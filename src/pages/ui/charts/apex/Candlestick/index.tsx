@@ -1,1 +1,1 @@
-export { CandlestickApex as default } from './CandlestickApex';
+export {CandlestickApex as default} from './CandlestickApex';

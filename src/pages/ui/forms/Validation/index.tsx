@@ -1,1 +1,1 @@
-export { ValidationForm as default } from './ValidationForm';
+export {ValidationForm as default} from './ValidationForm';

@@ -1,1 +1,1 @@
-export { TreemapApex as default } from './TreemapApex';
+export {TreemapApex as default} from './TreemapApex';

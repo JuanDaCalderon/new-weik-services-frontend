@@ -1,1 +1,1 @@
-export { EditorsForm as default } from './EditorsForm';
+export {EditorsForm as default} from './EditorsForm';

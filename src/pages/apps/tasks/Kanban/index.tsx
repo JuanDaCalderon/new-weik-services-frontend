@@ -1,1 +1,1 @@
-export { KanbanTask as default } from './KanbanTask';
+export {KanbanTask as default} from './KanbanTask';

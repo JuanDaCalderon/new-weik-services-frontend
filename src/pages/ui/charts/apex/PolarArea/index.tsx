@@ -1,1 +1,1 @@
-export { PolarAreaApex as default } from './PolarAreaApex';
+export {PolarAreaApex as default} from './PolarAreaApex';

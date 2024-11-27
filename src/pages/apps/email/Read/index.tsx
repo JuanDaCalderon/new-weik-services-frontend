@@ -1,1 +1,1 @@
-export { ReadEmail as default } from './ReadEmail';
+export {ReadEmail as default} from './ReadEmail';

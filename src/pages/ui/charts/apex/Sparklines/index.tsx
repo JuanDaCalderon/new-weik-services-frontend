@@ -1,1 +1,1 @@
-export { SparklinesApex as default } from './SparklinesApex';
+export {SparklinesApex as default} from './SparklinesApex';

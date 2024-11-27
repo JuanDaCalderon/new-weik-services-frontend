@@ -1,1 +1,1 @@
-export { InvoicePage as default } from './InvoicePage';
+export {InvoicePage as default} from './InvoicePage';

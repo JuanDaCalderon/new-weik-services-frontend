@@ -1,1 +1,1 @@
-export { WizardForm as default } from './WizardForm';
+export {WizardForm as default} from './WizardForm';

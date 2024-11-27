@@ -1,1 +1,1 @@
-export { EcommerceDashboard as default } from './EcommerceDashboard';
+export {EcommerceDashboard as default} from './EcommerceDashboard';

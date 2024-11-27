@@ -1,1 +1,1 @@
-export { ShoppingCartEcom as default } from './ShoppingCartEcom';
+export {ShoppingCartEcom as default} from './ShoppingCartEcom';

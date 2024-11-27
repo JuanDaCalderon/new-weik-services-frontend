@@ -1,5 +1,5 @@
 const GoogleMaps = () => {
-	return <div>GoogleMaps</div>;
+  return <div>GoogleMaps</div>;
 };
 
-export { GoogleMaps };
+export {GoogleMaps};

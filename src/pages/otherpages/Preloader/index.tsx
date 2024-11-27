@@ -1,1 +1,1 @@
-export { PreloaderPage as default } from './PreloaderPage';
+export {PreloaderPage as default} from './PreloaderPage';

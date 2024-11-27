@@ -1,17 +1,17 @@
 export type QuickAccessItem = {
-	icon: string;
-	name: string;
-	size: string;
+  icon: string;
+  name: string;
+  size: string;
 };
 type Member = {
-	image: string;
-	name: string;
+  image: string;
+  name: string;
 };
 export type RecentFileItem = {
-	name: string;
-	modifiedDate: string;
-	modifiedBy: string;
-	size: string;
-	owner: string;
-	members: Member[];
+  name: string;
+  modifiedDate: string;
+  modifiedBy: string;
+  size: string;
+  owner: string;
+  members: Member[];
 };

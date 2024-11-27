@@ -1,1 +1,1 @@
-export { MixedApex as default } from './MixedApex';
+export {MixedApex as default} from './MixedApex';

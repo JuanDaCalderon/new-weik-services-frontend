@@ -1,1 +1,1 @@
-export { SocialFeedApp as default } from './SocialFeedApp';
+export {SocialFeedApp as default} from './SocialFeedApp';

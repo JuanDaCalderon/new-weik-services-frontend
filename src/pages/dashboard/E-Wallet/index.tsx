@@ -1,1 +1,1 @@
-export { EWalletDashboard as default } from './EWalletDashboard';
+export {EWalletDashboard as default} from './EWalletDashboard';

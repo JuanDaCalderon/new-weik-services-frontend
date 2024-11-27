@@ -1,5 +1,5 @@
-import { lazy } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import {lazy} from 'react';
+import {Outlet, Route, Routes} from 'react-router-dom';
 
 const Accordions = lazy(() => import('./AccordionsUI'));
 const Alerts = lazy(() => import('./AlertsUI'));
@@ -29,36 +29,36 @@ const Typography = lazy(() => import('./TypographyUI'));
 const Utilities = lazy(() => import('./UtilitiesUI'));
 
 export default function BaseUI() {
-	return (
-		<Routes>
-			<Route path="/*" element={<Outlet />}>
-				<Route path="accordions" element={<Accordions />} />
-				<Route path="alerts" element={<Alerts />} />
-				<Route path="avatars" element={<Avatars />} />
-				<Route path="badges" element={<Badges />} />
-				<Route path="breadcrumb" element={<Breadcrumb />} />
-				<Route path="buttons" element={<Buttons />} />
-				<Route path="cards" element={<Cards />} />
-				<Route path="carousel" element={<Carousel />} />
-				<Route path="dropdowns" element={<Dropdowns />} />
-				<Route path="embed" element={<Embed />} />
-				<Route path="grid" element={<Grid />} />
-				<Route path="listgroups" element={<ListGroup />} />
-				<Route path="modals" element={<Modals />} />
-				<Route path="notifications" element={<Notifications />} />
-				<Route path="offcanvas" element={<Offcanvas />} />
-				<Route path="placeholders" element={<Placeholders />} />
-				<Route path="pagination" element={<Pagination />} />
-				<Route path="popovers" element={<Popover />} />
-				<Route path="progress" element={<Progress />} />
-				<Route path="ribbons" element={<Ribbons />} />
-				<Route path="spinners" element={<Spinners />} />
-				<Route path="tabs" element={<Tabs />} />
-				<Route path="tooltips" element={<Tooltips />} />
-				<Route path="links" element={<Links />} />
-				<Route path="typography" element={<Typography />} />
-				<Route path="utilities" element={<Utilities />} />
-			</Route>
-		</Routes>
-	);
+  return (
+    <Routes>
+      <Route path="/*" element={<Outlet />}>
+        <Route path="accordions" element={<Accordions />} />
+        <Route path="alerts" element={<Alerts />} />
+        <Route path="avatars" element={<Avatars />} />
+        <Route path="badges" element={<Badges />} />
+        <Route path="breadcrumb" element={<Breadcrumb />} />
+        <Route path="buttons" element={<Buttons />} />
+        <Route path="cards" element={<Cards />} />
+        <Route path="carousel" element={<Carousel />} />
+        <Route path="dropdowns" element={<Dropdowns />} />
+        <Route path="embed" element={<Embed />} />
+        <Route path="grid" element={<Grid />} />
+        <Route path="listgroups" element={<ListGroup />} />
+        <Route path="modals" element={<Modals />} />
+        <Route path="notifications" element={<Notifications />} />
+        <Route path="offcanvas" element={<Offcanvas />} />
+        <Route path="placeholders" element={<Placeholders />} />
+        <Route path="pagination" element={<Pagination />} />
+        <Route path="popovers" element={<Popover />} />
+        <Route path="progress" element={<Progress />} />
+        <Route path="ribbons" element={<Ribbons />} />
+        <Route path="spinners" element={<Spinners />} />
+        <Route path="tabs" element={<Tabs />} />
+        <Route path="tooltips" element={<Tooltips />} />
+        <Route path="links" element={<Links />} />
+        <Route path="typography" element={<Typography />} />
+        <Route path="utilities" element={<Utilities />} />
+      </Route>
+    </Routes>
+  );
 }

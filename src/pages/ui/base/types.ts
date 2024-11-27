@@ -1,10 +1,10 @@
-import { OverlayProps } from 'react-bootstrap';
+import {OverlayProps} from 'react-bootstrap';
 
 export type Variant = {
-	name: string;
-	color: string;
+  name: string;
+  color: string;
 };
 
 export type PopoverDirection = {
-	placement: OverlayProps['placement'];
+  placement: OverlayProps['placement'];
 };

@@ -1,1 +1,1 @@
-export { PieApex as default } from './PieApex';
+export {PieApex as default} from './PieApex';

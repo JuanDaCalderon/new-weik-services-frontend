@@ -1,38 +1,38 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import * as yup from 'yup';
-import { EventInput } from '@fullcalendar/core';
-import { Event } from '../types';
+import {EventInput} from '@fullcalendar/core';
+import {Event} from '../types';
 
 export default function useAddEditEvent(
-	eventData: EventInput | undefined,
-	isEditable: boolean,
-	onUpdateEvent: (value: Event) => void,
-	onAddEvent: (value: Event) => void
+  eventData: EventInput | undefined,
+  isEditable: boolean,
+  onUpdateEvent: (value: Event) => void,
+  onAddEvent: (value: Event) => void
 ) {
-	// event state
-	const [event] = useState<Event>({
-		title: eventData?.title || '',
-		className: eventData?.className || '',
-	});
+  // event state
+  const [event] = useState<Event>({
+    title: eventData?.title || '',
+    className: eventData?.className || ''
+  });
 
-	// /*
-	//  * form validation schema
-	//  */
-	const schema = yup.object().shape({
-		title: yup.string().required('Please enter event name'),
-		className: yup.string().required('Please select category'),
-	});
+  // /*
+  //  * form validation schema
+  //  */
+  const schema = yup.object().shape({
+    title: yup.string().required('Please enter event name'),
+    className: yup.string().required('Please select category')
+  });
 
-	/*
-	 * handle form submission
-	 */
-	const onSubmitEvent = (data: Event) => {
-		isEditable ? onUpdateEvent(data) : onAddEvent(data);
-	};
+  /*
+   * handle form submission
+   */
+  const onSubmitEvent = (data: Event) => {
+    isEditable ? onUpdateEvent(data) : onAddEvent(data);
+  };
 
-	return {
-		event,
-		schema,
-		onSubmitEvent,
-	};
+  return {
+    event,
+    schema,
+    onSubmitEvent
+  };
 }

@@ -1,1 +1,1 @@
-export { WidgetsUI as default } from './WidgetsUI';
+export {WidgetsUI as default} from './WidgetsUI';

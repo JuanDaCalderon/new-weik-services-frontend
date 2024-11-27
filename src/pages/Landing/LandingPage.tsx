@@ -7,44 +7,44 @@ import Pricing from './Pricing';
 import FAQ from './FAQ';
 import ContactUs from './ContactUs';
 import Footer from './Footer';
-import { services, layouts, features, plans, rawFaqs } from './data';
-import { useAccountLayout } from '@/components/BGCircles';
-import { PageBreadcrumb } from '@/components';
+import {services, layouts, features, plans, rawFaqs} from './data';
+import {useAccountLayout} from '@/components/BGCircles';
+import {PageBreadcrumb} from '@/components';
 
 const LandingPage = () => {
-	useAccountLayout();
+  useAccountLayout();
 
-	return (
-		<>
-			<PageBreadcrumb title="Landing" />
-			{/* navbar */}
-			<NavBar />
+  return (
+    <>
+      <PageBreadcrumb title="Landing" />
+      {/* navbar */}
+      <NavBar />
 
-			{/* hero */}
-			<Hero />
+      {/* hero */}
+      <Hero />
 
-			{/* services */}
-			<Services services={services} />
+      {/* services */}
+      <Services services={services} />
 
-			{/* layouts */}
-			<Layouts layouts={layouts} />
+      {/* layouts */}
+      <Layouts layouts={layouts} />
 
-			{/* features */}
-			<Features features={features} />
+      {/* features */}
+      <Features features={features} />
 
-			{/* pricing */}
-			<Pricing plans={plans} />
+      {/* pricing */}
+      <Pricing plans={plans} />
 
-			{/* faqs */}
-			<FAQ rawFaqs={rawFaqs} />
+      {/* faqs */}
+      <FAQ rawFaqs={rawFaqs} />
 
-			{/* contact */}
-			<ContactUs />
+      {/* contact */}
+      <ContactUs />
 
-			{/* footer */}
-			<Footer />
-		</>
-	);
+      {/* footer */}
+      <Footer />
+    </>
+  );
 };
 
-export { LandingPage };
+export {LandingPage};

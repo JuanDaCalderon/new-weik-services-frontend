@@ -1,10 +1,10 @@
-import { useAuthContext } from '@/common/context';
-import { useEffect } from 'react';
+import {useAuthContext} from '@/common/context';
+import {useEffect} from 'react';
 
 export default function useLogout() {
-	const { removeSession } = useAuthContext();
+  const {removeSession} = useAuthContext();
 
-	useEffect(() => {
-		removeSession();
-	}, [removeSession]);
+  useEffect(() => {
+    removeSession();
+  }, [removeSession]);
 }

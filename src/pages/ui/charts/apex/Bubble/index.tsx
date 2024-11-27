@@ -1,1 +1,1 @@
-export { BubbleApex as default } from './BubbleApex';
+export {BubbleApex as default} from './BubbleApex';

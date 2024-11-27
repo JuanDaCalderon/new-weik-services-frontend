@@ -1,1 +1,1 @@
-export { TimelinePage as default } from './TimelinePage';
+export {TimelinePage as default} from './TimelinePage';

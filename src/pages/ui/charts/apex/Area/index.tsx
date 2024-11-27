@@ -1,1 +1,1 @@
-export { AreaApex as default } from './AreaApex';
+export {AreaApex as default} from './AreaApex';

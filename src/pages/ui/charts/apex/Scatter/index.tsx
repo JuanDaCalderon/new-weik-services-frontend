@@ -1,1 +1,1 @@
-export { ScatterApex as default } from './ScatterApex';
+export {ScatterApex as default} from './ScatterApex';

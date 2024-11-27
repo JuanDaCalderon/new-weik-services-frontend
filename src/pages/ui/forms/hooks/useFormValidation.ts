@@ -1,23 +1,23 @@
-import { useToggle } from '@/hooks';
+import {useToggle} from '@/hooks';
 
 export default function useFormValidation() {
-	const [isValidated, setValidated] = useToggle();
+  const [isValidated, setValidated] = useToggle();
 
-	/*
-	 * handle form submission
-	 */
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		const form = event.currentTarget;
-		if (form.checkValidity() === false) {
-			event.preventDefault();
-			event.stopPropagation();
-		}
+  /*
+   * handle form submission
+   */
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-		setValidated();
-	};
+    setValidated();
+  };
 
-	return {
-		isValidated,
-		handleSubmit,
-	};
+  return {
+    isValidated,
+    handleSubmit
+  };
 }

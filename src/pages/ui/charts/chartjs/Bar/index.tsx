@@ -1,1 +1,1 @@
-export { BarChartJs as default } from './BarChartJs';
+export {BarChartJs as default} from './BarChartJs';

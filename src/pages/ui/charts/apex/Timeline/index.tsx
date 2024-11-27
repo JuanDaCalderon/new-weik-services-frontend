@@ -1,1 +1,1 @@
-export { TimelineApex as default } from './TimelineApex';
+export {TimelineApex as default} from './TimelineApex';

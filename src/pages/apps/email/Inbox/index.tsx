@@ -1,1 +1,1 @@
-export { InboxEmail as default } from './InboxEmail';
+export {InboxEmail as default} from './InboxEmail';

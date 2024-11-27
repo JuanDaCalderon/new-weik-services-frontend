@@ -1,29 +1,44 @@
-// eslint-disable-next-line no-undef
 module.exports = {
+	root: true,
 	env: {
 		browser: true,
-		es2021: true,
+		node: true,
 	},
-	extends: [
-		'eslint:recommended',
-		'plugin:import/recommended',
-		'plugin:react/recommended',
-		'plugin:react-hooks/recommended',
-		'plugin:react/jsx-runtime',
-		'prettier',
-		'plugin:prettier/recommended',
-	],
-	overrides: [],
+	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
+		project: ['./tsconfig.json', './tsconfig.node.json'],
+		tsconfigRootDir: __dirname,
 	},
-	plugins: ['react', 'autofix'],
+	plugins: ['react', '@typescript-eslint/eslint-plugin'],
+	extends: [
+		'eslint:recommended',
+		'plugin:react/recommended',
+		'plugin:react-hooks/recommended',
+		'plugin:react/jsx-runtime',
+		'plugin:prettier/recommended',
+	],
 	rules: {
-		indent: ['error', 'tab'],
-		'linebreak-style': ['error', 'unix'],
-		quotes: ['error', 'single'],
-		semi: ['error', 'always'],
+		'react/no-unescaped-entities': 'off',
+		'@typescript-eslint/interface-name-prefix': 'off',
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/no-explicit-any': 'off',
+		'prettier/prettier': ['error',
+			{
+				printWidth: 100,
+				tabWidth: 2,
+				semi: true,
+				singleQuote: true,
+				trailingComma: 'none',
+				bracketSpacing: false,
+				bracketSameLine: true,
+				jsxBracketSameLine: true,
+				proseWrap: 'always',
+				useTabs: false,
+			}
+		],
 	},
 	settings: {
 		react: {

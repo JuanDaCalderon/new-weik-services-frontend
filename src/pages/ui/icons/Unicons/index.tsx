@@ -1,1 +1,1 @@
-export { UniconsIcons as default } from './UniconsIcons';
+export {UniconsIcons as default} from './UniconsIcons';

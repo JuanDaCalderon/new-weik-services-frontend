@@ -1,1 +1,1 @@
-export { AdvancedTable as default } from './AdvancedTable';
+export {AdvancedTable as default} from './AdvancedTable';

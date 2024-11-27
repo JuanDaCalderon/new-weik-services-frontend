@@ -1,1 +1,1 @@
-export { HeatmapApex as default } from './HeatmapApex';
+export {HeatmapApex as default} from './HeatmapApex';

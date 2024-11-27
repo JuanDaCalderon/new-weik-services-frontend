@@ -1,1 +1,1 @@
-export { RadarApex as default } from './RadarApex';
+export {RadarApex as default} from './RadarApex';

@@ -1,1 +1,1 @@
-export { DetailsTask as default } from './DetailsTask';
+export {DetailsTask as default} from './DetailsTask';

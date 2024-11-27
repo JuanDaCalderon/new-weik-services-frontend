@@ -1,1 +1,1 @@
-export { RangeUI as default } from './RangeUI';
+export {RangeUI as default} from './RangeUI';

@@ -1,1 +1,1 @@
-export { SparklinesCharts as default } from './SparklinesCharts';
+export {SparklinesCharts as default} from './SparklinesCharts';

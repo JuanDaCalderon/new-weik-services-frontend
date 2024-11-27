@@ -1,7 +1,7 @@
-import { PageBreadcrumb } from '@/components';
+import {PageBreadcrumb} from '@/components';
 
 const StarterPage = () => {
-	return <PageBreadcrumb title="Starter Page" subName="Pages" />;
+  return <PageBreadcrumb title="Starter Page" subName="Pages" />;
 };
 
-export { StarterPage };
+export {StarterPage};

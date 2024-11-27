@@ -1,1 +1,1 @@
-export { BoxplotApex as default } from './BoxplotApex';
+export {BoxplotApex as default} from './BoxplotApex';

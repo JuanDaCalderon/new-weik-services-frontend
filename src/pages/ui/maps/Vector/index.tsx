@@ -1,1 +1,1 @@
-export { VectorMaps as default } from './VectorMaps';
+export {VectorMaps as default} from './VectorMaps';

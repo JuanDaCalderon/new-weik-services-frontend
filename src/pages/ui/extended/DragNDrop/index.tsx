@@ -1,1 +1,1 @@
-export { DragNDropUI as default } from './DragNDropUI';
+export {DragNDropUI as default} from './DragNDropUI';

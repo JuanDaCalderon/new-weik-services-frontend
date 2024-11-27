@@ -1,1 +1,1 @@
-export { ListTask as default } from './ListTask';
+export {ListTask as default} from './ListTask';

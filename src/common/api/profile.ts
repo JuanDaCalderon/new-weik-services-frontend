@@ -1,11 +1,11 @@
-import { HttpClient } from '@/common/helpers';
+import {HttpClient} from '@/common/helpers';
 
 function ProfileService() {
-	return {
-		profile: () => {
-			return HttpClient.get('/profile');
-		},
-	};
+  return {
+    profile: () => {
+      return HttpClient.get('/profile');
+    }
+  };
 }
 
 export default ProfileService();

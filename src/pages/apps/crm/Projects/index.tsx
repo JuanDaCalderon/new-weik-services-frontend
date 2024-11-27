@@ -1,1 +1,1 @@
-export { ProjectsCRM as default } from './ProjectsCRM';
+export {ProjectsCRM as default} from './ProjectsCRM';

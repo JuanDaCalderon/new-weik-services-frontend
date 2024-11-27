@@ -1,1 +1,1 @@
-export { BasicElementsForm as default } from './BasicElementsForm';
+export {BasicElementsForm as default} from './BasicElementsForm';

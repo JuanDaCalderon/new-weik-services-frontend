@@ -1,13 +1,13 @@
-import { Project } from '../types';
+import {Project} from '../types';
 
 export default function useProjectOverview(project: Project, displayCount: number) {
-	let modifiedTeamMembers;
+  let modifiedTeamMembers;
 
-	if (project.assignTo.length <= displayCount || project.assignTo.length - displayCount === 1) {
-		modifiedTeamMembers = project.assignTo;
-	} else {
-		modifiedTeamMembers = project.assignTo.filter((m, index) => index < displayCount);
-	}
+  if (project.assignTo.length <= displayCount || project.assignTo.length - displayCount === 1) {
+    modifiedTeamMembers = project.assignTo;
+  } else {
+    modifiedTeamMembers = project.assignTo.filter((m, index) => index < displayCount);
+  }
 
-	return { modifiedTeamMembers };
+  return {modifiedTeamMembers};
 }

@@ -1,1 +1,1 @@
-export { FileManagerApp as default } from './FileManagerApp';
+export {FileManagerApp as default} from './FileManagerApp';

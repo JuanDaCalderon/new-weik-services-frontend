@@ -1,1 +1,1 @@
-export { CheckoutEcom as default } from './CheckoutEcom';
+export {CheckoutEcom as default} from './CheckoutEcom';

@@ -1,1 +1,1 @@
-export { LineApex as default } from './LineApex';
+export {LineApex as default} from './LineApex';

@@ -1,1 +1,1 @@
-export { AreaChartJs as default } from './AreaChartJs';
+export {AreaChartJs as default} from './AreaChartJs';

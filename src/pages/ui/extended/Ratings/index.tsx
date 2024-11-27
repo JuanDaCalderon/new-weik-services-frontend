@@ -1,1 +1,1 @@
-export { RatingsUI as default } from './RatingsUI';
+export {RatingsUI as default} from './RatingsUI';

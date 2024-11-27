@@ -1,41 +1,37 @@
-import { Row, Col } from 'react-bootstrap';
-import { Form, TextInput } from '@/components';
-import { NewMessagePosted, chatMessageSchema } from './hooks/useChatList';
+import {Row, Col} from 'react-bootstrap';
+import {Form, TextInput} from '@/components';
+import {NewMessagePosted, chatMessageSchema} from './hooks/useChatList';
 
 const ChatForm = ({
-	onNewMessagesPosted,
+  onNewMessagesPosted
 }: {
-	onNewMessagesPosted: (message: NewMessagePosted) => void;
+  onNewMessagesPosted: (message: NewMessagePosted) => void;
 }) => {
-	return (
-		<Form
-			name="chat-form"
-			id="chat-form"
-			onSubmit={onNewMessagesPosted}
-			schema={chatMessageSchema}
-			className="needs-validation m-3"
-		>
-			<Row>
-				<Col>
-					<TextInput
-						name="message"
-						type="text"
-						className="form-control chat-input"
-						placeholder="Enter your text"
-						key="message"
-					/>
-				</Col>
-				<Col className="col-auto">
-					<button
-						type="submit"
-						className="btn btn-danger chat-send waves-effect waves-light"
-					>
-						Send
-					</button>
-				</Col>
-			</Row>
-		</Form>
-	);
+  return (
+    <Form
+      name="chat-form"
+      id="chat-form"
+      onSubmit={onNewMessagesPosted}
+      schema={chatMessageSchema}
+      className="needs-validation m-3">
+      <Row>
+        <Col>
+          <TextInput
+            name="message"
+            type="text"
+            className="form-control chat-input"
+            placeholder="Enter your text"
+            key="message"
+          />
+        </Col>
+        <Col className="col-auto">
+          <button type="submit" className="btn btn-danger chat-send waves-effect waves-light">
+            Send
+          </button>
+        </Col>
+      </Row>
+    </Form>
+  );
 };
 
 export default ChatForm;

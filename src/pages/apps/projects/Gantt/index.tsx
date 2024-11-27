@@ -1,1 +1,1 @@
-export { GanttProject as default } from './GanttProject';
+export {GanttProject as default} from './GanttProject';

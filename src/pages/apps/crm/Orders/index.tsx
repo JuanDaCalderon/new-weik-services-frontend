@@ -1,1 +1,1 @@
-export { OrdersCRM as default } from './OrdersCRM';
+export {OrdersCRM as default} from './OrdersCRM';

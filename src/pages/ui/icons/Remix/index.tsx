@@ -1,1 +1,1 @@
-export { RemixIcons as default } from './RemixIcons';
+export {RemixIcons as default} from './RemixIcons';

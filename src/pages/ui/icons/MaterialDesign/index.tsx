@@ -1,1 +1,1 @@
-export { MaterialDesignIcons as default } from './MaterialDesignIcons';
+export {MaterialDesignIcons as default} from './MaterialDesignIcons';

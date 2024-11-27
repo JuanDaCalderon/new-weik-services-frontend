@@ -1,1 +1,1 @@
-export { ColumnApex as default } from './ColumnApex';
+export {ColumnApex as default} from './ColumnApex';

@@ -1,1 +1,1 @@
-export { ManagementCRM as default } from './ManagementCRM';
+export {ManagementCRM as default} from './ManagementCRM';

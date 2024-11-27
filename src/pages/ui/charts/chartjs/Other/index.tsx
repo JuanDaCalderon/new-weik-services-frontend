@@ -1,1 +1,1 @@
-export { OtherChartJs as default } from './OtherChartJs';
+export {OtherChartJs as default} from './OtherChartJs';

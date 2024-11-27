@@ -1,1 +1,1 @@
-export { BarApex as default } from './BarApex';
+export {BarApex as default} from './BarApex';

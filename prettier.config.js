@@ -1,11 +1,14 @@
 const config = {
-  "bracketSpacing": true,
-  "semi": true,
-  "tabWidth": 4,
-  "singleQuote": true,
-  "trailingComma": "es5",
   "printWidth": 100,
-  "useTabs": true,
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "bracketSpacing": false,
+  "bracketSameLine": true,
+  "jsxBracketSameLine": true,
+  "proseWrap": "always",
+  "useTabs": false,
 };
 
 export default config;

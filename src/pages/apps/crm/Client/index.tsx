@@ -1,1 +1,1 @@
-export { ClientCRM as default } from './ClientCRM';
+export {ClientCRM as default} from './ClientCRM';

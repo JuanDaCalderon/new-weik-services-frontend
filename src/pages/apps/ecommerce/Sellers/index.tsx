@@ -1,1 +1,1 @@
-export { SellersEcom as default } from './SellersEcom';
+export {SellersEcom as default} from './SellersEcom';

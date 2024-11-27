@@ -1,1 +1,1 @@
-export { CRMDashboard as default } from './CRMDashboard';
+export {CRMDashboard as default} from './CRMDashboard';

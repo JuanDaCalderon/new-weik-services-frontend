@@ -1,1 +1,1 @@
-export { FileUploadsForm as default } from './FileUploadsForm';
+export {FileUploadsForm as default} from './FileUploadsForm';

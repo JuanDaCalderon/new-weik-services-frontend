@@ -1,1 +1,1 @@
-export { OrderDetailsEcom as default } from './OrderDetailsEcom';
+export {OrderDetailsEcom as default} from './OrderDetailsEcom';

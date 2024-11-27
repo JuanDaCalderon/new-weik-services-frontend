@@ -1,1 +1,1 @@
-export { ScrollbarUI as default } from './ScrollbarUI';
+export {ScrollbarUI as default} from './ScrollbarUI';

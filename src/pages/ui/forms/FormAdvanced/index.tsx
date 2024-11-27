@@ -1,1 +1,1 @@
-export { FormAdvanced as default } from './FormAdvanced';
+export {FormAdvanced as default} from './FormAdvanced';

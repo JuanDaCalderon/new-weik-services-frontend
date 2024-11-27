@@ -1,1 +1,1 @@
-export { RadialbarApex as default } from './RadialbarApex';
+export {RadialbarApex as default} from './RadialbarApex';

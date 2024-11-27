@@ -1,5 +1,5 @@
-import { lazy } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import {lazy} from 'react';
+import {Outlet, Route, Routes} from 'react-router-dom';
 
 const Area = lazy(() => import('./Area'));
 const Bar = lazy(() => import('./Bar'));
@@ -20,27 +20,27 @@ const PolarArea = lazy(() => import('./PolarArea'));
 const Sparklines = lazy(() => import('./Sparklines'));
 
 export default function BaseUI() {
-	return (
-		<Routes>
-			<Route path="/*" element={<Outlet />}>
-				<Route path="area" element={<Area />} />
-				<Route path="bar" element={<Bar />} />
-				<Route path="bubble" element={<Bubble />} />
-				<Route path="candlestick" element={<Candlestick />} />
-				<Route path="column" element={<Column />} />
-				<Route path="heatmap" element={<Heatmap />} />
-				<Route path="line" element={<Line />} />
-				<Route path="mixed" element={<Mixed />} />
-				<Route path="timeline" element={<Timeline />} />
-				<Route path="boxplot" element={<Boxplot />} />
-				<Route path="treemap" element={<Treemap />} />
-				<Route path="pie" element={<Pie />} />
-				<Route path="radar" element={<Radar />} />
-				<Route path="radialbar" element={<Radialbar />} />
-				<Route path="scatter" element={<Scatter />} />
-				<Route path="polararea" element={<PolarArea />} />
-				<Route path="sparklines" element={<Sparklines />} />
-			</Route>
-		</Routes>
-	);
+  return (
+    <Routes>
+      <Route path="/*" element={<Outlet />}>
+        <Route path="area" element={<Area />} />
+        <Route path="bar" element={<Bar />} />
+        <Route path="bubble" element={<Bubble />} />
+        <Route path="candlestick" element={<Candlestick />} />
+        <Route path="column" element={<Column />} />
+        <Route path="heatmap" element={<Heatmap />} />
+        <Route path="line" element={<Line />} />
+        <Route path="mixed" element={<Mixed />} />
+        <Route path="timeline" element={<Timeline />} />
+        <Route path="boxplot" element={<Boxplot />} />
+        <Route path="treemap" element={<Treemap />} />
+        <Route path="pie" element={<Pie />} />
+        <Route path="radar" element={<Radar />} />
+        <Route path="radialbar" element={<Radialbar />} />
+        <Route path="scatter" element={<Scatter />} />
+        <Route path="polararea" element={<PolarArea />} />
+        <Route path="sparklines" element={<Sparklines />} />
+      </Route>
+    </Routes>
+  );
 }

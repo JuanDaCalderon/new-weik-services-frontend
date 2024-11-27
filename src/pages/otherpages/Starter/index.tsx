@@ -1,1 +1,1 @@
-export { StarterPage as default } from './StarterPage';
+export {StarterPage as default} from './StarterPage';

@@ -1,1 +1,1 @@
-export { CalendarApp as default } from './CalendarApp';
+export {CalendarApp as default} from './CalendarApp';

@@ -3,15 +3,15 @@ import 'jsvectormap/dist/maps/spain.js';
 import useVectorMap from './useVectorMap';
 
 type SpainVectorMapProps = {
-	width?: string;
-	height?: string;
-	options?: Record<string, unknown>;
+  width?: string;
+  height?: string;
+  options?: Record<string, unknown>;
 };
 
-const SpainVectorMap = ({ width, height, options }: SpainVectorMapProps) => {
-	const { selectorId } = useVectorMap(options, 'spain');
+const SpainVectorMap = ({width, height, options}: SpainVectorMapProps) => {
+  const {selectorId} = useVectorMap(options, 'spain');
 
-	return <div id={selectorId} style={{ width: width, height: height }}></div>;
+  return <div id={selectorId} style={{width: width, height: height}}></div>;
 };
 
 export default SpainVectorMap;
