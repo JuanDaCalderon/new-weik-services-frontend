@@ -1,43 +1,35 @@
 import {Link} from 'react-router-dom';
-import {Row, Col, Card, Container} from 'react-bootstrap';
-import {BGCircles, PageBreadcrumb} from '@/components';
-
-// images
+import {Row, Col, Card, Container, Image} from 'react-bootstrap';
+import {BGCircles} from '@/components';
 import Logo from '@/assets/images/logo.png';
+import {DEFAULT_ROUTER_PATH, year} from '@/constants';
 
 const ErrorPageNotFound = () => {
   return (
     <>
-      <PageBreadcrumb title="Page not Found" />
       <BGCircles />
-
       <div className="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5} xxl={4}>
               <Card>
-                {/* logo */}
-                <Card.Header className="py-4 text-center bg-primary">
-                  <Link to="/">
-                    <span>
-                      <img src={Logo} alt="logo" height={22} />
-                    </span>
+                <Card.Header className="py-3 text-center bg-primary">
+                  <Link to={DEFAULT_ROUTER_PATH}>
+                    <Image className="w-50" fluid src={Logo} alt="weikstudio" loading="lazy" />
                   </Link>
                 </Card.Header>
-
-                <Card.Body className="p-4">
+                <Card.Body>
                   <div className="text-center">
                     <h1 className="text-error">
                       4<i className="mdi mdi-emoticon-sad"></i>4
                     </h1>
-                    <h4 className="text-uppercase text-danger mt-3">Page Not Found</h4>
-                    <p className="text-muted mt-3">
-                      It's looking like you may have taken a wrong turn. Don't worry... it happens
-                      to the best of us. Here's a little tip that might help you get back on track.
+                    <h2 className="text-uppercase text-danger mt-2">Página no encontrada</h2>
+                    <p className="text-dark text-opacity-75">
+                      Parece que has tomado el camino equivocado. No te preocupes... nos pasa a los
+                      mejores. Aquí tienes un pequeño consejo que puede ayudarte a retomar el rumbo.
                     </p>
-
-                    <Link className="btn btn-info mt-3" to="/">
-                      <i className="mdi mdi-reply"></i> Return Home
+                    <Link className="btn btn-info mt-1" to="/" replace>
+                      <i className="mdi mdi-reply"></i> Regresar a weik services
                     </Link>
                   </div>
                 </Card.Body>
@@ -46,10 +38,7 @@ const ErrorPageNotFound = () => {
           </Row>
         </Container>
       </div>
-
-      <footer className="footer footer-alt">
-        2018 - {new Date().getFullYear()} © Hyper - Coderthemes.com
-      </footer>
+      <footer className="footer footer-alt">{year} © Weik Motion Studio - weikstudio.com</footer>
     </>
   );
 };

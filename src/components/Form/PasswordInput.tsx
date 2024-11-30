@@ -1,6 +1,7 @@
 import {ReactNode, useState} from 'react';
 import {Control, Controller, RegisterOptions} from 'react-hook-form';
 import {Form, InputGroup} from 'react-bootstrap';
+import {FeedbackInvalidText, LabelText} from './FormUtils';
 
 type PasswordInputProps = {
   name: string;
@@ -19,16 +20,13 @@ type PasswordInputProps = {
 
 export default function PasswordInput({
   name,
-  type = 'password',
   id,
   label,
   className,
   containerClass,
   helpText,
   children,
-  errors,
   control,
-  register,
   ...props
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +39,7 @@ export default function PasswordInput({
           {label && (
             <>
               {children}
-              <Form.Label>{label}</Form.Label>
+              <LabelText label={label} />
             </>
           )}
           <InputGroup className="mb-0">
@@ -54,6 +52,7 @@ export default function PasswordInput({
               onChange={(e) => {
                 field.onChange(e.target.value);
               }}
+              autoComplete="current-password"
               className={className}
               isInvalid={Boolean(fieldState.error?.message)}
             />
@@ -75,9 +74,10 @@ export default function PasswordInput({
             </Form.Text>
           )}
           {fieldState.error && (
-            <Form.Control.Feedback type="invalid" className="d-block">
-              {fieldState.error['message']}
-            </Form.Control.Feedback>
+            <FeedbackInvalidText
+              errorMessage={fieldState.error['message'] ?? ''}
+              customClassNames="d-block"
+            />
           )}
         </Form.Group>
       )}

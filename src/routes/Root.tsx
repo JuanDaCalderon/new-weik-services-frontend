@@ -1,12 +1,8 @@
+import {DEFAULT_ROUTER_PATH} from '@/constants';
 import {Navigate} from 'react-router-dom';
 
 const Root = () => {
-  const getRootUrl = () => {
-    const url = 'dashboard/ecommerce';
-    return url;
-  };
-  const url = getRootUrl();
-  return <Navigate to={`/${url}`} />;
+  return <Navigate to={DEFAULT_ROUTER_PATH} />;
 };
 
 export default Root;

@@ -1,17 +1,17 @@
-import {ReactNode} from 'react';
-import {Card, Col, Container, Row} from 'react-bootstrap';
+import {ReactNode, memo} from 'react';
+import {Card, Col, Container, Row, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {BGCircles} from '@/components';
-
-// images
 import Logo from '@/assets/images/logo.png';
+import {Toaster} from 'react-hot-toast';
+import {DEFAULT_ROUTER_PATH, year} from '@/constants';
 
 type AccountWrapperProps = {
   children?: ReactNode;
   bottomLinks?: ReactNode;
 };
 
-export default function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
+function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
   return (
     <>
       <BGCircles />
@@ -20,26 +20,31 @@ export default function AccountWrapper({bottomLinks, children}: AccountWrapperPr
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5} xxl={4}>
               <Card>
-                <Card.Header className="pt-4 pb-4 text-center bg-primary">
-                  <Link to="/">
-                    <span>
-                      <img src={Logo} alt="" height="22" />
-                    </span>
+                <Card.Header className="pt-3 pb-3 text-center bg-primary">
+                  <Link to={DEFAULT_ROUTER_PATH}>
+                    <Image className="w-50" fluid src={Logo} alt="weikstudio" loading="lazy" />
                   </Link>
                 </Card.Header>
-                <Card.Body className="p-4">{children}</Card.Body>
+                <Card.Body>{children}</Card.Body>
               </Card>
               {bottomLinks}
             </Col>
           </Row>
         </Container>
       </div>
-      <footer className="footer footer-alt">
-        2018 - {new Date().getFullYear()} © Hyper -
-        <Link to="https://coderthemes.com/" target="_blank">
-          Coderthemes.com
-        </Link>
-      </footer>
+      <footer className="footer footer-alt">{year} © Weik Motion Studio - weikstudio.com</footer>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 6000,
+          style: {
+            background: '#4f565c',
+            color: '#fff'
+          }
+        }}
+      />
     </>
   );
 }
+
+export default memo(AccountWrapper);

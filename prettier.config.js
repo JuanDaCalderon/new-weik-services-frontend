@@ -9,6 +9,7 @@ const config = {
   "jsxBracketSameLine": true,
   "proseWrap": "always",
   "useTabs": false,
+  "endOfLine": "auto"
 };
 
 export default config;

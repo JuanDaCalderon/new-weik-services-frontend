@@ -1,10 +1,17 @@
-export type User = {
-  id: number;
+export type Employee = {
   email: string;
-  username?: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-  role?: string;
-  token?: string;
+  nombres: string;
+  apellidos: string;
+};
+
+export interface User extends Employee {
+  id: number;
+  uid: string;
+  token: string;
+}
+
+export type PayLoadUserType = {
+  user: User;
+  domain: string;
+  isLoggedIn: boolean;
 };

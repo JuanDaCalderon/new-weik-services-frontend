@@ -20,18 +20,15 @@ type FormSelectProps = {
 
 const SelectInput = ({
   name,
-  type = 'select',
   id,
   className,
   containerClass,
   label,
-  placeholder,
   helpText,
   children,
   multiple,
   errors,
   control,
-  register,
   ...props
 }: FormSelectProps) => {
   return (

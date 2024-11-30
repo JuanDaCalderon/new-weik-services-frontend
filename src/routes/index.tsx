@@ -1,18 +1,18 @@
-import {Route, Routes as ReactRoutes} from 'react-router-dom';
-import ProtectedRoutes from './ProtectedRoutes';
+import {Route, Routes as ReactRoutes, Navigate} from 'react-router-dom';
+//import ProtectedRoutes from './ProtectedRoutes';
+import Root from '@/routes/Root';
 import ErrorPages from '@/pages/error';
 import Account from '@/pages/account';
-import LandingPage from '@/pages/Landing';
-import ErrorPageNotFound from '@/pages/error/PageNotFound';
+import {PAGE_NOT_FOUND_PATH} from '@/constants';
 
 export default function AppRoutes() {
   return (
     <ReactRoutes>
-      <Route path="account/*" element={<Account />} />
-      <Route path="/*" element={<ProtectedRoutes />} />
+      <Route index element={<Root />}></Route>
+      <Route path="/account/*" element={<Account />} />
       <Route path="/error/*" element={<ErrorPages />} />
-      <Route path="/landing" element={<LandingPage />} />
-      <Route path="*" element={<ErrorPageNotFound />} />
+      {/* <Route path="/*" element={<ProtectedRoutes />} /> */}
+      <Route path="*" element={<Navigate to={PAGE_NOT_FOUND_PATH} />} />
     </ReactRoutes>
   );
 }

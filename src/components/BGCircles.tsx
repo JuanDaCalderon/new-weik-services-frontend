@@ -3,14 +3,12 @@ import {useEffect} from 'react';
 export function useAccountLayout() {
   useEffect(() => {
     if (document) document.body.classList.add('authentication-bg');
-
     return () => document.body.classList.remove('authentication-bg');
   }, []);
 }
 
 const BGCircles = () => {
   useAccountLayout();
-
   return (
     <div
       className="position-absolute start-0 end-0 start-0 bottom-0 w-100 h-100"

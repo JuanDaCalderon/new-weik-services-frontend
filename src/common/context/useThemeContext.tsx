@@ -1,4 +1,4 @@
-import {ReactNode, createContext, useCallback, useContext, useState} from 'react';
+import {ReactNode, createContext, useCallback, useContext, useState, JSX} from 'react';
 import i18n, {isValidLanguage, Languages} from '@/common/languages/i18n';
 
 const ThemeContext = createContext<any>({});
@@ -31,13 +31,12 @@ export const ThemeSettings = {
 
 export function useThemeContext() {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
+  if (context === undefined)
     throw new Error('useThemeContext must be used within an ThemeProvider');
-  }
   return context;
 }
 
-export function ThemeProvider({children}: {children: ReactNode}) {
+export function ThemeProvider({children}: {children: ReactNode}): JSX.Element {
   const [currentLanguage, setCurrentLanguage] = useState(Languages.EN);
 
   const [settings, setSettings] = useState({

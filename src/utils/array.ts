@@ -1,26 +1,3 @@
-import {SearchOption} from '@/layouts/Topbar/types';
-
-const groupByFields = (array: Array<any>, f: (item: SearchOption) => string[]): Array<any> => {
-  /*
-	params description :
-			f : function which returnf the array of fields 
-			e.g. :  (item) => {
-					return [itemField1, itemField2];
-			}
-			array : array of data to group e.g. : [{...}, {...}]       
-	*/
-  const groups: {[key: string]: number[]} = {};
-  array.forEach((o) => {
-    const group = JSON.stringify(f(o));
-    groups[group] = groups[group] || [];
-    groups[group].push(o);
-  });
-
-  return Object.keys(groups).map((group) => {
-    return groups[group];
-  });
-};
-
 /**
  * split array into chunks
  * @param array - array to split
@@ -35,4 +12,4 @@ const splitArray = <T>(array: Array<T>, chunkSize: number) => {
   return chunks;
 };
 
-export {groupByFields, splitArray};
+export {splitArray};

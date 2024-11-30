@@ -37,6 +37,7 @@ module.exports = {
 				jsxBracketSameLine: true,
 				proseWrap: 'always',
 				useTabs: false,
+				endOfLine: 'auto'
 			}
 		],
 	},

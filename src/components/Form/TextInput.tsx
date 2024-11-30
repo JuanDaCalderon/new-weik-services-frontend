@@ -1,5 +1,6 @@
 import {Form} from 'react-bootstrap';
 import {Control, Controller, RegisterOptions, useFormContext} from 'react-hook-form';
+import {FeedbackInvalidText, LabelText} from './FormUtils';
 
 type TextInputProps = {
   type: 'text' | 'email' | 'number';
@@ -16,6 +17,7 @@ type TextInputProps = {
   errors?: any;
   control?: Control<any>;
   register?: RegisterOptions;
+  autoComplete?: string;
 };
 
 export default function TextInput({
@@ -27,8 +29,8 @@ export default function TextInput({
   placeholder,
   helpText,
   errors,
-  register,
   type,
+  autoComplete = 'off',
   ...props
 }: TextInputProps) {
   const {control} = useFormContext();
@@ -39,7 +41,7 @@ export default function TextInput({
       control={control}
       render={({field, fieldState}) => (
         <Form.Group className={containerClass ?? ''}>
-          {label && <Form.Label>{label}</Form.Label>}
+          {label && <LabelText label={label} />}
           <Form.Control
             id={id}
             type={type}
@@ -50,6 +52,7 @@ export default function TextInput({
               field.onChange(e.target.value);
             }}
             placeholder={placeholder}
+            autoComplete={autoComplete}
             className={className}
             isInvalid={Boolean(fieldState.error?.message)}
           />
@@ -60,9 +63,7 @@ export default function TextInput({
           )}
           {errors ||
             (fieldState.error && (
-              <Form.Control.Feedback type="invalid">
-                {fieldState.error['message']}
-              </Form.Control.Feedback>
+              <FeedbackInvalidText errorMessage={fieldState.error['message'] ?? ''} />
             ))}
         </Form.Group>
       )}

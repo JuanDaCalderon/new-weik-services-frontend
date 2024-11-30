@@ -1,62 +1,53 @@
-import {Form, PageBreadcrumb, TextInput} from '@/components';
-import AccountWrapper from '../AccountWrapper';
-import {useTranslation} from 'react-i18next';
-import {Button, Col, Row} from 'react-bootstrap';
+import {JSX, useMemo} from 'react';
+import {Form, SendButton, TextInput} from '@/components';
+import AccountWrapper from '@/pages/account/AccountWrapper';
+import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import useRecoverPassword from './useRecoverPassword';
-
-export type UserData = {
-  email: string;
-};
-
-const BottomLink = () => {
-  const {t} = useTranslation();
-
-  return (
-    <Row className="mt-3">
-      <Col className="text-center">
-        <p className="text-muted">
-          {t('Back to')}
-          <Link to={'/account/login'} className="text-muted ms-1">
-            <b>{t('Log In')}</b>
-          </Link>
-        </p>
-      </Col>
-    </Row>
-  );
-};
+import useRecoverPassword, {
+  recoverPasswordFormFields,
+  recoverPasswordFormSchema
+} from './useRecoverPassword';
+import {DEFAULT_ROUTER_PATH} from '@/constants';
 
 const RecoverPassword = () => {
-  const {t} = useTranslation();
-  const {loading, onSubmit, schema} = useRecoverPassword();
+  const {loading, onSubmit} = useRecoverPassword();
+
+  const bottomLink: JSX.Element = useMemo(
+    () => (
+      <Row className="mt-3">
+        <Col className="text-center">
+          <p className="text-dark text-opacity-75">
+            Olvidalo, ya la recordé
+            <Link to={DEFAULT_ROUTER_PATH} className="text-dark text-opacity-75 ms-1">
+              <b>Ingresar</b>
+            </Link>
+          </p>
+        </Col>
+      </Row>
+    ),
+    []
+  );
 
   return (
     <>
-      <PageBreadcrumb title="Recover Password" />
-      <AccountWrapper bottomLinks={<BottomLink />}>
+      <AccountWrapper bottomLinks={bottomLink}>
         <div className="text-center w-75 m-auto">
-          <h4 className="text-dark-50 text-center mt-0 fw-bold">{t('Reset Password')}</h4>
-          <p className="text-muted mb-4">
-            {t(
-              "Enter your email address and we'll send you an email with instructions to reset your password."
-            )}
+          <h4 className="text-dark text-center mt-0 fw-bold">Restablecer contraseña</h4>
+          <p className="text-dark text-opacity-75">
+            Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con
+            instrucciones para restablecer su contraseña.
           </p>
         </div>
-
-        <Form onSubmit={onSubmit} schema={schema}>
+        <Form<recoverPasswordFormFields> onSubmit={onSubmit} schema={recoverPasswordFormSchema}>
           <TextInput
-            label={t('Email Address')}
+            label={'Dirección de correo electrónico'}
             type="email"
             name="email"
-            placeholder={t('Enter your Email')}
-            containerClass={'mb-3'}
+            placeholder={'Ingresa tu correo electrónico'}
+            containerClass={'mb-2'}
+            autoComplete="email"
           />
-
-          <div className="mb-0 text-center">
-            <Button variant="primary" type="submit" disabled={loading}>
-              {t('Reset Password')}
-            </Button>
-          </div>
+          <SendButton loading={loading} text="Recuperar contraseña" />
         </Form>
       </AccountWrapper>
     </>

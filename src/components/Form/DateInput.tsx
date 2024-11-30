@@ -28,7 +28,6 @@ export default function DateInput({
   helpText,
   readOnly,
   errors,
-  register,
   type,
   ...props
 }: DateInputProps) {

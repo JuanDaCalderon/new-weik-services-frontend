@@ -1,40 +1,27 @@
-import {useTranslation} from 'react-i18next';
-import * as yup from 'yup';
-import {useState} from 'react';
-import {useNotificationContext} from '@/common/context';
-import {User} from '@/types';
-import {AxiosResponse} from 'axios';
-import {authApi} from '@/common';
+import {InferType, object, string} from 'yup';
+import {useCallback, useState} from 'react';
+
+export const recoverPasswordFormSchema = object({
+  email: string()
+    .email('Por favor ingrese un correo electrónico válido')
+    .required('Por favor ingrese su correo electrónico')
+});
+
+export type recoverPasswordFormFields = InferType<typeof recoverPasswordFormSchema>;
 
 export default function useRecoverPassword() {
-  const [loading, setLoading] = useState(false);
-  const {showNotification} = useNotificationContext();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const {t} = useTranslation();
-
-  /*
-   * form schema
-   */
-  const schema = yup.object().shape({
-    username: yup.string().required(t('Please enter Username'))
-  });
-
-  /*
-   * handle form submission
-   */
-  const onSubmit = async ({data}: any) => {
-    const {email}: User = data;
+  const onSubmit = useCallback(async (values: recoverPasswordFormFields) => {
     setLoading(true);
     try {
-      const response: AxiosResponse<User> = await authApi.forgetPassword(email);
-      console.log(response);
+      console.log('🚀 ~ onSubmit ~ values:', values);
     } catch (error: any) {
-      showNotification({message: error.toString(), type: 'error'});
+      console.log('🚀 ~ onSubmit ~ error:', {message: error.toString(), type: 'error'});
     } finally {
       setLoading(false);
     }
-    // dispatch(forgotPassword(formData["username"]));
-  };
+  }, []);
 
-  return {loading, schema, onSubmit};
+  return {loading, onSubmit};
 }

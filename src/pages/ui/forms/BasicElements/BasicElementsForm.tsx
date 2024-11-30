@@ -17,8 +17,7 @@ import {
   Form as RHForm,
   SelectInput,
   FileInput,
-  DateInput,
-  ColorInput
+  DateInput
 } from '@/components';
 
 const BasicInputElements = () => {
@@ -170,16 +169,6 @@ const BasicInputElements = () => {
                 placeholder="number placeholder"
                 containerClass={'mb-3'}
                 key="number"
-              />
-
-              <ColorInput
-                label="Color"
-                type="color"
-                name="color"
-                placeholder="color placeholder"
-                className="w-100"
-                containerClass={'mb-3'}
-                key="color"
               />
 
               <Form.Group className="mb-0">

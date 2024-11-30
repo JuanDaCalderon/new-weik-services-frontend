@@ -26,7 +26,6 @@ export default function TextInput({
   helpText,
   errors,
   control,
-  register,
   ...props
 }: TextInputProps) {
   return (

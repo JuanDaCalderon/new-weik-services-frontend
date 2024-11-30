@@ -1,45 +1,40 @@
-import {authApi} from '@/common/api';
-import {useAuthContext, useNotificationContext} from '@/common/context';
-import {useMemo, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
-import type {User} from '@/types';
-import * as yup from 'yup';
-import {AxiosResponse} from 'axios';
+import {useState, useCallback} from 'react';
+import {useDispatch} from 'react-redux';
+import {setUser} from '@/store/slices/user';
+import {object, string, boolean, InferType} from 'yup';
+import {extractDomain} from '@/utils';
+import {useAuth} from '@/endpoints';
 
-export const loginFormSchema = yup.object({
-  email: yup.string().email('Please enter valid email').required('Please enter email'),
-  password: yup.string().required('Please enter password')
+export const loginFormSchema = object({
+  email: string()
+    .email('Por favor ingrese un correo electrónico válido')
+    .required('Por favor ingrese su correo electrónico'),
+  password: string().required('Por favor, introduzca la contraseña'),
+  rememberme: boolean()
 });
 
-export type LoginFormFields = yup.InferType<typeof loginFormSchema>;
+export type LoginFormFields = InferType<typeof loginFormSchema>;
 
 export default function useLogin() {
-  const [loading, setLoading] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const {authLogIn} = useAuth();
+  const dispatch = useDispatch();
 
-  const {isAuthenticated, saveSession} = useAuthContext();
-  const {showNotification} = useNotificationContext();
-
-  const redirectUrl = useMemo(
-    () => (location.state && location.state.from ? location.state.from.pathname : '/'),
-    [location.state]
+  const login = useCallback(
+    async ({email, password, rememberme}: LoginFormFields) => {
+      setLoading(true);
+      try {
+        const user = await authLogIn({email, password});
+        if (user) dispatch(setUser({user, domain: extractDomain(email), isLoggedIn: true}));
+        console.info('🚀 ~ rememberme:', rememberme);
+      } catch (error: any) {
+        console.error('🚀 ~ login ~ error:', {message: error.toString(), type: 'error'});
+      } finally {
+        setLoading(false);
+      }
+    },
+    [authLogIn, dispatch]
   );
 
-  const login = async (values: LoginFormFields) => {
-    setLoading(true);
-    try {
-      const res: AxiosResponse<User> = await authApi.login(values);
-      if (res.data.token) {
-        saveSession({...(res.data ?? {}), token: res.data.token});
-        navigate(redirectUrl);
-      }
-    } catch (error: any) {
-      showNotification({message: error.toString(), type: 'error'});
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return {loading, login, redirectUrl, isAuthenticated};
+  return {loading, login};
 }

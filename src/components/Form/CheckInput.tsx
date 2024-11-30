@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 import {Form} from 'react-bootstrap';
 import {Control, Controller, RegisterOptions} from 'react-hook-form';
+import {FeedbackInvalidText, LabelText} from './FormUtils';
 
 type CheckInputProps = {
   type: 'checkbox' | 'radio';
@@ -27,7 +28,6 @@ export default function CheckInput({
   placeholder,
   helpText,
   errors,
-  register,
   type,
   defaultChecked,
   ...props
@@ -50,8 +50,9 @@ export default function CheckInput({
             placeholder={placeholder}
             className={className}
             isInvalid={Boolean(fieldState.error?.message)}
+            defaultChecked={defaultChecked}
           />
-          {label && <Form.Label htmlFor={id ?? name}>{label}</Form.Label>}
+          {label && <LabelText label={label} htmlFor={id ?? name} />}
           {helpText && (
             <Form.Text id={`${name}-help`} muted>
               {helpText}
@@ -59,9 +60,7 @@ export default function CheckInput({
           )}
           {errors ||
             (fieldState.error && (
-              <Form.Control.Feedback type="invalid">
-                {fieldState.error['message']}
-              </Form.Control.Feedback>
+              <FeedbackInvalidText errorMessage={fieldState.error['message'] ?? ''} />
             ))}
         </Form.Group>
       )}

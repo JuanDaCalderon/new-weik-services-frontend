@@ -1,7 +1,6 @@
-import {NotificationItem, ProfileOption, SearchOption} from './types';
+import {NotificationItem, ProfileOption} from './types';
 import avatar1 from '@/assets/images/users/avatar-1.jpg';
 import avatar2 from '@/assets/images/users/avatar-2.jpg';
-import avatar5 from '@/assets/images/users/avatar-5.jpg';
 
 // get the notifications
 const notifications: NotificationItem[] = [
@@ -92,42 +91,4 @@ const profileMenus: ProfileOption[] = [
   }
 ];
 
-const searchOptions: SearchOption[] = [
-  {value: '1', label: 'Analytics Report', icon: 'uil-notes', type: 'report'},
-  {
-    value: '2',
-    label: 'How can I help you?',
-    icon: 'uil-life-ring',
-    type: 'help'
-  },
-  {
-    value: '3',
-    label: 'User profile settings',
-    icon: 'uil-cog',
-    type: 'settings'
-  },
-  {
-    label: 'Erwin Brown',
-    value: 'users1',
-    type: 'users',
-    userDetails: {
-      firstname: 'Erwin',
-      lastname: 'Brown',
-      position: 'UI Designer',
-      avatar: avatar2
-    }
-  },
-  {
-    label: 'Jacob Deo',
-    value: 'users2',
-    type: 'users',
-    userDetails: {
-      firstname: 'Jacob',
-      lastname: 'Deo',
-      position: 'Developer',
-      avatar: avatar5
-    }
-  }
-];
-
-export {notifications, profileMenus, searchOptions};
+export {notifications, profileMenus};

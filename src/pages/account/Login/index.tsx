@@ -1,85 +1,56 @@
-import {PageBreadcrumb, Form, PasswordInput, TextInput} from '@/components';
-import {Button, Col, Row} from 'react-bootstrap';
-import {useTranslation} from 'react-i18next';
-import {Link, Navigate} from 'react-router-dom';
-import AccountWrapper from '../AccountWrapper';
+import {Form, PasswordInput, TextInput, CheckInput, SendButton} from '@/components';
+import {Col, Row} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import AccountWrapper from '@/pages/account/AccountWrapper';
 import useLogin, {LoginFormFields, loginFormSchema} from './useLogin';
-
-const BottomLink = () => {
-  const {t} = useTranslation();
-
-  return (
-    <Row className="mt-3">
-      <Col className="text-center">
-        <p className="text-muted">
-          {t("Don't have an account?")}
-          <Link to="/account/register" className="text-muted ms-1">
-            <b>{t('Sign Up')}</b>
-          </Link>
-        </p>
-      </Col>
-    </Row>
-  );
-};
+import {PAGE_RECOVERY_PASSWORD} from '@/constants';
 
 export default function Login() {
-  const {t} = useTranslation();
-
-  const {loading, login, redirectUrl, isAuthenticated} = useLogin();
+  const {loading, login} = useLogin();
 
   return (
-    <>
-      {isAuthenticated && <Navigate to={redirectUrl} replace />}
-
-      <PageBreadcrumb title="Login" />
-      <AccountWrapper bottomLinks={<BottomLink />}>
-        <div className="text-center w-75 m-auto">
-          <h4 className="text-dark-50 text-center mt-0 fw-bold">{t('Sign In')}</h4>
-          <p className="text-muted mb-4">
-            {t('Enter your username and password to access admin panel.')}
-          </p>
-        </div>
-
-        <Form<LoginFormFields>
-          onSubmit={login}
-          schema={loginFormSchema}
-          defaultValues={{email: 'hyper@coderthemes.com', password: 'Hyper'}}>
-          <Row>
-            <Col>
-              <TextInput
-                name="email"
-                label={t('Email Address')}
-                type="email"
-                placeholder={t('Enter your email')}
-                containerClass="mb-3"
-              />
-            </Col>
-          </Row>
-          <PasswordInput
-            label={t('Password')}
-            name="password"
-            placeholder={t('Enter your password')}
-            containerClass="mb-3">
-            <Link to="/account/recover-password" className="text-muted float-end">
-              <small>Forgot your password?</small>
-            </Link>
-          </PasswordInput>
-
-          {/* <CheckInput
-            name="rememberme"
-            type="checkbox"
-            label="Remember me"
-            containerClass="mb-3"
-            defaultChecked
-          /> */}
-
-          <div className="mb-3 text-center">
-            <Button variant="primary" type="submit" disabled={loading}>
-              {t('Log In')}
-            </Button>
-          </div>
-        </Form>
-      </AccountWrapper>
-    </>
+    <AccountWrapper>
+      <div className="text-center w-75 m-auto">
+        <h4 className="text-dark text-center fw-bold">Ingresar</h4>
+        <p className="text-dark text-opacity-75">
+          Ingresa tu dirección de correo y contraseña del portal WEIK para poder acceder.
+        </p>
+      </div>
+      <Form<LoginFormFields>
+        onSubmit={login}
+        schema={loginFormSchema}
+        defaultValues={{email: '', password: '', rememberme: false}}>
+        <Row>
+          <Col>
+            <TextInput
+              name="email"
+              label={'Dirección de correo'}
+              type="email"
+              autoComplete="email"
+              placeholder={'Ingresa tu dirección de correo'}
+              containerClass="mb-2"
+            />
+          </Col>
+        </Row>
+        <PasswordInput
+          label={'Contraseña'}
+          name="password"
+          placeholder={'Ingresa tu contraseña'}
+          containerClass="mb-2">
+          <Link to={PAGE_RECOVERY_PASSWORD} className="text-dark text-opacity-75 float-end">
+            <small>Olvidaste tu contraseña?</small>
+          </Link>
+        </PasswordInput>
+        <CheckInput
+          name="rememberme"
+          type="checkbox"
+          label="Recuerdame"
+          containerClass="mb-1"
+          defaultChecked={false}
+        />
+        <Link to="/account/logout">logout</Link>
+        <SendButton loading={loading} text="Ingresar" />
+      </Form>
+    </AccountWrapper>
   );
 }

@@ -9,6 +9,7 @@ export * from './FileUploader';
 export * from './TodoList';
 export * from './StatsWidgets';
 export * from './Messages';
+export * from './Buttons';
 
 export {default as BGCircles} from './BGCircles';
 export {default as CardTitle} from './CardTitle';

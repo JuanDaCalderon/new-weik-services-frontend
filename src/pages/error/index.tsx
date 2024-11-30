@@ -1,18 +1,19 @@
+import {PAGE_NOT_FOUND_PATH} from '@/constants';
 import DefaultLayout from '@/layouts/Default';
 import {lazy} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 
 const PageNotFound = lazy(() => import('./PageNotFound'));
-const ServerError = lazy(() => import('./ServerError'));
-const Maintenance = lazy(() => import('./Maintenance'));
+const InternalError = lazy(() => import('./InternalError'));
 
 const ErrorPages = () => {
   return (
     <Routes>
       <Route path="/*" element={<DefaultLayout />}>
-        <Route path="404" element={<PageNotFound />} />
-        <Route path="500" element={<ServerError />} />
-        <Route path="maintenance" element={<Maintenance />} />
+        <Route index element={<InternalError />} />
+        <Route path="notFound" element={<PageNotFound />} />
+        <Route path="internal" element={<InternalError />} />
+        <Route path="*" element={<Navigate to={PAGE_NOT_FOUND_PATH} />} />
       </Route>
     </Routes>
   );

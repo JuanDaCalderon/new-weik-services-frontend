@@ -1,10 +1,9 @@
 import {Link} from 'react-router-dom';
-import {notifications, profileMenus, searchOptions} from './data';
+import {notifications, profileMenus} from './data';
 import LanguageDropdown from './LanguageDropdown';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
 import SearchDropdown from './SearchDropdown';
-import TopbarSearch from './TopbarSearch';
 import AppsDropdown from './AppsDropdown';
 import MaximizeScreen from './MaximizeScreen';
 import {OverlayTrigger, Tooltip} from 'react-bootstrap';
@@ -122,8 +121,6 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
               <span />
             </div>
           </button>
-
-          <TopbarSearch options={searchOptions} />
         </div>
 
         <ul className="topbar-menu d-flex align-items-center gap-3">

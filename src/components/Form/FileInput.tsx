@@ -26,7 +26,6 @@ export default function FileInput({
   label,
   helpText,
   errors,
-  register,
   ...props
 }: FileInputProps) {
   return (
