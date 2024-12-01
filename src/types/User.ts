@@ -14,4 +14,5 @@ export type PayLoadUserType = {
   user: User;
   domain: string;
   isLoggedIn: boolean;
+  rememberme?: boolean;
 };

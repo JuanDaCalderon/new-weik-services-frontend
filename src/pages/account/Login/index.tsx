@@ -4,9 +4,15 @@ import {Link} from 'react-router-dom';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import useLogin, {LoginFormFields, loginFormSchema} from './useLogin';
 import {PAGE_RECOVERY_PASSWORD} from '@/constants';
+import toast, {Toaster} from 'react-hot-toast';
+import {useEffect} from 'react';
 
 export default function Login() {
   const {loading, login} = useLogin();
+
+  useEffect(() => {
+    toast.remove();
+  }, []);
 
   return (
     <AccountWrapper>
@@ -48,9 +54,18 @@ export default function Login() {
           containerClass="mb-1"
           defaultChecked={false}
         />
-        <Link to="/account/logout">logout</Link>
         <SendButton loading={loading} text="Ingresar" />
       </Form>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#4f565c',
+            color: '#fff'
+          }
+        }}
+      />
     </AccountWrapper>
   );
 }

@@ -147,7 +147,6 @@ const AppMenu = ({menuItems}: AppMenuProps) => {
   const activeMenu = useCallback(() => {
     const div = document.getElementById('main-side-menu');
     let matchingMenuItem = null;
-
     if (div) {
       const items: HTMLCollectionOf<HTMLAnchorElement> = div.getElementsByTagName('a');
       for (let i = 0; i < items.length; ++i) {
@@ -156,7 +155,6 @@ const AppMenu = ({menuItems}: AppMenuProps) => {
           break;
         }
       }
-
       if (matchingMenuItem) {
         const mid = matchingMenuItem.getAttribute('data-menu-key');
         const activeMt = findMenuItem(menuItems, mid!);

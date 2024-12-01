@@ -3,10 +3,11 @@ import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores/user';
 import {logOutUser} from '@/store/slices/user';
 import {User} from '@/types';
-import {signInWithEmailAndPassword, signOut} from 'firebase/auth';
+import {sendPasswordResetEmail, signInWithEmailAndPassword, signOut} from 'firebase/auth';
 import {useCallback} from 'react';
 import toast from 'react-hot-toast';
 import {useDispatch} from 'react-redux';
+import {DebugUtil} from '@/utils';
 
 const useAuth = () => {
   const isLoggedIn = useAppSelector(isUserLoggedInSelector);
@@ -23,11 +24,12 @@ const useAuth = () => {
           email: userCredential.user.email,
           uid: userCredential.user.uid
         } as User;
-        toast.success(`Has iniciado sesión correctamente como ${user?.email}`);
+        toast.success(`Has iniciado sesión correctamente como ${user?.email}`, {duration: 2500});
+        DebugUtil.logSuccess('Has iniciado sesión correctamente', user?.email);
       } catch (error: any) {
         let code: string = '';
         error instanceof Error && (code = error.message);
-        console.error('🚀 ~ authLogOut ~ error:', {message: error.toString(), type: 'error'});
+        DebugUtil.logError(code, error);
         if (code === 'Firebase: Error (auth/invalid-email).') {
           toast.error('¡Ups parece que los datos de ingreso no son correctos, intenta de nuevo!');
         } else if (code === 'Firebase: Error (auth/wrong-password).') {
@@ -47,19 +49,45 @@ const useAuth = () => {
     try {
       if (auth.currentUser) {
         await signOut(auth);
-        console.info('se hizo el logout en firebase');
+        DebugUtil.logSuccess('se hizo el logout en firebase', auth);
       }
       if (isLoggedIn) {
         dispatch(logOutUser());
         toast.success('¡Sesión cerrada exitosamente!');
+        DebugUtil.logSuccess('¡Sesión cerrada exitosamente!');
       }
     } catch (error: any) {
-      console.error('🚀 ~ authLogOut ~ error:', {message: error.toString(), type: 'error'});
+      DebugUtil.logError(
+        '¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!',
+        error
+      );
       toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
     }
   }, [dispatch, isLoggedIn]);
 
-  return {authLogIn, authLogOut};
+  const authRecoverPassword = useCallback(
+    async ({email}: {email: string}): Promise<string | null> => {
+      let returnEmail: string | null = null;
+      try {
+        await sendPasswordResetEmail(auth, email);
+        returnEmail = email;
+        DebugUtil.logSuccess('La solicitud ha sido creada correctamente', email);
+      } catch (error: any) {
+        let code: string = '';
+        error instanceof Error && (code = error.message);
+        DebugUtil.logError(code, error);
+        if (code === 'Firebase: Error (auth/user-not-found).') {
+          toast.error('¡Ups parece que no tenemos ningún usuario registrado con este email!');
+        } else {
+          toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
+        }
+      }
+      return returnEmail;
+    },
+    []
+  );
+
+  return {authLogIn, authLogOut, authRecoverPassword};
 };
 
 export default useAuth;

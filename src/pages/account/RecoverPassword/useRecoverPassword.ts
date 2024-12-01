@@ -1,5 +1,9 @@
 import {InferType, object, string} from 'yup';
 import {useCallback, useState} from 'react';
+import {DebugUtil} from '@/utils';
+import {useAuth} from '@/endpoints';
+import {useNavigate} from 'react-router-dom';
+import {PAGE_CONFIRM_EMAIL} from '@/constants';
 
 export const recoverPasswordFormSchema = object({
   email: string()
@@ -11,17 +15,26 @@ export type recoverPasswordFormFields = InferType<typeof recoverPasswordFormSche
 
 export default function useRecoverPassword() {
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const {authRecoverPassword} = useAuth();
 
-  const onSubmit = useCallback(async (values: recoverPasswordFormFields) => {
-    setLoading(true);
-    try {
-      console.log('🚀 ~ onSubmit ~ values:', values);
-    } catch (error: any) {
-      console.log('🚀 ~ onSubmit ~ error:', {message: error.toString(), type: 'error'});
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async ({email}: recoverPasswordFormFields) => {
+      setLoading(true);
+      try {
+        const emailSent = await authRecoverPassword({email});
+        if (emailSent) {
+          DebugUtil.logSuccess('Correo de recuperación de contraseña enviado', email);
+          navigate(`${PAGE_CONFIRM_EMAIL}/${emailSent}`);
+        }
+      } catch (error: any) {
+        DebugUtil.logError(error.toString(), error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [authRecoverPassword, navigate]
+  );
 
   return {loading, onSubmit};
 }

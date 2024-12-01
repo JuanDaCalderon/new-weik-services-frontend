@@ -2,31 +2,21 @@ import React, {Suspense, useEffect} from 'react';
 import {Outlet} from 'react-router-dom';
 import {Container} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
-import {ThemeSettings, useThemeContext} from '@/common/context';
+import {useThemeContext} from '@/common/context';
 import {changeHTMLAttribute} from '@/utils';
 
-// code splitting and lazy loading
-// https://blog.logrocket.com/lazy-loading-components-in-react-16-6-6cea535c0b52
 const Topbar = React.lazy(() => import('../Topbar/'));
 const Navbar = React.lazy(() => import('./Navbar'));
 const Footer = React.lazy(() => import('../Footer'));
-const RightSidebar = React.lazy(() => import('../RightSidebar'));
 
 const loading = () => <div className="text-center"></div>;
 
 const HorizontalLayout = () => {
   const {settings} = useThemeContext();
   const [horizontalDropdownOpen, toggleMenu] = useToggle();
-  const topbarDark =
-    settings.theme === ThemeSettings.theme.dark ||
-    settings.topbar.theme !== ThemeSettings.topbar.theme.light;
 
-  /*
-   * layout defaults
-   */
   useEffect(() => {
     changeHTMLAttribute('data-layout', 'topnav');
-
     return () => {
       document.getElementsByTagName('html')[0].removeAttribute('data-layout');
     };
@@ -34,28 +24,22 @@ const HorizontalLayout = () => {
 
   useEffect(() => {
     changeHTMLAttribute('data-bs-theme', settings.theme);
-  }, [settings.theme]);
-
-  useEffect(() => {
     changeHTMLAttribute('data-layout-mode', settings.layout.mode);
-  }, [settings.layout.mode]);
-
-  useEffect(() => {
     changeHTMLAttribute('data-menu-color', settings.sidebar.theme);
-  }, [settings.sidebar.theme]);
-
-  useEffect(() => {
     changeHTMLAttribute('data-topbar-color', settings.topbar.theme);
-  }, [settings.topbar.theme]);
-
-  useEffect(() => {
     changeHTMLAttribute('data-layout-position', settings.layout.menuPosition);
-  }, [settings.layout.menuPosition]);
+  }, [
+    settings.theme,
+    settings.layout.mode,
+    settings.sidebar.theme,
+    settings.topbar.theme,
+    settings.layout.menuPosition
+  ]);
 
   return (
     <div className="wrapper">
       <Suspense fallback={loading()}>
-        <Topbar toggleMenu={toggleMenu} navOpen={horizontalDropdownOpen} topbarDark={topbarDark} />
+        <Topbar toggleMenu={toggleMenu} navOpen={horizontalDropdownOpen} topbarDark={true} />
       </Suspense>
 
       <Suspense fallback={loading()}>
@@ -73,10 +57,6 @@ const HorizontalLayout = () => {
 
         <Suspense fallback={loading()}>
           <Footer />
-        </Suspense>
-
-        <Suspense fallback={loading()}>
-          <RightSidebar />
         </Suspense>
       </div>
     </div>

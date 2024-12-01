@@ -3,7 +3,6 @@ import {Card, Col, Container, Row, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {BGCircles} from '@/components';
 import Logo from '@/assets/images/logo.png';
-import {Toaster} from 'react-hot-toast';
 import {DEFAULT_ROUTER_PATH, year} from '@/constants';
 
 type AccountWrapperProps = {
@@ -33,16 +32,6 @@ function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
         </Container>
       </div>
       <footer className="footer footer-alt">{year} © Weik Motion Studio - weikstudio.com</footer>
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          duration: 6000,
-          style: {
-            background: '#4f565c',
-            color: '#fff'
-          }
-        }}
-      />
     </>
   );
 }

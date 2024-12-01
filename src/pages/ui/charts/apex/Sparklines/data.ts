@@ -180,7 +180,7 @@ export const Chart1Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }
@@ -221,7 +221,7 @@ export const Chart2Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }
@@ -262,7 +262,7 @@ export const Chart3Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }
@@ -303,7 +303,7 @@ export const Chart4Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }
@@ -349,7 +349,7 @@ export const Chart5Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }
@@ -394,7 +394,7 @@ export const Chart6Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }
@@ -439,7 +439,7 @@ export const Chart7Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }
@@ -484,7 +484,7 @@ export const Chart8Opt: ApexOptions = {
     },
     y: {
       title: {
-        formatter: function (seriesName) {
+        formatter: function (_seriesName) {
           return '';
         }
       }

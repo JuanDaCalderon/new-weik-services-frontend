@@ -3,7 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 import helpBoxImage from '@/assets/images/svg/help-icon.svg';
 import classNames from 'classnames';
 import {Collapse} from 'react-bootstrap';
-import {MenuItemType, ThemeSettings, useThemeContext} from '@/common';
+import {MenuItemType} from '@/common';
 import {findAllParent, findMenuItem} from './utils/menu';
 
 export type SubMenus = {
@@ -24,9 +24,7 @@ const MenuItemWithChildren = ({
 }: SubMenus) => {
   const [open, setOpen] = useState<boolean>(activeMenuItems!.includes(item.key));
 
-  const {settings} = useThemeContext();
-
-  const collapseClass = settings.sidebar.size === ThemeSettings.sidebar.size.condensed;
+  const collapseClass = false;
 
   useEffect(() => {
     setOpen(activeMenuItems!.includes(item.key));

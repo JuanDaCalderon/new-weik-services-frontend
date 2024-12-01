@@ -1,4 +1,4 @@
-import {JSX, useMemo} from 'react';
+import {JSX, useEffect, useMemo} from 'react';
 import {Form, SendButton, TextInput} from '@/components';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import {Col, Row} from 'react-bootstrap';
@@ -8,9 +8,14 @@ import useRecoverPassword, {
   recoverPasswordFormSchema
 } from './useRecoverPassword';
 import {DEFAULT_ROUTER_PATH} from '@/constants';
+import toast, {Toaster} from 'react-hot-toast';
 
 const RecoverPassword = () => {
   const {loading, onSubmit} = useRecoverPassword();
+
+  useEffect(() => {
+    toast.remove();
+  }, []);
 
   const bottomLink: JSX.Element = useMemo(
     () => (
@@ -49,6 +54,16 @@ const RecoverPassword = () => {
           />
           <SendButton loading={loading} text="Recuperar contraseña" />
         </Form>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            duration: 5000,
+            style: {
+              background: '#4f565c',
+              color: '#fff'
+            }
+          }}
+        />
       </AccountWrapper>
     </>
   );

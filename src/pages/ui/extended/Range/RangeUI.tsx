@@ -49,7 +49,7 @@ const RangeUI = () => {
                 range={{min: 10, max: 150}}
                 start={[20, 45]}
                 connect
-                onSlide={(render, handle, value, un, percent) => onSlide2(1, value)}
+                onSlide={(render, handle, value, _un, _percent) => onSlide2(1, value)}
               />
               <p className="mt-2 mb-0">
                 Value: {selectedRanges ? <span>{selectedRanges[1]}</span> : null}
@@ -99,7 +99,7 @@ const RangeUI = () => {
                 start={[20, 45]}
                 step={15}
                 connect
-                onSlide={(render, handle, value, un, percent) => onSlide2(2, value)}
+                onSlide={(render, handle, value, _un, _percent) => onSlide2(2, value)}
               />
               <p className="mt-2 mb-0">
                 Value: {selectedRanges ? <span>{selectedRanges[2]}</span> : null}

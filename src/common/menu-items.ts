@@ -29,7 +29,7 @@ const MENU_ITEMS: MenuItemType[] = [
       {
         key: 'ds-analytics',
         label: 'Analytics',
-        url: '/dashboard/analytics',
+        url: 'services/dashboard/analytics',
         parentKey: 'dashboards'
       },
       {
@@ -978,31 +978,31 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'ds-analytics',
         label: 'Analytics',
-        url: '/dashboard/analytics',
+        url: '/services/dashboard/analytics',
         parentKey: 'dashboards'
       },
       {
         key: 'ds-ecommerce',
         label: 'Ecommerce',
-        url: '/dashboard/ecommerce',
+        url: '/services/dashboard/ecommerce',
         parentKey: 'dashboards'
       },
       {
         key: 'ds-project',
         label: 'Projects',
-        url: '/dashboard/project',
+        url: '/services/dashboard/project',
         parentKey: 'dashboards'
       },
       {
         key: 'ds-crm',
         label: 'CRM',
-        url: '/dashboard/crm',
+        url: '/services/dashboard/crm',
         parentKey: 'dashboards'
       },
       {
         key: 'ds-ewallet',
         label: 'E-Wallet',
-        url: '/dashboard/e-wallet',
+        url: '/services/dashboard/e-wallet',
         parentKey: 'dashboards'
       }
     ]
@@ -1016,13 +1016,13 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'apps-calendar',
         label: 'Calendar',
-        url: '/apps/calendar',
+        url: '/services/apps/calendar',
         parentKey: 'apps'
       },
       {
         key: 'apps-chat',
         label: 'Chat',
-        url: '/apps/chat',
+        url: '/services/apps/chat',
         parentKey: 'apps'
       },
       {
@@ -1033,25 +1033,25 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'crm-projects',
             label: 'Projects',
-            url: '/apps/crm/projects',
+            url: '/services/apps/crm/projects',
             parentKey: 'apps-crm'
           },
           {
             key: 'crm-orders',
             label: 'Orders List',
-            url: '/apps/crm/orders',
+            url: '/services/apps/crm/orders',
             parentKey: 'apps-crm'
           },
           {
             key: 'crm-clients',
             label: 'Clients',
-            url: '/apps/crm/clients',
+            url: '/services/apps/crm/clients',
             parentKey: 'apps-crm'
           },
           {
             key: 'crm-management',
             label: 'Management',
-            url: '/apps/crm/management',
+            url: '/services/apps/crm/management',
             parentKey: 'apps-crm'
           }
         ]
@@ -1064,49 +1064,49 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'ecommerce-products',
             label: 'Products',
-            url: '/apps/ecommerce/products',
+            url: '/services/apps/ecommerce/products',
             parentKey: 'apps-ecommerce'
           },
           {
             key: 'ecommerce-details',
             label: 'Products Details',
-            url: '/apps/ecommerce/product-details',
+            url: '/services/apps/ecommerce/product-details',
             parentKey: 'apps-ecommerce'
           },
           {
             key: 'ecommerce-orders',
             label: 'Orders',
-            url: '/apps/ecommerce/orders',
+            url: '/services/apps/ecommerce/orders',
             parentKey: 'apps-ecommerce'
           },
           {
             key: 'ecommerce-order-details',
             label: 'Order Details',
-            url: '/apps/ecommerce/order-details',
+            url: '/services/apps/ecommerce/order-details',
             parentKey: 'apps-ecommerce'
           },
           {
             key: 'ecommerce-customers',
             label: 'Customers',
-            url: '/apps/ecommerce/customers',
+            url: '/services/apps/ecommerce/customers',
             parentKey: 'apps-ecommerce'
           },
           {
             key: 'ecommerce-shopping-cart',
             label: 'Shopping Cart',
-            url: '/apps/ecommerce/shopping-cart',
+            url: '/services/apps/ecommerce/shopping-cart',
             parentKey: 'apps-ecommerce'
           },
           {
             key: 'ecommerce-checkout',
             label: 'Checkout',
-            url: '/apps/ecommerce/checkout',
+            url: '/services/apps/ecommerce/checkout',
             parentKey: 'apps-ecommerce'
           },
           {
             key: 'ecommerce-sellers',
             label: 'Sellers',
-            url: '/apps/ecommerce/sellers',
+            url: '/services/apps/ecommerce/sellers',
             parentKey: 'apps-ecommerce'
           }
         ]
@@ -1119,13 +1119,13 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'email-inbox',
             label: 'Inbox',
-            url: '/apps/email/inbox',
+            url: '/services/apps/email/inbox',
             parentKey: 'apps-email'
           },
           {
             key: 'email-read-email',
             label: 'Read Email',
-            url: '/apps/email/read',
+            url: '/services/apps/email/read',
             parentKey: 'apps-email'
           }
         ]
@@ -1138,25 +1138,25 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'project-list',
             label: 'List',
-            url: '/apps/projects/list',
+            url: '/services/apps/projects/list',
             parentKey: 'apps-projects'
           },
           {
             key: 'project-details',
             label: 'Details',
-            url: '/apps/projects/details',
+            url: '/services/apps/projects/details',
             parentKey: 'apps-projects'
           },
           {
             key: 'project-gantt',
             label: 'Gantt',
-            url: '/apps/projects/gantt',
+            url: '/services/apps/projects/gantt',
             parentKey: 'apps-projects'
           },
           {
             key: 'project-create-project',
             label: 'Create Project',
-            url: '/apps/projects/create',
+            url: '/services/apps/projects/create',
             parentKey: 'apps-projects'
           }
         ]
@@ -1164,7 +1164,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'apps-social',
         label: 'Social Feed',
-        url: '/apps/social',
+        url: '/services/apps/social',
         parentKey: 'apps'
       },
       {
@@ -1175,19 +1175,19 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'task-list',
             label: 'List',
-            url: '/apps/tasks/list',
+            url: '/services/apps/tasks/list',
             parentKey: 'apps-tasks'
           },
           {
             key: 'task-details',
             label: 'Details',
-            url: '/apps/tasks/details',
+            url: '/services/apps/tasks/details',
             parentKey: 'apps-tasks'
           },
           {
             key: 'task-kanban',
             label: 'Kanban Board',
-            url: '/apps/tasks/kanban',
+            url: '/services/apps/tasks/kanban',
             parentKey: 'apps-tasks'
           }
         ]
@@ -1195,7 +1195,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'apps-file-manager',
         label: 'File Manager',
-        url: '/apps/file',
+        url: '/services/apps/file',
         parentKey: 'apps'
       }
     ]
@@ -1209,79 +1209,79 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'auth-pages',
         label: 'Authentication',
-        url: '/account',
+        url: '/services/account',
         parentKey: 'pages',
         children: [
           {
             key: 'auth-login',
             label: 'Login',
-            url: '/account/login',
+            url: '/services/account/login',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-login2',
             label: 'Login 2',
-            url: '/account/login2',
+            url: '/services/account/login2',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-register',
             label: 'Register',
-            url: '/account/register',
+            url: '/services/account/register',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-register2',
             label: 'Register 2',
-            url: '/account/register2',
+            url: '/services/account/register2',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-logout',
             label: 'Logout',
-            url: '/account/logout',
+            url: '/services/account/logout',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-logout2',
             label: 'Logout 2',
-            url: '/account/logout2',
+            url: '/services/account/logout2',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-recover-password',
             label: 'Recover Password',
-            url: '/account/recover-password',
+            url: '/services/account/recover-password',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-recover-password2',
             label: 'Recover Password 2',
-            url: '/account/recover-password2',
+            url: '/services/account/recover-password2',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-lock-screen',
             label: 'Lock Screen',
-            url: '/account/lock-screen',
+            url: '/services/account/lock-screen',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-lock-screen2',
             label: 'Lock Screen 2',
-            url: '/account/lock-screen2',
+            url: '/services/account/lock-screen2',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-confirm-mail',
             label: 'Confirm Mail',
-            url: '/account/confirm-mail',
+            url: '/services/account/confirm-mail',
             parentKey: 'auth-pages'
           },
           {
             key: 'auth-confirm-mail2',
             label: 'Confirm Mail 2',
-            url: '/account/confirm-mail2',
+            url: '/services/account/confirm-mail2',
             parentKey: 'auth-pages'
           }
         ]
@@ -1289,25 +1289,25 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'error-pages',
         label: 'Error',
-        url: '/error',
+        url: '/services/error',
         parentKey: 'pages',
         children: [
           {
             key: 'error-404',
             label: 'Error - 404',
-            url: '/error/404',
+            url: '/services/error/404',
             parentKey: 'error-pages'
           },
           {
             key: 'error-404-alt',
             label: 'Error - 404-alt',
-            url: '/pages/404-alt',
+            url: '/services/pages/404-alt',
             parentKey: 'error-pages'
           },
           {
             key: 'error-500',
             label: 'Error - 500',
-            url: '/error/500',
+            url: '/services/error/500',
             parentKey: 'error-pages'
           }
         ]
@@ -1315,62 +1315,62 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'page-starter',
         label: 'Starter Page',
-        url: '/pages/starter',
+        url: '/services/pages/starter',
         parentKey: 'pages'
       },
       {
         key: 'page-preloader',
         label: 'With Preloader',
-        url: '/pages/preloader',
+        url: '/services/pages/preloader',
         parentKey: 'pages'
       },
       {
         key: 'page-profile',
         label: 'Profile',
-        url: '/pages/profile',
+        url: '/services/pages/profile',
         parentKey: 'pages'
       },
       {
         key: 'page-profile2',
         label: 'Profile 2',
-        url: '/pages/profile2',
+        url: '/services/pages/profile2',
         parentKey: 'pages'
       },
       {
         key: 'page-invoice',
         label: 'Invoice',
-        url: '/pages/invoice',
+        url: '/services/pages/invoice',
         parentKey: 'pages'
       },
       {
         key: 'page-faq',
         label: 'FAQ',
-        url: '/pages/faq',
+        url: '/services/pages/faq',
         parentKey: 'pages'
       },
       {
         key: 'page-pricing',
         label: 'Pricing',
-        url: '/pages/pricing',
+        url: '/services/pages/pricing',
         parentKey: 'pages'
       },
       {
         key: 'page-maintenance',
         label: 'Maintenance',
-        url: '/error/maintenance',
+        url: '/services/error/maintenance',
         target: '_blank',
         parentKey: 'pages'
       },
       {
         key: 'page-timeline',
         label: 'Timeline',
-        url: '/pages/timeline',
+        url: '/services/pages/timeline',
         parentKey: 'pages'
       },
       {
         key: 'page-landing',
         label: 'Landing',
-        url: '/landing',
+        url: '/services/landing',
         target: '_blank',
         parentKey: 'pages'
       }
@@ -1385,7 +1385,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'widgets',
         label: 'Widgets',
-        url: '/ui/widgets',
+        url: '/services/ui/widgets',
         parentKey: 'components'
       },
       {
@@ -1396,73 +1396,73 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'base-ui-accordions',
             label: 'Accordions & Collapse',
-            url: '/ui/base-ui/accordions',
+            url: '/services/ui/base-ui/accordions',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-alerts',
             label: 'Alerts',
-            url: '/ui/base-ui/alerts',
+            url: '/services/ui/base-ui/alerts',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-avatars',
             label: 'Avatars',
-            url: '/ui/base-ui/avatars',
+            url: '/services/ui/base-ui/avatars',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-badges',
             label: 'Badges',
-            url: '/ui/base-ui/badges',
+            url: '/services/ui/base-ui/badges',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-breadcrumb',
             label: 'Breadcrumb',
-            url: '/ui/base-ui/breadcrumb',
+            url: '/services/ui/base-ui/breadcrumb',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-buttons',
             label: 'Buttons',
-            url: '/ui/base-ui/buttons',
+            url: '/services/ui/base-ui/buttons',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-cards',
             label: 'Cards',
-            url: '/ui/base-ui/cards',
+            url: '/services/ui/base-ui/cards',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-carousel',
             label: 'Carousel',
-            url: '/ui/base-ui/carousel',
+            url: '/services/ui/base-ui/carousel',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-dropdown',
             label: 'Dropdowns',
-            url: '/ui/base-ui/dropdowns',
+            url: '/services/ui/base-ui/dropdowns',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-embedvideo',
             label: 'Embed Video',
-            url: '/ui/base-ui/embed',
+            url: '/services/ui/base-ui/embed',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-grid',
             label: 'Grid',
-            url: '/ui/base-ui/grid',
+            url: '/services/ui/base-ui/grid',
             parentKey: 'base-ui1'
           },
           {
             key: 'base-ui-listgroups',
             label: 'List Group',
-            url: '/ui/base-ui/listgroups',
+            url: '/services/ui/base-ui/listgroups',
             parentKey: 'base-ui1'
           }
         ]
@@ -1475,85 +1475,85 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'base-ui-modals',
             label: 'Modals',
-            url: '/ui/base-ui/modals',
+            url: '/services/ui/base-ui/modals',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-notifications',
             label: 'Notifications',
-            url: '/ui/base-ui/notifications',
+            url: '/services/ui/base-ui/notifications',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-offcanvas',
             label: 'Offcanvas',
-            url: '/ui/base-ui/offcanvas',
+            url: '/services/ui/base-ui/offcanvas',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-placeholders',
             label: 'Placeholders',
-            url: '/ui/base-ui/placeholders',
+            url: '/services/ui/base-ui/placeholders',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-paginations',
             label: 'Pagination',
-            url: '/ui/base-ui/pagination',
+            url: '/services/ui/base-ui/pagination',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-popovers',
             label: 'Popovers',
-            url: '/ui/base-ui/popovers',
+            url: '/services/ui/base-ui/popovers',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-progress',
             label: 'Progress',
-            url: '/ui/base-ui/progress',
+            url: '/services/ui/base-ui/progress',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-ribbons',
             label: 'Ribbons',
-            url: '/ui/base-ui/ribbons',
+            url: '/services/ui/base-ui/ribbons',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-spinners',
             label: 'Spinners',
-            url: '/ui/base-ui/spinners',
+            url: '/services/ui/base-ui/spinners',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-tabs',
             label: 'Tabs',
-            url: '/ui/base-ui/tabs',
+            url: '/services/ui/base-ui/tabs',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-tooltips',
             label: 'Tooltips',
-            url: '/ui/base-ui/tooltips',
+            url: '/services/ui/base-ui/tooltips',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-links',
             label: 'Links',
-            url: '/ui/base-ui/links',
+            url: '/services/ui/base-ui/links',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-typography',
             label: 'Typography',
-            url: '/ui/base-ui/typography',
+            url: '/services/ui/base-ui/typography',
             parentKey: 'base-ui2'
           },
           {
             key: 'base-ui-utilities',
             label: 'Utilities',
-            url: '/ui/base-ui/utilities',
+            url: '/services/ui/base-ui/utilities',
             parentKey: 'base-ui2'
           }
         ]
@@ -1566,25 +1566,25 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'extended-ui-dragdrop',
             label: 'Drag and Drop',
-            url: '/ui/extended/dragdrop',
+            url: '/services/ui/extended/dragdrop',
             parentKey: 'extended-ui'
           },
           {
             key: 'extended-ui-rangesliders',
             label: 'Range Sliders',
-            url: '/ui/extended/rangesliders',
+            url: '/services/ui/extended/rangesliders',
             parentKey: 'extended-ui'
           },
           {
             key: 'extended-ui-ratings',
             label: 'Ratings',
-            url: '/ui/extended/ratings',
+            url: '/services/ui/extended/ratings',
             parentKey: 'extended-ui'
           },
           {
             key: 'extended-ui-scrollbar',
             label: 'Scrollbar',
-            url: '/ui/extended/scrollbar',
+            url: '/services/ui/extended/scrollbar',
             parentKey: 'extended-ui'
           }
         ]
@@ -1597,37 +1597,37 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'form-basic',
             label: 'Basic Elements',
-            url: '/ui/forms/basic',
+            url: '/services/ui/forms/basic',
             parentKey: 'forms'
           },
           {
             key: 'form-advanced',
             label: 'Form Advanced',
-            url: '/ui/forms/advanced',
+            url: '/services/ui/forms/advanced',
             parentKey: 'forms'
           },
           {
             key: 'form-validation',
             label: 'Validation',
-            url: '/ui/forms/validation',
+            url: '/services/ui/forms/validation',
             parentKey: 'forms'
           },
           {
             key: 'form-wizard',
             label: 'Wizard',
-            url: '/ui/forms/wizard',
+            url: '/services/ui/forms/wizard',
             parentKey: 'forms'
           },
           {
             key: 'form-upload',
             label: 'File Upload',
-            url: '/ui/forms/upload',
+            url: '/services/ui/forms/upload',
             parentKey: 'forms'
           },
           {
             key: 'form-editors',
             label: 'Editors',
-            url: '/ui/forms/editors',
+            url: '/services/ui/forms/editors',
             parentKey: 'forms'
           }
         ]
@@ -1646,79 +1646,79 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
               {
                 key: 'area-apex',
                 label: 'Area',
-                url: '/ui/charts/apex/area',
+                url: '/services/ui/charts/apex/area',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'bar-apex',
                 label: 'Bar',
-                url: '/ui/charts/apex/bar',
+                url: '/services/ui/charts/apex/bar',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'bubble-apex',
                 label: 'Bubble',
-                url: '/ui/charts/apex/bubble',
+                url: '/services/ui/charts/apex/bubble',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'candlestick-apex',
                 label: 'Candlestick',
-                url: '/ui/charts/apex/candlestick',
+                url: '/services/ui/charts/apex/candlestick',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'column-apex',
                 label: 'Column',
-                url: '/ui/charts/apex/column',
+                url: '/services/ui/charts/apex/column',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'heatmap-apex',
                 label: 'Heatmap',
-                url: '/ui/charts/apex/heatmap',
+                url: '/services/ui/charts/apex/heatmap',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'line-apex',
                 label: 'Line',
-                url: '/ui/charts/apex/line',
+                url: '/services/ui/charts/apex/line',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'mixed-apex',
                 label: 'Mixed',
-                url: '/ui/charts/apex/mixed',
+                url: '/services/ui/charts/apex/mixed',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'timeline-apex',
                 label: 'Timeline',
-                url: '/ui/charts/apex/timeline',
+                url: '/services/ui/charts/apex/timeline',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'boxplot-apex',
                 label: 'Boxplot',
-                url: '/ui/charts/apex/boxplot',
+                url: '/services/ui/charts/apex/boxplot',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'treemap-apex',
                 label: 'Treemap',
-                url: '/ui/charts/apex/treemap',
+                url: '/services/ui/charts/apex/treemap',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'pie-apex',
                 label: 'Pie',
-                url: '/ui/charts/apex/pie',
+                url: '/services/ui/charts/apex/pie',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'radar-apex',
                 label: 'Radar',
-                url: '/ui/charts/apex/radar',
+                url: '/services/ui/charts/apex/radar',
                 parentKey: 'apex-charts'
               },
               {
@@ -1730,19 +1730,19 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
               {
                 key: 'scatter-apex',
                 label: 'Scatter',
-                url: '/ui/charts/apex/scatter',
+                url: '/services/ui/charts/apex/scatter',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'polararea-apex',
                 label: 'Polar Area',
-                url: '/ui/charts/apex/polararea',
+                url: '/services/ui/charts/apex/polararea',
                 parentKey: 'apex-charts'
               },
               {
                 key: 'sparklines-apex',
                 label: 'Sparklines',
-                url: '/ui/charts/apex/sparklines',
+                url: '/services/ui/charts/apex/sparklines',
                 parentKey: 'apex-charts'
               }
             ]
@@ -1795,13 +1795,13 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'table-basic',
             label: 'Basic Tables',
-            url: '/ui/tables/basic',
+            url: '/services/ui/tables/basic',
             parentKey: 'tables'
           },
           {
             key: 'table-advanced',
             label: 'Advanced Tables',
-            url: '/ui/tables/advanced',
+            url: '/services/ui/tables/advanced',
             parentKey: 'tables'
           }
         ]
@@ -1814,25 +1814,25 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'icon-remix',
             label: 'Remix Icons',
-            url: '/ui/icons/remix',
+            url: '/services/ui/icons/remix',
             parentKey: 'icons'
           },
           {
             key: 'icon-mdiicons',
             label: 'Material Design',
-            url: '/ui/icons/mdi',
+            url: '/services/ui/icons/mdi',
             parentKey: 'icons'
           },
           {
             key: 'icon-unicons',
             label: 'Unicons',
-            url: '/ui/icons/unicons',
+            url: '/services/ui/icons/unicons',
             parentKey: 'icons'
           },
           {
             key: 'icon-lucide',
             label: 'Lucide',
-            url: '/ui/icons/lucide',
+            url: '/services/ui/icons/lucide',
             parentKey: 'icons'
           }
         ]
@@ -1845,13 +1845,13 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
           {
             key: 'maps-googlemaps',
             label: 'Google Maps',
-            url: '/ui/maps/googlemaps',
+            url: '/services/ui/maps/googlemaps',
             parentKey: 'maps'
           },
           {
             key: 'maps-vectormaps',
             label: 'Vector Maps',
-            url: '/ui/maps/vectormaps',
+            url: '/services/ui/maps/vectormaps',
             parentKey: 'maps'
           }
         ]

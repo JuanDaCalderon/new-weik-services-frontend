@@ -17,7 +17,7 @@ export default function Account() {
         <Route path="login" element={<Login />} />
         <Route path="logout" element={<Logout />} />
         <Route path="recover-password" element={<RecoverPassword />} />
-        <Route path="confirm-mail" element={<ConfirmMail />} />
+        <Route path="confirm-mail/:email" element={<ConfirmMail />} />
         <Route path="*" element={<Navigate to={PAGE_NOT_FOUND_PATH} />} />
       </Route>
     </Routes>

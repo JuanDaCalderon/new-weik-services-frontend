@@ -1,5 +1,5 @@
 import {Route, Routes as ReactRoutes, Navigate} from 'react-router-dom';
-//import ProtectedRoutes from './ProtectedRoutes';
+import ProtectedRoutes from './ProtectedRoutes';
 import Root from '@/routes/Root';
 import ErrorPages from '@/pages/error';
 import Account from '@/pages/account';
@@ -11,7 +11,7 @@ export default function AppRoutes() {
       <Route index element={<Root />}></Route>
       <Route path="/account/*" element={<Account />} />
       <Route path="/error/*" element={<ErrorPages />} />
-      {/* <Route path="/*" element={<ProtectedRoutes />} /> */}
+      <Route path="/services/*" element={<ProtectedRoutes />} />
       <Route path="*" element={<Navigate to={PAGE_NOT_FOUND_PATH} />} />
     </ReactRoutes>
   );

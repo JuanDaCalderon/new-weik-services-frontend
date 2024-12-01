@@ -5,28 +5,21 @@ const ThemeContext = createContext<any>({});
 
 export const ThemeSettings = {
   layout: {
-    type: {vertical: 'vertical', horizontal: 'horizontal'},
-    mode: {fluid: 'fluid', boxed: 'boxed', detached: 'detached'},
-    menuPosition: {scrollable: 'scrollable', fixed: 'fixed'}
+    type: {horizontal: 'horizontal'},
+    mode: {fluid: 'fluid'},
+    menuPosition: {fixed: 'fixed'}
   },
-  theme: {light: 'light', dark: 'dark'},
+  theme: {light: 'light'},
   topbar: {
-    theme: {light: 'light', dark: 'dark', brand: 'brand'},
-    logo: {hidden: 'fullscreen', show: ''}
+    theme: {dark: 'dark'},
+    logo: {show: ''}
   },
   sidebar: {
-    theme: {light: 'light', dark: 'dark', brand: 'brand'},
-    size: {
-      default: 'default',
-      compact: 'compact',
-      condensed: 'condensed',
-      showOnHover: 'sm-hover',
-      full: 'full',
-      fullscreen: 'fullscreen'
-    },
-    user: {show: true, hidden: false}
+    theme: {brand: 'brand'},
+    size: {default: 'default'},
+    user: {hidden: false}
   },
-  rightSidebar: {show: true, hidden: false}
+  rightSidebar: {hidden: false}
 };
 
 export function useThemeContext() {
@@ -41,17 +34,17 @@ export function ThemeProvider({children}: {children: ReactNode}): JSX.Element {
 
   const [settings, setSettings] = useState({
     layout: {
-      type: ThemeSettings.layout.type.vertical,
+      type: ThemeSettings.layout.type.horizontal,
       mode: ThemeSettings.layout.mode.fluid,
       menuPosition: ThemeSettings.layout.menuPosition.fixed
     },
     theme: ThemeSettings.theme.light,
     topbar: {
-      theme: ThemeSettings.topbar.theme.light,
+      theme: ThemeSettings.topbar.theme.dark,
       logo: ThemeSettings.topbar.logo.show
     },
     sidebar: {
-      theme: ThemeSettings.sidebar.theme.dark,
+      theme: ThemeSettings.sidebar.theme.brand,
       size: ThemeSettings.sidebar.size.default,
       user: ThemeSettings.sidebar.user.hidden
     },

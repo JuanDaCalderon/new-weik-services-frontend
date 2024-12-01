@@ -4,9 +4,14 @@ import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {DEFAULT_ROUTER_PATH} from '@/constants';
 import {useAuth} from '@/endpoints';
+import toast, {Toaster} from 'react-hot-toast';
 
 const Logout = () => {
   const {authLogOut} = useAuth();
+
+  useEffect(() => {
+    toast.remove();
+  }, []);
 
   useEffect(() => {
     authLogOut();
@@ -84,6 +89,16 @@ const Logout = () => {
           </svg>
         </div>
       </div>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#4f565c',
+            color: '#fff'
+          }
+        }}
+      />
     </AccountWrapper>
   );
 };
