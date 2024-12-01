@@ -8,9 +8,9 @@ export default function useTypeahead() {
   const [multiSelections, setMultiSelections] = useState<TypeaheadOption[]>([]);
 
   const options: Array<TypeaheadOption> = [
-    {id: 1, value: 'chocolate', label: 'Chocolate'},
-    {id: 2, value: 'strawberry', label: 'Strawberry'},
-    {id: 3, value: 'vanilla', label: 'Vanilla'}
+    {id: 1 as Object, value: 'chocolate' as Object, label: 'Chocolate' as Object},
+    {id: 2 as Object, value: 'strawberry' as Object, label: 'Strawberry' as Object},
+    {id: 3 as Object, value: 'vanilla' as Object, label: 'Vanilla' as Object}
   ];
 
   const onChangeSingleSelection = (selected: TypeaheadOption[]) => {

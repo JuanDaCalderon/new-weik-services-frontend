@@ -15,8 +15,6 @@ import logoDark from '@/assets/images/logo-dark.png';
 import logoSm from '@/assets/images/logo-sm.png';
 import logoDarkSm from '@/assets/images/logo-dark-sm.png';
 import {ThemeSettings, useThemeContext} from '@/common';
-import useThemeCustomizer from '@/components/ThemeCustomizer/useThemeCustomizer';
-import {useViewport} from '@/hooks';
 
 type TopbarProps = {
   topbarDark?: boolean;
@@ -25,57 +23,7 @@ type TopbarProps = {
 };
 
 const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
-  const {settings, updateSettings, updateSidebar} = useThemeContext();
-
-  const {sideBarType} = useThemeCustomizer();
-
-  const {width} = useViewport();
-
-  /**
-   * Toggle the leftmenu when having mobile screen
-   */
-  const handleLeftMenuCallBack = () => {
-    if (width < 1140) {
-      if (sideBarType === 'full') {
-        showLeftSideBarBackdrop();
-        document.getElementsByTagName('html')[0].classList.add('sidebar-enable');
-      } else if (sideBarType === 'condensed' || sideBarType === 'fullscreen') {
-        updateSidebar({size: ThemeSettings.sidebar.size.default});
-      } else {
-        updateSidebar({size: ThemeSettings.sidebar.size.condensed});
-      }
-    } else if (sideBarType === 'condensed') {
-      updateSidebar({size: ThemeSettings.sidebar.size.default});
-    } else if (sideBarType === 'full' || sideBarType === 'fullscreen') {
-      showLeftSideBarBackdrop();
-      document.getElementsByTagName('html')[0].classList.add('sidebar-enable');
-    } else {
-      updateSidebar({size: ThemeSettings.sidebar.size.condensed});
-    }
-  };
-
-  /**
-   * creates backdrop for leftsidebar
-   */
-  function showLeftSideBarBackdrop() {
-    const backdrop = document.createElement('div');
-    backdrop.id = 'custom-backdrop';
-    backdrop.className = 'offcanvas-backdrop fade show';
-    document.body.appendChild(backdrop);
-
-    backdrop.addEventListener('click', function () {
-      document.getElementsByTagName('html')[0].classList.remove('sidebar-enable');
-      hideLeftSideBarBackdrop();
-    });
-  }
-
-  function hideLeftSideBarBackdrop() {
-    const backdrop = document.getElementById('custom-backdrop');
-    if (backdrop) {
-      document.body.removeChild(backdrop);
-      document.body.style.removeProperty('overflow');
-    }
-  }
+  const {settings, updateSettings} = useThemeContext();
 
   /**
    * Toggle Dark Mode
@@ -84,15 +32,8 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
     if (settings.theme === 'dark') {
       updateSettings({theme: ThemeSettings.theme.light});
     } else {
-      updateSettings({theme: ThemeSettings.theme.dark});
+      updateSettings({theme: 'dark'});
     }
-  };
-
-  /**
-   * Toggles the right sidebar
-   */
-  const handleRightSideBar = () => {
-    updateSettings({rightSidebar: ThemeSettings.rightSidebar.show});
   };
 
   return (
@@ -109,10 +50,6 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
               </span>
             </Link>
           </div>
-
-          <button className="button-toggle-menu" onClick={handleLeftMenuCallBack}>
-            <i className="mdi mdi-menu" />
-          </button>
 
           <button className={`navbar-toggle ${navOpen ? 'open' : ''}`} onClick={toggleMenu}>
             <div className="lines">
@@ -139,7 +76,7 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
           <li className="d-none d-sm-inline-block">
             <button
               className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
-              onClick={handleRightSideBar}>
+              onClick={() => {}}>
               <i className="ri-settings-3-line font-22"></i>
             </button>
           </li>

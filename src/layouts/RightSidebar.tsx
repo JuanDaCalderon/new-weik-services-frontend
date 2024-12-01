@@ -1,13 +1,9 @@
 import SimpleBar from 'simplebar-react';
-import {Offcanvas, Row} from 'react-bootstrap';
-import useThemeCustomizer from '@/components/ThemeCustomizer/useThemeCustomizer';
+import {Offcanvas} from 'react-bootstrap';
 import {ThemeSettings, useThemeContext} from '@/common';
-import {ThemeCustomizer} from '@/components';
 
 const RightSideBar = () => {
   const {updateSettings, settings} = useThemeContext();
-
-  const {reset} = useThemeCustomizer();
 
   const isOpenRightSideBar = settings.rightSidebar;
 
@@ -34,33 +30,9 @@ const RightSideBar = () => {
 
         <Offcanvas.Body className="p-0">
           <SimpleBar scrollbarMaxSize={320} className="h-100">
-            <ThemeCustomizer />
+            <div>off canvas</div>
           </SimpleBar>
         </Offcanvas.Body>
-
-        <div className="offcanvas-footer border-top p-3 text-center">
-          <Row>
-            <div className="col-6">
-              <button
-                type="button"
-                className="btn btn-light w-100"
-                id="reset-layout"
-                onClick={reset}>
-                Reset
-              </button>
-            </div>
-            <div className="col-6">
-              <a
-                href="https://themes.getbootstrap.com/product/hyper-responsive-admin-dashboard-template/"
-                target="_blank"
-                role="button"
-                className="btn btn-primary w-100"
-                rel="noreferrer">
-                Buy Now
-              </a>
-            </div>
-          </Row>
-        </div>
       </Offcanvas>
     </>
   );

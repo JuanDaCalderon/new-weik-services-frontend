@@ -1,11 +1,11 @@
 import {lazy, Suspense, useEffect} from 'react';
 import {Container} from 'react-bootstrap';
 import {Outlet} from 'react-router-dom';
-import {useToggle, useViewport} from '@/hooks';
+import {useToggle} from '@/hooks';
 import {changeHTMLAttribute} from '@/utils';
 
 import {PageLoader} from '@/components';
-import {ThemeSettings, useThemeContext} from '@/common/context';
+import {useThemeContext} from '@/common/context';
 
 const Topbar = lazy(() => import('./Topbar'));
 const LeftSidebar = lazy(() => import('./LeftSidebar'));
@@ -13,9 +13,8 @@ const Footer = lazy(() => import('./Footer'));
 const RightSidebar = lazy(() => import('./RightSidebar'));
 
 export default function VerticalLayout() {
-  const {settings, updateSidebar} = useThemeContext();
+  const {settings} = useThemeContext();
 
-  const {width} = useViewport();
   const [isMenuOpened, toggleMenu] = useToggle();
 
   /*
@@ -71,32 +70,14 @@ export default function VerticalLayout() {
     }
   };
 
-  useEffect(() => {
-    if (width < 768) {
-      updateSidebar({size: ThemeSettings.sidebar.size.full});
-    } else if (width < 1140) {
-      updateSidebar({size: ThemeSettings.sidebar.size.condensed});
-    } else if (width >= 1140) {
-      updateSidebar({size: ThemeSettings.sidebar.size.default});
-    }
-  }, [width]);
-
-  const isCondensed = settings.sidebar.size === ThemeSettings.sidebar.size.condensed;
-  const topbarDark =
-    settings.theme === ThemeSettings.theme.dark ||
-    settings.topbar.theme !== ThemeSettings.topbar.theme.light;
-  const leftbarDark =
-    settings.theme === ThemeSettings.theme.dark ||
-    settings.sidebar.theme !== ThemeSettings.sidebar.theme.light;
-
   return (
     <div className="wrapper">
       <Suspense fallback={<PageLoader />}>
-        <Topbar toggleMenu={openMenu} topbarDark={topbarDark} />
+        <Topbar toggleMenu={openMenu} topbarDark={true} />
       </Suspense>
 
       <Suspense fallback={<PageLoader />}>
-        <LeftSidebar isCondensed={isCondensed} leftbarDark={leftbarDark} hideUserProfile={true} />
+        <LeftSidebar isCondensed={false} leftbarDark={true} hideUserProfile={true} />
       </Suspense>
 
       <div className="content-page">

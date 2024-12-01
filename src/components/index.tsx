@@ -1,6 +1,5 @@
 export * from './Form';
 export * from './table';
-export * from './ThemeCustomizer';
 export * from './VectorMap';
 export * from './ChatList';
 export * from './FAQs';
