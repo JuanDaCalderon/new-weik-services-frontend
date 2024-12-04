@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, MouseEvent, ChangeEvent} from 'react';
 import {CartItem, CartSummaryItem} from '../types';
 
 // images
@@ -62,7 +62,7 @@ export default function useCart() {
   /**
    * On quantity changed
    */
-  const onQtyChange = (e: React.ChangeEvent<HTMLInputElement>, item: CartItem) => {
+  const onQtyChange = (e: ChangeEvent<HTMLInputElement>, item: CartItem) => {
     const localItems = [...items];
     const idx = localItems.findIndex((i) => i.id === item.id);
     const newQty = Number(e.target.value);
@@ -74,7 +74,7 @@ export default function useCart() {
   /**
    * Removes item from cart
    */
-  const removeItem = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, item: CartItem) => {
+  const removeItem = (e: MouseEvent<HTMLAnchorElement, MouseEvent>, item: CartItem) => {
     e.preventDefault();
     const localItems = items.filter((i) => i.id !== item.id);
     _adjustCart(localItems);

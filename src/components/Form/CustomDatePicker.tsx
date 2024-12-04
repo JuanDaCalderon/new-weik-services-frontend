@@ -12,21 +12,23 @@ type DatepickerInputProps = {
 };
 
 /* Datepicker with Input */
-const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>((props, ref) => {
-  const onDateValueChange = () => {
-    console.log('date value changed');
-  };
-  return (
-    <input
-      type="text"
-      className="form-control date"
-      onClick={props.onClick}
-      value={props.value}
-      onChange={onDateValueChange}
-      ref={ref}
-    />
-  );
-});
+const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(
+  function DatepickerInput(props, ref) {
+    const onDateValueChange = () => {
+      console.log('date value changed');
+    };
+    return (
+      <input
+        type="text"
+        className="form-control date"
+        onClick={props.onClick}
+        value={props.value}
+        onChange={onDateValueChange}
+        ref={ref}
+      />
+    );
+  }
+);
 
 /* Datepicker with Addon Input */
 const DatepickerInputWithAddon = forwardRef<HTMLInputElement, DatepickerInputProps>(

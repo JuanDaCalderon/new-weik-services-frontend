@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, MouseEvent} from 'react';
 import productImg1 from '@/assets/images/products/product-5.jpg';
 
 export default function useProductDetails() {
@@ -20,10 +20,7 @@ export default function useProductDetails() {
   /**
    * Handles the image changes
    */
-  const handleImgChange = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    selectedImg: string
-  ) => {
+  const handleImgChange = (e: MouseEvent<HTMLAnchorElement, MouseEvent>, selectedImg: string) => {
     e.preventDefault();
     setSelectedProductImg(selectedImg);
     return false;

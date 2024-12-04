@@ -409,7 +409,7 @@ const WizardWithFormValidation = () => {
                   id="login"
                   render={({next}) => (
                     <RHForm<Form1Fields>
-                      onSubmit={(event, values) => next()}
+                      onSubmit={(_event, _values) => next()}
                       schema={validationSchema1}>
                       <TextInput
                         label="Username/Email"
@@ -435,7 +435,7 @@ const WizardWithFormValidation = () => {
                   id="gandalf"
                   render={({next, previous}) => (
                     <RHForm<Form2Fields>
-                      onSubmit={(event, values) => next()}
+                      onSubmit={(_event, _values) => next()}
                       schema={validationSchema2}>
                       <TextInput
                         label="First Name"
