@@ -23,7 +23,7 @@ const ProfileDropdown = ({userTitle, username, menuItems, userImage}: ProfileDro
         onClick={toggleDropdown}
         className="nav-link dropdown-toggle arrow-none nav-user px-2">
         <span className="account-user-avatar">
-          <img src={userImage} className="rounded-circle" width={32} alt="user" />
+          <img src={userImage} className="rounded-circle" width={32} alt="user" loading="lazy" />
         </span>
         <span className="d-lg-flex flex-column gap-1 d-none">
           <h5 className="my-0">{username}</h5>
@@ -33,7 +33,7 @@ const ProfileDropdown = ({userTitle, username, menuItems, userImage}: ProfileDro
       <Dropdown.Menu align={'end'} className="dropdown-menu-animated profile-dropdown">
         <div onClick={toggleDropdown}>
           <div className="dropdown-header noti-title">
-            <h6 className="text-overflow m-0">Welcome !</h6>
+            <h6 className="text-overflow m-0">Bienvenido!</h6>
           </div>
           {menuItems.map((item, i) => {
             return (

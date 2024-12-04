@@ -1,0 +1,75 @@
+import {ESTADOS} from '@/constants';
+import {Permiso, Rol} from './roles-permisos';
+
+export type Estados = ESTADOS.online | ESTADOS.offline | ESTADOS.inactivo;
+
+export type UserWorkData = {
+  diaInicio: string;
+  mesInicio: string;
+  anioInicio: string;
+  salarioNumero: number;
+  salarioTexto: string;
+  salarioExtraNumero: number;
+  salarioExtraTexto: string;
+  cargo: string;
+};
+
+export type HorarioType = {
+  rangoFechas: string[];
+  horaInicio: string;
+  horasDeTrabajo: number;
+  break: string;
+};
+
+export type HorasExtraType = {
+  checkInExtra: string;
+  checkOutExtra: string;
+  dia: string;
+  horasDeTrabajoExtra: number;
+  horasDeTrabajoExtraEnSegundos: number;
+};
+
+export type HorasTrabajoType = {
+  checkIn: string;
+  checkOut: string;
+  dia: string;
+  horasDeTrabajo: number;
+  horasDeTrabajoEnSegundos: number;
+};
+
+export type VacacionesType = {
+  rangoFechas: string[];
+  aprobadas: boolean;
+};
+
+export type Employee = {
+  id: string;
+  email: string;
+  nombres: string;
+  apellidos: string;
+  userName: string;
+  userImage: string;
+  fechaNacimiento: string;
+  numeroDocumento: string;
+  ciudadExpedicionDocumento: string;
+  estado: Estados;
+  roles: Rol[];
+  permisos: Permiso[];
+  horario: HorarioType[];
+  horasExtra: HorasExtraType[];
+  horasTrabajo: HorasTrabajoType[];
+  vacaciones: VacacionesType[];
+  informacionLaboral: UserWorkData;
+};
+
+export interface User extends Employee {
+  uid: string;
+  token: string;
+}
+
+export type PayLoadUserType = {
+  user: User;
+  domain: string;
+  isLoggedIn: boolean;
+  rememberme: boolean;
+};

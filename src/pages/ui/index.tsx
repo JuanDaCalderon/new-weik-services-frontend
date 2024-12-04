@@ -8,7 +8,6 @@ const Icons = lazy(() => import('./icons'));
 const Forms = lazy(() => import('./forms'));
 const Charts = lazy(() => import('./charts'));
 const Tables = lazy(() => import('./tables'));
-const Maps = lazy(() => import('./maps'));
 
 export default function Apps() {
   return (
@@ -21,7 +20,6 @@ export default function Apps() {
         <Route path="forms/*" element={<Forms />} />
         <Route path="charts/*" element={<Charts />} />
         <Route path="tables/*" element={<Tables />} />
-        <Route path="maps/*" element={<Maps />} />
       </Route>
     </Routes>
   );

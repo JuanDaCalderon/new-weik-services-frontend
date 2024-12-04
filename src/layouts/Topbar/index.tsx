@@ -1,52 +1,43 @@
 import {Link} from 'react-router-dom';
-import {notifications, profileMenus} from './data';
-import LanguageDropdown from './LanguageDropdown';
-import NotificationDropdown from './NotificationDropdown';
+import {profileMenus} from './data';
 import ProfileDropdown from './ProfileDropdown';
-import SearchDropdown from './SearchDropdown';
 import AppsDropdown from './AppsDropdown';
-import MaximizeScreen from './MaximizeScreen';
-import {OverlayTrigger, Tooltip} from 'react-bootstrap';
-
-// assets
+import {OverlayTrigger, Tooltip, Image} from 'react-bootstrap';
 import userImage from '@/assets/images/users/avatar-1.jpg';
 import logo from '@/assets/images/logo.png';
-import logoDark from '@/assets/images/logo-dark.png';
 import logoSm from '@/assets/images/logo-sm.png';
-import logoDarkSm from '@/assets/images/logo-dark-sm.png';
-import {ThemeSettings, useThemeContext} from '@/common';
+import {useThemeContext} from '@/common';
+import {THEME} from '@/constants';
+import {useCallback} from 'react';
 
 type TopbarProps = {
-  topbarDark?: boolean;
   toggleMenu?: () => void;
   navOpen?: boolean;
 };
 
-const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
+const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
   const {settings, updateSettings} = useThemeContext();
 
-  /**
-   * Toggle Dark Mode
-   */
-  const toggleDarkMode = () => {
-    if (settings.theme === 'dark') {
-      updateSettings({theme: ThemeSettings.theme.light});
-    } else {
-      updateSettings({theme: 'dark'});
-    }
-  };
+  const toggleDarkMode = useCallback(() => {
+    if (settings.theme === THEME.dark) updateSettings({theme: THEME.light});
+    else updateSettings({theme: THEME.dark});
+  }, [settings.theme, updateSettings]);
+
+  const toggleRightSideBar = useCallback(() => {
+    updateSettings({rightSidebar: {toggle: true}});
+  }, [updateSettings]);
 
   return (
-    <div className={'navbar-custom'}>
+    <div className="navbar-custom">
       <div className="topbar container-fluid">
         <div className="d-flex align-items-center gap-lg-2 gap-1">
           <div className="logo-topbar">
-            <Link to="/" className={topbarDark ? 'logo-light' : 'logo-dark'}>
+            <Link to="/" className="logo-light">
               <span className="logo-lg">
-                <img src={topbarDark ? logo : logoDark} alt="logo" />
+                <Image src={logo} alt="logo" loading="lazy" />
               </span>
               <span className="logo-sm">
-                <img src={topbarDark ? logoSm : logoDarkSm} alt="small logo" />
+                <Image src={logoSm} alt="small logo" loading="lazy" />
               </span>
             </Link>
           </div>
@@ -59,48 +50,36 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
             </div>
           </button>
         </div>
-
         <ul className="topbar-menu d-flex align-items-center gap-3">
-          <li className="dropdown d-lg-none">
-            <SearchDropdown />
-          </li>
-          <li className="dropdown">
-            <LanguageDropdown />
-          </li>
-          <li className="dropdown notification-list">
-            <NotificationDropdown notifications={notifications} />
-          </li>
           <li className="dropdown d-none d-sm-inline-block">
             <AppsDropdown />
           </li>
           <li className="d-none d-sm-inline-block">
-            <button
-              className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
-              onClick={() => {}}>
-              <i className="ri-settings-3-line font-22"></i>
-            </button>
+            <OverlayTrigger
+              placement="bottom"
+              overlay={<Tooltip id="dark-mode-toggler">Centro de operaciones</Tooltip>}>
+              <button
+                className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
+                onClick={toggleRightSideBar}>
+                <i className="ri-24-hours-line font-22"></i>
+              </button>
+            </OverlayTrigger>
           </li>
-
           <li className="d-none d-sm-inline-block">
             <OverlayTrigger
-              placement="left"
-              overlay={<Tooltip id="dark-mode-toggler">Theme Mode</Tooltip>}>
+              placement="bottom"
+              overlay={<Tooltip id="dark-mode-toggler">Tema</Tooltip>}>
               <div className="nav-link" id="light-dark-mode" onClick={toggleDarkMode}>
                 <i className="ri-moon-line font-22" />
               </div>
             </OverlayTrigger>
           </li>
-
-          <li className="d-none d-md-inline-block">
-            <MaximizeScreen />
-          </li>
-
           <li className="dropdown">
             <ProfileDropdown
               userImage={userImage}
               menuItems={profileMenus}
-              username={'Dominic Keller'}
-              userTitle={'Founder'}
+              username={'User name'}
+              userTitle={'Rol/Cargo'}
             />
           </li>
         </ul>

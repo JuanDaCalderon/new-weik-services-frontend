@@ -25,3 +25,9 @@ export type ReactTablePaginationProps<RowType> = {
   totalPages: number;
   pagination: PaginationState;
 };
+
+export interface SkeletonLoaderProps {
+  customClass?: string;
+  width?: string;
+  height?: string;
+}

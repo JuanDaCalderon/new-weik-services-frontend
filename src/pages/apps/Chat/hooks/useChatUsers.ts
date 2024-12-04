@@ -2,14 +2,11 @@ import {useState} from 'react';
 import {ChatUser} from '../types';
 import {users} from '../data';
 
-export default function useChatUsers(onUserSelect: (value: ChatUser) => void) {
+export default function useChatUsers() {
   const [user, setUser] = useState<ChatUser[]>([...users]);
   const [selectedUser, setSelectedUser] = useState<ChatUser>(users[1]);
   const [selectedGroup, setSelectedGroup] = useState<string>('All');
 
-  /**
-   * Filter users
-   */
   const filterUsers = (group: string) => {
     setSelectedGroup(group);
     setUser(
@@ -19,10 +16,6 @@ export default function useChatUsers(onUserSelect: (value: ChatUser) => void) {
     );
   };
 
-  /**
-   * Search the user
-   * @param {*} text
-   */
   const search = (text: string) => {
     setUser(
       text
@@ -31,15 +24,8 @@ export default function useChatUsers(onUserSelect: (value: ChatUser) => void) {
     );
   };
 
-  /**
-   * Activates the user
-   * @param {*} user
-   */
   const activateUser = (user: ChatUser) => {
     setSelectedUser(user);
-    if (onUserSelect) {
-      onUserSelect(user);
-    }
   };
 
   return {

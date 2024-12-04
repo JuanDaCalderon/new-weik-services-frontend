@@ -1,6 +1,7 @@
-import {ReactNode} from 'react';
+import {ReactNode, memo} from 'react';
 import {Row, Col, Breadcrumb} from 'react-bootstrap';
 import {Helmet} from 'react-helmet';
+import {Link} from 'react-router-dom';
 
 type PageTitleProps = {
   title: string;
@@ -8,35 +9,34 @@ type PageTitleProps = {
   children?: ReactNode;
 };
 
-const PageBreadcrumb = ({subName, title, children}: PageTitleProps) => {
+const PageBreadcrumb = ({title, children}: PageTitleProps) => {
   return (
     <>
       <Helmet>
-        <title>{title} | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>{title} | Weik - Crafting your vision</title>
       </Helmet>
-      {subName && (
-        <Row>
-          <Col>
-            <div className="page-title-box">
-              <div className="page-title-right">
-                <Breadcrumb listProps={{className: 'm-0'}}>
-                  <Breadcrumb.Item as={'li'}>Hyper</Breadcrumb.Item>
-                  <Breadcrumb.Item as={'li'}>{subName}</Breadcrumb.Item>
-                  <Breadcrumb.Item as={'li'} active>
-                    {title}
-                  </Breadcrumb.Item>
-                </Breadcrumb>
-              </div>
-              <h4 className="page-title">
-                {title}
-                {children ?? null}
-              </h4>
+      <Row>
+        <Col>
+          <div className="page-title-box">
+            <div className="page-title-right">
+              <Breadcrumb listProps={{className: 'm-0'}}>
+                <Breadcrumb.Item linkAs={'span'} as={'li'}>
+                  <Link to="/">Home</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item as={'li'} active>
+                  {title}
+                </Breadcrumb.Item>
+              </Breadcrumb>
             </div>
-          </Col>
-        </Row>
-      )}
+            <h4 className="page-title">
+              {title}
+              {children ?? null}
+            </h4>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 };
 
-export default PageBreadcrumb;
+export default memo(PageBreadcrumb);

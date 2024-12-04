@@ -1,4 +1,10 @@
-import {USER_DOMAIN, USER_NAME} from '@/constants';
+import {
+  SESSION_CLIENTES_KEY,
+  SESSION_PERMISOS_KEY,
+  SESSION_ROLES_KEY,
+  USER_DOMAIN,
+  USER_NAME
+} from '@/constants';
 import {PayLoadUserType, User} from '@/types';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
@@ -48,6 +54,9 @@ export const userSlice = createSlice({
       LocalStorageUtil.removeItem(USER_DOMAIN);
       SessionStorageUtil.removeItem(USER_NAME);
       SessionStorageUtil.removeItem(USER_DOMAIN);
+      SessionStorageUtil.removeItem(SESSION_CLIENTES_KEY);
+      SessionStorageUtil.removeItem(SESSION_PERMISOS_KEY);
+      SessionStorageUtil.removeItem(SESSION_ROLES_KEY);
       return {
         ...state,
         user: {} as User,

@@ -3,17 +3,11 @@ import {Link} from 'react-router-dom';
 import {Card} from 'react-bootstrap';
 import classnames from 'classnames';
 import SimpleBar from 'simplebar-react';
-import {ChatUser} from './types';
 import {useChatUsers} from './hooks';
 
-type ChatUsersProps = {
-  onUserSelect: (value: ChatUser) => void;
-};
-
-const ChatUsers = ({onUserSelect}: ChatUsersProps) => {
+const ChatUsers = () => {
   const groupFilters = ['All', 'Favourties', 'Friends'];
-  const {user, selectedUser, selectedGroup, filterUsers, search, activateUser} =
-    useChatUsers(onUserSelect);
+  const {user, selectedUser, selectedGroup, filterUsers, search, activateUser} = useChatUsers();
 
   return (
     <Card>

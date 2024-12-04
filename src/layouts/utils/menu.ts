@@ -1,9 +1,4 @@
-import {HORIZONTAL_MENU_ITEMS, MENU_ITEMS, MenuItemType} from '@/common/menu-items';
-
-const getMenuItems = () => {
-  // NOTE - You can fetch from server and return here as well
-  return MENU_ITEMS;
-};
+import {HORIZONTAL_MENU_ITEMS, MenuItemType} from '@/common/menu-items';
 
 const getHorizontalMenuItems = () => {
   // NOTE - You can fetch from server and return here as well
@@ -37,4 +32,4 @@ const findMenuItem = (
   return null;
 };
 
-export {getMenuItems, getHorizontalMenuItems, findAllParent, findMenuItem};
+export {getHorizontalMenuItems, findAllParent, findMenuItem};

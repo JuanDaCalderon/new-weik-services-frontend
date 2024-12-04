@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {Dropdown, Row} from 'react-bootstrap';
+import {Dropdown, OverlayTrigger, Row, Tooltip} from 'react-bootstrap';
 import {AppItem} from '../types';
 import slackIcon from './icons/slack.png';
 import bitbucketIcon from './icons/bitbucket.png';
@@ -10,7 +10,6 @@ import gSuiteIcon from './icons/g-suite.png';
 import {splitArray} from '@/utils';
 import {useToggle} from '@/hooks';
 
-// get the apps
 const apps: AppItem[] = [
   {
     name: 'Slack',
@@ -51,13 +50,17 @@ const AppsDropdown = () => {
 
   return (
     <Dropdown show={isOpen} onToggle={toggleDropdown}>
-      <Dropdown.Toggle
-        variant="link"
-        id="dropdown-apps"
-        onClick={toggleDropdown}
-        className="nav-link dropdown-toggle arrow-none">
-        <i className="ri-apps-2-line font-22"></i>
-      </Dropdown.Toggle>
+      <OverlayTrigger
+        placement="bottom"
+        overlay={<Tooltip id="dark-mode-toggler">Aplicaciones</Tooltip>}>
+        <Dropdown.Toggle
+          variant="link"
+          id="dropdown-apps"
+          onClick={toggleDropdown}
+          className="nav-link dropdown-toggle arrow-none">
+          <i className="ri-apps-2-line font-22"></i>
+        </Dropdown.Toggle>
+      </OverlayTrigger>
 
       <Dropdown.Menu align={'end'} className="dropdown-menu-animated dropdown-lg p-0">
         <div onClick={toggleDropdown} className="p-2">

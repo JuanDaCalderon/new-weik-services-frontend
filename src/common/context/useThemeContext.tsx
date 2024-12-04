@@ -1,25 +1,25 @@
+import {LAYOUT_MENU_POSITION, LAYOUT_MODE, LAYOUT_TYPE, SIDEBAR_SIZE, THEME} from '@/constants';
+import {ThemeContextType, ThemeSettingsContext, ThemeSettingsType} from '@/types';
 import {ReactNode, createContext, useCallback, useContext, useState, JSX} from 'react';
-import i18n, {isValidLanguage, Languages} from '@/common/languages/i18n';
 
-const ThemeContext = createContext<any>({});
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeSettings = {
+export const ThemeSettings: ThemeSettingsType = {
   layout: {
-    type: {horizontal: 'horizontal'},
-    mode: {fluid: 'fluid'},
-    menuPosition: {fixed: 'fixed'}
+    type: {horizontal: LAYOUT_TYPE.horizontal},
+    mode: {fluid: LAYOUT_MODE.fluid},
+    menuPosition: {fixed: LAYOUT_MENU_POSITION.fixed}
   },
-  theme: {light: 'light'},
+  theme: {light: THEME.light},
   topbar: {
-    theme: {dark: 'dark'},
-    logo: {show: ''}
+    theme: {dark: THEME.dark}
   },
   sidebar: {
-    theme: {brand: 'brand'},
-    size: {default: 'default'},
+    theme: {brand: THEME.brand},
+    size: {default: SIDEBAR_SIZE.default},
     user: {hidden: false}
   },
-  rightSidebar: {hidden: false}
+  rightSidebar: {toggle: false}
 };
 
 export function useThemeContext() {
@@ -30,9 +30,7 @@ export function useThemeContext() {
 }
 
 export function ThemeProvider({children}: {children: ReactNode}): JSX.Element {
-  const [currentLanguage, setCurrentLanguage] = useState(Languages.EN);
-
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<ThemeSettingsContext>({
     layout: {
       type: ThemeSettings.layout.type.horizontal,
       mode: ThemeSettings.layout.mode.fluid,
@@ -40,73 +38,24 @@ export function ThemeProvider({children}: {children: ReactNode}): JSX.Element {
     },
     theme: ThemeSettings.theme.light,
     topbar: {
-      theme: ThemeSettings.topbar.theme.dark,
-      logo: ThemeSettings.topbar.logo.show
+      theme: ThemeSettings.topbar.theme.dark
     },
     sidebar: {
       theme: ThemeSettings.sidebar.theme.brand,
       size: ThemeSettings.sidebar.size.default,
       user: ThemeSettings.sidebar.user.hidden
     },
-    rightSidebar: ThemeSettings.rightSidebar.hidden
+    rightSidebar: ThemeSettings.rightSidebar
   });
 
-  const changeLanguage = useCallback((lang: string) => {
-    if (isValidLanguage(lang)) {
-      i18n.changeLanguage(lang);
-      setCurrentLanguage(lang);
-    }
-  }, []);
-
   const updateSettings = useCallback(
-    (newSettings: any) => {
+    (newSettings: Partial<ThemeSettingsContext>) => {
       setSettings((prev) => ({...(prev ?? {}), ...(newSettings ?? {})}));
     },
     [setSettings]
   );
 
-  const updateLayout = useCallback(
-    (newLayout: any) => {
-      setSettings((prev) => ({
-        ...(prev ?? {}),
-        layout: {...(prev ?? {}).layout, ...(newLayout ?? {})}
-      }));
-    },
-    [setSettings]
-  );
-
-  const updateTopbar = useCallback(
-    (newTopbar: any) => {
-      setSettings((prev) => ({
-        ...(prev ?? {}),
-        topbar: {...(prev ?? {}).topbar, ...(newTopbar ?? {})}
-      }));
-    },
-    [setSettings]
-  );
-
-  const updateSidebar = useCallback(
-    (newSidebar: any) => {
-      setSettings((prev) => ({
-        ...(prev ?? {}),
-        sidebar: {...(prev ?? {}).sidebar, ...(newSidebar ?? {})}
-      }));
-    },
-    [setSettings]
-  );
-
   return (
-    <ThemeContext.Provider
-      value={{
-        changeLanguage,
-        currentLanguage,
-        settings,
-        updateSettings,
-        updateLayout,
-        updateTopbar,
-        updateSidebar
-      }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={{settings, updateSettings}}>{children}</ThemeContext.Provider>
   );
 }

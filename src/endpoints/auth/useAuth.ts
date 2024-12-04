@@ -1,6 +1,6 @@
 import {auth} from '@/firebase';
 import {useAppSelector} from '@/store';
-import {isUserLoggedInSelector} from '@/store/selectores/user';
+import {isUserLoggedInSelector, selectUser} from '@/store/selectores/user';
 import {logOutUser} from '@/store/slices/user';
 import {User} from '@/types';
 import {sendPasswordResetEmail, signInWithEmailAndPassword, signOut} from 'firebase/auth';
@@ -8,9 +8,15 @@ import {useCallback} from 'react';
 import toast from 'react-hot-toast';
 import {useDispatch} from 'react-redux';
 import {DebugUtil} from '@/utils';
+import {clearPermisos, clearRoles} from '@/store/slices/roles-permisos';
+import {clearClientes} from '@/store/slices/clientes';
+import {useGetUsers, useSetEstadoUser} from '@/endpoints';
 
 const useAuth = () => {
   const isLoggedIn = useAppSelector(isUserLoggedInSelector);
+  const {id} = useAppSelector(selectUser);
+  const {getLoggedInUser} = useGetUsers();
+  const {setOnlineUser, setOfflineUser} = useSetEstadoUser();
   const dispatch = useDispatch();
 
   const authLogIn = useCallback(
@@ -19,13 +25,18 @@ const useAuth = () => {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const token: string = await userCredential.user.getIdToken(true);
-        user = {
-          token: token,
-          email: userCredential.user.email,
-          uid: userCredential.user.uid
-        } as User;
-        toast.success(`Has iniciado sesión correctamente como ${user?.email}`, {duration: 2500});
-        DebugUtil.logSuccess('Has iniciado sesión correctamente', user?.email);
+        const userFromDb = await getLoggedInUser(userCredential.user.email ?? '');
+        if (userFromDb) {
+          await setOnlineUser(userFromDb.id);
+          user = {
+            ...userFromDb,
+            token: token,
+            email: userCredential.user.email,
+            uid: userCredential.user.uid
+          } as User;
+          toast.success(`Has iniciado sesión correctamente como ${user?.email}`, {duration: 2200});
+          DebugUtil.logSuccess('Has iniciado sesión correctamente', user?.email);
+        }
       } catch (error: any) {
         let code: string = '';
         error instanceof Error && (code = error.message);
@@ -42,7 +53,7 @@ const useAuth = () => {
       }
       return user;
     },
-    []
+    [getLoggedInUser, setOnlineUser]
   );
 
   const authLogOut = useCallback(async (): Promise<void> => {
@@ -51,8 +62,12 @@ const useAuth = () => {
         await signOut(auth);
         DebugUtil.logSuccess('se hizo el logout en firebase', auth);
       }
+      if (id) await setOfflineUser(id);
       if (isLoggedIn) {
         dispatch(logOutUser());
+        dispatch(clearRoles());
+        dispatch(clearPermisos());
+        dispatch(clearClientes());
         toast.success('¡Sesión cerrada exitosamente!');
         DebugUtil.logSuccess('¡Sesión cerrada exitosamente!');
       }
@@ -63,7 +78,7 @@ const useAuth = () => {
       );
       toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, id, isLoggedIn, setOfflineUser]);
 
   const authRecoverPassword = useCallback(
     async ({email}: {email: string}): Promise<string | null> => {

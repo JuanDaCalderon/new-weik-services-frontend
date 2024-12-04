@@ -1,94 +1,23 @@
-import {NotificationItem, ProfileOption} from './types';
-import avatar1 from '@/assets/images/users/avatar-1.jpg';
-import avatar2 from '@/assets/images/users/avatar-2.jpg';
-
-// get the notifications
-const notifications: NotificationItem[] = [
-  {
-    day: 'Today',
-    messages: [
-      {
-        id: 1,
-        title: 'Datacorp',
-        subText: 'Caleb Flakelar commented on Admin',
-        time: '1 min ago',
-        icon: 'mdi mdi-comment-account-outline',
-        variant: 'primary',
-        isRead: false
-      },
-      {
-        id: 2,
-        title: 'Admin',
-        subText: 'New user registered.',
-        time: '1 hours ago',
-        icon: 'mdi mdi-account-plus',
-        variant: 'info',
-        isRead: true
-      }
-    ]
-  },
-  {
-    day: 'Yesterday',
-    messages: [
-      {
-        id: 1,
-        title: 'Cristina Pride',
-        subText: 'Hi, How are you? What about our next meeting',
-        time: '1 day ago',
-        avatar: avatar1,
-        isRead: true
-      }
-    ]
-  },
-  {
-    day: '30 Dec 2021',
-    messages: [
-      {
-        id: 1,
-        title: 'Datacorp',
-        subText: 'Caleb Flakelar commented on Admin',
-        icon: 'mdi mdi-comment-account-outline',
-        variant: 'primary',
-        isRead: true
-      },
-      {
-        id: 2,
-        title: 'Karen Robinson',
-        subText: 'Wow ! this admin looks good and awesome design',
-        avatar: avatar2,
-        isRead: true
-      }
-    ]
-  }
-];
+import {PAGE_LOG_OUT} from '@/constants';
+import {ProfileOption} from './types';
 
 // get the profilemenu
 const profileMenus: ProfileOption[] = [
   {
-    label: 'My Account',
+    label: 'Mi cuenta',
     icon: 'mdi mdi-account-circle',
     redirectTo: '#'
   },
   {
-    label: 'Settings',
+    label: 'Roles y Permisos',
     icon: 'mdi mdi-account-edit',
     redirectTo: '#'
   },
   {
-    label: 'Support',
-    icon: 'mdi mdi-lifebuoy',
-    redirectTo: '#'
-  },
-  {
-    label: 'Lock Screen',
-    icon: 'mdi mdi-lock-outline',
-    redirectTo: '/account/lock-screen'
-  },
-  {
-    label: 'Logout',
+    label: 'Cerrar sesión',
     icon: 'mdi mdi-logout',
-    redirectTo: '/account/logout'
+    redirectTo: PAGE_LOG_OUT
   }
 ];
 
-export {notifications, profileMenus};
+export {profileMenus};

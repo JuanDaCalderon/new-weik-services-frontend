@@ -27,13 +27,20 @@ export default function useLogin() {
     async ({email, password, rememberme}: LoginFormFields) => {
       setLoading(true);
       try {
-        const user = await authLogIn({email, password});
+        let user = await authLogIn({email, password});
         if (user) {
-          dispatch(setUser({user, domain: extractDomain(email), isLoggedIn: true, rememberme}));
+          dispatch(
+            setUser({
+              user,
+              domain: extractDomain(email),
+              isLoggedIn: true,
+              rememberme: !!rememberme
+            })
+          );
           DebugUtil.logSuccess('Sesión iniciada en el store', user);
           setTimeout(() => {
             navigate('/services/dashboard');
-          }, 3000);
+          }, 2500);
         }
       } catch (error: any) {
         DebugUtil.logError(error.toString(), error);

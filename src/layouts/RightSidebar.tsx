@@ -1,36 +1,32 @@
 import SimpleBar from 'simplebar-react';
+import {useThemeContext} from '@/common';
+import {useCallback} from 'react';
 import {Offcanvas} from 'react-bootstrap';
-import {ThemeSettings, useThemeContext} from '@/common';
 
 const RightSideBar = () => {
   const {updateSettings, settings} = useThemeContext();
 
-  const isOpenRightSideBar = settings.rightSidebar;
-
-  /**
-   * Toggles the right sidebar
-   */
-  const handleRightSideBar = () => {
-    updateSettings({rightSidebar: ThemeSettings.rightSidebar.hidden});
-  };
+  const toggleRightSideBar = useCallback(() => {
+    updateSettings({rightSidebar: {toggle: false}});
+  }, [updateSettings]);
 
   return (
     <>
       <Offcanvas
-        show={isOpenRightSideBar}
-        onHide={handleRightSideBar}
+        show={settings.rightSidebar.toggle}
+        onHide={toggleRightSideBar}
         placement="end"
-        id="theme-settings-offcanvas">
+        id="Settings-right-side-bar">
         <Offcanvas.Header
           className="d-flex align-items-center bg-primary p-3"
           closeVariant="white"
           closeButton>
-          <h5 className="text-white m-0">Theme Settings</h5>
+          <h5 className="text-white m-0">Centro de operaciones</h5>
         </Offcanvas.Header>
 
-        <Offcanvas.Body className="p-0">
+        <Offcanvas.Body>
           <SimpleBar scrollbarMaxSize={320} className="h-100">
-            <div>off canvas</div>
+            Aquí debe ir el check-in y el check-out y tambien el modulo de usuarios online y offline
           </SimpleBar>
         </Offcanvas.Body>
       </Offcanvas>
