@@ -5,3 +5,5 @@ export * from './roles-permisos';
 export * from './clientes';
 export * from './themeContext';
 export * from './component-props';
+export * from './top-bar';
+export * from './menu';

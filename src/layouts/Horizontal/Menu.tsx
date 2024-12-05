@@ -1,24 +1,10 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, memo} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {MenuItemType} from '@/common/menu-items';
+import {AppMenuProps, MenuItems, MenuItemType} from '@/types';
 import classNames from 'classnames';
 import {findAllParent, findMenuItem} from '../utils/menu';
 
-/**
- * Renders the application menu
- */
-
-type MenuItems = {
-  item: MenuItemType;
-  tag?: React.ElementType;
-  linkClassName?: string;
-  className?: string;
-  subMenuClassNames?: string;
-  activeMenuItems?: string[];
-  toggleMenu?: (item: MenuItemType, status: boolean) => void;
-};
-
-const MenuItemWithChildren = ({
+const MenuItemWithChildren = memo(function MenuItemWithChildren({
   item,
   tag,
   linkClassName,
@@ -26,7 +12,7 @@ const MenuItemWithChildren = ({
   subMenuClassNames,
   activeMenuItems,
   toggleMenu
-}: MenuItems) => {
+}: MenuItems) {
   const Tag: React.ElementType = tag || 'div';
 
   const [open, setOpen] = useState<boolean>(activeMenuItems!.includes(item.key));
@@ -37,13 +23,16 @@ const MenuItemWithChildren = ({
     setOpen(activeMenuItems!.includes(item.key));
   }, [activeMenuItems, item]);
 
-  const toggleMenuItem = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const status = !open;
-    setOpen(status);
-    if (toggleMenu) toggleMenu(item, status);
-    return false;
-  };
+  const toggleMenuItem = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      const status = !open;
+      setOpen(status);
+      if (toggleMenu) toggleMenu(item, status);
+      return false;
+    },
+    [item, open, toggleMenu]
+  );
 
   return (
     <Tag
@@ -106,28 +95,24 @@ const MenuItemWithChildren = ({
       )}
     </Tag>
   );
-};
+});
 
-const MenuItem = ({item, className, linkClassName}: MenuItems) => {
+const MenuItem = memo(function MenuItem({item, className, linkClassName}: MenuItems) {
   return (
     <li className={`nav-item ${className}`}>
       <MenuItemLink item={item} className={linkClassName} />
     </li>
   );
-};
+});
 
-const MenuItemLink = ({item, className}: MenuItems) => {
+const MenuItemLink = memo(function MenuItemLink({item, className}: MenuItems) {
   return (
     <Link to={item.url!} target={item.target} className={className} data-menu-key={item.key}>
       {item.icon && <i className={item.icon}></i>}
       <span> {item.label} </span>
     </Link>
   );
-};
-
-type AppMenuProps = {
-  menuItems: Array<MenuItemType>;
-};
+});
 
 const AppMenu = ({menuItems}: AppMenuProps) => {
   const [activeMenuItems, setActiveMenuItems] = useState<string[]>([]);
@@ -198,4 +183,4 @@ const AppMenu = ({menuItems}: AppMenuProps) => {
   );
 };
 
-export default AppMenu;
+export default memo(AppMenu);

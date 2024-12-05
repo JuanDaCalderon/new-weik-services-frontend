@@ -56,7 +56,7 @@ html[data-menu-color="dark"] {
 
 // Brand Menu
 html[data-menu-color="brand"] {
-    --#{$prefix}menu-bg:                                     #{linear-gradient(135deg, #6379c3 0%, #546ee5 60%)};
+    --#{$prefix}menu-bg:                                     #{linear-gradient(135deg, #0f9cc2 0%, #0d8fb0 60%)};
     --#{$prefix}menu-item-color:                           #cedce4;
     --#{$prefix}menu-item-hover-color:                     #ffffff;
     --#{$prefix}menu-item-active-color:                    #ffffff;

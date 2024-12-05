@@ -1,10 +1,9 @@
+import {NavbarProps} from '@/types';
 import {getHorizontalMenuItems} from '../utils/menu';
 import AppMenu from './Menu';
 import {Collapse, Container} from 'react-bootstrap';
+import {memo} from 'react';
 
-type NavbarProps = {
-  isMenuOpened?: boolean;
-};
 const Navbar = ({isMenuOpened}: NavbarProps) => {
   return (
     <div className="topnav">
@@ -21,4 +20,4 @@ const Navbar = ({isMenuOpened}: NavbarProps) => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

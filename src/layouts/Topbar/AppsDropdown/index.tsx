@@ -1,6 +1,6 @@
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {Dropdown, OverlayTrigger, Row, Tooltip} from 'react-bootstrap';
-import {AppItem} from '../types';
 import slackIcon from './icons/slack.png';
 import bitbucketIcon from './icons/bitbucket.png';
 import dribbbleIcon from './icons/dribbble.png';
@@ -9,41 +9,41 @@ import githubIcon from './icons/github.png';
 import gSuiteIcon from './icons/g-suite.png';
 import {splitArray} from '@/utils';
 import {useToggle} from '@/hooks';
-
-const apps: AppItem[] = [
-  {
-    name: 'Slack',
-    icon: slackIcon,
-    redirectTo: '#'
-  },
-  {
-    name: 'GitHub',
-    icon: githubIcon,
-    redirectTo: '#'
-  },
-  {
-    name: 'Dribbble',
-    icon: dribbbleIcon,
-    redirectTo: '#'
-  },
-  {
-    name: 'Bitbucket',
-    icon: bitbucketIcon,
-    redirectTo: '#'
-  },
-  {
-    name: 'Dropbox',
-    icon: dropboxIcon,
-    redirectTo: '#'
-  },
-  {
-    name: 'G Suite',
-    icon: gSuiteIcon,
-    redirectTo: '#'
-  }
-];
+import {AppItem} from '@/types';
 
 const AppsDropdown = () => {
+  const apps: AppItem[] = [
+    {
+      name: 'Slack',
+      icon: slackIcon,
+      redirectTo: '#'
+    },
+    {
+      name: 'GitHub',
+      icon: githubIcon,
+      redirectTo: '#'
+    },
+    {
+      name: 'Dribbble',
+      icon: dribbbleIcon,
+      redirectTo: '#'
+    },
+    {
+      name: 'Bitbucket',
+      icon: bitbucketIcon,
+      redirectTo: '#'
+    },
+    {
+      name: 'Dropbox',
+      icon: dropboxIcon,
+      redirectTo: '#'
+    },
+    {
+      name: 'G Suite',
+      icon: gSuiteIcon,
+      redirectTo: '#'
+    }
+  ];
   const chunk_size = 3;
   const appsChunks = splitArray(apps, chunk_size);
   const [isOpen, toggleDropdown] = useToggle();
@@ -82,4 +82,4 @@ const AppsDropdown = () => {
   );
 };
 
-export default AppsDropdown;
+export default memo(AppsDropdown);

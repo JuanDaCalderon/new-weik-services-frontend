@@ -3,7 +3,7 @@ import {memo} from 'react';
 import {Button} from 'react-bootstrap';
 import {Spinner} from '@/components';
 
-const SendButton = ({loading, text}: SendButtonProps) => {
+const SendButton = memo(function SendButton({loading, text}: SendButtonProps) {
   return (
     <div className="text-center">
       <Button className="w-100" variant="primary" type="submit" disabled={loading}>
@@ -12,6 +12,6 @@ const SendButton = ({loading, text}: SendButtonProps) => {
       </Button>
     </div>
   );
-};
+});
 
-export default memo(SendButton);
+export {SendButton};

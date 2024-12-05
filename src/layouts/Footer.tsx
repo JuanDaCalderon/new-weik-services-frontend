@@ -2,8 +2,9 @@ import packageJson from '../../package.json';
 import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {year} from '@/constants';
+import {memo} from 'react';
 
-export default function Footer() {
+export default memo(function Footer() {
   return (
     <footer className="footer">
       <div className="container-fluid">
@@ -26,4 +27,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+});

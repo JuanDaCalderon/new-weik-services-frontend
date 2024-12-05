@@ -4,7 +4,6 @@
  * @returns El dominio del correo electrónico o un error si el correo no es válido.
  */
 function extractDomain(email: string): string {
-  // Validar que el email tenga un formato válido
   const emailRegex = /^[^\s@]+@([^\s@.]+)\.[a-z]{2,}$/i;
   const match = email.match(emailRegex);
   if (!match) {

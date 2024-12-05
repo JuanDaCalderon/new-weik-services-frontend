@@ -1,5 +1,6 @@
 import type {ColumnDef, PaginationState, Table, TableOptions} from '@tanstack/react-table';
 import type {ReactNode} from 'react';
+import {MenuItemType} from './menu';
 
 export type ChildrenType = Readonly<{children: ReactNode}>;
 
@@ -31,3 +32,16 @@ export interface SkeletonLoaderProps {
   width?: string;
   height?: string;
 }
+
+export type TopbarProps = {
+  toggleMenu?: () => void;
+  navOpen?: boolean;
+};
+
+export type NavbarProps = {
+  isMenuOpened?: boolean;
+};
+
+export type AppMenuProps = {
+  menuItems: Array<MenuItemType>;
+};

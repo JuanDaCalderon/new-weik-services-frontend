@@ -1,19 +1,13 @@
 import {Link} from 'react-router-dom';
-import {profileMenus} from './data';
 import ProfileDropdown from './ProfileDropdown';
 import AppsDropdown from './AppsDropdown';
 import {OverlayTrigger, Tooltip, Image} from 'react-bootstrap';
-import userImage from '@/assets/images/users/avatar-1.jpg';
 import logo from '@/assets/images/logo.png';
 import logoSm from '@/assets/images/logo-sm.png';
 import {useThemeContext} from '@/common';
 import {THEME} from '@/constants';
 import {useCallback} from 'react';
-
-type TopbarProps = {
-  toggleMenu?: () => void;
-  navOpen?: boolean;
-};
+import {TopbarProps} from '@/types';
 
 const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
   const {settings, updateSettings} = useThemeContext();
@@ -75,12 +69,7 @@ const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
             </OverlayTrigger>
           </li>
           <li className="dropdown">
-            <ProfileDropdown
-              userImage={userImage}
-              menuItems={profileMenus}
-              username={'User name'}
-              userTitle={'Rol/Cargo'}
-            />
+            <ProfileDropdown />
           </li>
         </ul>
       </div>
