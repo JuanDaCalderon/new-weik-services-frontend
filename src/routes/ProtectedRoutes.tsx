@@ -6,7 +6,8 @@ import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores/user';
 import {DEFAULT_ROUTER_PATH} from '@/constants';
 
-const Profile = lazy(() => import('@/pages/otherpages/Profile'));
+const Profile = lazy(() => import('@/pages/perfil'));
+const RolesYPermisos = lazy(() => import('@/pages/rolesypermisos'));
 
 const Dashboard = lazy(() => import('../pages/dashboard'));
 const Apps = lazy(() => import('../pages/apps'));
@@ -21,7 +22,8 @@ export default function ProtectedRoutes() {
       <ReactRoutes>
         <Route path="/*" element={<HorizontalLayout />}>
           <Route index element={<Root />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="perfil" element={<Profile />} />
+          <Route path="rolesypermisos" element={<RolesYPermisos />} />
           <Route path="dashboard/*" element={<Dashboard />} />
           <Route path="apps/*" element={<Apps />} />
           <Route path="pages/*" element={<OtherPages />} />

@@ -6,14 +6,15 @@ import {
   Unsubscribe,
   onSnapshot,
   query,
-  getDocs
+  getDocs,
+  Timestamp
 } from 'firebase/firestore';
 import {db} from '@/firebase';
 import {PERMISOS_PATH, ROLES_PATH} from '@/constants';
-import {Rol, Permiso} from '@/types';
+import {Rol, Permiso, Employee} from '@/types';
 import {useDispatch} from 'react-redux';
 import {clearPermisos, clearRoles, setPermisos, setRoles} from '@/store/slices/roles-permisos';
-import {DebugUtil} from '@/utils';
+import {DateUtils, DebugUtil} from '@/utils';
 
 const useRolesYPermisos = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,8 @@ const useRolesYPermisos = () => {
       unsubscribe = onSnapshot(query(collection(db, ROLES_PATH)), async (querySnapshotDocs) => {
         const roles: Rol[] = [];
         for (const doc of querySnapshotDocs.docs) {
-          const {rol, permisos} = doc.data();
+          const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion} =
+            doc.data();
           const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>).map(
             async (permisoRef) => {
               const docSnap = await getDoc(permisoRef);
@@ -34,10 +36,29 @@ const useRolesYPermisos = () => {
               } as Permiso;
             }
           );
+          const docSnap = await getDoc(usuarioCreacion as DocumentReference);
+          const thisUsuarioCreacion: Pick<
+            Employee,
+            'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
+          > = {
+            email: docSnap.data()?.email ?? '',
+            apellidos: docSnap.data()?.apellidos ?? '',
+            nombres: docSnap.data()?.nombres ?? '',
+            userImage: docSnap.data()?.userImage ?? '',
+            userName: docSnap.data()?.userName ?? ''
+          };
           roles.push({
             id: doc.id,
-            rol,
-            permisos: await Promise.all(thisPermisos)
+            rol: rol ?? '',
+            descripcion: descripcion ?? '',
+            permisos: await Promise.all(thisPermisos),
+            fechaCreacion: fechaCreacion
+              ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
+              : DateUtils.formatDateToString(new Date()),
+            fechaActualizacion: fechaActualizacion
+              ? DateUtils.formatDateToString((fechaActualizacion as Timestamp).toDate())
+              : DateUtils.formatDateToString(new Date()),
+            usuarioCreacion: thisUsuarioCreacion
           });
         }
         dispatch(clearRoles());
@@ -58,7 +79,8 @@ const useRolesYPermisos = () => {
       const roles: Rol[] = [];
       const queryDocs = await getDocs(query(collection(db, ROLES_PATH)));
       for (const doc of queryDocs.docs) {
-        const {rol, permisos} = doc.data();
+        const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion} =
+          doc.data();
         const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>).map(
           async (permisoRef) => {
             const docSnap = await getDoc(permisoRef);
@@ -68,10 +90,29 @@ const useRolesYPermisos = () => {
             } as Permiso;
           }
         );
+        const docSnap = await getDoc(usuarioCreacion as DocumentReference);
+        const thisUsuarioCreacion: Pick<
+          Employee,
+          'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
+        > = {
+          email: docSnap.data()?.email ?? '',
+          apellidos: docSnap.data()?.apellidos ?? '',
+          nombres: docSnap.data()?.nombres ?? '',
+          userImage: docSnap.data()?.userImage ?? '',
+          userName: docSnap.data()?.userName ?? ''
+        };
         roles.push({
           id: doc.id,
-          rol,
-          permisos: await Promise.all(thisPermisos)
+          rol: rol ?? '',
+          descripcion: descripcion ?? '',
+          permisos: await Promise.all(thisPermisos),
+          fechaCreacion: fechaCreacion
+            ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
+            : DateUtils.formatDateToString(new Date()),
+          fechaActualizacion: fechaActualizacion
+            ? DateUtils.formatDateToString((fechaActualizacion as Timestamp).toDate())
+            : DateUtils.formatDateToString(new Date()),
+          usuarioCreacion: thisUsuarioCreacion
         });
       }
       dispatch(setRoles(roles));
@@ -93,7 +134,7 @@ const useRolesYPermisos = () => {
           const {permiso} = doc.data();
           permisos.push({
             id: doc.id,
-            permiso
+            permiso: permiso ?? ''
           });
         }
         dispatch(clearPermisos());
@@ -117,7 +158,7 @@ const useRolesYPermisos = () => {
         const {permiso} = doc.data();
         permisos.push({
           id: doc.id,
-          permiso
+          permiso: permiso ?? ''
         });
       }
       dispatch(setPermisos(permisos));

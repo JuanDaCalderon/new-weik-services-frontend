@@ -1,0 +1,27 @@
+.cursor-pointer {
+  cursor: pointer !important;
+  * {
+    cursor: pointer !important;
+  }
+}
+
+img.loading {
+  width: 100%;
+  height: auto;
+  background-color: #e0e0e0;
+  aspect-ratio: 1/1;
+  color: transparent;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -3,20 +3,22 @@
 //
 
 .dropzone {
-    border: 2px dashed $input-border-color;
-    background: $input-bg;
-    border-radius: 6px;
-    cursor: pointer;
-    min-height: 150px;
-    padding: 20px;
+  display: flex;
+  border: 2px dashed $input-border-color;
+  background: $input-bg;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 
+  .dz-message {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  &.dz-started {
     .dz-message {
-        text-align: center;
-        margin: 2rem 0;
+      display: none;
     }
-    &.dz-started {
-        .dz-message {
-            display: none;
-        }
-    }
+  }
 }

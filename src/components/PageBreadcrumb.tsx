@@ -28,7 +28,7 @@ const PageBreadcrumb = ({title, children}: PageTitleProps) => {
                 </Breadcrumb.Item>
               </Breadcrumb>
             </div>
-            <h4 className="page-title">
+            <h4 className="page-title text-dark text-opacity-75">
               {title}
               {children ?? null}
             </h4>

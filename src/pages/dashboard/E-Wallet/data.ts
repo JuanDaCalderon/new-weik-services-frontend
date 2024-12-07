@@ -1,30 +1,9 @@
-import {MoneyRecord, Merchant, Transaction, WatchListItem} from './types';
+import {Merchant, Transaction} from './types';
 import avatar1 from '@/assets/images/users/avatar-1.jpg';
 import avatar2 from '@/assets/images/users/avatar-2.jpg';
 import avatar3 from '@/assets/images/users/avatar-3.jpg';
 import avatar4 from '@/assets/images/users/avatar-4.jpg';
 import avatar5 from '@/assets/images/users/avatar-5.jpg';
-
-const moneyHistory: MoneyRecord[] = [
-  {
-    title: 'Income',
-    money: '$2,76,548',
-    icon: 'mdi mdi-arrow-up-bold-outline',
-    variant: 'primary'
-  },
-  {
-    title: 'Expenses',
-    money: '$50,216',
-    icon: 'mdi mdi-arrow-down-bold-outline',
-    variant: 'danger'
-  },
-  {
-    title: 'Transfar',
-    money: '$98,100',
-    icon: 'mdi mdi-swap-horizontal',
-    variant: 'success'
-  }
-];
 
 const merchantList: Merchant[] = [
   {
@@ -130,55 +109,4 @@ const transactionList: Transaction[] = [
   }
 ];
 
-const watchList: WatchListItem[] = [
-  {
-    icon: 'mdi mdi-currency-btc',
-    variant: 'warning',
-    title: 'Bitcoin (BTC)',
-    amount: '$48,665.80',
-    trend: '10%',
-    trendStatus: 'up'
-  },
-  {
-    icon: 'mdi mdi-currency-ngn',
-    variant: 'success',
-    title: 'Nigerian naira (NGN)',
-    amount: '$0.0024',
-    trend: '12%',
-    trendStatus: 'down'
-  },
-  {
-    icon: 'mdi mdi-currency-gbp',
-    variant: 'danger',
-    title: 'Pound sterling (GBP)',
-    amount: '$1.33',
-    trend: '15%',
-    trendStatus: 'up'
-  },
-  {
-    icon: 'mdi mdi-currency-ils',
-    variant: 'primary',
-    title: 'Israeli shekels (ILS)',
-    amount: '$0.32',
-    trend: '11%',
-    trendStatus: 'up'
-  },
-  {
-    icon: 'mdi mdi-currency-kzt',
-    variant: 'info',
-    title: 'Kazakhstani tenge (KZT)',
-    amount: '$0.0023',
-    trend: '10%',
-    trendStatus: 'down'
-  },
-  {
-    icon: 'mdi mdi-currency-rub',
-    variant: 'dark',
-    title: 'Russian ruble (RUB)',
-    amount: '$0.014',
-    trend: '18%',
-    trendStatus: 'up'
-  }
-];
-
-export {moneyHistory, merchantList, transactionList, watchList};
+export {merchantList, transactionList};

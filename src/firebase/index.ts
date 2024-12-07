@@ -2,6 +2,7 @@ import config from '@/config';
 import {FirebaseOptions, initializeApp} from 'firebase/app';
 import {getAuth} from 'firebase/auth';
 import {initializeFirestore} from 'firebase/firestore';
+import {getStorage} from 'firebase/storage';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: config.FIREBASE_API_KEY,
@@ -15,3 +16,4 @@ const firebaseConfig: FirebaseOptions = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = initializeFirestore(app, {}, config.FIREBASE_DATABASE);
+export const storage = getStorage(app);

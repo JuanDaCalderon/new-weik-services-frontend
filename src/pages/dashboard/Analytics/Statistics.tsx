@@ -1,5 +1,4 @@
 import {Card} from 'react-bootstrap';
-import statsImg from '@/assets/images/svg/email-campaign.svg';
 
 const Statistics = () => {
   /**
@@ -55,20 +54,6 @@ const Statistics = () => {
             </span>
             <span className="text-nowrap">Since previous week</span>
           </p>
-        </Card.Body>
-      </Card>
-
-      <Card className="cta-box overflow-hidden">
-        <Card.Body>
-          <div className="d-flex align-items-center">
-            <div>
-              <h3 className="m-0 fw-normal cta-box-title">
-                Enhance your <b>Campaign</b> for better outreach
-                <i className="mdi mdi-arrow-right"></i>
-              </h3>
-            </div>
-            <img className="ms-3" src={statsImg} width="92" alt="Generic placeholder" />
-          </div>
         </Card.Body>
       </Card>
     </>

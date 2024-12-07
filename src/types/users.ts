@@ -11,7 +11,6 @@ export type UserWorkData = {
   salarioTexto: string;
   salarioExtraNumero: number;
   salarioExtraTexto: string;
-  cargo: string;
 };
 
 export type HorarioType = {
@@ -53,8 +52,10 @@ export type Employee = {
   numeroDocumento: string;
   ciudadExpedicionDocumento: string;
   estado: Estados;
-  roles: Rol[];
-  permisos: Permiso[];
+  cargo: string;
+  roles: Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion'>[];
+  permisosOtorgados: Permiso[];
+  permisosDenegados: Permiso[];
   horario: HorarioType[];
   horasExtra: HorasExtraType[];
   horasTrabajo: HorasTrabajoType[];

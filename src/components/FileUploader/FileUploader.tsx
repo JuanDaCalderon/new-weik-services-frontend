@@ -1,7 +1,7 @@
-import {Link} from 'react-router-dom';
-import {Row, Col, Card} from 'react-bootstrap';
+import {Card, Button} from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import useFileUploader from './useFileUploader';
+import {useEffect} from 'react';
 
 export type FileType = File & {
   preview?: string;
@@ -9,75 +9,68 @@ export type FileType = File & {
 };
 
 type FileUploaderProps = {
-  onFileUpload?: (files: FileType[]) => void;
+  onFileUpload?: (files: FileType) => void;
+  onFileRemoved?: () => void;
+  resetFile?: boolean;
   showPreview?: boolean;
+  isRounded?: boolean;
 };
 
-const FileUploader = ({showPreview = true, onFileUpload}: FileUploaderProps) => {
-  const {selectedFiles, handleAcceptedFiles, removeFile} = useFileUploader(showPreview);
+const FileUploader = ({
+  showPreview = true,
+  onFileUpload,
+  isRounded = false,
+  onFileRemoved,
+  resetFile = false
+}: FileUploaderProps) => {
+  const {selectedFile, handleAcceptedFiles, removeFile} = useFileUploader(showPreview);
+
+  useEffect(() => {
+    if (resetFile) removeFile(onFileRemoved);
+  }, [onFileRemoved, removeFile, resetFile]);
 
   return (
     <>
-      <Dropzone onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles, onFileUpload)}>
-        {({getRootProps, getInputProps}) => (
-          <div className="dropzone">
-            <div className="dz-message needsclick" {...getRootProps()}>
-              <input {...getInputProps()} />
-              <i className="h1 text-muted ri-upload-cloud-2-line"></i>
-              <h3>Drop files here or click to upload.</h3>
-              <span className="text-muted font-13">
-                (This is just a demo dropzone. Selected files are
-                <strong>not</strong> actually uploaded.)
-              </span>
+      {!selectedFile && (
+        <Dropzone onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles, onFileUpload)}>
+          {({getRootProps, getInputProps}) => (
+            <div className={`dropzone ${isRounded && 'rounded-circle'} m-0 p-0`}>
+              <div className="dz-message needsclick m-0 p-0" {...getRootProps()}>
+                <input {...getInputProps()} />
+                <i className="h2 text-muted ri-upload-cloud-2-line p-0 m-0"></i>
+                <p className="m-0 p-0">Haz clic para subir.</p>
+              </div>
             </div>
-          </div>
-        )}
-      </Dropzone>
+          )}
+        </Dropzone>
+      )}
 
-      {showPreview && selectedFiles.length > 0 && (
-        <div className="dropzone-previews mt-3" id="uploadPreviewTemplate">
-          {(selectedFiles || []).map((f, i) => {
-            return (
-              <Card className="mt-1 mb-0 shadow-none border" key={i + '-file'}>
-                <div className="p-2">
-                  <Row className="align-items-center">
-                    {f.preview && (
-                      <Col className="col-auto">
-                        <img
-                          data-dz-thumbnail=""
-                          className="avatar-sm rounded bg-light"
-                          alt={f.name}
-                          src={f.preview}
-                        />
-                      </Col>
-                    )}
-                    {!f.preview && (
-                      <Col className="col-auto">
-                        <div className="avatar-sm">
-                          <span className="avatar-title bg-primary rounded">
-                            {f.type.split('/')[0]}
-                          </span>
-                        </div>
-                      </Col>
-                    )}
-                    <Col className="ps-0">
-                      <Link to="" className="text-muted fw-bold">
-                        {f.name}
-                      </Link>
-                      <p className="mb-0">
-                        <strong>{f.formattedSize}</strong>
-                      </p>
-                    </Col>
-                    <Col className="text-end">
-                      <Link to="" className="btn btn-link btn-lg text-muted shadow-none">
-                        <i className="ri-close-line" onClick={() => removeFile(f)}></i>
-                      </Link>
-                    </Col>
-                  </Row>
-                </div>
-              </Card>
-            );
-          })}
+      {showPreview && !!selectedFile && (
+        <div className="dropzone-previews rounded-circle w-100 h-100" id="uploadPreviewTemplate">
+          <Card className="m-0 p-0 rounded-circle shadow-none border w-100 h-100">
+            {selectedFile.preview && (
+              <img
+                className="img-thumbnail rounded-circle bg-light object-fit-cover h-100"
+                width="100%"
+                height="100%"
+                alt={selectedFile.name}
+                src={selectedFile.preview}
+              />
+            )}
+
+            <Button
+              variant="danger"
+              className="btn-icon shadow-none p-0 m-0 position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
+              style={{
+                width: '26px',
+                height: '26px',
+                borderRadius: '100px',
+                borderColor: 'transparent'
+              }}
+              onClick={() => removeFile(onFileRemoved)}>
+              <i className="ri-close-line font-24"></i>
+            </Button>
+          </Card>
         </div>
       )}
     </>

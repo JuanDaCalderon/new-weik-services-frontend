@@ -1,9 +1,17 @@
 import {useCallback} from 'react';
-import {collection, getDocs, query, where, Timestamp} from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  Timestamp,
+  DocumentReference,
+  getDoc
+} from 'firebase/firestore';
 import {db} from '@/firebase';
 import {USUARIOS_PATH} from '@/constants';
 import {DebugUtil, DateUtils} from '@/utils';
-import {Employee} from '@/types';
+import {Employee, Permiso, Rol} from '@/types';
 import toast from 'react-hot-toast';
 
 const useGetUsers = () => {
@@ -25,14 +33,36 @@ const useGetUsers = () => {
         userImage,
         estado,
         fechaNacimiento,
+        cargo,
         roles,
-        permisos,
+        permisosOtorgados,
+        permisosDenegados,
         horario,
         horasExtra,
         horasTrabajo,
         informacionLaboral,
         vacaciones
       } = firstDoc.data();
+      const thisRoles: Promise<
+        Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion'>
+      >[] = (roles as Array<DocumentReference>).map(async (rolRef) => {
+        const docSnap = await getDoc(rolRef);
+        const permisos = docSnap.data()?.permisos ?? [];
+        const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>).map(
+          async (permisoRef) => {
+            const docSnap = await getDoc(permisoRef);
+            return {
+              id: docSnap.id,
+              permiso: docSnap.data()?.permiso ?? ''
+            } as Permiso;
+          }
+        );
+        return {
+          id: docSnap.id,
+          rol: docSnap.data()?.rol ?? '',
+          permisos: await Promise.all(thisPermisos)
+        } as Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion'>;
+      });
       usuario = {
         id: firstDoc.id,
         email,
@@ -46,8 +76,10 @@ const useGetUsers = () => {
         fechaNacimiento: fechaNacimiento
           ? DateUtils.formatDateToString((fechaNacimiento as Timestamp).toDate())
           : DateUtils.formatDateToString(new Date()),
-        roles: roles ?? [],
-        permisos: permisos ?? [],
+        cargo: cargo ?? '',
+        roles: await Promise.all(thisRoles),
+        permisosOtorgados: permisosOtorgados ?? [],
+        permisosDenegados: permisosDenegados ?? [],
         horario: horario ?? [],
         horasExtra: horasExtra ?? [],
         horasTrabajo: horasTrabajo ?? [],

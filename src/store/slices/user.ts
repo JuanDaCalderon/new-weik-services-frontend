@@ -49,6 +49,19 @@ export const userSlice = createSlice({
         rememberme: !!rememberme
       } as PayLoadUserType;
     },
+    updateUserImage: (state: PayLoadUserType, action: PayloadAction<string>) => {
+      const userImage = action.payload;
+      const user: User = {
+        ...state.user,
+        userImage
+      };
+      if (state.rememberme) LocalStorageUtil.updateItem<User>(USER_NAME, user);
+      else SessionStorageUtil.updateItem<User>(USER_NAME, user);
+      return {
+        ...state,
+        user
+      };
+    },
     logOutUser: (state: PayLoadUserType) => {
       LocalStorageUtil.removeItem(USER_NAME);
       LocalStorageUtil.removeItem(USER_DOMAIN);
@@ -68,5 +81,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const {setUser, logOutUser} = userSlice.actions;
+export const {setUser, logOutUser, updateUserImage} = userSlice.actions;
 export default userSlice.reducer;

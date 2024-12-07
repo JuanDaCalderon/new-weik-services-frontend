@@ -7,3 +7,4 @@ export * from './email';
 export * from './debug';
 export * from './sessionStorage';
 export * from './fechas';
+export * from './getStrings';

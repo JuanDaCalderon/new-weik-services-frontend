@@ -3,10 +3,6 @@ import {Row, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {CustomDatePicker} from '@/components';
 import Statistics from './Statistics';
-import PerformanceChart from './PerformanceChart';
-import RevenueChart from './RevenueChart';
-import RevenueByLocationChart from './RevenueByLocationChart';
-import SalesChart from './SalesChart';
 import Activity from './Activity';
 import Products from './Products';
 import {useGetClients, useRolesYPermisos} from '@/endpoints';
@@ -64,30 +60,11 @@ const EcommerceDashboard = () => {
       </Row>
 
       <Row>
-        <Col xl={5} lg={6}>
+        <Col xl={4} lg={6}>
           <Statistics />
         </Col>
-
-        <Col xl={7} lg={6}>
-          <PerformanceChart />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col lg={8}>
-          <RevenueChart />
-        </Col>
-        <Col lg={4}>
-          <RevenueByLocationChart />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col xl={{span: 6, order: 1}} lg={{span: 12, order: 2}}>
+        <Col xl={5}>
           <Products />
-        </Col>
-        <Col xl={3} lg={{span: 6, order: 1}}>
-          <SalesChart />
         </Col>
         <Col xl={3} lg={{span: 6, order: 1}}>
           <Activity />

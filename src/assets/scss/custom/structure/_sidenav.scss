@@ -761,7 +761,7 @@ html[data-sidenav-size='fullscreen']:not([data-layout='topnav']) {
 // Detached Left Sidebar Menu (Layout Mode)
 html[data-layout-mode='detached']:not([data-layout='topnav']) {
   .wrapper {
-    max-width: 95%;
+    max-width: 98%;
     margin: 0 auto;
 
     .navbar-custom {
@@ -769,7 +769,7 @@ html[data-layout-mode='detached']:not([data-layout='topnav']) {
       margin: 0 -2.65%;
 
       .topbar {
-        max-width: 95%;
+        max-width: 98%;
       }
     }
 
