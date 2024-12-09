@@ -45,10 +45,10 @@ const useGetUsers = () => {
       } = firstDoc.data();
       const thisRoles: Promise<
         Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion'>
-      >[] = (roles as Array<DocumentReference>).map(async (rolRef) => {
+      >[] = (roles as Array<DocumentReference>)?.map(async (rolRef) => {
         const docSnap = await getDoc(rolRef);
         const permisos = docSnap.data()?.permisos ?? [];
-        const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>).map(
+        const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>)?.map(
           async (permisoRef) => {
             const docSnap = await getDoc(permisoRef);
             return {
@@ -60,7 +60,7 @@ const useGetUsers = () => {
         return {
           id: docSnap.id,
           rol: docSnap.data()?.rol ?? '',
-          permisos: await Promise.all(thisPermisos)
+          permisos: thisPermisos ? await Promise.all(thisPermisos) : []
         } as Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion'>;
       });
       usuario = {
@@ -77,7 +77,7 @@ const useGetUsers = () => {
           ? DateUtils.formatDateToString((fechaNacimiento as Timestamp).toDate())
           : DateUtils.formatDateToString(new Date()),
         cargo: cargo ?? '',
-        roles: await Promise.all(thisRoles),
+        roles: thisRoles ? await Promise.all(thisRoles) : [],
         permisosOtorgados: permisosOtorgados ?? [],
         permisosDenegados: permisosDenegados ?? [],
         horario: horario ?? [],

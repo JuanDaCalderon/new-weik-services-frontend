@@ -27,7 +27,7 @@ const useRolesYPermisos = () => {
         for (const doc of querySnapshotDocs.docs) {
           const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion} =
             doc.data();
-          const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>).map(
+          const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>)?.map(
             async (permisoRef) => {
               const docSnap = await getDoc(permisoRef);
               return {
@@ -51,7 +51,7 @@ const useRolesYPermisos = () => {
             id: doc.id,
             rol: rol ?? '',
             descripcion: descripcion ?? '',
-            permisos: await Promise.all(thisPermisos),
+            permisos: thisPermisos ? await Promise.all(thisPermisos) : [],
             fechaCreacion: fechaCreacion
               ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
               : DateUtils.formatDateToString(new Date()),
@@ -81,7 +81,7 @@ const useRolesYPermisos = () => {
       for (const doc of queryDocs.docs) {
         const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion} =
           doc.data();
-        const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>).map(
+        const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>)?.map(
           async (permisoRef) => {
             const docSnap = await getDoc(permisoRef);
             return {
@@ -105,7 +105,7 @@ const useRolesYPermisos = () => {
           id: doc.id,
           rol: rol ?? '',
           descripcion: descripcion ?? '',
-          permisos: await Promise.all(thisPermisos),
+          permisos: thisPermisos ? await Promise.all(thisPermisos) : [],
           fechaCreacion: fechaCreacion
             ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
             : DateUtils.formatDateToString(new Date()),
