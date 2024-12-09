@@ -8,3 +8,4 @@ export * from './debug';
 export * from './sessionStorage';
 export * from './fechas';
 export * from './getStrings';
+export * from './getUpdatedFields';

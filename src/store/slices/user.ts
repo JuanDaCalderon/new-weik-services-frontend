@@ -5,7 +5,7 @@ import {
   USER_DOMAIN,
   USER_NAME
 } from '@/constants';
-import {PayLoadUserType, User} from '@/types';
+import {PartialEmployee, PayLoadUserType, User} from '@/types';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {LocalStorageUtil, SessionStorageUtil} from '@/utils';
@@ -62,6 +62,19 @@ export const userSlice = createSlice({
         user
       };
     },
+    updateDataUser: (state: PayLoadUserType, action: PayloadAction<PartialEmployee>) => {
+      const partialUser = action.payload;
+      const user: User = {
+        ...state.user,
+        ...partialUser
+      };
+      if (state.rememberme) LocalStorageUtil.updateItem<User>(USER_NAME, user);
+      else SessionStorageUtil.updateItem<User>(USER_NAME, user);
+      return {
+        ...state,
+        user
+      };
+    },
     logOutUser: (state: PayLoadUserType) => {
       LocalStorageUtil.removeItem(USER_NAME);
       LocalStorageUtil.removeItem(USER_DOMAIN);
@@ -81,5 +94,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const {setUser, logOutUser, updateUserImage} = userSlice.actions;
+export const {setUser, logOutUser, updateUserImage, updateDataUser} = userSlice.actions;
 export default userSlice.reducer;

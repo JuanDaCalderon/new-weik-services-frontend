@@ -25,7 +25,6 @@ const UserPortadaBox = () => {
   } = useProfileImage();
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     let timeOut: NodeJS.Timeout;
     if (isUpdatingProfileImage.hasLoad) {
       timeOut = setTimeout(() => {

@@ -34,71 +34,79 @@ class DateUtils {
     return new Date(dateString);
   }
 
-  // Devuelve solo la fecha en formato 'YYYY/MM/DD'
-  static getDateOnly(date: Date): string {
-    const formattedDate = [
+  // Devuelve solo la fecha en formato 'YYYY/MM/DD' o 'YYYY-MM-DD'
+  static getDateOnly(date: Date, separator: string = '/'): string {
+    return [
       date.getFullYear(),
       (date.getMonth() + 1).toString().padStart(2, '0'), // Mes con 2 dígitos
       date.getDate().toString().padStart(2, '0') // Día con 2 dígitos
-    ].join('/');
+    ].join(separator);
+  }
+
+  // Devuelve solo la hora en formato 'HH:mm:ss' (24 horas) o 'hh:mm:ss AM/PM' (12 horas)
+  static getTimeOnly(date: Date, use24HourFormat: boolean = true): string {
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    if (use24HourFormat) {
+      // Formato 24 horas
+      return [
+        hours.toString().padStart(2, '0'), // Hora con 2 dígitos
+        minutes,
+        seconds
+      ].join(':');
+    } else {
+      // Formato 12 horas con AM/PM
+      const period = hours >= 12 ? 'PM' : 'AM';
+      const adjustedHours = (hours % 12 || 12).toString().padStart(2, '0'); // 12 horas con 2 dígitos
+      return `${adjustedHours}:${minutes}:${seconds} ${period}`;
+    }
+  }
+
+  /** Devuelve la fecha en formato largo (en español), con o sin la hora incluida */
+  static formatLongDate(date: Date, includeTime: boolean = false): string {
+    const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const monthNames = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre'
+    ];
+    const dayName = dayNames[date.getDay()];
+    const monthName = monthNames[date.getMonth()];
+    const formattedDate: string = `${dayName}, ${date.getDate()} de ${monthName} de ${date.getFullYear()}`;
+    if (includeTime) return `${formattedDate}, ${DateUtils.getTimeOnly(date)}`;
     return formattedDate;
   }
 
-  // Devuelve solo la hora en formato 'HH:mm:ss'
-  static getTimeOnly(date: Date): string {
-    const time = [
-      date.getHours().toString().padStart(2, '0'), // Hora con 2 dígitos
-      date.getMinutes().toString().padStart(2, '0'), // Minutos con 2 dígitos
-      date.getSeconds().toString().padStart(2, '0') // Segundos con 2 dígitos
-    ].join(':');
-    return time;
-  }
-
-  // Devuelve la fecha en formato largo (en español) con la hora incluida
-  static formatLongDate(date: Date): string {
-    const dayNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  /** Devuelve la fecha en formato corto (en español), con o sin la hora incluida */
+  static formatShortDate(date: Date, includeTime: boolean = false): string {
     const monthNames = [
-      'enero',
-      'febrero',
-      'marzo',
-      'abril',
-      'mayo',
-      'junio',
-      'julio',
-      'agosto',
-      'septiembre',
-      'octubre',
-      'noviembre',
-      'diciembre'
+      'Ene',
+      'Feb',
+      'Mar',
+      'Abr',
+      'May',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dic'
     ];
-
-    const dayName = dayNames[date.getDay()];
-    const monthName = monthNames[date.getMonth()];
-
-    return `${dayName}, ${date.getDate()} de ${monthName} de ${date.getFullYear()}, ${DateUtils.getTimeOnly(
-      date
-    )}`;
-  }
-
-  /** Devuelve la fecha en formato corto (en español) con la hora incluida */
-  static formatShortDate(date: Date): string {
-    const monthNames = [
-      'ene',
-      'feb',
-      'mar',
-      'abr',
-      'may',
-      'jun',
-      'jul',
-      'ago',
-      'sep',
-      'oct',
-      'nov',
-      'dic'
-    ];
-    return `${date.getDate()} ${
-      monthNames[date.getMonth()]
-    } ${date.getFullYear()}, ${DateUtils.getTimeOnly(date)}`;
+    const formattedDate: string = `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+    if (includeTime) return `${formattedDate}, ${DateUtils.getTimeOnly(date)}`;
+    return formattedDate;
   }
 }
 

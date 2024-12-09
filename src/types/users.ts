@@ -63,6 +63,8 @@ export type Employee = {
   informacionLaboral: UserWorkData;
 };
 
+export type PartialEmployee = Partial<Employee>;
+
 export interface User extends Employee {
   uid: string;
   token: string;

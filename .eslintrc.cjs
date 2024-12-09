@@ -4,6 +4,9 @@ module.exports = {
 		browser: true,
 		node: true,
 	},
+	globals: {
+		"NodeJS": "readonly"
+	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',

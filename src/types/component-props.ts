@@ -1,5 +1,5 @@
 import type {ColumnDef, PaginationState, Table, TableOptions} from '@tanstack/react-table';
-import type {ReactNode} from 'react';
+import type {ChangeEvent, ReactNode} from 'react';
 import {MenuItemType} from './menu';
 
 export type ChildrenType = Readonly<{children: ReactNode}>;
@@ -45,3 +45,18 @@ export type NavbarProps = {
 export type AppMenuProps = {
   menuItems: Array<MenuItemType>;
 };
+
+export interface DisplayInfoProps {
+  label: string;
+  value?: string;
+  className?: string;
+}
+
+export interface LabelWithControlProps {
+  id: string;
+  name: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}

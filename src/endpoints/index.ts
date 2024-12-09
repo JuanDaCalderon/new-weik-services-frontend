@@ -3,6 +3,7 @@ import useGetClients from './db/clientes/useGetClients';
 import useRolesYPermisos from './db/roles-permisos/useRolesYPermisos';
 import useGetUsers from './db/users/useGetUsers';
 import useSetEstadoUser from './db/users/useSetEstadoUser';
+import useUpdateUser from './db/users/useUpdateUser';
 import useUserProfileImage from './db/profile-image/useUserProfileImage';
 
 export {
@@ -11,5 +12,6 @@ export {
   useRolesYPermisos,
   useGetUsers,
   useSetEstadoUser,
-  useUserProfileImage
+  useUserProfileImage,
+  useUpdateUser
 };
