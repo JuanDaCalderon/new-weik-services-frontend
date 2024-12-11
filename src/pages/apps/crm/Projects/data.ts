@@ -1,58 +1,10 @@
-import {DailyTask, Project, StatisticsItem, TeamMember} from './types';
+import {DailyTask, TeamMember} from './types';
 import avatar1 from '@/assets/images/users/avatar-1.jpg';
 import avatar2 from '@/assets/images/users/avatar-2.jpg';
 import avatar3 from '@/assets/images/users/avatar-4.jpg';
 import avatar4 from '@/assets/images/users/avatar-5.jpg';
 import avatar5 from '@/assets/images/users/avatar-6.jpg';
 import avatar6 from '@/assets/images/users/avatar-7.jpg';
-
-const projectList: Project[] = [
-  {
-    title: 'Project Dashboard',
-    task: 'New Task Assign',
-    created_on: '4 Hrs ago',
-    members: [avatar1, avatar2]
-  },
-  {
-    title: 'Admin Template',
-    task: 'New Task Assign',
-    created_on: '7 Hrs ago',
-    members: [avatar3, avatar4]
-  },
-  {
-    title: 'Client Project',
-    task: 'New Task Assign',
-    created_on: '1 Day ago',
-    members: [avatar5, avatar6]
-  }
-];
-
-const statisticsData: StatisticsItem[] = [
-  {
-    icon: 'mdi mdi-file-document-edit',
-    variant: 'primary',
-    title: 'Active Project',
-    noOfProject: 85
-  },
-  {
-    icon: 'mdi mdi-account-group',
-    variant: 'success',
-    title: 'Total Employees',
-    noOfProject: 32
-  },
-  {
-    icon: 'mdi mdi-account-star',
-    variant: 'info',
-    title: 'Project Review',
-    noOfProject: 40
-  },
-  {
-    icon: 'mdi mdi-folder-plus',
-    variant: 'warning',
-    title: 'New Project',
-    noOfProject: 25
-  }
-];
 
 const tasksData: DailyTask[] = [
   {
@@ -119,4 +71,4 @@ const members: TeamMember[] = [
     experience: '1 Year'
   }
 ];
-export {projectList, statisticsData, tasksData, members};
+export {tasksData, members};

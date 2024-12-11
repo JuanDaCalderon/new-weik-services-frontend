@@ -1,55 +1,83 @@
-import {useState, useCallback} from 'react';
-import {useDispatch} from 'react-redux';
-import {setUser} from '@/store/slices/user';
-import {object, string, boolean, InferType} from 'yup';
-import {extractDomain} from '@/utils';
-import {useAuth} from '@/endpoints';
-import {DebugUtil} from '@/utils';
-import {useNavigate} from 'react-router-dom';
+import {useState, useCallback, useEffect, ChangeEvent} from 'react';
+import {DateUtils, DebugUtil, getUpdatedFields} from '@/utils';
+import toast from 'react-hot-toast';
+import {Employee} from '@/types';
+import {selectUser} from '@/store/selectores';
+import {useAppSelector} from '@/store';
+import {useUpdateUser} from '@/endpoints';
 
-export const loginFormSchema = object({
-  email: string()
-    .email('Por favor ingrese un correo electrónico válido')
-    .required('Por favor ingrese su correo electrónico'),
-  password: string().required('Por favor, introduzca la contraseña'),
-  rememberme: boolean()
-});
+export default function useUpdateData() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFormChanged, setIsFormChanged] = useState<boolean>(false);
+  const [formData, setFormData] = useState({
+    nombres: '',
+    apellidos: '',
+    userName: '',
+    fechaNacimiento: '',
+    numeroDocumento: '',
+    ciudadExpedicionDocumento: ''
+  });
+  const user = useAppSelector(selectUser);
+  const {updateUserData} = useUpdateUser();
 
-export type LoginFormFields = InferType<typeof loginFormSchema>;
+  useEffect(() => {
+    setFormData({
+      nombres: user.nombres,
+      apellidos: user.apellidos,
+      ciudadExpedicionDocumento: user.ciudadExpedicionDocumento,
+      userName: user.userName,
+      numeroDocumento: user.numeroDocumento,
+      fechaNacimiento:
+        DateUtils.getDateOnly(DateUtils.parseStringToDate(user.fechaNacimiento), '-') ?? ''
+    });
+    setIsFormChanged(false);
+  }, [
+    user.apellidos,
+    user.ciudadExpedicionDocumento,
+    user.fechaNacimiento,
+    user.nombres,
+    user.numeroDocumento,
+    user.userName
+  ]);
 
-export default function useLogin() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const {authLogIn} = useAuth();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const login = useCallback(
-    async ({email, password, rememberme}: LoginFormFields) => {
-      setLoading(true);
-      try {
-        let user = await authLogIn({email, password});
-        if (user) {
-          dispatch(
-            setUser({
-              user,
-              domain: extractDomain(email),
-              isLoggedIn: true,
-              rememberme: !!rememberme
-            })
-          );
-          DebugUtil.logSuccess('Sesión iniciada en el store', user);
-          setTimeout(() => {
-            navigate('/services/dashboard');
-          }, 2500);
-        }
-      } catch (error: any) {
-        DebugUtil.logError(error.toString(), error);
-      } finally {
-        setLoading(false);
-      }
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const {name, value} = e.target;
+      setFormData((prev) => {
+        const updated = {...prev, [name]: value};
+        const changes = getUpdatedFields(user, updated);
+        setIsFormChanged(Object.keys(changes).length > 0);
+        return updated;
+      });
     },
-    [authLogIn, dispatch, navigate]
+    [user]
   );
 
-  return {loading, login};
+  const updateData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const newFormData: typeof formData = {
+        ...formData,
+        fechaNacimiento: DateUtils.formatDateToString(
+          new Date(formData.fechaNacimiento.replaceAll('-', '/'))
+        )
+      };
+      const changes = getUpdatedFields<Employee>(user, newFormData);
+      if (Object.keys(changes).length === 0) {
+        toast.error('No hay cambios realizados');
+        return;
+      }
+      if (changes.userName && /\s/.test(changes.userName)) {
+        toast.error('El nombre de usuario no debe tener espacios.');
+        return;
+      }
+      await updateUserData(changes, user.id);
+    } catch (error: any) {
+      DebugUtil.logError(error.toString(), error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [formData, updateUserData, user]);
+
+  return {formData, isLoading, isFormChanged, updateData, handleInputChange};
 }

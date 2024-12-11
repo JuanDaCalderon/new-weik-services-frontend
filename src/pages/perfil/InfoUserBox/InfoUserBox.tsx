@@ -1,70 +1,21 @@
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
-import {
-  DateUtils,
-  getCargoUser,
-  getNombreCompletoUser,
-  getUpdatedFields,
-  getUserNameUser
-} from '@/utils';
-import {useCallback, useState, ChangeEvent, useEffect, useMemo} from 'react';
+import {DateUtils, getCargoUser, getNombreCompletoUser, getUserNameUser} from '@/utils';
+import {useCallback, useState, ChangeEvent, useMemo} from 'react';
 import {Button, Card, Form} from 'react-bootstrap';
 import DisplayInfo from './DisplayInfo';
 import LabelWithControl from './LabelWithControl';
-import toast from 'react-hot-toast';
-import {useUpdateUser} from '@/endpoints';
-import {Employee} from '@/types';
+import {Spinner} from '@/components';
+import useUpdateData from './useUpdateData';
 
 const InfoUserBox = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [isFormChanged, setIsFormChanged] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
-    nombres: '',
-    apellidos: '',
-    userName: '',
-    fechaNacimiento: '',
-    numeroDocumento: '',
-    ciudadExpedicionDocumento: ''
-  });
-  const {updateUserData} = useUpdateUser();
   const user = useAppSelector(selectUser);
-
-  useEffect(() => {
-    setFormData({
-      nombres: user.nombres,
-      apellidos: user.apellidos,
-      ciudadExpedicionDocumento: user.ciudadExpedicionDocumento,
-      userName: user.userName,
-      numeroDocumento: user.numeroDocumento,
-      fechaNacimiento:
-        DateUtils.getDateOnly(DateUtils.parseStringToDate(user.fechaNacimiento), '-') ?? ''
-    });
-    setIsFormChanged(false);
-  }, [
-    user.apellidos,
-    user.ciudadExpedicionDocumento,
-    user.fechaNacimiento,
-    user.nombres,
-    user.numeroDocumento,
-    user.userName
-  ]);
+  const {formData, handleInputChange, isFormChanged, isLoading, updateData} = useUpdateData();
 
   const handleSwitchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   }, []);
-
-  const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const {name, value} = e.target;
-      setFormData((prev) => {
-        const updated = {...prev, [name]: value};
-        const changes = getUpdatedFields(user, updated);
-        setIsFormChanged(Object.keys(changes).length > 0);
-        return updated;
-      });
-    },
-    [user]
-  );
 
   const editableFields = useMemo(() => {
     return [
@@ -131,25 +82,6 @@ const InfoUserBox = () => {
     ];
   }, [user]);
 
-  const submitUpdatedData = useCallback(async () => {
-    const newFormData: typeof formData = {
-      ...formData,
-      fechaNacimiento: DateUtils.formatDateToString(
-        new Date(formData.fechaNacimiento.replaceAll('-', '/'))
-      )
-    };
-    const changes = getUpdatedFields<Employee>(user, newFormData);
-    if (Object.keys(changes).length === 0) {
-      toast.error('No hay cambios realizados');
-      return;
-    }
-    if (changes.userName && /\s/.test(changes.userName)) {
-      toast.error('El nombre de usuario no debe tener espacios.');
-      return;
-    }
-    await updateUserData(changes, user.id);
-  }, [formData, updateUserData, user]);
-
   return (
     <Card>
       <Card.Body>
@@ -192,8 +124,9 @@ const InfoUserBox = () => {
               className="w-100 mt-2"
               variant="primary"
               disabled={!isFormChanged}
-              onClick={submitUpdatedData}>
-              Actualizar información
+              onClick={updateData}>
+              {isLoading && <Spinner className="spinner-border-sm me-1" tag="span" color="white" />}
+              {!isLoading && 'Actualizar información'}
             </Button>
           )}
         </div>

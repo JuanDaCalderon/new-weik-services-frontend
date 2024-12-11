@@ -75,12 +75,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             parentKey: 'apps-crm'
           },
           {
-            key: 'crm-clients',
-            label: 'Clients',
-            url: '/services/apps/crm/clients',
-            parentKey: 'apps-crm'
-          },
-          {
             key: 'crm-management',
             label: 'Management',
             url: '/services/apps/crm/management',
@@ -106,12 +100,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             parentKey: 'apps-ecommerce'
           },
           {
-            key: 'ecommerce-order-details',
-            label: 'Order Details',
-            url: '/services/apps/ecommerce/order-details',
-            parentKey: 'apps-ecommerce'
-          },
-          {
             key: 'ecommerce-customers',
             label: 'Customers',
             url: '/services/apps/ecommerce/customers',
@@ -128,31 +116,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             label: 'Sellers',
             url: '/services/apps/ecommerce/sellers',
             parentKey: 'apps-ecommerce'
-          }
-        ]
-      },
-      {
-        key: 'apps-projects',
-        label: 'Projects',
-        parentKey: 'apps',
-        children: [
-          {
-            key: 'project-list',
-            label: 'List',
-            url: '/services/apps/projects/list',
-            parentKey: 'apps-projects'
-          },
-          {
-            key: 'project-details',
-            label: 'Details',
-            url: '/services/apps/projects/details',
-            parentKey: 'apps-projects'
-          },
-          {
-            key: 'project-create-project',
-            label: 'Create Project',
-            url: '/services/apps/projects/create',
-            parentKey: 'apps-projects'
           }
         ]
       },
@@ -174,12 +137,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             parentKey: 'apps-tasks'
           }
         ]
-      },
-      {
-        key: 'apps-file-manager',
-        label: 'File Manager',
-        url: '/services/apps/file',
-        parentKey: 'apps'
       }
     ]
   },
@@ -205,12 +162,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         key: 'page-invoice',
         label: 'Invoice',
         url: '/services/pages/invoice',
-        parentKey: 'pages'
-      },
-      {
-        key: 'page-faq',
-        label: 'FAQ',
-        url: '/services/pages/faq',
         parentKey: 'pages'
       },
       {

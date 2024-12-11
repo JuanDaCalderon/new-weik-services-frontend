@@ -11,17 +11,3 @@ export type TeamMember = {
   designation: string;
   experience: string;
 };
-
-export type StatisticsItem = {
-  icon: string;
-  variant: string;
-  title: string;
-  noOfProject: number;
-};
-
-export type Project = {
-  title: string;
-  task: string;
-  created_on: string;
-  members: string[];
-};

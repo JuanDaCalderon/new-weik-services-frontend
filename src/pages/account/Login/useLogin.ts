@@ -45,7 +45,9 @@ export default function useLogin() {
       } catch (error: any) {
         DebugUtil.logError(error.toString(), error);
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       }
     },
     [authLogIn, dispatch, navigate]
