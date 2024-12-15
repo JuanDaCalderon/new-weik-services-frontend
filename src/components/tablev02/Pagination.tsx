@@ -27,17 +27,18 @@ const Pagination = <RowType,>({
   currentPage,
   totalPages
 }: ReactTablePaginationProps<RowType>) => {
-  const [visiblePages, setVisiblePages] = useState([1]);
-  const pageSizeList = [5, 10, 25, 50, 100];
+  const [visiblePages, setVisiblePages] = useState<number[]>([1]);
+  const pageSizeList = [10, 25, 50, 100];
 
   useEffect(() => {
     setVisiblePages(getVisiblePages(totalPages, currentPage));
   }, [currentPage, totalPages]);
+
   return (
-    <div className="d-lg-flex align-items-center text-center pb-1">
+    <div className="d-lg-flex align-items-center text-center">
       {pageSizeList.length > 0 && (
-        <div className={classNames('d-inline-flex gap-2 align-items-center')}>
-          <label className="me-1">Display </label>
+        <div className="d-inline-flex gap-2 align-items-center">
+          <label className="me-1">Mostrar </label>
           <select
             name="page-size-select"
             id="page-size-select"
@@ -55,8 +56,8 @@ const Pagination = <RowType,>({
         </div>
       )}
       <span className="mx-3">
-        Page&nbsp;
-        {currentPage} of {totalPages}
+        Página&nbsp;
+        {currentPage} de {totalPages}
       </span>
 
       <ul className="pagination pagination-rounded d-inline-flex ms-auto align-item-center mb-0">

@@ -53,7 +53,10 @@ export type Employee = {
   ciudadExpedicionDocumento: string;
   estado: Estados;
   cargo: string;
-  roles: Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion'>[];
+  roles: Omit<
+    Rol,
+    'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion' | 'usuarioUpdated'
+  >[];
   permisosOtorgados: Permiso[];
   permisosDenegados: Permiso[];
   horario: HorarioType[];

@@ -11,6 +11,7 @@ export type Rol = {
   descripcion: string;
   permisos: Permiso[];
   usuarioCreacion: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'>;
+  usuarioUpdated: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'>;
   fechaCreacion: string;
   fechaActualizacion: string;
 };

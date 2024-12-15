@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-// import htmlToDraft from 'html-to-draftjs';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {ListTaskItem} from '../types';
 
 export default function useTask(task: ListTaskItem) {
@@ -22,17 +20,6 @@ export default function useTask(task: ListTaskItem) {
       End of simple area
   </p>
   `);
-
-  // useEffect(() => {
-  //   const html = `<p class="m-0">This is a task description with markup support</p> <ul> <li>Select a text to reveal the toolbar.</li> <li>Edit rich document on-the-fly, so elastic!</li> </ul> <p>End of air-mode area</p>`;
-  //   const contentBlock = htmlToDraft(html);
-  //   if (contentBlock) {
-  //     const contentState = ContentState.createFromBlockArray(
-  //       contentBlock.contentBlocks,
-  //     );
-  //     setEditorState(EditorState.createWithContent(contentState));
-  //   }
-  // }, []);
 
   /**
    * On editor body change

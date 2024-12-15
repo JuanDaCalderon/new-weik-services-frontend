@@ -3,7 +3,7 @@ import ReactTable from '@/components/table/ReactTable';
 import {Button, Card, Col, Row} from 'react-bootstrap';
 import {customers} from '../data';
 import {Customer} from '../types';
-import {columns, sizePerPageList} from './ColumnsSet';
+import {columns} from './ColumnsSet';
 
 const CustomersEcom = () => {
   return (
@@ -38,7 +38,6 @@ const CustomersEcom = () => {
                 columns={columns}
                 data={customers}
                 pageSize={10}
-                rowsPerPageList={sizePerPageList}
                 tableClass="table-striped"
                 showPagination
                 isSearchable

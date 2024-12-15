@@ -1,4 +1,5 @@
 export const USER_NAME = 'user';
+export const USERS_NAME = 'users';
 export const ROLES_PERMISOS_NAME = 'roles-permisos';
 export const CLIENTES_NAME = 'clientes';
 

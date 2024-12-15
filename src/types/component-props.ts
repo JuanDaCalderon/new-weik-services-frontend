@@ -1,15 +1,13 @@
-import type {ColumnDef, PaginationState, Table, TableOptions} from '@tanstack/react-table';
-import type {ChangeEvent, ReactNode} from 'react';
+import type {ColumnDef, PaginationState, Row, Table} from '@tanstack/react-table';
+import type {ChangeEvent, ReactElement, ReactNode} from 'react';
 import {MenuItemType} from './menu';
 
 export type ChildrenType = Readonly<{children: ReactNode}>;
 
 export type ReactTableProps<RowType> = {
-  options?: TableOptions<RowType>;
   columns: ColumnDef<RowType>[];
   data: RowType[];
   showPagination?: boolean;
-  rowsPerPageList?: number[];
   isSearchable?: boolean;
   isSelectable?: boolean;
   isExpandable?: boolean;
@@ -17,11 +15,12 @@ export type ReactTableProps<RowType> = {
   tableClass?: string;
   theadClass?: string;
   searchBoxClass?: string;
+  renderSubComponent?: (props: {row: Row<RowType>}) => ReactElement;
+  getRowCanExpand?: (row: Row<RowType>) => boolean;
 };
 
 export type ReactTablePaginationProps<RowType> = {
   table: Table<RowType>;
-  rowsPerPageList?: number[];
   currentPage: number;
   totalPages: number;
   pagination: PaginationState;

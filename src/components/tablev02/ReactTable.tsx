@@ -11,7 +11,7 @@ import {
   type PaginationState
 } from '@tanstack/react-table';
 import classNames from 'classnames';
-import {useEffect, useRef, useState, type HTMLProps} from 'react';
+import {Fragment, useEffect, useRef, useState, type HTMLProps} from 'react';
 import {Table} from 'react-bootstrap';
 import Pagination from './Pagination';
 
@@ -44,7 +44,9 @@ const ReactTable = <RowType,>({
   isSearchable,
   searchBoxClass,
   theadClass,
-  isSelectable
+  isSelectable,
+  renderSubComponent,
+  getRowCanExpand
 }: ReactTableProps<RowType>) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -71,7 +73,8 @@ const ReactTable = <RowType,>({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    ...(showPagination && {getPaginationRowModel: getPaginationRowModel()})
+    ...(showPagination && {getPaginationRowModel: getPaginationRowModel()}),
+    ...(getRowCanExpand && {getRowCanExpand})
   });
 
   return (
@@ -124,23 +127,30 @@ const ReactTable = <RowType,>({
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {isSelectable && (
-                <td>
-                  <IndeterminateCheckbox
-                    {...{
-                      checked: row.getIsSelected(),
-                      disabled: !row.getCanSelect(),
-                      indeterminate: row.getIsSomeSelected(),
-                      onChange: row.getToggleSelectedHandler()
-                    }}
-                  />
-                </td>
+            <Fragment key={row.id}>
+              <tr>
+                {isSelectable && (
+                  <td>
+                    <IndeterminateCheckbox
+                      {...{
+                        checked: row.getIsSelected(),
+                        disabled: !row.getCanSelect(),
+                        indeterminate: row.getIsSomeSelected(),
+                        onChange: row.getToggleSelectedHandler()
+                      }}
+                    />
+                  </td>
+                )}
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                ))}
+              </tr>
+              {row.getIsExpanded() && renderSubComponent && (
+                <tr>
+                  <td colSpan={row.getVisibleCells().length}>{renderSubComponent({row})}</td>
+                </tr>
               )}
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-              ))}
-            </tr>
+            </Fragment>
           ))}
         </tbody>
       </Table>

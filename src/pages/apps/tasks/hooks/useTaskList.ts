@@ -8,10 +8,6 @@ export default function useTaskList() {
   const [otherTask] = useState<ListTaskItem[]>([...otherTasks]);
   const [selectedTask, setSelectedTask] = useState<ListTaskItem>(todayTasks[0]);
 
-  /**
-   * Selects the task
-   * @param {*} taks
-   */
   const selectTask = (task: ListTaskItem) => {
     setSelectedTask(task);
   };

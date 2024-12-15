@@ -5,6 +5,7 @@ import useGetUsers from './db/users/useGetUsers';
 import useSetEstadoUser from './db/users/useSetEstadoUser';
 import useUpdateUser from './db/users/useUpdateUser';
 import useUserProfileImage from './db/profile-image/useUserProfileImage';
+import useGetEmployees from './db/users/useGetEmployees';
 
 export {
   useAuth,
@@ -13,5 +14,6 @@ export {
   useGetUsers,
   useSetEstadoUser,
   useUserProfileImage,
-  useUpdateUser
+  useUpdateUser,
+  useGetEmployees
 };

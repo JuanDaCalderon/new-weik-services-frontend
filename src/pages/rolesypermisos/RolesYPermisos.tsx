@@ -1,16 +1,25 @@
 import {Row, Col, Card, Tab, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {PageBreadcrumb} from '@/components';
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import {TabContentItem} from '@/types';
 import {Roles} from './Roles';
 import {Usuarios} from './Usuarios';
+import {useGetEmployees} from '@/endpoints';
 
 const RolesYPermisos = memo(function RolesYPermisos() {
+  const {getEmployeesListener} = useGetEmployees();
   const tabContents: TabContentItem[] = [
     {id: 'Roles', title: 'Roles'},
     {id: 'Usuarios', title: 'Usuarios'}
   ];
+
+  useEffect(() => {
+    const employeesUnsubscribe = getEmployeesListener();
+    return () => {
+      employeesUnsubscribe();
+    };
+  }, [getEmployeesListener]);
 
   return (
     <>

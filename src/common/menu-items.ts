@@ -129,12 +129,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             label: 'List',
             url: '/services/apps/tasks/list',
             parentKey: 'apps-tasks'
-          },
-          {
-            key: 'task-details',
-            label: 'Details',
-            url: '/services/apps/tasks/details',
-            parentKey: 'apps-tasks'
           }
         ]
       }
@@ -419,12 +413,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             label: 'File Upload',
             url: '/services/ui/forms/upload',
             parentKey: 'forms'
-          },
-          {
-            key: 'form-editors',
-            label: 'Editors',
-            url: '/services/ui/forms/editors',
-            parentKey: 'forms'
           }
         ]
       },
@@ -574,12 +562,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
                 parentKey: 'chartjs-charts'
               }
             ]
-          },
-          {
-            key: 'sparklines-charts',
-            label: 'Sparklines Charts',
-            url: '/ui/charts/sparklines',
-            parentKey: 'charts'
           }
         ]
       },

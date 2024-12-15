@@ -4,7 +4,7 @@ import {Button, Card, Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {products} from '../data';
 import {Product} from '../types';
-import {columns, sizePerPageList} from './ColumnsSet';
+import {columns} from './ColumnsSet';
 
 const ProductsEcom = () => {
   return (
@@ -43,7 +43,6 @@ const ProductsEcom = () => {
                 columns={columns}
                 data={products}
                 pageSize={5}
-                rowsPerPageList={sizePerPageList}
                 theadClass="table-light"
                 showPagination
                 isSearchable

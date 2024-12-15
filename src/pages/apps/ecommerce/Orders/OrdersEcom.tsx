@@ -3,7 +3,7 @@ import ReactTable from '@/components/table/ReactTable';
 import {Button, Card, Col, Row} from 'react-bootstrap';
 import {useOrders} from '../hooks';
 import {Order} from '../types';
-import {columns, sizePerPageList} from './ColumnsSet';
+import {columns} from './ColumnsSet';
 
 const OrdersEcom = () => {
   const {orderList, changeOrderStatusGroup} = useOrders();
@@ -55,7 +55,6 @@ const OrdersEcom = () => {
                 columns={columns}
                 data={orderList}
                 pageSize={10}
-                rowsPerPageList={sizePerPageList}
                 showPagination
                 isSearchable={true}
                 theadClass="table-light"

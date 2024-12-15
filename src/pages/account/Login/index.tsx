@@ -1,19 +1,23 @@
 import {Form, PasswordInput, TextInput, CheckInput, SendButton} from '@/components';
 import {Col, Row} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import useLogin, {LoginFormFields, loginFormSchema} from './useLogin';
 import {PAGE_RECOVERY_PASSWORD} from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 import {useEffect} from 'react';
+import {useAppSelector} from '@/store';
+import {isUserLoggedInSelector} from '@/store/selectores';
 
 export default function Login() {
   const {loading, login} = useLogin();
+  const isLoggedIn = useAppSelector(isUserLoggedInSelector);
 
   useEffect(() => {
     toast.remove();
   }, []);
 
+  if (isLoggedIn) return <Navigate to="/services/dashboard" />;
   return (
     <AccountWrapper>
       <div className="text-center w-75 m-auto">

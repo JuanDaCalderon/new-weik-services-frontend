@@ -28,8 +28,6 @@ const columns: ColumnDef<Employee>[] = [
   }
 ];
 
-const sizePerPageList = [5, 10, 25, 50];
-
 const AdvancedTable = () => {
   return (
     <>
@@ -44,13 +42,7 @@ const AdvancedTable = () => {
                 A simple example of table with pagination and column sorting
               </p>
 
-              <ReactTable<Employee>
-                columns={columns}
-                data={data}
-                pageSize={5}
-                rowsPerPageList={sizePerPageList}
-                showPagination
-              />
+              <ReactTable<Employee> columns={columns} data={data} pageSize={5} showPagination />
             </CardBody>
           </Card>
         </Col>
@@ -67,7 +59,6 @@ const AdvancedTable = () => {
                 columns={columns}
                 data={data}
                 pageSize={5}
-                rowsPerPageList={sizePerPageList}
                 showPagination
                 isSearchable={true}
               />
@@ -89,7 +80,6 @@ const AdvancedTable = () => {
                 columns={columns}
                 data={data}
                 pageSize={5}
-                rowsPerPageList={sizePerPageList}
                 showPagination
                 isSelectable={true}
               />
@@ -109,9 +99,8 @@ const AdvancedTable = () => {
                 columns={columns}
                 data={expandableRecords}
                 pageSize={5}
-                rowsPerPageList={sizePerPageList}
                 showPagination
-                // isExpandable={true}
+                isExpandable={true}
               />
             </CardBody>
           </Card>

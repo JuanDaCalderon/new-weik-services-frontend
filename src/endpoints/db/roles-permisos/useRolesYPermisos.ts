@@ -19,23 +19,32 @@ import {DateUtils, DebugUtil} from '@/utils';
 const useRolesYPermisos = () => {
   const dispatch = useDispatch();
 
+  const getPermisos = useCallback((permisos: Array<DocumentReference> = []) => {
+    return permisos.map(async (permisoRef) => {
+      const permisoDocSnap = await getDoc(permisoRef);
+      return {
+        id: permisoDocSnap.id,
+        permiso: permisoDocSnap.data()?.permiso ?? ''
+      } as Permiso;
+    });
+  }, []);
+
   const getRolesListener = useCallback((): Unsubscribe => {
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
       unsubscribe = onSnapshot(query(collection(db, ROLES_PATH)), async (querySnapshotDocs) => {
         const roles: Rol[] = [];
         for (const doc of querySnapshotDocs.docs) {
-          const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion} =
-            doc.data();
-          const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>)?.map(
-            async (permisoRef) => {
-              const docSnap = await getDoc(permisoRef);
-              return {
-                id: docSnap.id,
-                permiso: docSnap.data()?.permiso ?? ''
-              } as Permiso;
-            }
-          );
+          const {
+            rol,
+            descripcion,
+            permisos,
+            fechaCreacion,
+            fechaActualizacion,
+            usuarioCreacion,
+            usuarioUpdated
+          } = doc.data();
+          const thisPermisos: Promise<Permiso>[] = getPermisos(permisos);
           const docSnap = await getDoc(usuarioCreacion as DocumentReference);
           const thisUsuarioCreacion: Pick<
             Employee,
@@ -46,6 +55,17 @@ const useRolesYPermisos = () => {
             nombres: docSnap.data()?.nombres ?? '',
             userImage: docSnap.data()?.userImage ?? '',
             userName: docSnap.data()?.userName ?? ''
+          };
+          const docSnapUpdated = await getDoc(usuarioUpdated as DocumentReference);
+          const thisUsuarioUpdated: Pick<
+            Employee,
+            'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
+          > = {
+            email: docSnapUpdated.data()?.email ?? '',
+            apellidos: docSnapUpdated.data()?.apellidos ?? '',
+            nombres: docSnapUpdated.data()?.nombres ?? '',
+            userImage: docSnapUpdated.data()?.userImage ?? '',
+            userName: docSnapUpdated.data()?.userName ?? ''
           };
           roles.push({
             id: doc.id,
@@ -58,7 +78,8 @@ const useRolesYPermisos = () => {
             fechaActualizacion: fechaActualizacion
               ? DateUtils.formatDateToString((fechaActualizacion as Timestamp).toDate())
               : DateUtils.formatDateToString(new Date()),
-            usuarioCreacion: thisUsuarioCreacion
+            usuarioCreacion: thisUsuarioCreacion,
+            usuarioUpdated: thisUsuarioUpdated
           });
         }
         dispatch(clearRoles());
@@ -72,24 +93,23 @@ const useRolesYPermisos = () => {
       DebugUtil.logError(error.message, error);
     }
     return unsubscribe;
-  }, [dispatch]);
+  }, [dispatch, getPermisos]);
 
   const getRolesSync = useCallback(async (): Promise<void> => {
     try {
       const roles: Rol[] = [];
       const queryDocs = await getDocs(query(collection(db, ROLES_PATH)));
       for (const doc of queryDocs.docs) {
-        const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion} =
-          doc.data();
-        const thisPermisos: Promise<Permiso>[] = (permisos as Array<DocumentReference>)?.map(
-          async (permisoRef) => {
-            const docSnap = await getDoc(permisoRef);
-            return {
-              id: docSnap.id,
-              permiso: docSnap.data()?.permiso ?? ''
-            } as Permiso;
-          }
-        );
+        const {
+          rol,
+          descripcion,
+          permisos,
+          fechaCreacion,
+          fechaActualizacion,
+          usuarioCreacion,
+          usuarioUpdated
+        } = doc.data();
+        const thisPermisos: Promise<Permiso>[] = getPermisos(permisos);
         const docSnap = await getDoc(usuarioCreacion as DocumentReference);
         const thisUsuarioCreacion: Pick<
           Employee,
@@ -100,6 +120,17 @@ const useRolesYPermisos = () => {
           nombres: docSnap.data()?.nombres ?? '',
           userImage: docSnap.data()?.userImage ?? '',
           userName: docSnap.data()?.userName ?? ''
+        };
+        const docSnapUpdated = await getDoc(usuarioUpdated as DocumentReference);
+        const thisUsuarioUpdated: Pick<
+          Employee,
+          'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
+        > = {
+          email: docSnapUpdated.data()?.email ?? '',
+          apellidos: docSnapUpdated.data()?.apellidos ?? '',
+          nombres: docSnapUpdated.data()?.nombres ?? '',
+          userImage: docSnapUpdated.data()?.userImage ?? '',
+          userName: docSnapUpdated.data()?.userName ?? ''
         };
         roles.push({
           id: doc.id,
@@ -112,7 +143,8 @@ const useRolesYPermisos = () => {
           fechaActualizacion: fechaActualizacion
             ? DateUtils.formatDateToString((fechaActualizacion as Timestamp).toDate())
             : DateUtils.formatDateToString(new Date()),
-          usuarioCreacion: thisUsuarioCreacion
+          usuarioCreacion: thisUsuarioCreacion,
+          usuarioUpdated: thisUsuarioUpdated
         });
       }
       dispatch(setRoles(roles));
@@ -123,7 +155,7 @@ const useRolesYPermisos = () => {
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
-  }, [dispatch]);
+  }, [dispatch, getPermisos]);
 
   const getPermisosListener = useCallback((): Unsubscribe => {
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
