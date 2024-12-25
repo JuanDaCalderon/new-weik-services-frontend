@@ -6,6 +6,14 @@ import {selectUser} from '@/store/selectores';
 import {useAppSelector} from '@/store';
 import {useUpdateUser} from '@/endpoints';
 
+const fieldNames: {[K in keyof Employee]?: string} = {
+  nombres: 'Nombres',
+  apellidos: 'Apellidos',
+  userName: 'Nombre de usuario',
+  numeroDocumento: 'Número de documento',
+  ciudadExpedicionDocumento: 'Lugar de expedición'
+};
+
 export default function useUpdateData() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFormChanged, setIsFormChanged] = useState<boolean>(false);
@@ -65,6 +73,14 @@ export default function useUpdateData() {
       const changes = getUpdatedFields<Employee>(user, newFormData);
       if (Object.keys(changes).length === 0) {
         toast.error('No hay cambios realizados');
+        return;
+      }
+      const emptyFields = Object.entries(fieldNames)
+        .filter(([key]) => (changes as any)[key] === '')
+        .map(([key, label]) => ({key, label}));
+      if (emptyFields.length > 0) {
+        const fieldLabels = emptyFields.map((field) => field.label).join(', ');
+        toast.error(`Los siguientes campos no deben estar vacíos: ${fieldLabels}`);
         return;
       }
       if (changes.userName && /\s/.test(changes.userName)) {

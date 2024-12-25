@@ -45,7 +45,7 @@ const InfoUserBox = () => {
         id: 'numeroDocumento',
         name: 'numeroDocumento',
         label: 'Número de documento',
-        type: 'text',
+        type: 'number',
         value: formData.numeroDocumento
       },
       {
@@ -125,7 +125,7 @@ const InfoUserBox = () => {
               variant="primary"
               disabled={!isFormChanged}
               onClick={updateData}>
-              {isLoading && <Spinner className="spinner-border-sm me-1" tag="span" color="white" />}
+              {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
               {!isLoading && 'Actualizar información'}
             </Button>
           )}

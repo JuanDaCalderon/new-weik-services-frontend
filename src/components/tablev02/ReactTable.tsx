@@ -145,11 +145,13 @@ const ReactTable = <RowType,>({
                   <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
                 ))}
               </tr>
-              {row.getIsExpanded() && renderSubComponent && (
-                <tr>
-                  <td colSpan={row.getVisibleCells().length}>{renderSubComponent({row})}</td>
+              {row.getIsExpanded() && renderSubComponent ? (
+                <tr className="m-0 p-0">
+                  <td className="m-0 p-0" colSpan={row.getVisibleCells().length}>
+                    {renderSubComponent({row})}
+                  </td>
                 </tr>
-              )}
+              ) : null}
             </Fragment>
           ))}
         </tbody>

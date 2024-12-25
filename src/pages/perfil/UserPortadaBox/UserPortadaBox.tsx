@@ -123,39 +123,6 @@ const UserPortadaBox = () => {
               </li>
             </ul>
           </Col>
-          {/* <Col xs={12} sm={4} md={2}>
-            <Card className="tilebox-one m-0">
-              <Card.Body className="p-2">
-                <i className="ri-folder-received-fill float-end text-info"></i>
-                <h6 className="text-dark text-uppercase mt-0">
-                  <span className="d-none d-xl-inline">Proyectos</span> asignados
-                </h6>
-                <h2 className="text-info text-opacity-75 mb-0">1000</h2>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col xs={12} sm={6} md={2}>
-            <Card className="tilebox-one m-0">
-              <Card.Body className="p-2">
-                <i className="ri-alert-fill float-end text-warning"></i>
-                <h6 className="text-dark text-uppercase mt-0">
-                  <span className="d-none d-xl-inline">Proyectos</span> Pendientes
-                </h6>
-                <h2 className="text-warning text-opacity-75 mb-0">800</h2>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col xs={12} sm={6} md={2}>
-            <Card className="tilebox-one m-0">
-              <Card.Body className="p-2">
-                <i className="ri-checkbox-fill float-end text-success"></i>
-                <h6 className="text-dark text-uppercase mt-0">
-                  <span className="d-none d-xl-inline">Proyectos</span> Entregados
-                </h6>
-                <h2 className="text-success text-opacity-75 mb-0">200</h2>
-              </Card.Body>
-            </Card>
-          </Col> */}
         </Row>
       </Card.Body>
     </Card>

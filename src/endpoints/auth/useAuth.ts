@@ -34,7 +34,6 @@ const useAuth = () => {
             email: userCredential.user.email,
             uid: userCredential.user.uid
           } as User;
-          toast.success(`Has iniciado sesión correctamente como ${user?.email}`, {duration: 2200});
           DebugUtil.logSuccess('Has iniciado sesión correctamente', user?.email);
         }
       } catch (error: any) {
@@ -91,11 +90,9 @@ const useAuth = () => {
         let code: string = '';
         error instanceof Error && (code = error.message);
         DebugUtil.logError(code, error);
-        if (code === 'Firebase: Error (auth/user-not-found).') {
+        if (code === 'Firebase: Error (auth/user-not-found).')
           toast.error('¡Ups parece que no tenemos ningún usuario registrado con este email!');
-        } else {
-          toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
-        }
+        else toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
       }
       return returnEmail;
     },

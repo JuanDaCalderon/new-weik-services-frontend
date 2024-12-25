@@ -3,16 +3,18 @@ import {Link} from 'react-router-dom';
 import {PageBreadcrumb} from '@/components';
 import {memo, useEffect} from 'react';
 import {TabContentItem} from '@/types';
-import {Roles} from './Roles';
 import {Usuarios} from './Usuarios';
 import {useGetEmployees} from '@/endpoints';
+import Roles from './roles';
+import {Toaster} from 'react-hot-toast';
+
+const tabContents: TabContentItem[] = [
+  {id: 'Roles', title: 'Roles'},
+  {id: 'Usuarios', title: 'Usuarios'}
+];
 
 const RolesYPermisos = memo(function RolesYPermisos() {
   const {getEmployeesListener} = useGetEmployees();
-  const tabContents: TabContentItem[] = [
-    {id: 'Roles', title: 'Roles'},
-    {id: 'Usuarios', title: 'Usuarios'}
-  ];
 
   useEffect(() => {
     const employeesUnsubscribe = getEmployeesListener();
@@ -28,10 +30,12 @@ const RolesYPermisos = memo(function RolesYPermisos() {
         <Card.Body>
           <Row>
             <Tab.Container defaultActiveKey="Roles">
-              <Col xs={12} md={2} xl={1}>
-                <Nav variant="pills" className="flex-column">
+              <Col xs={12} md={2} xxl={1}>
+                <Nav
+                  variant="pills"
+                  className="flex-column bg-light bg-gradient bg-opacity-50 rounded">
                   {tabContents.map((tab, index) => (
-                    <Nav.Item key={index}>
+                    <Nav.Item className="w-100" key={index}>
                       <Nav.Link as={Link} to="#" eventKey={tab.id}>
                         {tab.title}
                       </Nav.Link>
@@ -39,7 +43,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
                   ))}
                 </Nav>
               </Col>
-              <Col xs={12} md={10} xl={11}>
+              <Col xs={12} md={10} xxl={11}>
                 <Tab.Content>
                   {tabContents.map((tab, index) => (
                     <Tab.Pane eventKey={tab.id} key={index}>
@@ -57,6 +61,16 @@ const RolesYPermisos = memo(function RolesYPermisos() {
           </Row>
         </Card.Body>
       </Card>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#4f565c',
+            color: '#fff'
+          }
+        }}
+      />
     </>
   );
 });

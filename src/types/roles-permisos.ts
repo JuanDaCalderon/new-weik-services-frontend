@@ -3,6 +3,7 @@ import {Employee} from './users';
 export type Permiso = {
   id: string;
   permiso: string;
+  labelName: string;
 };
 
 export type Rol = {
@@ -21,9 +22,38 @@ export type PayLoadRolesPermisosType = {
   permisos: Permiso[];
 };
 
+export type RolCreationBasics = Partial<
+  Omit<
+    Rol,
+    | 'id'
+    | 'usuarioCreacion'
+    | 'usuarioUpdated'
+    | 'fechaCreacion'
+    | 'fechaActualizacion'
+    | 'permisos'
+  >
+>;
+
 /* -------- Utils -------- */
 
 export type TabContentItem = {
   id: string;
   title: string;
 };
+
+export type thisRol = {
+  id: number;
+  rolName: string;
+  createdBy: string;
+  updatedBy: string;
+  ribbonCreatedDate: Date;
+  createdDate: string;
+  updatedDate: string;
+  RolePermisos: string;
+  RoleUsuarios: string;
+  descripcion: string;
+};
+
+export interface PermisoByRoles extends Permiso {
+  activo: boolean;
+}

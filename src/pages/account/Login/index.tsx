@@ -4,7 +4,7 @@ import {Link, Navigate} from 'react-router-dom';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import useLogin, {LoginFormFields, loginFormSchema} from './useLogin';
 import {PAGE_RECOVERY_PASSWORD} from '@/constants';
-import toast, {Toaster} from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import {useEffect} from 'react';
 import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores';
@@ -12,11 +12,9 @@ import {isUserLoggedInSelector} from '@/store/selectores';
 export default function Login() {
   const {loading, login} = useLogin();
   const isLoggedIn = useAppSelector(isUserLoggedInSelector);
-
   useEffect(() => {
     toast.remove();
   }, []);
-
   if (isLoggedIn) return <Navigate to="/services/dashboard" />;
   return (
     <AccountWrapper>
@@ -60,16 +58,6 @@ export default function Login() {
         />
         <SendButton loading={loading} text="Ingresar" />
       </Form>
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          duration: 5000,
-          style: {
-            background: '#4f565c',
-            color: '#fff'
-          }
-        }}
-      />
     </AccountWrapper>
   );
 }

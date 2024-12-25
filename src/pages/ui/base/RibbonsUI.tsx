@@ -46,13 +46,7 @@ const Ribbon2 = ({label, color}: RibbonProps) => {
     <Card className="ribbon-box">
       <Card.Body>
         <div className={classNames('ribbon-two', 'ribbon-two-' + color)}>
-          <span
-            className={classNames(
-              {'bg-dark text-light': color === 'dark'},
-              {'bg-secondary text-light': color === 'secondary'}
-            )}>
-            {label}
-          </span>
+          <span>{label}</span>
         </div>
         <p className="mb-0">
           Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at

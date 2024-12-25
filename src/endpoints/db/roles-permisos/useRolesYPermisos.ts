@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import {
   collection,
   DocumentReference,
@@ -7,16 +7,26 @@ import {
   onSnapshot,
   query,
   getDocs,
-  Timestamp
+  Timestamp,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  setDoc
 } from 'firebase/firestore';
 import {db} from '@/firebase';
-import {PERMISOS_PATH, ROLES_PATH} from '@/constants';
-import {Rol, Permiso, Employee} from '@/types';
+import {PERMISOS_PATH, ROLES_PATH, USUARIOS_PATH} from '@/constants';
+import {Rol, Permiso, Employee, PermisoByRoles, RolCreationBasics} from '@/types';
 import {useDispatch} from 'react-redux';
 import {clearPermisos, clearRoles, setPermisos, setRoles} from '@/store/slices/roles-permisos';
 import {DateUtils, DebugUtil} from '@/utils';
+import toast from 'react-hot-toast';
+import {useAppSelector} from '@/store';
+import {selectUser} from '@/store/selectores';
 
 const useRolesYPermisos = () => {
+  const [isLoadingCreatinRol, setIsLoadingCreatinRol] = useState<boolean>(false);
+  const {id} = useAppSelector(selectUser);
   const dispatch = useDispatch();
 
   const getPermisos = useCallback((permisos: Array<DocumentReference> = []) => {
@@ -24,7 +34,8 @@ const useRolesYPermisos = () => {
       const permisoDocSnap = await getDoc(permisoRef);
       return {
         id: permisoDocSnap.id,
-        permiso: permisoDocSnap.data()?.permiso ?? ''
+        permiso: permisoDocSnap.data()?.permiso ?? '',
+        labelName: permisoDocSnap.data()?.labelName ?? ''
       } as Permiso;
     });
   }, []);
@@ -163,10 +174,11 @@ const useRolesYPermisos = () => {
       unsubscribe = onSnapshot(collection(db, PERMISOS_PATH), async (querySnapshotDocs) => {
         const permisos: Permiso[] = [];
         for (const doc of querySnapshotDocs.docs) {
-          const {permiso} = doc.data();
+          const {permiso, labelName} = doc.data();
           permisos.push({
             id: doc.id,
-            permiso: permiso ?? ''
+            permiso: permiso ?? '',
+            labelName: labelName ?? ''
           });
         }
         dispatch(clearPermisos());
@@ -187,10 +199,11 @@ const useRolesYPermisos = () => {
       const permisos: Permiso[] = [];
       const queryDocs = await getDocs(collection(db, PERMISOS_PATH));
       for (const doc of queryDocs.docs) {
-        const {permiso} = doc.data();
+        const {permiso, labelName} = doc.data();
         permisos.push({
           id: doc.id,
-          permiso: permiso ?? ''
+          permiso: permiso ?? '',
+          labelName: labelName ?? ''
         });
       }
       dispatch(setPermisos(permisos));
@@ -203,11 +216,104 @@ const useRolesYPermisos = () => {
     }
   }, [dispatch]);
 
+  const agregarPermisoARol = useCallback(async (rolId: string, permisoRef: DocumentReference) => {
+    try {
+      const rolDocRef = doc(db, ROLES_PATH, rolId);
+      await updateDoc(rolDocRef, {
+        permisos: arrayUnion(permisoRef)
+      });
+      DebugUtil.logSuccess(`Se ha agregado el permiso correctamente al rol con id: ${rolId}`);
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+    }
+  }, []);
+
+  const quitarPermisoDeRol = useCallback(async (rolId: string, permisoRef: DocumentReference) => {
+    try {
+      const rolDocRef = doc(db, ROLES_PATH, rolId);
+      await updateDoc(rolDocRef, {
+        permisos: arrayRemove(permisoRef)
+      });
+      DebugUtil.logSuccess(`Se ha quitado el permiso correctamente al rol con id: ${rolId}`);
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+    }
+  }, []);
+
+  const updateActualizadoUserAndDate = useCallback(
+    async (rolId: string) => {
+      try {
+        const rolDocRef = doc(db, ROLES_PATH, rolId);
+        const userDocRef = doc(db, USUARIOS_PATH, id);
+        await updateDoc(rolDocRef, {
+          usuarioUpdated: userDocRef,
+          fechaActualizacion: Timestamp.now()
+        });
+        DebugUtil.logSuccess(`Se ha actualizado el usuario y hora de actualización del rol`);
+      } catch (error: any) {
+        toast.error(
+          'Ha ocurrido un error al actualizar el usuario y hora de actualización del rol'
+        );
+        DebugUtil.logError(error.message, error);
+      }
+    },
+    [id]
+  );
+
+  const updatePermisosDeRol = useCallback(
+    async (rolId: string, permisosCambiados: PermisoByRoles[]) => {
+      try {
+        for (const permiso of permisosCambiados) {
+          const permisoRef = doc(db, PERMISOS_PATH, permiso.id);
+          if (permiso.activo) await agregarPermisoARol(rolId, permisoRef);
+          else await quitarPermisoDeRol(rolId, permisoRef);
+          await updateActualizadoUserAndDate(rolId);
+        }
+        toast.success('Se han actualizado los permisos del rol correctamente');
+      } catch (error: any) {
+        toast.error('Ha ocurrido un error al actualizar los permisos del rol');
+        DebugUtil.logError(error.message, error);
+      }
+    },
+    [agregarPermisoARol, quitarPermisoDeRol, updateActualizadoUserAndDate]
+  );
+
+  const createRol = useCallback(
+    async (rolCreationBasics: RolCreationBasics, newRoleIndex: string) => {
+      setIsLoadingCreatinRol(true);
+      try {
+        const userDocRef = doc(db, USUARIOS_PATH, id);
+        await setDoc(doc(db, ROLES_PATH, newRoleIndex), {
+          rol: rolCreationBasics.rol?.toLowerCase(),
+          descripcion: rolCreationBasics.descripcion?.toLowerCase(),
+          permisos: [],
+          usuarioCreacion: userDocRef,
+          usuarioUpdated: userDocRef,
+          fechaActualizacion: Timestamp.now(),
+          fechaCreacion: Timestamp.now()
+        });
+        DebugUtil.logSuccess(`Rol ${rolCreationBasics.rol} creado correctamente`);
+        toast.success(`Rol ${rolCreationBasics.rol} creado correctamente`);
+      } catch (error: any) {
+        DebugUtil.logError(error.message, error);
+        toast.error(
+          'Ocurrió un error al intentar crear el rol, por favor intenta de nuevo más tarde'
+        );
+      } finally {
+        setIsLoadingCreatinRol(false);
+      }
+    },
+    [id]
+  );
+
   return {
     getRolesListener,
     getRolesSync,
     getPermisosListener,
-    getPermisosSync
+    getPermisosSync,
+    updatePermisosDeRol,
+    createRol,
+    isLoadingCreatinRol
   };
 };
 

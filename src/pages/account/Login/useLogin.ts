@@ -6,6 +6,7 @@ import {extractDomain} from '@/utils';
 import {useAuth} from '@/endpoints';
 import {DebugUtil} from '@/utils';
 import {useNavigate} from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export const loginFormSchema = object({
   email: string()
@@ -38,16 +39,15 @@ export default function useLogin() {
             })
           );
           DebugUtil.logSuccess('Sesión iniciada en el store', user);
+          navigate('/services/dashboard');
           setTimeout(() => {
-            navigate('/services/dashboard');
-          }, 2500);
+            toast.success(`Has iniciado sesión correctamente como ${user?.email}`);
+          }, 1000);
         }
       } catch (error: any) {
         DebugUtil.logError(error.toString(), error);
       } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        setLoading(false);
       }
     },
     [authLogIn, dispatch, navigate]

@@ -20,7 +20,8 @@ const useGetUsers = () => {
       const permisoDocSnap = await getDoc(permisoRef);
       return {
         id: permisoDocSnap.id,
-        permiso: permisoDocSnap.data()?.permiso ?? ''
+        permiso: permisoDocSnap.data()?.permiso ?? '',
+        labelName: permisoDocSnap.data()?.labelName ?? ''
       } as Permiso;
     });
   }, []);

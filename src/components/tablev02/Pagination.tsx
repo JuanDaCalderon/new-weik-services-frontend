@@ -103,7 +103,9 @@ const Pagination = <RowType,>({
           className={classNames('page-item', 'paginate_button', 'next', {
             disabled: !table.getCanNextPage()
           })}
-          onClick={() => table.nextPage()}>
+          onClick={() => {
+            if (table.getCanNextPage()) table.nextPage();
+          }}>
           <button className="page-link">
             <i className="mdi mdi-chevron-right"></i>
           </button>

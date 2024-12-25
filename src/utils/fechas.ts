@@ -108,6 +108,15 @@ class DateUtils {
     if (includeTime) return `${formattedDate}, ${DateUtils.getTimeOnly(date)}`;
     return formattedDate;
   }
+  /** Devuelve true si la fecha es de hoy */
+  static isToday(date: Date): boolean {
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  }
 }
 
 export {DateUtils};
