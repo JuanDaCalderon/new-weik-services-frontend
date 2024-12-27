@@ -1,4 +1,4 @@
-import {Employee, User} from '@/types';
+import {Employee, thisUsuarios, User} from '@/types';
 
 /**
  * Obtiene el nombre completo del usuario. Si no tiene nombres o apellidos, retorna el nombre de usuario;
@@ -7,7 +7,7 @@ import {Employee, User} from '@/types';
  * @param {User | Employee} user - El objeto del usuario que contiene la información personal.
  * @returns {string} El nombre completo, nombre de usuario o correo electrónico del usuario.
  */
-const getNombreCompletoUser = (user: User | Employee): string => {
+const getNombreCompletoUser = (user: User | Employee | thisUsuarios): string => {
   const {apellidos, email, nombres, userName} = user;
   if (nombres !== '' || apellidos !== '') return `${nombres} ${apellidos}`;
   else if (userName !== '') return userName;
@@ -21,7 +21,7 @@ const getNombreCompletoUser = (user: User | Employee): string => {
  * @param {User | Employee} user - El objeto del usuario que contiene la información personal.
  * @returns {string} El nombre de usuario, nombre completo o correo electrónico del usuario.
  */
-const getUserNameUser = (user: User | Employee): string => {
+const getUserNameUser = (user: User | Employee | thisUsuarios): string => {
   const {apellidos, email, nombres, userName} = user;
   if (userName !== '') return userName;
   else if (nombres !== '' || apellidos !== '') return `${nombres} ${apellidos}`;
@@ -35,7 +35,7 @@ const getUserNameUser = (user: User | Employee): string => {
  * @param {User | Employee} user - El objeto del usuario que contiene la información laboral.
  * @returns {string} Los roles o cargo del usuario, o "Sin Rol" si no se encuentra información.
  */
-const getRolesUser = (user: User | Employee): string => {
+const getRolesUser = (user: User | Employee | thisUsuarios): string => {
   const {roles, cargo} = user;
   if (roles && roles.length > 0) return roles.map((rol) => rol.rol).join(' - ');
   else if (cargo !== '') return cargo;
@@ -49,7 +49,7 @@ const getRolesUser = (user: User | Employee): string => {
  * @param {User | Employee} user - El objeto del usuario que contiene la información laboral.
  * @returns {string} El cargo o roles del usuario, o "Sin Cargo" si no se encuentra información.
  */
-const getCargoUser = (user: User | Employee): string => {
+const getCargoUser = (user: User | Employee | thisUsuarios): string => {
   const {cargo, roles} = user;
   if (cargo !== '') return cargo;
   else if (roles && roles.length > 0) return roles.map((rol) => rol.rol).join(' - ');

@@ -26,6 +26,7 @@ import {selectUser} from '@/store/selectores';
 
 const useRolesYPermisos = () => {
   const [isLoadingCreatinRol, setIsLoadingCreatinRol] = useState<boolean>(false);
+  const [isLoadingUpdatingPermisos, setIsLoadingUpdatingPermisos] = useState<boolean>(false);
   const {id} = useAppSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -262,6 +263,7 @@ const useRolesYPermisos = () => {
 
   const updatePermisosDeRol = useCallback(
     async (rolId: string, permisosCambiados: PermisoByRoles[]) => {
+      setIsLoadingUpdatingPermisos(true);
       try {
         for (const permiso of permisosCambiados) {
           const permisoRef = doc(db, PERMISOS_PATH, permiso.id);
@@ -273,6 +275,8 @@ const useRolesYPermisos = () => {
       } catch (error: any) {
         toast.error('Ha ocurrido un error al actualizar los permisos del rol');
         DebugUtil.logError(error.message, error);
+      } finally {
+        setIsLoadingUpdatingPermisos(false);
       }
     },
     [agregarPermisoARol, quitarPermisoDeRol, updateActualizadoUserAndDate]
@@ -313,7 +317,8 @@ const useRolesYPermisos = () => {
     getPermisosSync,
     updatePermisosDeRol,
     createRol,
-    isLoadingCreatinRol
+    isLoadingCreatinRol,
+    isLoadingUpdatingPermisos
   };
 };
 

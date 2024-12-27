@@ -3,10 +3,11 @@ import {Link} from 'react-router-dom';
 import {PageBreadcrumb} from '@/components';
 import {memo, useEffect} from 'react';
 import {TabContentItem} from '@/types';
-import {Usuarios} from './Usuarios';
+import {Usuarios} from './usuarios/Usuarios';
 import {useGetEmployees} from '@/endpoints';
 import Roles from './roles';
 import {Toaster} from 'react-hot-toast';
+import {RolesUsuariosProvider} from './context';
 
 const tabContents: TabContentItem[] = [
   {id: 'Roles', title: 'Roles'},
@@ -24,7 +25,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
   }, [getEmployeesListener]);
 
   return (
-    <>
+    <RolesUsuariosProvider>
       <PageBreadcrumb title="Roles y Permisos" />
       <Card>
         <Card.Body>
@@ -71,7 +72,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
           }
         }}
       />
-    </>
+    </RolesUsuariosProvider>
   );
 });
 

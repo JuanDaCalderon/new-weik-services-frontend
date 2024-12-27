@@ -47,10 +47,12 @@ export type thisRol = {
   createdBy: string;
   updatedBy: string;
   ribbonCreatedDate: Date;
+  ribbonUpdatedDate: Date;
   createdDate: string;
   updatedDate: string;
   RolePermisos: string;
   RoleUsuarios: string;
+  usuarios: Employee[];
   descripcion: string;
 };
 

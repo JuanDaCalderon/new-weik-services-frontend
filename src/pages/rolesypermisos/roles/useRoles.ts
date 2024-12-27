@@ -45,6 +45,7 @@ export default function useRoles() {
         descripcion: rol.descripcion,
         createdBy: rol.usuarioCreacion.email,
         ribbonCreatedDate: DateUtils.parseStringToDate(rol.fechaCreacion),
+        ribbonUpdatedDate: DateUtils.parseStringToDate(rol.fechaActualizacion),
         createdDate: DateUtils.formatShortDate(DateUtils.parseStringToDate(rol.fechaCreacion)),
         updatedBy: rol.usuarioUpdated.email,
         updatedDate: DateUtils.formatShortDate(
@@ -52,7 +53,10 @@ export default function useRoles() {
           true
         ),
         RolePermisos: `${numeroRoles} ${numeroRoles === 1 ? 'permiso' : 'permisos'}`,
-        RoleUsuarios: `${numeroUsuarios} ${numeroUsuarios === 1 ? 'usuario' : 'usuarios'}`
+        RoleUsuarios: `${numeroUsuarios} ${numeroUsuarios === 1 ? 'usuario' : 'usuarios'}`,
+        usuarios: employeesFromStore.filter((employee) =>
+          employee.roles.some((thisRol) => thisRol.id === String(id))
+        )
       };
     });
   }, [employeesFromStore, rolesFromStore]);

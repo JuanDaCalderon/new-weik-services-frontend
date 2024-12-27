@@ -79,3 +79,21 @@ export type PayLoadUserType = {
   isLoggedIn: boolean;
   rememberme: boolean;
 };
+
+/* -------- Utils -------- */
+
+export type thisUsuarios = {
+  id: number;
+  email: string;
+  nombres: string;
+  apellidos: string;
+  userName: string;
+  userImage: string;
+  cargo: string;
+  roles: Omit<
+    Rol,
+    'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion' | 'usuarioUpdated'
+  >[];
+  permisosOtorgados: Permiso[];
+  permisosDenegados: Permiso[];
+};
