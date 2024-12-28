@@ -52,8 +52,13 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
   return (
     <Row className="m-0 py-2 column-gap-1 bg-light-subtle">
       <span>
+        <i className="mdi mdi-arrow-up-left-bold font-16" />
         <strong>Permisos del rol {row.original.rolName}</strong>
       </span>
+      <p className="my-0 py-0">
+        Asigna los permisos a este rol utilizando los toggles que se encuentran a continuación.
+        Activa o desactiva según sea necesario y luego guarda los cambios.
+      </p>
       {thisPermisos.map(({id, permiso, labelName, activo}) => (
         <Col key={id} className="d-flex align-items-center mt-2" xs="auto">
           <span className="me-1">{labelName}</span>
@@ -71,7 +76,7 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
           />
         </Col>
       ))}
-      <Col xs="auto" md={12} className="ms-auto mt-2">
+      <Col xs="auto" md={12} className="ms-auto mt-2 pt-1">
         <Button
           className="shadow-sm"
           variant="info"

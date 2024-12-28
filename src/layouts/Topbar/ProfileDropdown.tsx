@@ -18,7 +18,8 @@ const profileMenus: ProfileOption[] = [
   {
     label: 'Roles y Permisos',
     icon: 'mdi mdi-account-edit',
-    redirectTo: PAGE_ROLES_PERMISOS
+    redirectTo: PAGE_ROLES_PERMISOS,
+    permisoId: 'acceso-roles-permisos'
   },
   {
     label: 'Cerrar sesión',
@@ -39,6 +40,16 @@ const ProfileDropdown = () => {
     if (user.userImage && user.userImage !== '') return user.userImage;
     else return fallBackLogo;
   }, [user.userImage]);
+
+  const profileMenuOptions = useMemo(() => {
+    const newProfileMenu = profileMenus.filter((menu) => {
+      if (!menu.permisoId) return true;
+      return user.roles.some((rol) =>
+        rol.permisos?.some((permiso) => permiso.permiso === menu.permisoId)
+      );
+    });
+    return newProfileMenu;
+  }, [user.roles]);
 
   return (
     <Dropdown show={isOpen} onToggle={toggleDropdown}>
@@ -69,7 +80,7 @@ const ProfileDropdown = () => {
           <div className="dropdown-header noti-title">
             <h6 className="text-overflow m-0">Bienvenido!</h6>
           </div>
-          {profileMenus.map((item, i) => {
+          {(profileMenuOptions || []).map((item, i) => {
             return (
               <Link
                 to={item.redirectTo}

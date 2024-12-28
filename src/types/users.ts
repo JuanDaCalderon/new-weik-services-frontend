@@ -80,6 +80,11 @@ export type PayLoadUserType = {
   rememberme: boolean;
 };
 
+export type PayLoadUsers = {
+  users: Employee[];
+  isLoadingUsers: boolean;
+};
+
 /* -------- Utils -------- */
 
 export type thisUsuarios = {

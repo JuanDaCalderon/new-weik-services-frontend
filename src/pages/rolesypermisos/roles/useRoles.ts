@@ -1,25 +1,16 @@
 import {rolesSelector} from '@/store/selectores';
 import {useAppSelector} from '@/store';
-import {selectEmployees} from '@/store/selectores/users';
-import {useCallback, useEffect, useMemo} from 'react';
+import {selectEmployees, selectisLoadingEmployees} from '@/store/selectores/users';
+import {useCallback, useMemo} from 'react';
 import {useRolesYPermisos} from '@/endpoints';
 import {RolCreationBasics, thisRol} from '@/types';
 import {DateUtils, DebugUtil} from '@/utils';
 
 export default function useRoles() {
-  const {getPermisosListener, getRolesListener, createRol, isLoadingCreatinRol} =
-    useRolesYPermisos();
+  const {createRol, isLoadingCreatinRol} = useRolesYPermisos();
   const rolesFromStore = useAppSelector(rolesSelector);
   const employeesFromStore = useAppSelector(selectEmployees);
-
-  useEffect(() => {
-    const rolesUnsubscribe = getRolesListener();
-    const permisosUnsubscribe = getPermisosListener();
-    return () => {
-      rolesUnsubscribe();
-      permisosUnsubscribe();
-    };
-  }, [getPermisosListener, getRolesListener]);
+  const isLoadingEmployees = useAppSelector(selectisLoadingEmployees);
 
   const newRoleIndex: string = useMemo((): string => {
     let newRoleIndex: number = rolesFromStore.length + 1;
@@ -53,13 +44,15 @@ export default function useRoles() {
           true
         ),
         RolePermisos: `${numeroRoles} ${numeroRoles === 1 ? 'permiso' : 'permisos'}`,
-        RoleUsuarios: `${numeroUsuarios} ${numeroUsuarios === 1 ? 'usuario' : 'usuarios'}`,
+        RoleUsuarios: !isLoadingEmployees
+          ? `${numeroUsuarios} ${numeroUsuarios === 1 ? 'usuario' : 'usuarios'}`
+          : null,
         usuarios: employeesFromStore.filter((employee) =>
           employee.roles.some((thisRol) => thisRol.id === String(id))
         )
       };
     });
-  }, [employeesFromStore, rolesFromStore]);
+  }, [employeesFromStore, isLoadingEmployees, rolesFromStore]);
 
   const sendRol = useCallback(
     async (rolCreationBasics: RolCreationBasics) => {

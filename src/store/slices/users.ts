@@ -1,22 +1,37 @@
 import {USERS_NAME} from '@/constants';
-import {Employee} from '@/types';
+import {Employee, PayLoadUsers} from '@/types';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 
-const initialState: Employee[] = [];
+const initialState: PayLoadUsers = {
+  users: [],
+  isLoadingUsers: false
+};
 
 export const usersSlice = createSlice({
   name: USERS_NAME,
   initialState,
   reducers: {
-    setUsers: (_state: Employee[], action: PayloadAction<Employee[]>) => {
-      return [...action.payload];
+    setUsers: (state: PayLoadUsers, action: PayloadAction<Employee[]>) => {
+      return {
+        ...state,
+        users: [...action.payload]
+      };
     },
-    clearUsers: () => {
-      return [];
+    setIsloadingUsers: (state: PayLoadUsers, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        isLoadingUsers: action.payload
+      };
+    },
+    clearUsers: (_state: PayLoadUsers, action: PayloadAction<boolean>) => {
+      return {
+        users: [],
+        isLoadingUsers: action.payload ?? false
+      };
     }
   }
 });
 
-export const {setUsers, clearUsers} = usersSlice.actions;
+export const {setUsers, clearUsers, setIsloadingUsers} = usersSlice.actions;
 export default usersSlice.reducer;

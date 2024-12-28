@@ -27,6 +27,9 @@ import {selectUser} from '@/store/selectores';
 const useRolesYPermisos = () => {
   const [isLoadingCreatinRol, setIsLoadingCreatinRol] = useState<boolean>(false);
   const [isLoadingUpdatingPermisos, setIsLoadingUpdatingPermisos] = useState<boolean>(false);
+  const [isLoadingAddAndRemoveRolToUser, setIsLoadingAddAndRemoveRolToUser] =
+    useState<boolean>(false);
+  const [isLoadingUpdatingBasics, setIsLoadingUpdatingBasics] = useState<boolean>(false);
   const {id} = useAppSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -310,6 +313,73 @@ const useRolesYPermisos = () => {
     [id]
   );
 
+  const addRolToUser = useCallback(async (roleId: string, addUsers: string[] = []) => {
+    setIsLoadingAddAndRemoveRolToUser(true);
+    try {
+      if (addUsers.length > 0) {
+        let userDocRef: DocumentReference;
+        const rolDocRef = doc(db, ROLES_PATH, roleId);
+        for (const userId of addUsers) {
+          userDocRef = doc(db, USUARIOS_PATH, userId);
+          await updateDoc(userDocRef, {
+            roles: arrayUnion(rolDocRef)
+          });
+        }
+        DebugUtil.logSuccess(`Se ha agregado este rol a los usuarios`);
+        toast.success('Se han agregado los usuarios del rol correctamente');
+      }
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+      toast.error('Ocurrió un error durante el proceso de asignación de este rol a los usuarios.');
+    } finally {
+      setIsLoadingAddAndRemoveRolToUser(false);
+    }
+  }, []);
+
+  const removeRolToUser = useCallback(async (roleId: string, removeUsers: string[] = []) => {
+    setIsLoadingAddAndRemoveRolToUser(true);
+    try {
+      if (removeUsers.length > 0) {
+        let userDocRef: DocumentReference;
+        const rolDocRef = doc(db, ROLES_PATH, roleId);
+        for (const userId of removeUsers) {
+          userDocRef = doc(db, USUARIOS_PATH, userId);
+          await updateDoc(userDocRef, {
+            roles: arrayRemove(rolDocRef)
+          });
+        }
+        DebugUtil.logSuccess(`Se ha removido este rol de los usuarios`);
+        toast.success('Se han removido los usuarios del rol correctamente');
+      }
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+      toast.error('Ocurrió un error durante el proceso de remover este rol de los usuarios.');
+    } finally {
+      setIsLoadingAddAndRemoveRolToUser(false);
+    }
+  }, []);
+
+  const updateRolBasics = useCallback(
+    async (roleId: string, rolBasicsUpdated: RolCreationBasics) => {
+      setIsLoadingUpdatingBasics(true);
+      try {
+        const rolDocRef = doc(db, ROLES_PATH, roleId);
+        await updateDoc(rolDocRef, {
+          ...rolBasicsUpdated
+        });
+        await updateActualizadoUserAndDate(roleId);
+        DebugUtil.logSuccess('El rol se actualizó correctamente.');
+        toast.success('El rol se actualizó correctamente.');
+      } catch (error: any) {
+        DebugUtil.logError(error.message, error);
+        toast.error('Se produjo un error al actualizar los datos del rol.');
+      } finally {
+        setIsLoadingUpdatingBasics(false);
+      }
+    },
+    [updateActualizadoUserAndDate]
+  );
+
   return {
     getRolesListener,
     getRolesSync,
@@ -317,8 +387,13 @@ const useRolesYPermisos = () => {
     getPermisosSync,
     updatePermisosDeRol,
     createRol,
+    addRolToUser,
+    removeRolToUser,
+    updateRolBasics,
     isLoadingCreatinRol,
-    isLoadingUpdatingPermisos
+    isLoadingUpdatingPermisos,
+    isLoadingAddAndRemoveRolToUser,
+    isLoadingUpdatingBasics
   };
 };
 

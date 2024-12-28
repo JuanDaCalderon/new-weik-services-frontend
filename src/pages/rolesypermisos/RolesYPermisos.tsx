@@ -4,7 +4,7 @@ import {PageBreadcrumb} from '@/components';
 import {memo, useEffect} from 'react';
 import {TabContentItem} from '@/types';
 import {Usuarios} from './usuarios/Usuarios';
-import {useGetEmployees} from '@/endpoints';
+import {useGetEmployees, useRolesYPermisos} from '@/endpoints';
 import Roles from './roles';
 import {Toaster} from 'react-hot-toast';
 import {RolesUsuariosProvider} from './context';
@@ -15,14 +15,19 @@ const tabContents: TabContentItem[] = [
 ];
 
 const RolesYPermisos = memo(function RolesYPermisos() {
+  const {getPermisosListener, getRolesListener} = useRolesYPermisos();
   const {getEmployeesListener} = useGetEmployees();
 
   useEffect(() => {
     const employeesUnsubscribe = getEmployeesListener();
+    const rolesUnsubscribe = getRolesListener();
+    const permisosUnsubscribe = getPermisosListener();
     return () => {
       employeesUnsubscribe();
+      rolesUnsubscribe();
+      permisosUnsubscribe();
     };
-  }, [getEmployeesListener]);
+  }, [getEmployeesListener, getPermisosListener, getRolesListener]);
 
   return (
     <RolesUsuariosProvider>

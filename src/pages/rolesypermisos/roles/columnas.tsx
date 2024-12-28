@@ -4,7 +4,7 @@ import {Badge} from 'react-bootstrap';
 import {DateUtils} from '@/utils';
 import type {Row} from '@tanstack/react-table';
 import {useRolesUsuariosContext} from '@/pages/rolesypermisos/context';
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 import {ROLES_CELLS} from '@/constants';
 
 const RolNameColumn = memo(function RolNameColumn({row}: {row: Row<thisRol>}) {
@@ -75,22 +75,33 @@ const RoleUsuariosColumn = memo(function RoleUsuariosColumn({row}: {row: Row<thi
   const {updateRolesCell, rolesUsuarios} = useRolesUsuariosContext();
 
   const onClickHandled = useCallback(() => {
-    const toggleHandler = row.getToggleExpandedHandler();
-    if (row.getIsExpanded() && rolesUsuarios.rolesCell !== ROLES_CELLS.usuarios) toggleHandler();
-    updateRolesCell(ROLES_CELLS.usuarios);
-    toggleHandler();
+    if (row.original.RoleUsuarios) {
+      const toggleHandler = row.getToggleExpandedHandler();
+      if (row.getIsExpanded() && rolesUsuarios.rolesCell !== ROLES_CELLS.usuarios) toggleHandler();
+      updateRolesCell(ROLES_CELLS.usuarios);
+      toggleHandler();
+    }
   }, [rolesUsuarios.rolesCell, row, updateRolesCell]);
+
+  const roleUsuarios: string = useMemo(() => {
+    return row.original.RoleUsuarios ? row.original.RoleUsuarios : 'cargando';
+  }, [row.original.RoleUsuarios]);
+
+  const getfeedbackIcon = (): string => {
+    if (row.getIsExpanded() && rolesUsuarios.rolesCell === ROLES_CELLS.usuarios) return '👇';
+    else return row.original.RoleUsuarios ? '👉' : '⏳';
+  };
 
   return (
     <div
-      className="ribbon-box cursor-pointer no-user-text-selectable scale-hover"
+      className={`ribbon-box no-user-text-selectable ${row.original.RoleUsuarios && 'cursor-pointer scale-hover'}`}
       style={{transformOrigin: 'center'}}
       onClick={onClickHandled}>
       <span className="me-1" style={{width: '20px', height: '20px'}}>
-        {row.getIsExpanded() && rolesUsuarios.rolesCell === ROLES_CELLS.usuarios ? '👇' : '👉'}
+        {getfeedbackIcon()}
       </span>
       <Badge bg="" pill className="me-1 badge-outline-warning font-14">
-        {row.original.RoleUsuarios}
+        {roleUsuarios}
       </Badge>
     </div>
   );

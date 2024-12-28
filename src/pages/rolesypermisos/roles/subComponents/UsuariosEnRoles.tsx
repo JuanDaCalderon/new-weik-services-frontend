@@ -7,11 +7,14 @@ import {useAppSelector} from '@/store';
 import {selectEmployees} from '@/store/selectores/users';
 import {getUserNameUser} from '@/utils';
 import toast from 'react-hot-toast';
+import {useRolesYPermisos} from '@/endpoints';
+import {Spinner} from '@/components';
 
 const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<thisRol>}) {
   const [selectedOptions, setSelectedOptions] = useState<{value: string; label: string}[]>([]);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
   const employees = useAppSelector(selectEmployees);
+  const {addRolToUser, removeRolToUser, isLoadingAddAndRemoveRolToUser} = useRolesYPermisos();
   const usuariosIniciales = useMemo(() => {
     return (row.original.usuarios || []).map<{value: string; label: string}>((employee) => {
       return {
@@ -45,35 +48,41 @@ const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
     const addedUsers = Array.from(selectedValues).filter((value) => !initialValues.has(value));
     const removedUsers = Array.from(initialValues).filter((value) => !selectedValues.has(value));
     if (addedUsers.length > 0 || removedUsers.length > 0) {
-      console.log('🚀 ~ Usuarios añadidos y eliminados:', addedUsers, removedUsers);
-      // Aquí puedes realizar la lógica para guardar los cambios en la base de datos
-      const updatedEmployeeIds = [...addedUsers, ...removedUsers];
-      console.log('🚀 ~ handleSave ~ updatedEmployeeIds:', updatedEmployeeIds, row.original.id);
+      await addRolToUser(String(row.original.id), addedUsers);
+      await removeRolToUser(String(row.original.id), removedUsers);
     } else {
       toast.error('No se han realizado cambios');
       setHasTouched(false);
     }
-  }, [row.original.id, selectedOptions, usuariosIniciales]);
+  }, [addRolToUser, removeRolToUser, row.original.id, selectedOptions, usuariosIniciales]);
 
   return (
     <Row className="m-0 py-2 column-gap-1 bg-light-subtle">
-      <span className="mb-1">
+      <span>
+        <i className="mdi mdi-arrow-up-left-bold font-16" />
         <strong>Usuarios del rol {row.original.rolName}</strong>
       </span>
+      <p className="my-0 py-0">
+        Asigna usuarios a este rol utilizando el selector que se muestra a continuación. Agrega o
+        elimina según sea necesario y guarda los cambios.
+      </p>
       <Col lg={12}>
         <Select
           isMulti={true}
           options={options}
           value={selectedOptions}
           onChange={handleSelectChange}
-          className="react-select"
+          className="react-select mt-1"
           classNamePrefix="react-select"
           placeholder="No hay usuarios asignados"
         />
       </Col>
       <Col xs="auto" md={12} className="ms-auto mt-2">
         <Button className="shadow-sm" variant="info" onClick={handleSave} disabled={!hasTouched}>
-          Guardar cambios
+          {isLoadingAddAndRemoveRolToUser && (
+            <Spinner className="spinner-border-sm" tag="span" color="white" />
+          )}
+          {!isLoadingAddAndRemoveRolToUser && 'Guardar cambios'}
         </Button>
       </Col>
     </Row>

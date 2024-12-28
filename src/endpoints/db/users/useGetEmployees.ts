@@ -14,7 +14,7 @@ import {USUARIOS_PATH} from '@/constants';
 import {DebugUtil, DateUtils} from '@/utils';
 import {Employee, Permiso, Rol} from '@/types';
 import {useDispatch} from 'react-redux';
-import {setUsers, clearUsers} from '@/store/slices/users';
+import {setUsers, clearUsers, setIsloadingUsers} from '@/store/slices/users';
 
 const useGetEmployees = () => {
   const dispatch = useDispatch();
@@ -53,6 +53,7 @@ const useGetEmployees = () => {
   );
 
   const getEmployeesListener = useCallback((): Unsubscribe => {
+    dispatch(setIsloadingUsers(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
       unsubscribe = onSnapshot(query(collection(db, USUARIOS_PATH)), async (querySnapshotDocs) => {
@@ -79,8 +80,8 @@ const useGetEmployees = () => {
             informacionLaboral
           } = doc.data();
           const thisRoles = getRoles(roles);
-          const thisPermisosOtorgados = getPermisos(permisosOtorgados);
-          const thisPermisosDenegados = getPermisos(permisosDenegados);
+          const thisPermisosOtorgados = await getPermisos(permisosOtorgados);
+          const thisPermisosDenegados = await getPermisos(permisosDenegados);
           const employee: Employee = {
             id: doc.id,
             email,
@@ -110,8 +111,9 @@ const useGetEmployees = () => {
           };
           employees.push(employee);
         }
-        dispatch(clearUsers());
+        dispatch(clearUsers(true));
         dispatch(setUsers(employees));
+        dispatch(setIsloadingUsers(false));
         DebugUtil.logSuccess('Se cargaron exitosamente los usuarios en la store');
       });
     } catch (error: any) {
@@ -121,6 +123,7 @@ const useGetEmployees = () => {
   }, [dispatch, getPermisos, getRoles]);
 
   const getEmployeesSync = useCallback(async (): Promise<void> => {
+    dispatch(setIsloadingUsers(true));
     try {
       const employees: Employee[] = [];
       const queryDocs = await getDocs(query(collection(db, USUARIOS_PATH)));
@@ -177,6 +180,8 @@ const useGetEmployees = () => {
       DebugUtil.logSuccess('Se cargaron exitosamente los usuarios en la store sincronamente');
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
+    } finally {
+      dispatch(setIsloadingUsers(false));
     }
   }, [dispatch, getPermisos, getRoles]);
 

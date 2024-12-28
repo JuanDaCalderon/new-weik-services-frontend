@@ -51,7 +51,7 @@ export type thisRol = {
   createdDate: string;
   updatedDate: string;
   RolePermisos: string;
-  RoleUsuarios: string;
+  RoleUsuarios: string | null;
   usuarios: Employee[];
   descripcion: string;
 };
