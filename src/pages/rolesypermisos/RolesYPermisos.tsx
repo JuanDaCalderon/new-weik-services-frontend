@@ -1,5 +1,5 @@
 import {Row, Col, Card, Tab, Nav} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import {PageBreadcrumb} from '@/components';
 import {memo, useEffect} from 'react';
 import {TabContentItem} from '@/types';
@@ -11,6 +11,9 @@ import {RolesUsuariosProvider} from './context';
 import {useAppSelector} from '@/store';
 import {selectisLoadingEmployees} from '@/store/selectores/users';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
+import {selectUser} from '@/store/selectores';
+import {hasPermission} from '@/utils';
+import {PERMISOS_MAP_IDS} from '@/constants';
 
 const tabContents: TabContentItem[] = [
   {id: 'Roles', title: 'Roles'},
@@ -21,6 +24,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
   const {getPermisosListener, getRolesListener} = useRolesYPermisos();
   const {getEmployeesListener} = useGetEmployees();
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     const employeesUnsubscribe = getEmployeesListener();
@@ -32,6 +36,17 @@ const RolesYPermisos = memo(function RolesYPermisos() {
       permisosUnsubscribe();
     };
   }, [getEmployeesListener, getPermisosListener, getRolesListener]);
+
+  if (
+    !hasPermission(
+      PERMISOS_MAP_IDS.accesoRolesPermisos,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    )
+  ) {
+    return <Navigate to="/services/dashboard" replace />;
+  }
 
   return (
     <RolesUsuariosProvider>

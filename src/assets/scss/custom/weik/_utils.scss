@@ -44,3 +44,13 @@ img.loading {
     opacity: 1;
   }
 }
+
+.table-responsive {
+  overflow-y: visible !important;
+}
+
+@media (min-width: 1200px) {
+  .overflow-unset {
+    overflow-x: unset;
+  }
+}

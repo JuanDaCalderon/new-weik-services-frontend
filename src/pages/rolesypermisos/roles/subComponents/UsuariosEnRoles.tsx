@@ -56,6 +56,20 @@ const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
     }
   }, [addRolToUser, removeRolToUser, row.original.id, selectedOptions, usuariosIniciales]);
 
+  const menuOpen = useCallback(() => {
+    const tables = document.querySelectorAll('.table-responsive');
+    for (const table of tables) {
+      table.classList.add('overflow-unset');
+    }
+  }, []);
+
+  const menuClose = useCallback(() => {
+    const tables = document.querySelectorAll('.table-responsive');
+    for (const table of tables) {
+      table.classList.remove('overflow-unset');
+    }
+  }, []);
+
   return (
     <Row className="m-0 py-2 column-gap-1 bg-light-subtle">
       <span>
@@ -78,6 +92,8 @@ const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
           className="react-select"
           classNamePrefix="react-select"
           placeholder="No hay usuarios asignados"
+          onMenuOpen={menuOpen}
+          onMenuClose={menuClose}
         />
       </Col>
       <Col xs="auto" md={12} className="ms-auto mt-2">
