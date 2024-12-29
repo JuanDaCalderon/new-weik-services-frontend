@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import {useToggle} from '@/hooks';
 import {memo, useMemo} from 'react';
 import {ProfileOption} from '@/types';
-import {PAGE_LOG_OUT, PAGE_PROFILE, PAGE_ROLES_PERMISOS} from '@/constants';
+import {PAGE_LOG_OUT, PAGE_PROFILE, PAGE_ROLES_PERMISOS, PERMISOS_MAP_IDS} from '@/constants';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
-import {getNombreCompletoUser} from '@/utils';
+import {filterByPermissions, getNombreCompletoUser} from '@/utils';
 const profileMenus: ProfileOption[] = [
   {
     label: 'Mi cuenta',
@@ -19,7 +19,7 @@ const profileMenus: ProfileOption[] = [
     label: 'Roles y Permisos',
     icon: 'mdi mdi-account-edit',
     redirectTo: PAGE_ROLES_PERMISOS,
-    permisoId: 'acceso-roles-permisos'
+    permisoId: PERMISOS_MAP_IDS.accesoRolesPermisos
   },
   {
     label: 'Cerrar sesión',
@@ -42,14 +42,13 @@ const ProfileDropdown = () => {
   }, [user.userImage]);
 
   const profileMenuOptions = useMemo(() => {
-    const newProfileMenu = profileMenus.filter((menu) => {
-      if (!menu.permisoId) return true;
-      return user.roles.some((rol) =>
-        rol.permisos?.some((permiso) => permiso.permiso === menu.permisoId)
-      );
-    });
-    return newProfileMenu;
-  }, [user.roles]);
+    return filterByPermissions(
+      profileMenus,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (
     <Dropdown show={isOpen} onToggle={toggleDropdown}>

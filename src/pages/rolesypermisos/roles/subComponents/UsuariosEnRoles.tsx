@@ -2,7 +2,7 @@ import {thisRol} from '@/types';
 import Select, {MultiValue} from 'react-select';
 import {Row as RowTable} from '@tanstack/react-table';
 import {memo, useCallback, useEffect, useMemo, useState} from 'react';
-import {Button, Col, Row} from 'react-bootstrap';
+import {Button, Col, Form, Row} from 'react-bootstrap';
 import {useAppSelector} from '@/store';
 import {selectEmployees} from '@/store/selectores/users';
 import {getUserNameUser} from '@/utils';
@@ -48,8 +48,8 @@ const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
     const addedUsers = Array.from(selectedValues).filter((value) => !initialValues.has(value));
     const removedUsers = Array.from(initialValues).filter((value) => !selectedValues.has(value));
     if (addedUsers.length > 0 || removedUsers.length > 0) {
-      await addRolToUser(String(row.original.id), addedUsers);
-      await removeRolToUser(String(row.original.id), removedUsers);
+      if (removedUsers.length > 0) await removeRolToUser(String(row.original.id), removedUsers);
+      if (addedUsers.length > 0) await addRolToUser(String(row.original.id), addedUsers);
     } else {
       toast.error('No se han realizado cambios');
       setHasTouched(false);
@@ -66,13 +66,16 @@ const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
         Asigna usuarios a este rol utilizando el selector que se muestra a continuación. Agrega o
         elimina según sea necesario y guarda los cambios.
       </p>
-      <Col lg={12}>
+      <Col className="mt-1" lg={12}>
+        <Form.Label className="mb-0" htmlFor="cargo">
+          <strong>Usuarios:</strong>
+        </Form.Label>
         <Select
           isMulti={true}
           options={options}
           value={selectedOptions}
           onChange={handleSelectChange}
-          className="react-select mt-1"
+          className="react-select"
           classNamePrefix="react-select"
           placeholder="No hay usuarios asignados"
         />

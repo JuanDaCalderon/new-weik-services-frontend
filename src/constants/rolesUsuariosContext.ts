@@ -5,6 +5,7 @@ export enum ROLES_CELLS {
 }
 
 export enum USUARIOS_CELLS {
+  cargo = 'cargo',
   roles = 'roles',
   permisosOtorgados = 'permisosOtorgados',
   permisosDenegados = 'permisosDenegados'

@@ -380,6 +380,27 @@ const useRolesYPermisos = () => {
     [updateActualizadoUserAndDate]
   );
 
+  /* const updateRolesOfUser = useCallback(async (roleId: string, newUsers: string[] = []) => {
+    setIsLoadingAddAndRemoveRolToUser(true);
+    try {
+      let userDocRef: DocumentReference;
+      const rolDocRef = doc(db, ROLES_PATH, roleId);
+      for (const userId of newUsers) {
+        userDocRef = doc(db, USUARIOS_PATH, userId);
+        await updateDoc(userDocRef, {
+          roles: arrayRemove(rolDocRef)
+        });
+      }
+      DebugUtil.logSuccess(`Los usuarios con este rol han sido actualizados correctamente.`);
+      toast.success('Los usuarios con este rol han sido actualizados correctamente.');
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+      toast.error('Ocurrió un error durante la actualización de este rol a los usuarios.');
+    } finally {
+      setIsLoadingAddAndRemoveRolToUser(false);
+    }
+  }, []); */
+
   return {
     getRolesListener,
     getRolesSync,

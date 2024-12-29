@@ -17,6 +17,10 @@ const RolNameColumn = memo(function RolNameColumn({row}: {row: Row<thisRol>}) {
     toggleHandler();
   }, [rolesUsuarios.rolesCell, row, updateRolesCell]);
 
+  const getfeedbackIcon = (): string => {
+    return row.getIsExpanded() && rolesUsuarios.rolesCell === ROLES_CELLS.rol ? '👇' : '👉';
+  };
+
   return (
     <div className="ribbon-box no-user-text-selectable">
       {DateUtils.isToday(row.original.ribbonCreatedDate) ? (
@@ -30,11 +34,15 @@ const RolNameColumn = memo(function RolNameColumn({row}: {row: Row<thisRol>}) {
           </div>
         )
       )}
-      <div className="cursor-pointer scale-hover" onClick={onClickHandled}>
+      <div
+        className={`${row.getCanExpand() && 'cursor-pointer scale-hover'}`}
+        onClick={onClickHandled}>
         <div className=" d-flex justify-content-start align-content-center align-items-center">
-          <span className="d-block mb-1" style={{width: '20px', height: '20px'}}>
-            {row.getIsExpanded() && rolesUsuarios.rolesCell === ROLES_CELLS.rol ? '👇' : '👉'}
-          </span>
+          {row.getCanExpand() && (
+            <span className="d-block mb-1" style={{width: '20px', height: '20px'}}>
+              {getfeedbackIcon()}
+            </span>
+          )}
           <span className="d-block no-user-text-selectable fw-bold text-uppercase text-dark text-opacity-75">
             {row.original.rolName}
           </span>
@@ -57,13 +65,19 @@ const RolePermisosColumn = memo(function RolePermisosColumn({row}: {row: Row<thi
     toggleHandler();
   }, [rolesUsuarios.rolesCell, row, updateRolesCell]);
 
+  const getfeedbackIcon = (): string => {
+    return row.getIsExpanded() && rolesUsuarios.rolesCell === ROLES_CELLS.permisos ? '👇' : '👉';
+  };
+
   return (
     <div
-      className="ribbon-box cursor-pointer no-user-text-selectable scale-hover"
+      className={`ribbon-box no-user-text-selectable ${row.getCanExpand() && 'cursor-pointer scale-hover'}`}
       onClick={onClickHandled}>
-      <span className="me-1" style={{width: '20px', height: '20px'}}>
-        {row.getIsExpanded() && rolesUsuarios.rolesCell === ROLES_CELLS.permisos ? '👇' : '👉'}
-      </span>
+      {row.getCanExpand() && (
+        <span className="me-1" style={{width: '20px', height: '20px'}}>
+          {getfeedbackIcon()}
+        </span>
+      )}
       <Badge bg="" pill className="me-1 badge-outline-info font-14">
         {row.original.RolePermisos}
       </Badge>
@@ -94,12 +108,14 @@ const RoleUsuariosColumn = memo(function RoleUsuariosColumn({row}: {row: Row<thi
 
   return (
     <div
-      className={`ribbon-box no-user-text-selectable ${row.original.RoleUsuarios && 'cursor-pointer scale-hover'}`}
+      className={`ribbon-box no-user-text-selectable ${row.original.RoleUsuarios && `${row.getCanExpand() && 'cursor-pointer scale-hover'}`}`}
       style={{transformOrigin: 'center'}}
       onClick={onClickHandled}>
-      <span className="me-1" style={{width: '20px', height: '20px'}}>
-        {getfeedbackIcon()}
-      </span>
+      {row.getCanExpand() && (
+        <span className="me-1" style={{width: '20px', height: '20px'}}>
+          {getfeedbackIcon()}
+        </span>
+      )}
       <Badge bg="" pill className="me-1 badge-outline-warning font-14">
         {roleUsuarios}
       </Badge>

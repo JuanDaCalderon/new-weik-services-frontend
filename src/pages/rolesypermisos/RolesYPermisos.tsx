@@ -8,6 +8,9 @@ import {useGetEmployees, useRolesYPermisos} from '@/endpoints';
 import Roles from './roles';
 import {Toaster} from 'react-hot-toast';
 import {RolesUsuariosProvider} from './context';
+import {useAppSelector} from '@/store';
+import {selectisLoadingEmployees} from '@/store/selectores/users';
+import {SkeletonLoader} from '@/components/SkeletonLoader';
 
 const tabContents: TabContentItem[] = [
   {id: 'Roles', title: 'Roles'},
@@ -17,6 +20,7 @@ const tabContents: TabContentItem[] = [
 const RolesYPermisos = memo(function RolesYPermisos() {
   const {getPermisosListener, getRolesListener} = useRolesYPermisos();
   const {getEmployeesListener} = useGetEmployees();
+  const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
 
   useEffect(() => {
     const employeesUnsubscribe = getEmployeesListener();
@@ -56,7 +60,15 @@ const RolesYPermisos = memo(function RolesYPermisos() {
                       <Row>
                         <Col sm="12">
                           {tab.id === 'Roles' && <Roles />}
-                          {tab.id === 'Usuarios' && <Usuarios />}
+                          {tab.id === 'Usuarios' && (
+                            <>
+                              {!isLoadingUsers ? (
+                                <Usuarios />
+                              ) : (
+                                <SkeletonLoader height="125px"></SkeletonLoader>
+                              )}
+                            </>
+                          )}
                         </Col>
                       </Row>
                     </Tab.Pane>

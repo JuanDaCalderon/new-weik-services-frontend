@@ -41,6 +41,11 @@ export type VacacionesType = {
   aprobadas: boolean;
 };
 
+export type RolesForUser = Omit<
+  Rol,
+  'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion' | 'usuarioUpdated'
+>;
+
 export type Employee = {
   id: string;
   email: string;
@@ -53,10 +58,7 @@ export type Employee = {
   ciudadExpedicionDocumento: string;
   estado: Estados;
   cargo: string;
-  roles: Omit<
-    Rol,
-    'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion' | 'usuarioUpdated'
-  >[];
+  roles: RolesForUser[];
   permisosOtorgados: Permiso[];
   permisosDenegados: Permiso[];
   horario: HorarioType[];
@@ -88,17 +90,18 @@ export type PayLoadUsers = {
 /* -------- Utils -------- */
 
 export type thisUsuarios = {
-  id: number;
+  id: string;
   email: string;
   nombres: string;
   apellidos: string;
   userName: string;
   userImage: string;
   cargo: string;
-  roles: Omit<
-    Rol,
-    'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion' | 'usuarioUpdated'
-  >[];
+  roles: RolesForUser[];
   permisosOtorgados: Permiso[];
   permisosDenegados: Permiso[];
+};
+
+export type UsuarioCargoEdit = {
+  cargo?: string;
 };

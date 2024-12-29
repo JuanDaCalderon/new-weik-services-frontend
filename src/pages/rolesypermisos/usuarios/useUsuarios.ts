@@ -10,7 +10,7 @@ export default function useUsuarios() {
     return employeesFromStore.map<thisUsuarios>((usuario) => {
       const {id, roles, permisosOtorgados, permisosDenegados} = usuario;
       return {
-        id: +id,
+        id,
         email: usuario.email,
         nombres: usuario.nombres,
         apellidos: usuario.apellidos,

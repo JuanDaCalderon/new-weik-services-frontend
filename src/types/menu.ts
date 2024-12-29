@@ -24,3 +24,8 @@ export type MenuItems = {
   activeMenuItems?: string[];
   toggleMenu?: (item: MenuItemType, status: boolean) => void;
 };
+
+export type MenuItem = {
+  permisoId?: string; // Propiedad mínima necesaria
+  [key: string]: any; // Otras propiedades del menú son opcionales
+};

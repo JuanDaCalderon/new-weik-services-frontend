@@ -1,4 +1,4 @@
-import {memo, useCallback, useState} from 'react';
+import {memo, useCallback, useMemo, useState} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import ReactTable from '@/components/tablev02/ReactTable';
 import {RolCreationBasics, thisRol} from '@/types';
@@ -8,11 +8,34 @@ import {GenericModal} from '@/components/Modals/GenericModal';
 import {useToggle} from '@/hooks';
 import useRoles from './useRoles';
 import {BodyModal} from './CrearRolesBodyModal';
+import {hasPermission} from '@/utils';
+import {PERMISOS_MAP_IDS} from '@/constants';
+import {useAppSelector} from '@/store';
+import {selectUser} from '@/store/selectores';
 
 const Roles = memo(function Roles() {
   const {roles, sendRol, isLoadingCreatinRol} = useRoles();
   const [crearRolOpen, crearRolOpenToggle] = useToggle();
   const [rolCreationBasics, setRolCreationBasics] = useState<RolCreationBasics>({});
+  const user = useAppSelector(selectUser);
+
+  const canCrearRol = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.crearRoles,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
+  const canEditRoles = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.editarRoles,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const onSend = useCallback(async () => {
     await sendRol(rolCreationBasics);
@@ -38,9 +61,21 @@ const Roles = memo(function Roles() {
         <Col xs="auto" className="me-auto">
           <h4 className="header-title text-dark m-0">Gestor de roles</h4>
         </Col>
-        <Col xs="auto" className="ms-auto">
-          <Button className="w-100 shadow-sm" variant="success" onClick={crearRolOpenToggle}>
-            <i className="mdi mdi-account-cog" /> Crear Rol
+        <Col
+          xs="auto"
+          className="d-flex column-gap-1 justify-content-end align-items-center text-end ms-auto">
+          {!canCrearRol && (
+            <span className="m-0 p-0 text-danger font-11 text-end">
+              Permiso para "crear rol" denegado. <br /> Contacta a tu administrador si lo necesitas.
+            </span>
+          )}
+          <Button
+            className="shadow-sm"
+            style={{maxWidth: '175px'}}
+            variant="success"
+            disabled={!canCrearRol}
+            onClick={crearRolOpenToggle}>
+            <i className="mdi mdi-account-cog me-1" /> Crear Rol
           </Button>
         </Col>
       </Row>
@@ -53,9 +88,16 @@ const Roles = memo(function Roles() {
             data={roles}
             showPagination
             isSearchable={true}
-            getRowCanExpand={() => true}
+            getRowCanExpand={() => canEditRoles}
             renderSubComponent={(props) => <MemoizedRenderSubComponent {...props} />}
           />
+          {!canEditRoles && (
+            <div className="w-100 text-end mt-1">
+              <span className="m-0 p-0 text-danger font-11 text-end">
+                Permiso para "editar roles" denegado. Contacta a tu administrador si lo necesitas.
+              </span>
+            </div>
+          )}
         </Col>
       </Row>
     </>
