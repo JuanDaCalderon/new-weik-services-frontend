@@ -5,6 +5,7 @@ import InfoUserBox from './InfoUserBox';
 import HubLaboral from './HubLaboral';
 import UserRolesYPermisos from './RolesYPermisos';
 import {Toaster} from 'react-hot-toast';
+import PasswordBox from './PasswordBox';
 
 const ProfilePage = () => {
   return (
@@ -20,6 +21,7 @@ const ProfilePage = () => {
       <Row>
         <Col xs={12} xl={4} xxl={3}>
           <InfoUserBox />
+          <PasswordBox />
           <UserRolesYPermisos />
         </Col>
 

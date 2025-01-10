@@ -616,6 +616,128 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ]
       }
     ]
+  },
+  {
+    key: 'clientes',
+    icon: 'uil-user-square',
+    label: 'Clientes',
+    isTitle: true,
+    children: [
+      {
+        key: 'disney',
+        label: 'Disney',
+        parentKey: 'clientes',
+        children: [
+          {
+            key: 'ppts',
+            label: 'Power point templates',
+            url: '/services/clientes/disney/ppts',
+            parentKey: 'disney'
+          },
+          {
+            key: 'motions',
+            label: 'Motions',
+            url: '/services/clientes/disney/motions',
+            parentKey: 'disney'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    key: 'gestion',
+    icon: 'uil-cog',
+    label: 'Gestion',
+    isTitle: true,
+    children: [
+      {
+        key: 'clientes',
+        label: 'Clientes',
+        parentKey: 'gestion',
+        children: [
+          {
+            key: 'crearcliente',
+            label: 'Crear cliente',
+            url: '/services/gestion/clientes/crearcliente',
+            parentKey: 'clientes'
+          },
+          {
+            key: 'editarcliente',
+            label: 'Editar cliente',
+            url: '/services/gestion/clientes/editarcliente',
+            parentKey: 'clientes'
+          },
+          {
+            key: 'eliminarcliente',
+            label: 'Eliminar cliente',
+            url: '/services/gestion/clientes/eliminarcliente',
+            parentKey: 'clientes'
+          }
+        ]
+      },
+      {
+        key: 'usuarios',
+        label: 'Usuarios',
+        parentKey: 'gestion',
+        children: [
+          {
+            key: 'crearusuario',
+            label: 'Crear usuario',
+            url: '/services/gestion/usuarios/crearusuario',
+            parentKey: 'usuarios'
+          },
+          {
+            key: 'editarusuario',
+            label: 'Editar usuario',
+            url: '/services/gestion/usuarios/editarusuario',
+            parentKey: 'usuarios'
+          },
+          {
+            key: 'eliminarusuario',
+            label: 'Eliminar usuario',
+            url: '/services/gestion/usuarios/eliminarusuario',
+            parentKey: 'usuarios'
+          }
+        ]
+      },
+      {
+        key: 'oficina',
+        label: 'Oficina',
+        parentKey: 'gestion',
+        children: [
+          {
+            key: 'equipo',
+            label: 'Equipo',
+            url: '/services/gestion/oficina/equipo',
+            parentKey: 'oficina'
+          },
+          {
+            key: 'vacaciones',
+            label: 'Vacaciones',
+            url: '/services/gestion/oficina/vacaciones',
+            parentKey: 'oficina'
+          },
+          {
+            key: 'solicitudes',
+            label: 'Solicitudes',
+            url: '/services/gestion/oficina/solicitudes',
+            parentKey: 'oficina'
+          }
+        ]
+      },
+      {
+        key: 'noticias',
+        label: 'Noticias',
+        url: '/services/gestion/noticias',
+        parentKey: 'gestion'
+      },
+      {
+        key: 'solicitudes',
+        label: 'Solicitudes',
+        url: '/services/gestion/solicitudes',
+        parentKey: 'gestion'
+      }
+    ]
   }
 ];
 

@@ -1,4 +1,5 @@
 import useAuth from './auth/useAuth';
+import useChangePassword from './auth/useChangePassword';
 import useGetClients from './db/clientes/useGetClients';
 import useRolesYPermisos from './db/roles-permisos/useRolesYPermisos';
 import useGetUsers from './db/users/useGetUsers';
@@ -15,5 +16,6 @@ export {
   useSetEstadoUser,
   useUserProfileImage,
   useUpdateUser,
-  useGetEmployees
+  useGetEmployees,
+  useChangePassword
 };

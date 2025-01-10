@@ -7,7 +7,7 @@ import {useAuth} from '@/endpoints';
 import toast, {Toaster} from 'react-hot-toast';
 
 const Logout = () => {
-  const {authLogOut} = useAuth();
+  const {authLogOut, isLoadingLogOut} = useAuth();
 
   useEffect(() => {
     toast.remove();
@@ -23,14 +23,18 @@ const Logout = () => {
         <Col className="text-center">
           <p className="text-dark text-opacity-75 text-opacity-75">
             Volver al
-            <Link to={DEFAULT_ROUTER_PATH} className="text-dark text-opacity-75 ms-1">
-              <b>acceso</b>
-            </Link>
+            {!isLoadingLogOut ? (
+              <Link to={DEFAULT_ROUTER_PATH} className="text-dark text-opacity-75 ms-1">
+                <b>acceso</b>
+              </Link>
+            ) : (
+              <span className="ms-1">desconectando...</span>
+            )}
           </p>
         </Col>
       </Row>
     ),
-    []
+    [isLoadingLogOut]
   );
 
   return (

@@ -4,7 +4,7 @@ import {isUserLoggedInSelector, selectUser} from '@/store/selectores/user';
 import {logOutUser} from '@/store/slices/user';
 import {User} from '@/types';
 import {sendPasswordResetEmail, signInWithEmailAndPassword, signOut} from 'firebase/auth';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import toast from 'react-hot-toast';
 import {useDispatch} from 'react-redux';
 import {DebugUtil} from '@/utils';
@@ -13,6 +13,7 @@ import {clearClientes} from '@/store/slices/clientes';
 import {useGetUsers, useSetEstadoUser} from '@/endpoints';
 
 const useAuth = () => {
+  const [isLoadingLogOut, setIsLoadingLogOut] = useState<boolean>(true);
   const isLoggedIn = useAppSelector(isUserLoggedInSelector);
   const {id} = useAppSelector(selectUser);
   const {getLoggedInUser} = useGetUsers();
@@ -56,6 +57,7 @@ const useAuth = () => {
   );
 
   const authLogOut = useCallback(async (): Promise<void> => {
+    setIsLoadingLogOut(true);
     try {
       if (auth.currentUser) {
         await signOut(auth);
@@ -76,6 +78,8 @@ const useAuth = () => {
         error
       );
       toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
+    } finally {
+      setIsLoadingLogOut(false);
     }
   }, [dispatch, id, isLoggedIn, setOfflineUser]);
 
@@ -99,7 +103,7 @@ const useAuth = () => {
     []
   );
 
-  return {authLogIn, authLogOut, authRecoverPassword};
+  return {isLoadingLogOut, authLogIn, authLogOut, authRecoverPassword};
 };
 
 export default useAuth;
