@@ -5,9 +5,11 @@ import Root from './Root';
 import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores/user';
 import {DEFAULT_ROUTER_PATH} from '@/constants';
-
+/* NEW PAGES */
 const Profile = lazy(() => import('@/pages/perfil'));
 const RolesYPermisos = lazy(() => import('@/pages/rolesypermisos'));
+const Gestion = lazy(() => import('@/pages/gestion'));
+/* NEW PAGES */
 
 const Dashboard = lazy(() => import('../pages/dashboard'));
 const Apps = lazy(() => import('../pages/apps'));
@@ -22,8 +24,11 @@ export default function ProtectedRoutes() {
       <ReactRoutes>
         <Route path="/*" element={<HorizontalLayout />}>
           <Route index element={<Root />} />
+          {/* NEW PAGES */}
           <Route path="perfil" element={<Profile />} />
           <Route path="rolesypermisos" element={<RolesYPermisos />} />
+          <Route path="gestion/*" element={<Gestion />} />
+          {/* NEW PAGES */}
           <Route path="dashboard/*" element={<Dashboard />} />
           <Route path="apps/*" element={<Apps />} />
           <Route path="pages/*" element={<OtherPages />} />

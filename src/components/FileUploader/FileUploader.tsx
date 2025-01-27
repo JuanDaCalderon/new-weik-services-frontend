@@ -1,4 +1,4 @@
-import {Card, Button} from 'react-bootstrap';
+import {Card, Button, ProgressBar} from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import useFileUploader from './useFileUploader';
 import {useEffect} from 'react';
@@ -14,6 +14,7 @@ type FileUploaderProps = {
   resetFile?: boolean;
   showPreview?: boolean;
   isRounded?: boolean;
+  acceptedFileTypes?: string[];
 };
 
 const FileUploader = ({
@@ -21,9 +22,11 @@ const FileUploader = ({
   onFileUpload,
   isRounded = false,
   onFileRemoved,
-  resetFile = false
+  resetFile = false,
+  acceptedFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'] // Por defecto, solo imágenes
 }: FileUploaderProps) => {
-  const {selectedFile, handleAcceptedFiles, removeFile} = useFileUploader(showPreview);
+  const {selectedFile, uploadProgress, handleAcceptedFiles, removeFile} =
+    useFileUploader(showPreview);
 
   useEffect(() => {
     if (resetFile) removeFile(onFileRemoved);
@@ -32,7 +35,10 @@ const FileUploader = ({
   return (
     <>
       {!selectedFile && (
-        <Dropzone onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles, onFileUpload)}>
+        <Dropzone
+          onDrop={(acceptedFiles) =>
+            handleAcceptedFiles(acceptedFiles, onFileUpload, acceptedFileTypes)
+          }>
           {({getRootProps, getInputProps}) => (
             <div className={`dropzone ${isRounded && 'rounded-circle'} m-0 p-0`}>
               <div className="dz-message needsclick m-0 p-0" {...getRootProps()}>
@@ -72,6 +78,17 @@ const FileUploader = ({
             </Button>
           </Card>
         </div>
+      )}
+
+      {!!uploadProgress && (
+        <ProgressBar
+          now={uploadProgress}
+          label={`${uploadProgress}%`}
+          variant="success"
+          className="position-relative mt-1"
+          animated
+          striped
+        />
       )}
     </>
   );

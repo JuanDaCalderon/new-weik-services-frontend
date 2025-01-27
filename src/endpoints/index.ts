@@ -7,6 +7,7 @@ import useSetEstadoUser from './db/users/useSetEstadoUser';
 import useUpdateUser from './db/users/useUpdateUser';
 import useUserProfileImage from './db/profile-image/useUserProfileImage';
 import useGetEmployees from './db/users/useGetEmployees';
+import useUploadImage from './db/utils/useUploadImage';
 
 export {
   useAuth,
@@ -17,5 +18,6 @@ export {
   useUserProfileImage,
   useUpdateUser,
   useGetEmployees,
-  useChangePassword
+  useChangePassword,
+  useUploadImage
 };
