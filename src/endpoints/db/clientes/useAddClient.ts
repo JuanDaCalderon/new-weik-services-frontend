@@ -13,7 +13,7 @@ export default function useAddClient() {
     setIsLoadingAddClient(true);
     try {
       await setDoc(doc(db, CLIENTES_PATH, cliente.domain), cliente);
-      toast.success(`Has agregado a ${cliente.nombre} como cliente correctamente`);
+      toast.success(`Has agregado a ${cliente.nombre.toLowerCase()} como cliente correctamente`);
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
       DebugUtil.logError(error.message, error);

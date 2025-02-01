@@ -7,12 +7,13 @@ import {Cliente} from '@/types';
 import {useAppSelector} from '@/store';
 import {selectClientes} from '@/store/selectores';
 import toast, {Toaster} from 'react-hot-toast';
-import {removeTrashFromDomain, DateUtils, DebugUtil} from '@/utils';
+import {DateUtils, DebugUtil, isValidDomain, isValidName, formatText, formatDomain} from '@/utils';
 import {FileUploader} from '@/components';
 import useClientImage from './useClientImage';
 import {STORAGE_CLIENTES_PATH} from '@/constants';
 import {useGetClients, useUploadImage} from '@/endpoints';
 import useAddClient from '@/endpoints/db/clientes/useAddClient';
+import {checkIfClientExists} from '@/utils/cliente';
 const clienteDatosIniciales: Cliente = {
   id: '',
   nombre: '',
@@ -23,9 +24,10 @@ const clienteDatosIniciales: Cliente = {
 
 const ACCEPTED_FILE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
 
-const CrearCliente = memo(function CrearCliente() {
+const Clientes = memo(function Clientes() {
   const [newCliente, setNewCliente] = useState<Cliente>(clienteDatosIniciales);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
+  const [shouldResetImage, setShouldResetImage] = useState<boolean>(false);
   const {clientImage, handleImageFile, handleImageRemoved} = useClientImage();
   const clientes = useAppSelector(selectClientes);
   const {isLoadingUploadImage, uploadImage} = useUploadImage();
@@ -40,6 +42,7 @@ const CrearCliente = memo(function CrearCliente() {
 
   const handleFileUpload = useCallback(
     (file: FileType) => {
+      setShouldResetImage(false);
       handleImageFile(file);
       setHasTouched(true);
     },
@@ -55,32 +58,64 @@ const CrearCliente = memo(function CrearCliente() {
     );
   }, []);
 
-  const enviarCliente = useCallback(async () => {
-    if (isValidClient(newCliente) && clientImage) {
-      try {
-        const refName = newCliente.nombre.toLowerCase().replace(/\s+/g, '');
-        const refDomain = removeTrashFromDomain(
-          newCliente.domain.toLowerCase().replace(/\s+/g, '')
-        );
-        const imgName = `${refName}_${refDomain}_${DateUtils.getDateOnly(new Date(), '_')}`;
-        const imgUrl = await uploadImage(STORAGE_CLIENTES_PATH, imgName, clientImage);
-        const cliente: Cliente = {
-          nombre: newCliente.nombre,
-          domain: refDomain,
-          branding: newCliente.branding,
-          logo: imgUrl
-        } as Cliente;
-        await addClient(cliente);
-        await getClientesSync();
-        setNewCliente(clienteDatosIniciales);
-      } catch (error: any) {
-        DebugUtil.logError(error.message, error);
-      }
-    } else {
-      toast.error('Complete todos los campos y asegúrese de haber subido una imagen.');
-    }
+  const resetForm = useCallback(() => {
+    setShouldResetImage(true);
+    setNewCliente(clienteDatosIniciales);
     setHasTouched(false);
-  }, [isValidClient, newCliente, clientImage, uploadImage, addClient, getClientesSync]);
+  }, []);
+
+  const enviarCliente = useCallback(async () => {
+    if (!isValidClient(newCliente) || !clientImage) {
+      toast.error(
+        `Complete todos los campos${!clientImage ? ' y asegúrese de haber subido una imagen' : ''}.`
+      );
+      setShouldResetImage(!clientImage);
+      setHasTouched(false);
+      return;
+    }
+    if (checkIfClientExists(newCliente, clientes)) {
+      toast.error(
+        'El cliente no se pudo crear, ya existen registros con el mismo nombre y/o dominio.'
+      );
+      return;
+    }
+    if (!isValidDomain(newCliente.domain) || !isValidName(newCliente.nombre)) {
+      if (!isValidDomain(newCliente.domain)) {
+        toast.error('El dominio no puede contener caracteres especiales.');
+      }
+      if (!isValidName(newCliente.nombre)) {
+        toast.error('El nombre no puede contener caracteres especiales.');
+      }
+      return;
+    }
+
+    try {
+      const refName = formatText(newCliente.nombre);
+      const refDomain = formatDomain(newCliente.domain);
+      const imgName = `${refName}_${refDomain}_${DateUtils.getDateOnly(new Date(), '_')}`;
+      const imgUrl = await uploadImage(STORAGE_CLIENTES_PATH, imgName, clientImage);
+      const cliente: Cliente = {
+        nombre: newCliente.nombre,
+        domain: refDomain,
+        branding: newCliente.branding,
+        logo: imgUrl
+      } as Cliente;
+      await addClient(cliente);
+      await getClientesSync();
+      resetForm();
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+    }
+  }, [
+    addClient,
+    clientImage,
+    clientes,
+    getClientesSync,
+    isValidClient,
+    newCliente,
+    resetForm,
+    uploadImage
+  ]);
 
   const isLoadingUploadCliente = useMemo(() => {
     return isLoadingAddClient || isLoadingUploadImage;
@@ -127,7 +162,7 @@ const CrearCliente = memo(function CrearCliente() {
                         onFileUpload={handleFileUpload}
                         onFileRemoved={handleImageRemoved}
                         acceptedFileTypes={ACCEPTED_FILE_TYPES}
-                        resetFile={!hasTouched}
+                        resetFile={shouldResetImage}
                         isRounded
                       />
                     </div>
@@ -217,4 +252,4 @@ const CrearCliente = memo(function CrearCliente() {
   );
 });
 
-export {CrearCliente};
+export {Clientes};

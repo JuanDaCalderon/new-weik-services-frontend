@@ -5,3 +5,16 @@ export const removeTrashFromDomain = (domainToBeCleaned: string): string => {
   }
   return newDomain;
 };
+
+export const isValidDomain = (domainToBeValidated: string): boolean => {
+  const regex = /^[A-Za-zÑñ]+$/;
+  return regex.test(domainToBeValidated);
+};
+
+export const isValidName = (nameToBeValidated: string): boolean => {
+  const regex = /^[A-Za-zÑñ]+(?: [A-Za-zÑñ]+)*$/;
+  return regex.test(nameToBeValidated);
+};
+
+export const formatText = (text: string) => text.toLowerCase().replace(/\s+/g, '');
+export const formatDomain = (domain: string) => removeTrashFromDomain(formatText(domain));

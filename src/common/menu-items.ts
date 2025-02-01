@@ -653,52 +653,14 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
       {
         key: 'clientes',
         label: 'Clientes',
-        parentKey: 'gestion',
-        children: [
-          {
-            key: 'crearcliente',
-            label: 'Crear cliente',
-            url: '/services/gestion/clientes/crearcliente',
-            parentKey: 'clientes'
-          },
-          {
-            key: 'editarcliente',
-            label: 'Editar cliente',
-            url: '/services/gestion/clientes/editarcliente',
-            parentKey: 'clientes'
-          },
-          {
-            key: 'eliminarcliente',
-            label: 'Eliminar cliente',
-            url: '/services/gestion/clientes/eliminarcliente',
-            parentKey: 'clientes'
-          }
-        ]
+        url: '/services/gestion/clientes',
+        parentKey: 'gestion'
       },
       {
         key: 'usuarios',
         label: 'Usuarios',
-        parentKey: 'gestion',
-        children: [
-          {
-            key: 'crearusuario',
-            label: 'Crear usuario',
-            url: '/services/gestion/usuarios/crearusuario',
-            parentKey: 'usuarios'
-          },
-          {
-            key: 'editarusuario',
-            label: 'Editar usuario',
-            url: '/services/gestion/usuarios/editarusuario',
-            parentKey: 'usuarios'
-          },
-          {
-            key: 'eliminarusuario',
-            label: 'Eliminar usuario',
-            url: '/services/gestion/usuarios/eliminarusuario',
-            parentKey: 'usuarios'
-          }
-        ]
+        url: '/services/gestion/usuarios',
+        parentKey: 'gestion'
       },
       {
         key: 'oficina',

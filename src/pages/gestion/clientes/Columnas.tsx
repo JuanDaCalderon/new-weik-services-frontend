@@ -1,5 +1,22 @@
 import {Cliente} from '@/types';
 import type {ColumnDef} from '@tanstack/react-table';
+import type {Row} from '@tanstack/react-table';
+import {memo} from 'react';
+import {Button} from 'react-bootstrap';
+
+const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>}) {
+  console.log('🚀 ~ clientesAcciones ~ row:', row);
+  return (
+    <div className="d-flex gap-1">
+      <Button type="button" variant="outline-primary py-0 px-1">
+        <i className="uil-pen"></i>
+      </Button>
+      <Button type="button" variant="outline-danger py-0 px-1">
+        <i className="uil-trash"></i>
+      </Button>
+    </div>
+  );
+});
 
 const columns: ColumnDef<Cliente>[] = [
   {
@@ -33,6 +50,11 @@ const columns: ColumnDef<Cliente>[] = [
         Ir al link
       </a>
     )
+  },
+  {
+    header: 'Acciones',
+    accessorKey: 'acciones',
+    cell: clientesAcciones
   }
 ];
 

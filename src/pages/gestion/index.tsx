@@ -10,7 +10,7 @@ export default function Gestion() {
     <Routes>
       <Route path="/*" element={<Outlet />}>
         <Route index element={<Root />} />
-        <Route path="clientes/*" element={<Clientes />} />
+        <Route path="clientes" element={<Clientes />} />
         <Route path="*" element={<Error404Alt />} />
       </Route>
     </Routes>
