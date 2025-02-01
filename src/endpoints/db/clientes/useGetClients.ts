@@ -4,13 +4,14 @@ import {db} from '@/firebase';
 import {CLIENTES_PATH, MAIN_DOMAIN} from '@/constants';
 import {DebugUtil} from '@/utils';
 import {useDispatch} from 'react-redux';
-import {clearClientes, setClientes} from '@/store/slices/clientes';
+import {clearClientes, isLoadingClientes, setClientes} from '@/store/slices/clientes';
 import {Cliente} from '@/types';
 
 const useGetClients = () => {
   const dispatch = useDispatch();
 
   const getClientesListener = useCallback((): Unsubscribe => {
+    dispatch(isLoadingClientes(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
       unsubscribe = onSnapshot(
@@ -37,11 +38,14 @@ const useGetClients = () => {
       );
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
+    } finally {
+      dispatch(isLoadingClientes(false));
     }
     return unsubscribe;
   }, [dispatch]);
 
   const getClientesSync = useCallback(async (): Promise<void> => {
+    dispatch(isLoadingClientes(true));
     try {
       const clientes: Cliente[] = [];
       const queryDocs = await getDocs(
@@ -57,6 +61,7 @@ const useGetClients = () => {
           domain
         });
       }
+      dispatch(clearClientes());
       dispatch(setClientes(clientes));
       DebugUtil.logSuccess(
         'Se han consultado los clientes correctamente sync y ya deben estar en el store',
@@ -64,6 +69,8 @@ const useGetClients = () => {
       );
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
+    } finally {
+      dispatch(isLoadingClientes(false));
     }
   }, [dispatch]);
 

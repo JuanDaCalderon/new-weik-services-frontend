@@ -5,3 +5,8 @@ export type Cliente = {
   branding: string;
   logo: string;
 };
+
+export type PayLoadClientType = {
+  clientes: Cliente[];
+  isLoading: boolean;
+};

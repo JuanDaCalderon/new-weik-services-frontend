@@ -5,15 +5,16 @@ import {Button, Card, Col, Form, Row} from 'react-bootstrap';
 import {columns} from './Columnas';
 import {Cliente} from '@/types';
 import {useAppSelector} from '@/store';
-import {selectClientes} from '@/store/selectores';
+import {selectClientes, isLoadingClientes} from '@/store/selectores';
 import toast, {Toaster} from 'react-hot-toast';
 import {DateUtils, DebugUtil, isValidDomain, isValidName, formatText, formatDomain} from '@/utils';
 import {FileUploader} from '@/components';
 import useClientImage from './useClientImage';
-import {STORAGE_CLIENTES_PATH} from '@/constants';
+import {ACCEPTED_FILE_TYPES, STORAGE_CLIENTES_PATH} from '@/constants';
 import {useGetClients, useUploadImage} from '@/endpoints';
 import {useAddClient} from '@/endpoints';
 import {checkIfClientExists} from '@/utils/cliente';
+import {SkeletonLoader} from '@/components/SkeletonLoader';
 const clienteDatosIniciales: Cliente = {
   id: '',
   nombre: '',
@@ -22,14 +23,13 @@ const clienteDatosIniciales: Cliente = {
   logo: ''
 };
 
-const ACCEPTED_FILE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-
 const Clientes = memo(function Clientes() {
   const [newCliente, setNewCliente] = useState<Cliente>(clienteDatosIniciales);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
   const [shouldResetImage, setShouldResetImage] = useState<boolean>(false);
   const {clientImage, handleImageFile, handleImageRemoved} = useClientImage();
   const clientes = useAppSelector(selectClientes);
+  const isLoadingClients = useAppSelector(isLoadingClientes);
   const {isLoadingUploadImage, uploadImage} = useUploadImage();
   const {isLoadingAddClient, addClient} = useAddClient();
   const {getClientesSync} = useGetClients();
@@ -154,7 +154,7 @@ const Clientes = memo(function Clientes() {
                     </li>
                   </ul>
                   <div className="d-flex justify-content-center flex-column mb-3">
-                    <Form.Label className="mb-0" htmlFor="nombre">
+                    <Form.Label className="mb-0" htmlFor="logo">
                       <strong>Logo o imagen del cliente:</strong>
                     </Form.Label>
                     <div className="avatar-lg d-block me-auto ms-auto mb-1">
@@ -192,6 +192,9 @@ const Clientes = memo(function Clientes() {
                     value={newCliente.domain}
                     onChange={handleInputChange}
                   />
+                  <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
+                    una vez creado el dominio, no podrá ser modificado.
+                  </p>
                   <Form.Label className="mb-0 mt-1" htmlFor="branding">
                     <strong>Link al branding del cliente:</strong>
                   </Form.Label>
@@ -223,14 +226,17 @@ const Clientes = memo(function Clientes() {
                 </Col>
                 <Col sm={12} lg={8} xl={9} xxl={10}>
                   <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Clientes</h4>
-
-                  <ReactTable<Cliente>
-                    columns={columns}
-                    data={clientes}
-                    pageSize={10}
-                    tableClass="table-striped"
-                    showPagination
-                  />
+                  {!isLoadingClients ? (
+                    <ReactTable<Cliente>
+                      columns={columns}
+                      data={clientes}
+                      pageSize={10}
+                      tableClass="table-striped"
+                      showPagination
+                    />
+                  ) : (
+                    <SkeletonLoader height="200px" customClass="px-1" />
+                  )}
                 </Col>
               </Row>
             </Card.Body>

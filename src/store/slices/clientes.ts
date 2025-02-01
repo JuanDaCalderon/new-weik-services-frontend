@@ -1,26 +1,40 @@
 import {CLIENTES_NAME, SESSION_CLIENTES_KEY} from '@/constants';
-import {Cliente} from '@/types';
+import {Cliente, PayLoadClientType} from '@/types';
 import {SessionStorageUtil} from '@/utils';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 
-const initialState: Cliente[] =
-  SessionStorageUtil.getItem<Cliente[]>(SESSION_CLIENTES_KEY) ?? ([] as Cliente[]);
+const initialState: PayLoadClientType = {
+  clientes: SessionStorageUtil.getItem<Cliente[]>(SESSION_CLIENTES_KEY) ?? ([] as Cliente[]),
+  isLoading: false
+};
 
 export const clientesSlice = createSlice({
   name: CLIENTES_NAME,
   initialState,
   reducers: {
-    setClientes: (_state: Cliente[], action: PayloadAction<Cliente[]>) => {
+    setClientes: (state: PayLoadClientType, action: PayloadAction<Cliente[]>) => {
       SessionStorageUtil.setItem<Cliente[]>(SESSION_CLIENTES_KEY, action.payload);
-      return [...action.payload];
+      return {
+        ...state,
+        clientes: action.payload
+      };
     },
-    clearClientes: () => {
+    clearClientes: (state: PayLoadClientType) => {
       SessionStorageUtil.removeItem(SESSION_CLIENTES_KEY);
-      return [];
+      return {
+        ...state,
+        clientes: []
+      };
+    },
+    isLoadingClientes: (state: PayLoadClientType, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        isLoading: action.payload
+      };
     }
   }
 });
 
-export const {setClientes, clearClientes} = clientesSlice.actions;
+export const {setClientes, clearClientes, isLoadingClientes} = clientesSlice.actions;
 export default clientesSlice.reducer;

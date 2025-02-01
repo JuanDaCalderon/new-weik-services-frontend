@@ -1,1 +1,1 @@
-export {Clientes as default} from './/Clientes';
+export {Clientes as default} from './Clientes';
