@@ -12,7 +12,7 @@ import {FileUploader} from '@/components';
 import useClientImage from './useClientImage';
 import {STORAGE_CLIENTES_PATH} from '@/constants';
 import {useGetClients, useUploadImage} from '@/endpoints';
-import useAddClient from '@/endpoints/db/clientes/useAddClient';
+import {useAddClient} from '@/endpoints';
 import {checkIfClientExists} from '@/utils/cliente';
 const clienteDatosIniciales: Cliente = {
   id: '',
