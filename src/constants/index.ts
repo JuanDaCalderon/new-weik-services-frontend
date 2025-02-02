@@ -7,3 +7,4 @@ export * from './themeContext';
 export * from './rolesUsuariosContext';
 export * from './permisos';
 export * from './filetypes';
+export * from './profileMenu';

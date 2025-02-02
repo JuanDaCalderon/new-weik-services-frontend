@@ -1,5 +1,5 @@
-import useQuery from './useQuery';
-import useViewport from './useViewPort';
 import useToggle from './useToggle';
+import useTogglev2 from './useTogglev2';
+import useFileManager from './useFileManager';
 
-export {useToggle, useQuery, useViewport};
+export {useToggle, useTogglev2, useFileManager};

@@ -1,3 +1,9 @@
+/**
+ * Get the updated fields between two objects
+ * @param original
+ * @param updated
+ * @returns
+ */
 export const getUpdatedFields = <T extends Record<string, any>>(
   original: Partial<T>,
   updated: Partial<T>

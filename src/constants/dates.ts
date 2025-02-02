@@ -15,5 +15,4 @@ const months: {index: number; name: string}[] = [
 ];
 /** Current year in number */
 const year: number = new Date().getFullYear();
-
 export {months, year};

@@ -1,5 +1,5 @@
 import {ESTADOS} from '@/constants';
-import {Permiso, Rol} from './roles-permisos';
+import {Permiso, Rol} from '@/types';
 
 export type Estados = ESTADOS.online | ESTADOS.offline | ESTADOS.inactivo;
 
@@ -84,7 +84,7 @@ export type PayLoadUserType = {
 
 export type PayLoadUsers = {
   users: Employee[];
-  isLoadingUsers: boolean;
+  isLoading: boolean;
 };
 
 /* -------- Utils -------- */

@@ -1,10 +1,10 @@
 import {CLIENTES_NAME, ROLES_PERMISOS_NAME, USER_NAME, USERS_NAME} from '@/constants';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
-import userReducer from './slices/user';
-import rolesPermisosSlice from './slices/roles-permisos';
-import clientesSlice from './slices/clientes';
-import usersSlice from './slices/users';
+import userReducer from '@/store/slices/user';
+import rolesPermisosSlice from '@/store/slices/roles-permisos';
+import clientesSlice from '@/store/slices/clientes';
+import usersSlice from '@/store/slices/users';
 
 const rootReducer = combineReducers({
   [USER_NAME]: userReducer,

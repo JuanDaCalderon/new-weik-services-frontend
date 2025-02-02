@@ -1,4 +1,4 @@
-import {Employee} from './users';
+import {Employee} from '@/types';
 
 export type Permiso = {
   id: string;

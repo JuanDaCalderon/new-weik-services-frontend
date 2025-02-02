@@ -1,22 +1,30 @@
 import {PageBreadcrumb} from '@/components';
 import ReactTable from '@/components/table/ReactTable';
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import {Card, Col, Row} from 'react-bootstrap';
 import {columns} from './Columnas';
-import {Cliente} from '@/types';
+import {Employee} from '@/types';
 import {useAppSelector} from '@/store';
-import {selectClientes, isLoadingClientes} from '@/store/selectores';
+import {selectEmployees, selectisLoadingEmployees} from '@/store/selectores';
 import {Toaster} from 'react-hot-toast';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-import {CrearCliente} from '@/pages/gestion/clientes/CrearCliente';
+/* import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios'; */
+import {useGetEmployees} from '@/endpoints';
 
-const Clientes = memo(function Clientes() {
-  const clientes = useAppSelector(selectClientes);
-  const isLoadingClients = useAppSelector(isLoadingClientes);
+const Usuarios = memo(function Usuarios() {
+  const {getEmployeesSync} = useGetEmployees();
+  const users = useAppSelector(selectEmployees);
+  const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
+
+  useEffect(() => {
+    if (users.length <= 0) {
+      getEmployeesSync();
+    }
+  }, [getEmployeesSync, users.length]);
 
   return (
     <>
-      <PageBreadcrumb title="Gestión cliente" />
+      <PageBreadcrumb title="Gestión usuarios" />
 
       <Row>
         <Col xs={12}>
@@ -24,14 +32,14 @@ const Clientes = memo(function Clientes() {
             <Card.Body>
               <Row>
                 <Col sm={12} lg={4} xl={3} xxl={2} className="mb-3 mb-lg-0">
-                  <CrearCliente />
+                  {/* <CrearUsuarios /> */}
                 </Col>
                 <Col sm={12} lg={8} xl={9} xxl={10}>
-                  <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Clientes</h4>
-                  {!isLoadingClients ? (
-                    <ReactTable<Cliente>
+                  <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>
+                  {!isLoadingUsers ? (
+                    <ReactTable<Employee>
                       columns={columns}
-                      data={clientes}
+                      data={users}
                       pageSize={10}
                       tableClass="table-striped"
                       showPagination
@@ -60,4 +68,4 @@ const Clientes = memo(function Clientes() {
   );
 });
 
-export {Clientes};
+export {Usuarios};

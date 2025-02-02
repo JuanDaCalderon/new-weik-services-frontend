@@ -7,10 +7,10 @@ import {changeHTMLAttribute, getBoolean} from '@/utils';
 import config from '@/config';
 import packageJson from '../../../package.json';
 
-const Topbar = React.lazy(() => import('../Topbar/'));
-const Navbar = React.lazy(() => import('./Navbar'));
-const Footer = React.lazy(() => import('../Footer'));
-const RightSidebar = React.lazy(() => import('../RightSidebar'));
+const Topbar = React.lazy(() => import('@/layouts/Topbar'));
+const Navbar = React.lazy(() => import('@/layouts/Horizontal/Navbar'));
+const Footer = React.lazy(() => import('@/layouts/Footer'));
+const RightSidebar = React.lazy(() => import('@/layouts/RightSidebar'));
 
 const loading = () => <div className="text-center"></div>;
 

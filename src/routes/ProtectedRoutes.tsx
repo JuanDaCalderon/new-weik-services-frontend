@@ -1,7 +1,7 @@
 import {lazy} from 'react';
 import {Route, Routes as ReactRoutes, Navigate} from 'react-router-dom';
 import HorizontalLayout from '@/layouts/Horizontal';
-import Root from './Root';
+import Root from '@/routes/Root';
 import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores/user';
 import {DEFAULT_ROUTER_PATH} from '@/constants';

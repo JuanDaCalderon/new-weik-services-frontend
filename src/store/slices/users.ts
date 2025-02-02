@@ -5,7 +5,7 @@ import type {PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: PayLoadUsers = {
   users: [],
-  isLoadingUsers: false
+  isLoading: false
 };
 
 export const usersSlice = createSlice({
@@ -21,13 +21,13 @@ export const usersSlice = createSlice({
     setIsloadingUsers: (state: PayLoadUsers, action: PayloadAction<boolean>) => {
       return {
         ...state,
-        isLoadingUsers: action.payload
+        isLoading: action.payload
       };
     },
-    clearUsers: (_state: PayLoadUsers, action: PayloadAction<boolean>) => {
+    clearUsers: (state: PayLoadUsers) => {
       return {
-        users: [],
-        isLoadingUsers: action.payload ?? false
+        ...state,
+        users: []
       };
     }
   }

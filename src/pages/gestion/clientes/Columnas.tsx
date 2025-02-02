@@ -18,32 +18,25 @@ import {DateUtils, formatDomain, formatText, getUpdatedFields, isValidName} from
 import toast from 'react-hot-toast';
 import {FileUploader} from '@/components';
 import {ACCEPTED_FILE_TYPES, STORAGE_CLIENTES_PATH} from '@/constants';
-import useProfileImage from '@/pages/perfil/UserPortadaBox/useProfileImage';
+import {useFileManager} from '@/hooks';
 
 const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>}) {
-  /* EDIT CLIENT */
   const clientes = useAppSelector(selectClientes);
-  const clienteDatosIncial: Cliente = useMemo(
-    () => clientes.find((c: Cliente) => c.id === row.original.id) as Cliente,
+  const clienteDatosIncial = useMemo(
+    () => clientes.find((c) => c.id === row.original.id) as Cliente,
     [clientes, row.original.id]
   );
-  const [editClienteOpen, editClienteToggle, showEditCliente, hideEditCliente] = useToggle();
   const [updatedClient, setUpdatedClient] = useState<Cliente>(clienteDatosIncial);
-  const [hasTouched, setHasTouched] = useState<boolean>(false);
-  const {
-    isProfileImageEdit,
-    toggleProfileImageEdit,
-    handleImageFile,
-    handleImageRemoved,
-    profileImage
-  } = useProfileImage();
-  /* END EDIT CLIENT */
-  /* DELETE CLIENT */
   const [isReadyToBeDeleted, setIsReadyToBeDeleted] = useState<boolean>(true);
+  const [hasTouched, setHasTouched] = useState<boolean>(false);
   const [domain, setDomain] = useState<string>('');
+
+  const [editClienteOpen, editClienteToggle, showEditCliente, hideEditCliente] = useToggle();
   const [deleteClienteOpen, deleteClienteToggle, showDeleteCliente, hideDeleteCliente] =
     useToggle();
-  /* END DELETE CLIENT */
+  const {file, isFileManagerEdit, toggleFileManagerEdit, handleFileRemoved, handleFile} =
+    useFileManager();
+
   const {getClientesSync} = useGetClients();
   const {isLoadingDeleteCliente, deleteCliente} = useDeleteClient();
   const {uploadImage, isLoadingUploadImage} = useUploadImage();
@@ -53,16 +46,13 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setDomain(e.target.value);
-      e.target.value === row.original.domain
-        ? setIsReadyToBeDeleted(false)
-        : setIsReadyToBeDeleted(true);
+      setIsReadyToBeDeleted(e.target.value !== row.original.domain);
     },
     [row.original.domain]
   );
 
   const handleInputChangeEdit = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setUpdatedClient((prev) => ({...prev, [name]: value}));
+    setUpdatedClient((prev) => ({...prev, [e.target.name]: e.target.value}));
     setHasTouched(true);
   }, []);
 
@@ -73,6 +63,46 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
     setIsReadyToBeDeleted(true);
     hideDeleteCliente();
   }, [deleteCliente, getClientesSync, hideDeleteCliente, row.original.id]);
+
+  const onEditClient = useCallback(async () => {
+    const clienteUpdated = getUpdatedFields<Cliente>(clienteDatosIncial, updatedClient);
+    if (Object.keys(clienteUpdated).length > 0 || file) {
+      let newImageUrl: string | undefined = undefined;
+      if (clienteUpdated.nombre && !isValidName(clienteUpdated.nombre)) {
+        toast.error('El nombre no puede contener caracteres especiales.');
+        return;
+      }
+      if (file) {
+        await deleteImage(row.original.logo);
+        const refName = formatText(
+          clienteUpdated.nombre ? clienteUpdated.nombre : row.original.nombre
+        );
+        const refDomain = formatDomain(row.original.domain);
+        const imgName = `${refName}_${refDomain}_${DateUtils.getDateOnly(new Date(), '_')}`;
+        newImageUrl = await uploadImage(STORAGE_CLIENTES_PATH, imgName, file);
+      }
+      const cliente = newImageUrl ? {...clienteUpdated, logo: newImageUrl} : {...clienteUpdated};
+      await updateClient(row.original.id, cliente);
+      hideEditCliente();
+      await getClientesSync();
+    } else {
+      toast.error('No se han realizado cambios');
+      setHasTouched(false);
+    }
+  }, [
+    clienteDatosIncial,
+    deleteImage,
+    file,
+    getClientesSync,
+    hideEditCliente,
+    row.original.domain,
+    row.original.id,
+    row.original.logo,
+    row.original.nombre,
+    updateClient,
+    updatedClient,
+    uploadImage
+  ]);
 
   const deleteModalBody: JSX.Element = useMemo(
     () => (
@@ -114,50 +144,6 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
     [domain, handleInputChange, row.original.logo, row.original.nombre]
   );
 
-  const onEditClient = useCallback(async () => {
-    const clienteUpdated = getUpdatedFields<Cliente>(clienteDatosIncial, updatedClient);
-    if (Object.keys(clienteUpdated).length > 0 || profileImage) {
-      let newImageUrl: string | undefined = undefined;
-      let cliente: Cliente;
-      if (clienteUpdated.nombre && !isValidName(clienteUpdated.nombre)) {
-        toast.error('El nombre no puede contener caracteres especiales.');
-        return;
-      }
-      if (profileImage) {
-        const refName = formatText(
-          clienteUpdated.nombre ? clienteUpdated.nombre : row.original.nombre
-        );
-        const refDomain = formatDomain(
-          clienteUpdated.domain ? clienteUpdated.domain : row.original.domain
-        );
-        const imgName = `${refName}_${refDomain}_${DateUtils.getDateOnly(new Date(), '_')}`;
-        newImageUrl = await uploadImage(STORAGE_CLIENTES_PATH, imgName, profileImage); // Esta es la url de la nueva imagen
-        await deleteImage(row.original.logo); // Eliminamos la imagen anterior
-      }
-      if (newImageUrl) cliente = {...clienteUpdated, logo: newImageUrl} as Cliente;
-      else cliente = {...clienteUpdated} as Cliente;
-      await updateClient(row.original.id, cliente);
-      hideEditCliente();
-      await getClientesSync();
-    } else {
-      toast.error('No se han realizado cambios');
-      setHasTouched(false);
-    }
-  }, [
-    clienteDatosIncial,
-    deleteImage,
-    getClientesSync,
-    hideEditCliente,
-    profileImage,
-    row.original.domain,
-    row.original.id,
-    row.original.logo,
-    row.original.nombre,
-    updateClient,
-    updatedClient,
-    uploadImage
-  ]);
-
   const editModalBody: JSX.Element = useMemo(
     () => (
       <div className="d-flex w-100 flex-column">
@@ -165,13 +151,13 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
           <strong>Logo o imagen del cliente:</strong>
         </Form.Label>
         <div className="avatar-lg position-relative d-block me-auto ms-auto mb-3">
-          {isProfileImageEdit ? (
+          {isFileManagerEdit ? (
             <FileUploader
               onFileUpload={(file) => {
-                handleImageFile(file);
+                handleFile(file);
                 setHasTouched(true);
               }}
-              onFileRemoved={handleImageRemoved}
+              onFileRemoved={handleFileRemoved}
               acceptedFileTypes={ACCEPTED_FILE_TYPES}
               isRounded
             />
@@ -185,7 +171,7 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
               loading="lazy"
             />
           )}
-          {!profileImage && (
+          {!file && (
             <Button
               variant="light"
               className="btn-icon shadow-none p-0 m-0 position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
@@ -195,9 +181,9 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
                 borderRadius: '100px',
                 borderColor: 'transparent'
               }}
-              onClick={toggleProfileImageEdit}>
+              onClick={toggleFileManagerEdit}>
               <i
-                className={`mdi ${isProfileImageEdit ? 'mdi-arrow-u-right-bottom-bold' : 'mdi-image-edit'} font-18 d-flex justify-content-center align-items-center`}></i>
+                className={`mdi ${isFileManagerEdit ? 'mdi-arrow-u-right-bottom-bold' : 'mdi-image-edit'} font-18 d-flex justify-content-center align-items-center`}></i>
             </Button>
           )}
         </div>
@@ -228,13 +214,13 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
       </div>
     ),
     [
-      handleImageFile,
-      handleImageRemoved,
+      file,
+      handleFile,
+      handleFileRemoved,
       handleInputChangeEdit,
-      isProfileImageEdit,
-      profileImage,
+      isFileManagerEdit,
       row.original.logo,
-      toggleProfileImageEdit,
+      toggleFileManagerEdit,
       updatedClient.branding,
       updatedClient.nombre
     ]
@@ -243,10 +229,10 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
   return (
     <>
       <div className="d-flex gap-1">
-        <Button type="button" variant="outline-primary py-0 px-1" onClick={showEditCliente}>
+        <Button variant="outline-primary py-0 px-1" onClick={showEditCliente}>
           <i className="uil-pen"></i>
         </Button>
-        <Button type="button" variant="outline-danger py-0 px-1" onClick={showDeleteCliente}>
+        <Button variant="outline-danger py-0 px-1" onClick={showDeleteCliente}>
           <i className="uil-trash"></i>
         </Button>
       </div>

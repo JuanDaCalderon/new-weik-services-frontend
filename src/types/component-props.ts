@@ -1,6 +1,6 @@
 import type {ColumnDef, PaginationState, Row, Table} from '@tanstack/react-table';
 import type {ChangeEvent, ReactElement, ReactNode} from 'react';
-import {MenuItemType} from './menu';
+import {MenuItemType} from '@/types';
 
 export type ChildrenType = Readonly<{children: ReactNode}>;
 

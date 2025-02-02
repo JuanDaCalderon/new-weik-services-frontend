@@ -111,7 +111,7 @@ const useGetEmployees = () => {
           };
           employees.push(employee);
         }
-        dispatch(clearUsers(true));
+        dispatch(clearUsers());
         dispatch(setUsers(employees));
         dispatch(setIsloadingUsers(false));
         DebugUtil.logSuccess('Se cargaron exitosamente los usuarios en la store');
@@ -176,6 +176,7 @@ const useGetEmployees = () => {
         };
         employees.push(employee);
       }
+      dispatch(clearUsers());
       dispatch(setUsers(employees));
       DebugUtil.logSuccess('Se cargaron exitosamente los usuarios en la store sincronamente');
     } catch (error: any) {

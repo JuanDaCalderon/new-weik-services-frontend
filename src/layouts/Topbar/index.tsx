@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
-import ProfileDropdown from './ProfileDropdown';
-import AppsDropdown from './AppsDropdown';
+import ProfileDropdown from '@/layouts/Topbar/ProfileDropdown';
+import AppsDropdown from '@/layouts/Topbar/AppsDropdown';
 import {OverlayTrigger, Tooltip, Image} from 'react-bootstrap';
 import logo from '@/assets/images/logo.png';
 import logoSm from '@/assets/images/logo-sm.png';

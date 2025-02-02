@@ -2,7 +2,7 @@ import React, {useEffect, useState, useCallback, memo} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {AppMenuProps, MenuItems, MenuItemType} from '@/types';
 import classNames from 'classnames';
-import {findAllParent, findMenuItem} from '../utils/menu';
+import {findAllParent, findMenuItem} from '@/layouts/utils/menu';
 
 const MenuItemWithChildren = memo(function MenuItemWithChildren({
   item,

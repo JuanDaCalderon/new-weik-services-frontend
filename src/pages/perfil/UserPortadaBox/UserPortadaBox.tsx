@@ -2,40 +2,42 @@ import {Card, Row, Col, Button} from 'react-bootstrap';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
-import {useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {getNombreCompletoUser, getRolesUser, getUserNameUser} from '@/utils';
 import {FileUploader} from '@/components';
-import useProfileImage from './useProfileImage';
+import {useFileManager} from '@/hooks';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
+import {useUserProfileImage} from '@/endpoints';
 
 const UserPortadaBox = () => {
   const user = useAppSelector(selectUser);
+  const {updateProfileImage} = useUserProfileImage();
   const {
+    file,
+    isFileManagerEdit,
+    isUpdatingFile,
     isLoading,
-    isProfileImageEdit,
-    isUpdatingProfileImage,
-    toggleProfileImageEdit,
-    hideProfileImageEdit,
-    handleImageFile,
-    handleImageLoad,
-    handleImageRemoved,
-    handleOnSubmit,
+    handleFile,
+    handleFileRemoved,
     resetLoaders,
-    profileImage
-  } = useProfileImage();
+    hideFileManagerEdit,
+    handleFileLoad,
+    toggleFileManagerEdit,
+    setIsUpdatingFile
+  } = useFileManager();
 
   useEffect(() => {
     let timeOut: NodeJS.Timeout;
-    if (isUpdatingProfileImage.hasLoad) {
+    if (isUpdatingFile.hasLoad) {
       timeOut = setTimeout(() => {
-        hideProfileImageEdit();
+        hideFileManagerEdit();
         resetLoaders();
       }, 100);
     }
     return () => {
       clearTimeout(timeOut);
     };
-  }, [hideProfileImageEdit, isUpdatingProfileImage.hasLoad, resetLoaders]);
+  }, [hideFileManagerEdit, isUpdatingFile.hasLoad, resetLoaders]);
 
   const userImg: string = useMemo(() => {
     if (user.userImage && user.userImage !== '') return user.userImage;
@@ -54,17 +56,23 @@ const UserPortadaBox = () => {
     return getRolesUser(user);
   }, [user]);
 
+  const handleOnSubmit = useCallback(async () => {
+    setIsUpdatingFile({startToLoad: true, hasLoad: false});
+    if (file) await updateProfileImage(file);
+    setIsUpdatingFile({startToLoad: false, hasLoad: true});
+  }, [file, setIsUpdatingFile, updateProfileImage]);
+
   return (
     <Card className="bg-primary">
       <Card.Body className="profile-user-box">
         <Row className="align-items-center row-gap-2">
           <Col xs={'auto'}>
             <div className="avatar-lg position-relative d-inline-block">
-              {isProfileImageEdit ? (
+              {isFileManagerEdit ? (
                 <FileUploader
-                  onFileUpload={handleImageFile}
-                  onFileRemoved={handleImageRemoved}
-                  resetFile={isUpdatingProfileImage.hasLoad}
+                  onFileUpload={handleFile}
+                  onFileRemoved={handleFileRemoved}
+                  resetFile={isUpdatingFile.hasLoad}
                   isRounded
                 />
               ) : (
@@ -75,12 +83,12 @@ const UserPortadaBox = () => {
                     height={'100%'}
                     alt="Profile image"
                     className={`rounded-circle object-fit-cover img-thumbnail ${isLoading ? 'loading' : ' w-100  h-100'}`}
-                    onLoad={handleImageLoad}
+                    onLoad={handleFileLoad}
                     loading="lazy"
                   />
                 </>
               )}
-              {!profileImage ? (
+              {!file ? (
                 <Button
                   variant="light"
                   className="btn-icon shadow-none p-0 m-0 position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
@@ -90,9 +98,9 @@ const UserPortadaBox = () => {
                     borderRadius: '100px',
                     borderColor: 'transparent'
                   }}
-                  onClick={toggleProfileImageEdit}>
+                  onClick={toggleFileManagerEdit}>
                   <i
-                    className={`mdi ${isProfileImageEdit ? 'mdi-arrow-u-right-bottom-bold' : 'mdi-image-edit'} font-18 d-flex justify-content-center align-items-center`}></i>
+                    className={`mdi ${isFileManagerEdit ? 'mdi-arrow-u-right-bottom-bold' : 'mdi-image-edit'} font-18 d-flex justify-content-center align-items-center`}></i>
                 </Button>
               ) : (
                 <Button
@@ -108,7 +116,7 @@ const UserPortadaBox = () => {
                   <i className="mdi mdi-content-save-check font-18 d-flex justify-content-center align-items-center"></i>
                 </Button>
               )}
-              {isUpdatingProfileImage.startToLoad && (
+              {isUpdatingFile.startToLoad && (
                 <SkeletonLoader customClass="position-absolute top-0 p-0"></SkeletonLoader>
               )}
             </div>

@@ -3,30 +3,11 @@ import {Dropdown} from 'react-bootstrap';
 import classNames from 'classnames';
 import {useToggle} from '@/hooks';
 import {memo, useMemo} from 'react';
-import {ProfileOption} from '@/types';
-import {PAGE_LOG_OUT, PAGE_PROFILE, PAGE_ROLES_PERMISOS, PERMISOS_MAP_IDS} from '@/constants';
+import {profileMenus} from '@/constants';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {filterByPermissions, getNombreCompletoUser} from '@/utils';
-const profileMenus: ProfileOption[] = [
-  {
-    label: 'Mi cuenta',
-    icon: 'mdi mdi-account-circle',
-    redirectTo: PAGE_PROFILE
-  },
-  {
-    label: 'Roles y Permisos',
-    icon: 'mdi mdi-account-edit',
-    redirectTo: PAGE_ROLES_PERMISOS,
-    permisoId: PERMISOS_MAP_IDS.accesoRolesPermisos
-  },
-  {
-    label: 'Cerrar sesión',
-    icon: 'mdi mdi-logout',
-    redirectTo: PAGE_LOG_OUT
-  }
-];
 
 const ProfileDropdown = () => {
   const [isOpen, toggleDropdown] = useToggle();

@@ -1,4 +1,4 @@
-import {memo, useMemo} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import ReactTable from '@/components/tablev02/ReactTable';
 import {MemoizedRenderSubComponent} from './SubComponentUsuarios';
@@ -8,10 +8,12 @@ import {usuariosColumns} from './columnas';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {hasPermission} from '@/utils';
-import {PERMISOS_MAP_IDS} from '@/constants';
+import {PAGE_GESTION_USUARIOS, PERMISOS_MAP_IDS} from '@/constants';
+import {useNavigate} from 'react-router-dom';
 
 const Usuarios = memo(function Usuarios() {
   const user = useAppSelector(selectUser);
+  const navigate = useNavigate();
   const {usuarios} = useUsuarios();
   const canCrearUsuario = useMemo(() => {
     return hasPermission(
@@ -29,6 +31,10 @@ const Usuarios = memo(function Usuarios() {
       user.permisosDenegados
     );
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+  const onNavigateToCrearUsuario = useCallback(() => {
+    navigate(PAGE_GESTION_USUARIOS);
+  }, [navigate]);
+
   return (
     <>
       <hr className="d-md-none" />
@@ -49,7 +55,8 @@ const Usuarios = memo(function Usuarios() {
             className="shadow-sm"
             style={{maxWidth: '175px'}}
             variant="success"
-            disabled={!canCrearUsuario}>
+            disabled={!canCrearUsuario}
+            onClick={onNavigateToCrearUsuario}>
             <i className="mdi mdi-account-multiple-plus me-1" />
             Crear Usuario
           </Button>

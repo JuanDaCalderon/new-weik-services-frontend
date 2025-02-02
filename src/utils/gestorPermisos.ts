@@ -1,5 +1,14 @@
 import {MenuItem, Permiso, RolesForUser} from '@/types';
 
+/**
+ * Filtra los menús según los permisos otorgados al usuario
+ *
+ * @param {MenuItem[]} menus
+ * @param {RolesForUser[]} roles
+ * @param {Permiso[]} permisosOtorgados
+ * @param {Permiso[]} permisosDenegados
+ * @returns {MenuItem[]} Menús filtrados
+ */
 export const filterByPermissions = (
   menus: MenuItem[],
   roles: RolesForUser[],
@@ -7,13 +16,11 @@ export const filterByPermissions = (
   permisosDenegados: Permiso[]
 ): MenuItem[] => {
   let filteredMenus: MenuItem[];
-
   // Filtrar según los roles del usuario
   filteredMenus = menus.filter((menu) => {
     if (!menu.permisoId) return true;
     return roles.some((rol) => rol.permisos?.some((permiso) => permiso.permiso === menu.permisoId));
   });
-
   // Incluir permisos otorgados directamente
   if (permisosOtorgados.length > 0) {
     if (filteredMenus.length !== menus.length) filteredMenus = menus;
@@ -22,7 +29,6 @@ export const filterByPermissions = (
       return permisosOtorgados.some((permiso) => permiso.permiso === menu.permisoId);
     });
   }
-
   // Excluir permisos denegados
   if (permisosDenegados.length > 0) {
     filteredMenus = filteredMenus.filter((menu) => {
@@ -30,10 +36,18 @@ export const filterByPermissions = (
       return !permisosDenegados.some((permiso) => permiso.permiso === menu.permisoId);
     });
   }
-
   return filteredMenus;
 };
 
+/**
+ * Verifica si un usuario tiene un permiso específico
+ *
+ * @param {string} permisoId
+ * @param {RolesForUser[]} roles
+ * @param {Permiso[]} permisosOtorgados
+ * @param {Permiso[]} permisosDenegados
+ * @returns {boolean} true si tiene permiso, false si no
+ */
 export const hasPermission = (
   permisoId: string,
   roles: RolesForUser[],
@@ -44,16 +58,12 @@ export const hasPermission = (
   const hasRolePermission = roles.some((rol) =>
     rol.permisos?.some((permiso) => permiso.permiso === permisoId)
   );
-
   // Verificar si el permiso está otorgado directamente
   const isGranted = permisosOtorgados.some((permiso) => permiso.permiso === permisoId);
-
   // Verificar si el permiso está denegado
   const isDenied = permisosDenegados.some((permiso) => permiso.permiso === permisoId);
-
   // Priorizar denegaciones
   if (isDenied) return false;
-
   // Retornar true si tiene permiso por rol o está otorgado directamente
   return hasRolePermission || isGranted;
 };

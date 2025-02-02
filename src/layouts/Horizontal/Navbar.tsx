@@ -1,6 +1,6 @@
 import {NavbarProps} from '@/types';
-import {getHorizontalMenuItems} from '../utils/menu';
-import AppMenu from './Menu';
+import {getHorizontalMenuItems} from '@/layouts/utils/menu';
+import AppMenu from '@/layouts/Horizontal/Menu';
 import {Collapse, Container} from 'react-bootstrap';
 import {memo} from 'react';
 
