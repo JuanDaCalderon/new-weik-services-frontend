@@ -10,13 +10,14 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
-      devOptions: {
-        enabled: true
-      },
       manifest: {
         name: 'Weik Services',
         short_name: 'Weik',
         description: 'Weik Crafting Your Vision',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#313a46',
+        theme_color: '#313a46',
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -76,10 +77,7 @@ export default defineConfig({
             sizes: '1080x1920',
             type: 'image/png'
           }
-        ],
-        theme_color: '#313a46',
-        background_color: '#313a46',
-        display: 'standalone'
+        ]
       }
     })
   ],
