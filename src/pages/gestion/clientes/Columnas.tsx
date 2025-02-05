@@ -274,7 +274,7 @@ const columns: ColumnDef<Cliente>[] = [
           src={row.original.logo}
           alt={row.original.logo}
           loading="lazy"
-          className="me-2 rounded-circle object-fit-contain"
+          className="me-1 rounded-circle object-fit-contain"
         />
         <span className="fw-bold text-dark text-opacity-75">{row.original.nombre}</span>
       </div>

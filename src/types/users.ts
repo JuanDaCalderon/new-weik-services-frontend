@@ -54,6 +54,7 @@ export type Employee = {
   userName: string;
   userImage: string;
   fechaNacimiento: string;
+  fechaCreacion: string;
   numeroDocumento: string;
   ciudadExpedicionDocumento: string;
   estado: Estados;

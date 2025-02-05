@@ -11,7 +11,7 @@ import {useFileManager} from '@/hooks';
 import {ACCEPTED_FILE_TYPES, STORAGE_CLIENTES_PATH} from '@/constants';
 import {useGetClients, useUploadImage} from '@/endpoints';
 import {useAddClient} from '@/endpoints';
-import {checkIfClientExists} from '@/utils/cliente';
+import {checkIfClientExists} from '@/utils';
 const clienteDatosIniciales: Cliente = {
   id: '',
   nombre: '',

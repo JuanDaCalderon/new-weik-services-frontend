@@ -66,6 +66,7 @@ const useGetEmployees = () => {
             userName,
             userImage,
             fechaNacimiento,
+            fechaCreacion,
             numeroDocumento,
             ciudadExpedicionDocumento,
             estado,
@@ -91,6 +92,9 @@ const useGetEmployees = () => {
             userImage: userImage ?? '',
             fechaNacimiento: fechaNacimiento
               ? DateUtils.formatDateToString((fechaNacimiento as Timestamp).toDate())
+              : DateUtils.formatDateToString(new Date()),
+            fechaCreacion: fechaCreacion
+              ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
               : DateUtils.formatDateToString(new Date()),
             numeroDocumento: numeroDocumento ?? '',
             ciudadExpedicionDocumento: ciudadExpedicionDocumento ?? '',
@@ -135,6 +139,7 @@ const useGetEmployees = () => {
           userName,
           userImage,
           fechaNacimiento,
+          fechaCreacion,
           numeroDocumento,
           ciudadExpedicionDocumento,
           estado,
@@ -160,6 +165,9 @@ const useGetEmployees = () => {
           userImage: userImage ?? '',
           fechaNacimiento: fechaNacimiento
             ? DateUtils.formatDateToString((fechaNacimiento as Timestamp).toDate())
+            : DateUtils.formatDateToString(new Date()),
+          fechaCreacion: fechaCreacion
+            ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
             : DateUtils.formatDateToString(new Date()),
           numeroDocumento: numeroDocumento ?? '',
           ciudadExpedicionDocumento: ciudadExpedicionDocumento ?? '',

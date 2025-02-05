@@ -1,6 +1,6 @@
 import {PageBreadcrumb} from '@/components';
 import ReactTable from '@/components/table/ReactTable';
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import {Card, Col, Row} from 'react-bootstrap';
 import {columns} from './Columnas';
 import {Cliente} from '@/types';
@@ -9,10 +9,16 @@ import {selectClientes, isLoadingClientes} from '@/store/selectores';
 import {Toaster} from 'react-hot-toast';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {CrearCliente} from '@/pages/gestion/clientes/CrearCliente';
+import {useGetClients} from '@/endpoints';
 
 const Clientes = memo(function Clientes() {
+  const {getClientesSync} = useGetClients();
   const clientes = useAppSelector(selectClientes);
   const isLoadingClients = useAppSelector(isLoadingClientes);
+
+  useEffect(() => {
+    if (clientes.length <= 0) getClientesSync();
+  }, [clientes.length, getClientesSync]);
 
   return (
     <>
@@ -23,10 +29,14 @@ const Clientes = memo(function Clientes() {
           <Card>
             <Card.Body>
               <Row>
-                <Col sm={12} lg={4} xl={3} xxl={2} className="mb-3 mb-lg-0">
-                  <CrearCliente />
+                <Col sm={12} lg={4} xl={3} className="mb-3 mb-lg-0">
+                  {!isLoadingClients ? (
+                    <CrearCliente />
+                  ) : (
+                    <SkeletonLoader height="300px" customClass="p-0" />
+                  )}
                 </Col>
-                <Col sm={12} lg={8} xl={9} xxl={10}>
+                <Col sm={12} lg={8} xl={9}>
                   <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Clientes</h4>
                   {!isLoadingClients ? (
                     <ReactTable<Cliente>
@@ -37,7 +47,7 @@ const Clientes = memo(function Clientes() {
                       showPagination
                     />
                   ) : (
-                    <SkeletonLoader height="200px" customClass="px-1" />
+                    <SkeletonLoader height="100%" customClass="px-0" />
                   )}
                 </Col>
               </Row>

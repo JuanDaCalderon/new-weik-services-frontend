@@ -1,203 +1,300 @@
-import {FileType, Spinner} from '@/components';
 import {ChangeEvent, memo, useCallback, useMemo, useState} from 'react';
-import {Button, Form} from 'react-bootstrap';
-import {Cliente} from '@/types';
+import {Button, Form, InputGroup} from 'react-bootstrap';
+import {Employee, Option} from '@/types';
 import {useAppSelector} from '@/store';
-import {selectClientes} from '@/store/selectores';
+import Select, {MultiValue} from 'react-select';
+import {clientesOptionsSelector, rolesSelector, selectEmployees} from '@/store/selectores';
+import {ESTADOS, THIS_CLIENT_INFO} from '@/constants';
+import {checkIfUserExists, DebugUtil, generateUsername, isValidEmail} from '@/utils';
+import {useAddUser, useCreateUserAuth, useGetEmployees} from '@/endpoints';
 import toast from 'react-hot-toast';
-import {DateUtils, DebugUtil, isValidDomain, isValidName, formatText, formatDomain} from '@/utils';
-import {FileUploader} from '@/components';
-import {useFileManager} from '@/hooks';
-import {ACCEPTED_FILE_TYPES, STORAGE_CLIENTES_PATH} from '@/constants';
-import {useGetClients, useUploadImage} from '@/endpoints';
-import {useAddClient} from '@/endpoints';
-import {checkIfClientExists} from '@/utils/cliente';
-const clienteDatosIniciales: Cliente = {
-  id: '',
-  nombre: '',
-  domain: '',
-  branding: '',
-  logo: ''
-};
+import {Spinner} from '@/components';
+const userDatosIniciales: Employee = {
+  nombres: '',
+  apellidos: '',
+  cargo: '',
+  email: ''
+} as Employee;
 
 const CrearUsuarios = memo(function CrearUsuarios() {
-  const clientes = useAppSelector(selectClientes);
-  const [newCliente, setNewCliente] = useState<Cliente>(clienteDatosIniciales);
-  const [shouldResetImage, setShouldResetImage] = useState<boolean>(false);
+  const users = useAppSelector(selectEmployees);
+  const clientes = useAppSelector(clientesOptionsSelector);
+  const clientesOptions: Option[] = useMemo(() => {
+    const optionsClients: Option[] = [];
+    optionsClients.push(
+      {value: THIS_CLIENT_INFO.DOMAIN, label: THIS_CLIENT_INFO.LABEL},
+      ...clientes
+    );
+    return optionsClients;
+  }, [clientes]);
+  const roles = useAppSelector(rolesSelector);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [deactivateAutoEmail, setDeactivateAutoEmail] = useState<boolean>(false);
+  const [clienteSelected, setClienteSelected] = useState<string>(clientesOptions[0].value);
+  const [password, setpassword] = useState<string>('000000');
+  const [selectedOptionsRoles, setSelectedOptionsRoles] = useState<
+    {value: string; label: string}[]
+  >([]);
+  const [newUser, setNewUser] = useState<Employee>(userDatosIniciales);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
-  const {file, handleFile, handleFileRemoved} = useFileManager();
-  const {isLoadingUploadImage, uploadImage} = useUploadImage();
-  const {isLoadingAddClient, addClient} = useAddClient();
-  const {getClientesSync} = useGetClients();
+  const {getEmployeesSync} = useGetEmployees();
+  const {addUser, isLoadingAddUser} = useAddUser();
+  const {createAuthUser, isLoadingCreateAuthUser} = useCreateUserAuth();
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setNewCliente((prev) => ({...prev, [e.target.name]: e.target.value}));
+  const rolesOptions: Option[] = useMemo(
+    () => roles.map((rol) => ({value: rol.id, label: rol.rol})),
+    [roles]
+  );
+
+  const handleCheckBoxChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setDeactivateAutoEmail(e.target.checked);
+  }, []);
+
+  const handleInputChangePassword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setpassword(e.target.value);
     setHasTouched(true);
   }, []);
 
-  const handleFileUpload = useCallback(
-    (file: FileType) => {
-      setShouldResetImage(false);
-      handleFile(file);
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const {name, value} = e.target;
+      if (deactivateAutoEmail) setNewUser((prev) => ({...prev, [name]: value}));
+      else {
+        const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        setNewUser((prev) => ({
+          ...prev,
+          [name]: name === 'email' && !isValidEmail(value) ? value.split('@')[0] : value
+        }));
+      }
       setHasTouched(true);
     },
-    [handleFile]
+    [deactivateAutoEmail]
   );
 
-  const isValidClient = useCallback((clienteData: Cliente): boolean => {
+  const handleClienteSelectChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      if (!deactivateAutoEmail)
+        setNewUser((prev) => ({
+          ...prev,
+          email: `${prev.email.split('@')[0]}@${e.target.value}.com`
+        }));
+      setClienteSelected(e.target.value);
+      setHasTouched(true);
+    },
+    [deactivateAutoEmail]
+  );
+
+  const handleSelectChange = useCallback((selected: MultiValue<{value: string; label: string}>) => {
+    setSelectedOptionsRoles(selected as {value: string; label: string}[]);
+    setHasTouched(true);
+  }, []);
+
+  const isValidUser = useCallback((userData: Employee): boolean => {
     return (
-      !!clienteData &&
-      !!clienteData.nombre.trim() &&
-      !!clienteData.domain.trim() &&
-      !!clienteData.branding.trim()
+      !!userData &&
+      !!userData.nombres.trim() &&
+      !!userData.apellidos.trim() &&
+      !!userData.cargo.trim() &&
+      !!userData.email.trim()
     );
   }, []);
 
   const resetForm = useCallback(() => {
-    setShouldResetImage(true);
-    setNewCliente(clienteDatosIniciales);
+    setNewUser(userDatosIniciales);
+    setSelectedOptionsRoles([]);
+    setClienteSelected(clientesOptions[0].value);
     setHasTouched(false);
-  }, []);
+  }, [clientesOptions]);
 
-  const enviarCliente = useCallback(async () => {
-    if (!isValidClient(newCliente) || !file) {
-      toast.error(
-        `Complete todos los campos${!file ? ' y asegúrese de haber subido una imagen' : ''}.`
-      );
-      setShouldResetImage(!file);
+  const enviarUser = useCallback(async () => {
+    if (!isValidUser(newUser)) {
+      toast.error('Todos los campos son obligatorios. Por favor, complételos.');
       setHasTouched(false);
       return;
     }
-    if (checkIfClientExists(newCliente, clientes)) {
-      toast.error(
-        'El cliente no se pudo crear, ya existen registros con el mismo nombre y/o dominio.'
-      );
+    const usuario: Employee = {
+      ...newUser,
+      userName: generateUsername(newUser.nombres, newUser.apellidos),
+      email: newUser.email.includes('@')
+        ? newUser.email
+        : `${newUser.email}@${clienteSelected}.com`,
+      estado: ESTADOS.offline,
+      horario: [],
+      horasExtra: [],
+      horasTrabajo: [],
+      permisosDenegados: [],
+      permisosOtorgados: [],
+      roles: [],
+      vacaciones: [],
+      numeroDocumento: '',
+      ciudadExpedicionDocumento: '',
+      userImage: ''
+    };
+    if (checkIfUserExists(usuario, users)) {
+      toast.error('El usuario no se pudo crear, ya existen registros con el mismo Email.');
       return;
     }
-    if (!isValidDomain(newCliente.domain) || !isValidName(newCliente.nombre)) {
-      if (!isValidDomain(newCliente.domain)) {
-        toast.error('El dominio no puede contener caracteres especiales.');
-      }
-      if (!isValidName(newCliente.nombre)) {
-        toast.error('El nombre no puede contener caracteres especiales.');
-      }
+    if (!isValidEmail(usuario.email)) {
+      toast.error('El email no tiene un formato válido. Ejemplo: usuario@dominio.com');
       return;
     }
 
     try {
-      const refName = formatText(newCliente.nombre);
-      const refDomain = formatDomain(newCliente.domain);
-      const imgName = `${refName}_${refDomain}_${DateUtils.getDateOnly(new Date(), '_')}`;
-      const imgUrl = await uploadImage(STORAGE_CLIENTES_PATH, imgName, file);
-      const cliente: Cliente = {
-        nombre: newCliente.nombre,
-        domain: refDomain,
-        branding: newCliente.branding,
-        logo: imgUrl
-      } as Cliente;
-      await addClient(cliente);
-      await getClientesSync();
+      await createAuthUser(usuario.email, password);
+      await addUser(usuario);
+      await getEmployeesSync();
       resetForm();
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
   }, [
-    addClient,
-    clientes,
-    file,
-    getClientesSync,
-    isValidClient,
-    newCliente,
+    addUser,
+    clienteSelected,
+    createAuthUser,
+    getEmployeesSync,
+    isValidUser,
+    newUser,
+    password,
     resetForm,
-    uploadImage
+    users
   ]);
-
-  const isLoadingUploadCliente = useMemo(() => {
-    return isLoadingAddClient || isLoadingUploadImage;
-  }, [isLoadingAddClient, isLoadingUploadImage]);
 
   return (
     <>
       <p className="weik-text-grey-200 my-1">
-        Completa los campos y haz clic en "Crear" para añadir un cliente.
+        Completa los campos y haz clic en "Crear" para añadir un usuario enlazado a un cliente en
+        específico.
       </p>
-      <ul>
-        <li>
-          <h5 className="d-inline-block weik-text-grey-300 my-0">Nombre del cliente:</h5>
-          <p className="d-inline-block weik-text-grey-200 ms-1 my-0">Nombre completo del cliente</p>
-        </li>
-        <li>
-          <h5 className="d-inline-block weik-text-grey-300 my-0">Dominio del cliente:</h5>
-          <p className="d-inline-block weik-text-grey-200 ms-1 my-0">
-            @<b>dominio</b>.com, donde se asociarán los correos de los usuarios al cliente. No debe
-            contener espacios.
-          </p>
-        </li>
-      </ul>
-      <div className="d-flex justify-content-center flex-column mb-3">
-        <Form.Label className="mb-0" htmlFor="logo">
-          <strong>Logo o imagen del cliente:</strong>
-        </Form.Label>
-        <div className="avatar-lg d-block me-auto ms-auto mb-1">
-          <FileUploader
-            onFileUpload={handleFileUpload}
-            onFileRemoved={handleFileRemoved}
-            acceptedFileTypes={ACCEPTED_FILE_TYPES}
-            resetFile={shouldResetImage}
-            isRounded
-          />
-        </div>
-      </div>
-      <Form.Label className="mb-0" htmlFor="nombre">
-        <strong>Nombre del cliente:</strong>
+      <Form.Label className="mb-0" htmlFor="nombres">
+        <strong>Nombres del usuario:</strong>
       </Form.Label>
       <Form.Control
         size="sm"
         type="text"
-        id="nombre"
-        name="nombre"
-        placeholder="Ingrese el nombre del cliente"
-        value={newCliente.nombre}
+        id="nombres"
+        name="nombres"
+        required
+        placeholder="Ingrese los nombres del usuario"
+        value={newUser.nombres}
         onChange={handleInputChange}
       />
-      <Form.Label className="mb-0 mt-1" htmlFor="domain">
-        <strong>Dominio del cliente:</strong>
+      <Form.Label className="mb-0 mt-1" htmlFor="apellidos">
+        <strong>Apellidos del usuario:</strong>
       </Form.Label>
       <Form.Control
         size="sm"
         type="text"
-        id="domain"
-        name="domain"
-        placeholder="Ingrese el dominio del cliente"
-        value={newCliente.domain}
+        id="apellidos"
+        name="apellidos"
+        required
+        placeholder="Ingrese los apellidos del usuario"
+        value={newUser.apellidos}
         onChange={handleInputChange}
       />
-      <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
-        una vez creado el dominio, no podrá ser modificado.
-      </p>
-      <Form.Label className="mb-0 mt-1" htmlFor="branding">
-        <strong>Link al branding del cliente:</strong>
+      <Form.Label className="mb-0 mt-1" htmlFor="cargo">
+        <strong>Cargo del usuario:</strong>
       </Form.Label>
       <Form.Control
         size="sm"
         type="url"
-        id="branding"
-        name="branding"
-        pattern="https://.*"
+        id="cargo"
+        name="cargo"
         required
-        placeholder="Ingrese la URL del branding del cliente"
-        value={newCliente.branding}
+        placeholder="Ingrese el cargo del usuario"
+        value={newUser.cargo}
         onChange={handleInputChange}
       />
+      <div className="d-flex justify-content-between">
+        <Form.Label className="mb-0 mt-1" htmlFor="email">
+          <strong>Email del usuario:</strong>
+        </Form.Label>
+        <Form.Check
+          onChange={handleCheckBoxChange}
+          checked={deactivateAutoEmail}
+          className="mt-1"
+          type="checkbox"
+          label="Desactivar email autogenerado"
+        />
+      </div>
+      <Form.Control
+        size="sm"
+        type="text"
+        id="email"
+        name="email"
+        required
+        placeholder="NO es necesario poner @cliente.com"
+        value={newUser.email}
+        onChange={handleInputChange}
+      />
+      <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
+        Solo ingresa la parte antes del @ para crear el email, ya que al seleccionar el cliente,
+        este se autocompletará automáticamente. Todos los usuarios deben estar asociados a el
+        dominio de un cliente, ya sea un cliente externo o el cliente raíz (Weikstudio), donde
+        pueden tener roles como diseñador, administrador u otros.
+      </p>
+      <Form.Label className="mb-0 mt-1" htmlFor="password">
+        <strong>Contraseña:</strong>
+      </Form.Label>
+      <InputGroup className="mb-0">
+        <Form.Control
+          id="password"
+          size="sm"
+          type={showPassword ? 'text' : 'password'}
+          onChange={handleInputChangePassword}
+          autoComplete="current-password"
+          name="password"
+          value={password}
+        />
+        <div
+          className={`input-group-text input-group-password py-0 px-2 ${
+            showPassword ? 'show-password' : ''
+          }`}
+          data-password={showPassword ? 'true' : 'false'}>
+          <span
+            className="password-eye"
+            onClick={() => {
+              setShowPassword(!showPassword);
+            }}></span>
+        </div>
+      </InputGroup>
+      <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
+        La contraseña por defecto sera 000000
+      </p>
+      <Form.Label className="mb-0 mt-1" htmlFor="cliente">
+        <strong>Cliente asociado:</strong>
+      </Form.Label>
+      <Form.Select
+        size="sm"
+        id="cliente"
+        aria-label="Cliente asociado"
+        onChange={handleClienteSelectChange}>
+        {clientesOptions.map((cliente, index) => (
+          <option key={index} value={cliente.value}>
+            {cliente.label}
+          </option>
+        ))}
+      </Form.Select>
+      <Form.Label className="mb-0 mt-1" htmlFor="roles">
+        <strong>Roles:</strong>
+      </Form.Label>
+      <Select
+        isMulti={true}
+        options={rolesOptions}
+        value={selectedOptionsRoles}
+        onChange={handleSelectChange}
+        className="react-select"
+        classNamePrefix="react-select"
+        placeholder="No hay roles asignados"
+      />
       <Button
-        disabled={!hasTouched || isLoadingUploadCliente}
+        disabled={!hasTouched || isLoadingAddUser || isLoadingCreateAuthUser}
         variant="success"
         className="w-100 mt-2"
-        onClick={enviarCliente}>
-        {isLoadingUploadCliente && (
+        onClick={enviarUser}>
+        {(isLoadingAddUser || isLoadingCreateAuthUser) && (
           <Spinner className="spinner-border-sm" tag="span" color="white" />
         )}
-        {!isLoadingUploadCliente && (
+        {!isLoadingAddUser && !isLoadingCreateAuthUser && (
           <>
             <i className="mdi mdi-plus-circle me-1" /> Crear
           </>

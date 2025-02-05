@@ -67,6 +67,7 @@ const useGetUsers = () => {
           userImage,
           estado,
           fechaNacimiento,
+          fechaCreacion,
           cargo,
           roles,
           permisosOtorgados,
@@ -92,6 +93,9 @@ const useGetUsers = () => {
           estado: estado ?? '',
           fechaNacimiento: fechaNacimiento
             ? DateUtils.formatDateToString((fechaNacimiento as Timestamp).toDate())
+            : DateUtils.formatDateToString(new Date()),
+          fechaCreacion: fechaCreacion
+            ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
             : DateUtils.formatDateToString(new Date()),
           cargo: cargo ?? '',
           roles: thisRoles ? await Promise.all(thisRoles) : [],

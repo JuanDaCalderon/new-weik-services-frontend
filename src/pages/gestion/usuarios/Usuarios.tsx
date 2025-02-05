@@ -8,7 +8,7 @@ import {useAppSelector} from '@/store';
 import {selectEmployees, selectisLoadingEmployees} from '@/store/selectores';
 import {Toaster} from 'react-hot-toast';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-/* import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios'; */
+import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
 import {useGetEmployees} from '@/endpoints';
 
 const Usuarios = memo(function Usuarios() {
@@ -17,9 +17,7 @@ const Usuarios = memo(function Usuarios() {
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
 
   useEffect(() => {
-    if (users.length <= 0) {
-      getEmployeesSync();
-    }
+    if (users.length <= 0) getEmployeesSync();
   }, [getEmployeesSync, users.length]);
 
   return (
@@ -31,10 +29,14 @@ const Usuarios = memo(function Usuarios() {
           <Card>
             <Card.Body>
               <Row>
-                <Col sm={12} lg={4} xl={3} xxl={2} className="mb-3 mb-lg-0">
-                  {/* <CrearUsuarios /> */}
+                <Col sm={12} lg={4} xl={3} className="mb-3 mb-lg-0">
+                  {!isLoadingUsers ? (
+                    <CrearUsuarios />
+                  ) : (
+                    <SkeletonLoader height="300px" customClass="p-0" />
+                  )}
                 </Col>
-                <Col sm={12} lg={8} xl={9} xxl={10}>
+                <Col sm={12} lg={8} xl={9}>
                   <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>
                   {!isLoadingUsers ? (
                     <ReactTable<Employee>
@@ -45,7 +47,7 @@ const Usuarios = memo(function Usuarios() {
                       showPagination
                     />
                   ) : (
-                    <SkeletonLoader height="200px" customClass="px-1" />
+                    <SkeletonLoader height="100%" customClass="px-0" />
                   )}
                 </Col>
               </Row>

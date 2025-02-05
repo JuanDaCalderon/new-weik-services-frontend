@@ -5,6 +5,7 @@ import {memo, useCallback, useMemo} from 'react';
 import {Badge} from 'react-bootstrap';
 import {useRolesUsuariosContext} from '../context';
 import {USUARIOS_CELLS} from '@/constants';
+import fallBackLogo from '@/assets/images/logo-fallback.png';
 
 const UsuariosColumn = memo(function UsuariosColumn({row}: {row: Row<thisUsuarios>}) {
   const {updateUsuariosCell, rolesUsuarios} = useRolesUsuariosContext();
@@ -25,7 +26,17 @@ const UsuariosColumn = memo(function UsuariosColumn({row}: {row: Row<thisUsuario
           {row.getIsExpanded() && rolesUsuarios.usuariosCell === USUARIOS_CELLS.cargo ? '👇' : '👉'}
         </span>
       )}
-      <img src={row.original.userImage} className="rounded-circle avatar-xs" alt="friend" />
+      <img
+        src={
+          row.original.userImage && row.original.userImage !== ''
+            ? row.original.userImage
+            : fallBackLogo
+        }
+        alt={
+          row.original.userImage && row.original.userImage !== '' ? row.original.userImage : 'user'
+        }
+        className="rounded-circle avatar-xs"
+      />
       <div className="ms-1 d-flex flex-column">
         <span className="m-0 lh-sm fw-bold text-uppercase text-dark text-opacity-75 d-inline">
           {getNombreCompletoUser(row.original)}

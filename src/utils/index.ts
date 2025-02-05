@@ -12,3 +12,4 @@ export * from './getUpdatedFields';
 export * from './gestorPermisos';
 export * from './password';
 export * from './utils';
+export * from './checks';
