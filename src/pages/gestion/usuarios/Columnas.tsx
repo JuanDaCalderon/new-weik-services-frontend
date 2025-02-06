@@ -5,13 +5,16 @@ import {GenericModal} from '@/components/Modals/GenericModal';
 import {ChangeEvent, memo, useCallback, useMemo, useState, JSX, Fragment} from 'react';
 import {Badge, Button, Dropdown, DropdownButton, Form} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
-import {getNombreCompletoUser, DateUtils, DebugUtil} from '@/utils';
-import {ESTADOS, RIBBONTYPES} from '@/constants';
+import {getNombreCompletoUser, DateUtils, DebugUtil, hasPermission} from '@/utils';
+import {ESTADOS, PERMISOS_MAP_IDS, RIBBONTYPES} from '@/constants';
 import {useDeleteUser, useGetEmployees, useSetEstadoUser} from '@/endpoints';
 import toast from 'react-hot-toast';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
+import {useAppSelector} from '@/store';
+import {selectUser} from '@/store/selectores';
 
 const UsuariosAcciones = memo(function RolNameColumn({row}: {row: Row<Employee>}) {
+  const user = useAppSelector(selectUser);
   const [userEmail, setUserEmail] = useState<string>('');
   const [isReadyToBeDeleted, setIsReadyToBeDeleted] = useState<boolean>(true);
   const [deactivateOpen, deactivateToggle, showDeactivate, hideDeactivate] = useToggle();
@@ -133,58 +136,89 @@ const UsuariosAcciones = memo(function RolNameColumn({row}: {row: Row<Employee>}
 
   const isInactive = useMemo(() => row.original.estado === ESTADOS.inactivo, [row.original.estado]);
 
+  const canInactiveUsuarios = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.inactivarUsuarios,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
+  const canDeleteUsuarios = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.eliminarUsuarios,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
   return (
     <>
       <div className="d-flex gap-1">
-        {isInactive ? (
-          <Button variant="outline-info py-0 px-1" onClick={showActivate}>
-            <i className="uil-user-plus"></i>
-          </Button>
-        ) : (
-          <Button variant="outline-warning py-0 px-1" onClick={showDeactivate}>
-            <i className="uil-user-times"></i>
+        {canInactiveUsuarios && (
+          <>
+            {isInactive ? (
+              <Button variant="outline-info py-0 px-1" onClick={showActivate}>
+                <i className="uil-user-plus"></i>
+              </Button>
+            ) : (
+              <Button variant="outline-warning py-0 px-1" onClick={showDeactivate}>
+                <i className="uil-user-times"></i>
+              </Button>
+            )}
+          </>
+        )}
+        {canDeleteUsuarios && (
+          <Button variant="outline-danger py-0 px-1" onClick={showDelete}>
+            <i className="uil-trash"></i>
           </Button>
         )}
-        <Button variant="outline-danger py-0 px-1" onClick={showDelete}>
-          <i className="uil-trash"></i>
-        </Button>
+        {!canInactiveUsuarios && !canDeleteUsuarios && <span>No tiene permisos</span>}
       </div>
-      <GenericModal
-        show={deactivateOpen}
-        onToggle={deactivateToggle}
-        variant="warning"
-        headerText={`Desactivar usuario ${row.original.email}`}
-        submitText="Desactivar"
-        secondaryText="Cancelar"
-        body={deactivateModalBody}
-        isDisabled={isLoadingInactiveUser}
-        isLoading={isLoadingInactiveUser}
-        onSend={onDeactivateUser}
-      />
-      <GenericModal
-        show={activateOpen}
-        onToggle={activateToggle}
-        variant="info"
-        headerText={`Reactivar usuario ${row.original.email}`}
-        submitText="Reactivar"
-        secondaryText="Cancelar"
-        body={activateModalBody}
-        isDisabled={isLoadingOfflineUser}
-        isLoading={isLoadingOfflineUser}
-        onSend={onActivateUser}
-      />
-      <GenericModal
-        show={deleteOpen}
-        onToggle={deleteToggle}
-        variant="danger"
-        headerText={`Eliminar usuario ${row.original.email}`}
-        submitText="Eliminar"
-        secondaryText="Cancelar"
-        body={deleteModalBody}
-        isDisabled={isReadyToBeDeleted || isLoadingDeleteUser}
-        isLoading={isLoadingDeleteUser}
-        onSend={onDeleteUser}
-      />
+      {canInactiveUsuarios && (
+        <>
+          <GenericModal
+            show={deactivateOpen}
+            onToggle={deactivateToggle}
+            variant="warning"
+            headerText={`Desactivar usuario ${row.original.email}`}
+            submitText="Desactivar"
+            secondaryText="Cancelar"
+            body={deactivateModalBody}
+            isDisabled={isLoadingInactiveUser}
+            isLoading={isLoadingInactiveUser}
+            onSend={onDeactivateUser}
+          />
+          <GenericModal
+            show={activateOpen}
+            onToggle={activateToggle}
+            variant="info"
+            headerText={`Reactivar usuario ${row.original.email}`}
+            submitText="Reactivar"
+            secondaryText="Cancelar"
+            body={activateModalBody}
+            isDisabled={isLoadingOfflineUser}
+            isLoading={isLoadingOfflineUser}
+            onSend={onActivateUser}
+          />
+        </>
+      )}
+      {canDeleteUsuarios && (
+        <GenericModal
+          show={deleteOpen}
+          onToggle={deleteToggle}
+          variant="danger"
+          headerText={`Eliminar usuario ${row.original.email}`}
+          submitText="Eliminar"
+          secondaryText="Cancelar"
+          body={deleteModalBody}
+          isDisabled={isReadyToBeDeleted || isLoadingDeleteUser}
+          isLoading={isLoadingDeleteUser}
+          onSend={onDeleteUser}
+        />
+      )}
     </>
   );
 });

@@ -13,17 +13,25 @@ import {
   useUploadImage
 } from '@/endpoints';
 import {useAppSelector} from '@/store';
-import {selectClientes} from '@/store/selectores';
-import {DateUtils, formatDomain, formatText, getUpdatedFields, isValidName} from '@/utils';
+import {selectClientes, selectUser} from '@/store/selectores';
+import {
+  DateUtils,
+  formatDomain,
+  formatText,
+  getUpdatedFields,
+  hasPermission,
+  isValidName
+} from '@/utils';
 import toast from 'react-hot-toast';
 import {FileUploader} from '@/components';
-import {ACCEPTED_FILE_TYPES, STORAGE_CLIENTES_PATH} from '@/constants';
+import {ACCEPTED_FILE_TYPES, PERMISOS_MAP_IDS, STORAGE_CLIENTES_PATH} from '@/constants';
 import {useFileManager} from '@/hooks';
 
 const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>}) {
+  const user = useAppSelector(selectUser);
   const clientes = useAppSelector(selectClientes);
   const clienteDatosIncial = useMemo(
-    () => clientes.find((c) => c.id === row.original.id) as Cliente,
+    () => clientes.find((c: Cliente) => c.id === row.original.id) as Cliente,
     [clientes, row.original.id]
   );
   const [updatedClient, setUpdatedClient] = useState<Cliente>(clienteDatosIncial);
@@ -226,40 +234,67 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
     ]
   );
 
+  const canEditClientes = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.editarClientes,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
+  const canDeleteClientes = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.eliminarClientes,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
   return (
     <>
       <div className="d-flex gap-1">
-        <Button variant="outline-primary py-0 px-1" onClick={showEditCliente}>
-          <i className="uil-pen"></i>
-        </Button>
-        <Button variant="outline-danger py-0 px-1" onClick={showDeleteCliente}>
-          <i className="uil-trash"></i>
-        </Button>
+        {canEditClientes && (
+          <Button variant="outline-primary py-0 px-1" onClick={showEditCliente}>
+            <i className="uil-pen"></i>
+          </Button>
+        )}
+        {canDeleteClientes && (
+          <Button variant="outline-danger py-0 px-1" onClick={showDeleteCliente}>
+            <i className="uil-trash"></i>
+          </Button>
+        )}
+        {!canEditClientes && !canDeleteClientes && <span>No tiene permisos</span>}
       </div>
-      <GenericModal
-        show={deleteClienteOpen}
-        onToggle={deleteClienteToggle}
-        variant="danger"
-        headerText={`Eliminar cliente ${row.original.domain}`}
-        submitText="Eliminar"
-        secondaryText="Cancelar"
-        body={deleteModalBody}
-        isDisabled={isLoadingDeleteCliente || isReadyToBeDeleted}
-        isLoading={isLoadingDeleteCliente}
-        onSend={onDeleteClient}
-      />
-      <GenericModal
-        show={editClienteOpen}
-        onToggle={editClienteToggle}
-        variant="info"
-        headerText={`Editar cliente ${row.original.domain}`}
-        submitText="Editar"
-        secondaryText="Cancelar"
-        body={editModalBody}
-        isDisabled={!hasTouched || isUpdateClient || isLoadingUploadImage || isLoadingDeleteImage}
-        isLoading={isUpdateClient || isLoadingUploadImage || isLoadingDeleteImage}
-        onSend={onEditClient}
-      />
+      {canEditClientes && (
+        <GenericModal
+          show={editClienteOpen}
+          onToggle={editClienteToggle}
+          variant="info"
+          headerText={`Editar cliente ${row.original.domain}`}
+          submitText="Editar"
+          secondaryText="Cancelar"
+          body={editModalBody}
+          isDisabled={!hasTouched || isUpdateClient || isLoadingUploadImage || isLoadingDeleteImage}
+          isLoading={isUpdateClient || isLoadingUploadImage || isLoadingDeleteImage}
+          onSend={onEditClient}
+        />
+      )}
+      {canDeleteClientes && (
+        <GenericModal
+          show={deleteClienteOpen}
+          onToggle={deleteClienteToggle}
+          variant="danger"
+          headerText={`Eliminar cliente ${row.original.domain}`}
+          submitText="Eliminar"
+          secondaryText="Cancelar"
+          body={deleteModalBody}
+          isDisabled={isLoadingDeleteCliente || isReadyToBeDeleted}
+          isLoading={isLoadingDeleteCliente}
+          onSend={onDeleteClient}
+        />
+      )}
     </>
   );
 });

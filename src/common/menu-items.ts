@@ -1,3 +1,4 @@
+import {PERMISOS_MAP_IDS} from '@/constants';
 import {MenuItemType} from '@/types';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
@@ -654,13 +655,15 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         key: 'clientes',
         label: 'Clientes',
         url: '/services/gestion/clientes',
-        parentKey: 'gestion'
+        parentKey: 'gestion',
+        permisoId: PERMISOS_MAP_IDS.accesoGestionClientes
       },
       {
         key: 'usuarios',
         label: 'Usuarios',
         url: '/services/gestion/usuarios',
-        parentKey: 'gestion'
+        parentKey: 'gestion',
+        permisoId: PERMISOS_MAP_IDS.accesoGestionUsuarios
       },
       {
         key: 'oficina',

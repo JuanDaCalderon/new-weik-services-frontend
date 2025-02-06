@@ -1,4 +1,4 @@
-import {MenuItem, Permiso, RolesForUser} from '@/types';
+import {MenuItem, MenuItemType, Permiso, RolesForUser} from '@/types';
 
 /**
  * Filtra los menús según los permisos otorgados al usuario
@@ -37,6 +37,48 @@ export const filterByPermissions = (
     });
   }
   return filteredMenus;
+};
+
+/**
+ * Filtra los menús anidados según los permisos otorgados al usuario.
+ *
+ * @param {MenuItemType[]} menus - Lista de menús a filtrar.
+ * @param {RolesForUser[]} roles - Roles asignados al usuario.
+ * @param {Permiso[]} permisosOtorgados - Permisos explícitamente otorgados.
+ * @param {Permiso[]} permisosDenegados - Permisos explícitamente denegados.
+ * @returns {MenuItemType[]} - Menús filtrados.
+ */
+export const navBarFilterByPermissions = (
+  menus: MenuItemType[],
+  roles: RolesForUser[],
+  permisosOtorgados: Permiso[],
+  permisosDenegados: Permiso[]
+): MenuItemType[] => {
+  const hasAccess = (permisoId?: string): boolean => {
+    if (!permisoId) return true;
+    const permitidoPorRol = roles.some((rol) =>
+      rol.permisos?.some((permiso) => permiso.permiso === permisoId)
+    );
+    const permitidoDirectamente = permisosOtorgados.some(
+      (permiso) => permiso.permiso === permisoId
+    );
+    const denegado = permisosDenegados.some((permiso) => permiso.permiso === permisoId);
+    return (permitidoPorRol || permitidoDirectamente) && !denegado;
+  };
+
+  const filterMenuRecursive = (items: MenuItemType[]): MenuItemType[] => {
+    return items
+      .map((menu) => {
+        if (!hasAccess(menu.permisoId)) return null;
+        const filteredChildren = menu.children ? filterMenuRecursive(menu.children) : undefined;
+        return filteredChildren?.length || !menu.children
+          ? {...menu, children: filteredChildren}
+          : null;
+      })
+      .filter((item) => item !== null) as MenuItemType[];
+  };
+
+  return filterMenuRecursive(menus);
 };
 
 /**

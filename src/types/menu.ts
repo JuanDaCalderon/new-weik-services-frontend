@@ -13,6 +13,7 @@ export type MenuItemType = {
   parentKey?: string;
   target?: string;
   children?: MenuItemType[];
+  permisoId?: string;
 };
 
 export type MenuItems = {
