@@ -6,7 +6,7 @@ import Select, {MultiValue} from 'react-select';
 import {clientesOptionsSelector, rolesSelector, selectEmployees} from '@/store/selectores';
 import {ESTADOS, THIS_CLIENT_INFO} from '@/constants';
 import {checkIfUserExists, DebugUtil, generateUsername, isValidEmail} from '@/utils';
-import {useAddUser, useCreateUserAuth, useGetEmployees} from '@/endpoints';
+import {useAddUser, useCreateUserAuth, useGetEmployees, useUpdateUser} from '@/endpoints';
 import toast from 'react-hot-toast';
 import {Spinner} from '@/components';
 const userDatosIniciales: Employee = {
@@ -40,6 +40,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   const {getEmployeesSync} = useGetEmployees();
   const {addUser, isLoadingAddUser} = useAddUser();
   const {createAuthUser, isLoadingCreateAuthUser} = useCreateUserAuth();
+  const {updatedRolesOfUser, isLoadingUsersToRol} = useUpdateUser();
 
   const rolesOptions: Option[] = useMemo(
     () => roles.map((rol) => ({value: rol.id, label: rol.rol})),
@@ -58,12 +59,15 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const {name, value} = e.target;
-      if (deactivateAutoEmail) setNewUser((prev) => ({...prev, [name]: value}));
+      if (deactivateAutoEmail) setNewUser((prev) => ({...prev, [name]: value.toLowerCase()}));
       else {
         const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         setNewUser((prev) => ({
           ...prev,
-          [name]: name === 'email' && !isValidEmail(value) ? value.split('@')[0] : value
+          [name]:
+            name === 'email' && !isValidEmail(value)
+              ? value.split('@')[0].toLowerCase()
+              : value.toLowerCase()
         }));
       }
       setHasTouched(true);
@@ -76,9 +80,9 @@ const CrearUsuarios = memo(function CrearUsuarios() {
       if (!deactivateAutoEmail)
         setNewUser((prev) => ({
           ...prev,
-          email: `${prev.email.split('@')[0]}@${e.target.value}.com`
+          email: `${prev.email.split('@')[0]}@${e.target.value}.com`.toLowerCase()
         }));
-      setClienteSelected(e.target.value);
+      setClienteSelected(e.target.value.toLowerCase());
       setHasTouched(true);
     },
     [deactivateAutoEmail]
@@ -116,8 +120,8 @@ const CrearUsuarios = memo(function CrearUsuarios() {
       ...newUser,
       userName: generateUsername(newUser.nombres, newUser.apellidos),
       email: newUser.email.includes('@')
-        ? newUser.email
-        : `${newUser.email}@${clienteSelected}.com`,
+        ? newUser.email.toLowerCase()
+        : `${newUser.email}@${clienteSelected}.com`.toLowerCase(),
       estado: ESTADOS.offline,
       horario: [],
       horasExtra: [],
@@ -138,10 +142,17 @@ const CrearUsuarios = memo(function CrearUsuarios() {
       toast.error('El email no tiene un formato válido. Ejemplo: usuario@dominio.com');
       return;
     }
+    if (selectedOptionsRoles.length <= 0) {
+      toast.error('Ningún rol seleccionado. Debes asignar al menos uno.');
+      return;
+    }
 
     try {
       await createAuthUser(usuario.email, password);
-      await addUser(usuario);
+      const selectedValues = new Set(selectedOptionsRoles.map((rol) => rol.value));
+      const updatedRoles = Array.from(selectedValues);
+      const newUserId = await addUser(usuario);
+      if (newUserId) await updatedRolesOfUser(newUserId, updatedRoles);
       await getEmployeesSync();
       resetForm();
     } catch (error: any) {
@@ -156,6 +167,8 @@ const CrearUsuarios = memo(function CrearUsuarios() {
     newUser,
     password,
     resetForm,
+    selectedOptionsRoles,
+    updatedRolesOfUser,
     users
   ]);
 
@@ -164,6 +177,9 @@ const CrearUsuarios = memo(function CrearUsuarios() {
       <p className="weik-text-grey-200 my-1">
         Completa los campos y haz clic en "Crear" para añadir un usuario enlazado a un cliente en
         específico.
+        <br />
+        El nombre de usuario "username" se genera automáticamente, pero puede cambiarse desde el
+        perfil.
       </p>
       <Form.Label className="mb-0" htmlFor="nombres">
         <strong>Nombres del usuario:</strong>
@@ -204,6 +220,20 @@ const CrearUsuarios = memo(function CrearUsuarios() {
         value={newUser.cargo}
         onChange={handleInputChange}
       />
+      <Form.Label className="mb-0 mt-1" htmlFor="cliente">
+        <strong>Cliente asociado:</strong>
+      </Form.Label>
+      <Form.Select
+        size="sm"
+        id="cliente"
+        aria-label="Cliente asociado"
+        onChange={handleClienteSelectChange}>
+        {clientesOptions.map((cliente, index) => (
+          <option key={index} value={cliente.value}>
+            {cliente.label}
+          </option>
+        ))}
+      </Form.Select>
       <div className="d-flex justify-content-between">
         <Form.Label className="mb-0 mt-1" htmlFor="email">
           <strong>Email del usuario:</strong>
@@ -260,21 +290,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
       <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
         La contraseña por defecto sera 000000
       </p>
-      <Form.Label className="mb-0 mt-1" htmlFor="cliente">
-        <strong>Cliente asociado:</strong>
-      </Form.Label>
-      <Form.Select
-        size="sm"
-        id="cliente"
-        aria-label="Cliente asociado"
-        onChange={handleClienteSelectChange}>
-        {clientesOptions.map((cliente, index) => (
-          <option key={index} value={cliente.value}>
-            {cliente.label}
-          </option>
-        ))}
-      </Form.Select>
-      <Form.Label className="mb-0 mt-1" htmlFor="roles">
+      <Form.Label className="mb-0" htmlFor="roles">
         <strong>Roles:</strong>
       </Form.Label>
       <Select
@@ -287,14 +303,14 @@ const CrearUsuarios = memo(function CrearUsuarios() {
         placeholder="No hay roles asignados"
       />
       <Button
-        disabled={!hasTouched || isLoadingAddUser || isLoadingCreateAuthUser}
+        disabled={!hasTouched || isLoadingAddUser || isLoadingCreateAuthUser || isLoadingUsersToRol}
         variant="success"
         className="w-100 mt-2"
         onClick={enviarUser}>
-        {(isLoadingAddUser || isLoadingCreateAuthUser) && (
+        {(isLoadingAddUser || isLoadingCreateAuthUser || isLoadingUsersToRol) && (
           <Spinner className="spinner-border-sm" tag="span" color="white" />
         )}
-        {!isLoadingAddUser && !isLoadingCreateAuthUser && (
+        {!isLoadingAddUser && !isLoadingCreateAuthUser && !isLoadingUsersToRol && (
           <>
             <i className="mdi mdi-plus-circle me-1" /> Crear
           </>

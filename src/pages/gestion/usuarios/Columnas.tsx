@@ -88,8 +88,16 @@ const UsuariosAcciones = memo(function RolNameColumn({row}: {row: Row<Employee>}
       <>
         <div className="d-flex w-100 justify-content-around align-items-center gap-1 mb-1">
           <img
-            src={row.original.userImage}
-            alt={row.original.userImage}
+            src={
+              row.original.userImage && row.original.userImage !== ''
+                ? row.original.userImage
+                : fallBackLogo
+            }
+            alt={
+              row.original.userImage && row.original.userImage !== ''
+                ? row.original.userImage
+                : fallBackLogo
+            }
             loading="lazy"
             width={100}
             height={100}
@@ -202,7 +210,11 @@ const EstadosColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
 });
 
 const RolesColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
-  return (
+  const hasRoles: boolean = useMemo(
+    () => row.original.roles.length > 0,
+    [row.original.roles.length]
+  );
+  return hasRoles ? (
     <DropdownButton
       variant="info"
       title="Roles"
@@ -219,6 +231,10 @@ const RolesColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
         </Fragment>
       ))}
     </DropdownButton>
+  ) : (
+    <Button size="sm" disabled>
+      Sin rol
+    </Button>
   );
 });
 
