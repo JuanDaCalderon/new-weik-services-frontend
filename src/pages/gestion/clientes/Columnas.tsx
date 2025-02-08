@@ -3,7 +3,7 @@ import type {ColumnDef} from '@tanstack/react-table';
 import type {Row} from '@tanstack/react-table';
 import {GenericModal} from '@/components/Modals/GenericModal';
 import {memo, useCallback, useMemo, JSX, useState, ChangeEvent} from 'react';
-import {Button, Form} from 'react-bootstrap';
+import {Button, Form, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
 import {
   useDeleteClient,
@@ -256,14 +256,18 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
     <>
       <div className="d-flex gap-1">
         {canEditClientes && (
-          <Button variant="outline-primary py-0 px-1" onClick={showEditCliente}>
-            <i className="uil-pen"></i>
-          </Button>
+          <OverlayTrigger overlay={<Tooltip id="editUser">Editar Cliente</Tooltip>}>
+            <Button id="editUser" variant="outline-primary py-0 px-1" onClick={showEditCliente}>
+              <i className="uil-pen"></i>
+            </Button>
+          </OverlayTrigger>
         )}
         {canDeleteClientes && (
-          <Button variant="outline-danger py-0 px-1" onClick={showDeleteCliente}>
-            <i className="uil-trash"></i>
-          </Button>
+          <OverlayTrigger overlay={<Tooltip id="deleteUser">Eliminar Cliente</Tooltip>}>
+            <Button id="deleteUser" variant="outline-danger py-0 px-1" onClick={showDeleteCliente}>
+              <i className="uil-trash"></i>
+            </Button>
+          </OverlayTrigger>
         )}
         {!canEditClientes && !canDeleteClientes && <span>No tiene permisos</span>}
       </div>
@@ -304,7 +308,16 @@ const columns: ColumnDef<Cliente>[] = [
     header: 'Cliente',
     accessorKey: 'nombre',
     cell: ({row}) => (
-      <div className="table-user">
+      <div className="ribbon-box table-user">
+        {DateUtils.isToday(DateUtils.parseStringToDate(row.original.fechaCreacion)) && (
+          <div
+            className="ribbon-two ribbon-two-success end-0"
+            style={{left: '70%', top: '-11px', height: '52px', width: '80px'}}>
+            <span className="font-12" style={{left: '-10px', top: '16px'}}>
+              Nuevo
+            </span>
+          </div>
+        )}
         <img
           src={row.original.logo}
           alt={row.original.logo}
@@ -313,6 +326,13 @@ const columns: ColumnDef<Cliente>[] = [
         />
         <span className="fw-bold text-dark text-opacity-75">{row.original.nombre}</span>
       </div>
+    )
+  },
+  {
+    header: 'Fecha creación',
+    accessorKey: 'fechaCreacion',
+    cell: ({row}) => (
+      <>{DateUtils.formatShortDate(DateUtils.parseStringToDate(row.original.fechaCreacion))}</>
     )
   },
   {

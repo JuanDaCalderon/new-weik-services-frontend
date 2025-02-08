@@ -3,7 +3,15 @@ import type {ColumnDef} from '@tanstack/react-table';
 import type {Row} from '@tanstack/react-table';
 import {GenericModal} from '@/components/Modals/GenericModal';
 import {ChangeEvent, memo, useCallback, useMemo, useState, JSX, Fragment} from 'react';
-import {Badge, Button, Dropdown, DropdownButton, Form} from 'react-bootstrap';
+import {
+  Badge,
+  Button,
+  Dropdown,
+  DropdownButton,
+  Form,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
 import {getNombreCompletoUser, DateUtils, DebugUtil, hasPermission} from '@/utils';
 import {ESTADOS, PERMISOS_MAP_IDS, RIBBONTYPES} from '@/constants';
@@ -160,20 +168,29 @@ const UsuariosAcciones = memo(function RolNameColumn({row}: {row: Row<Employee>}
         {canInactiveUsuarios && (
           <>
             {isInactive ? (
-              <Button variant="outline-info py-0 px-1" onClick={showActivate}>
-                <i className="uil-user-plus"></i>
-              </Button>
+              <OverlayTrigger overlay={<Tooltip id="activarUser">Activar usuario</Tooltip>}>
+                <Button id="activarUser" variant="outline-info py-0 px-1" onClick={showActivate}>
+                  <i className="uil-user-plus" />
+                </Button>
+              </OverlayTrigger>
             ) : (
-              <Button variant="outline-warning py-0 px-1" onClick={showDeactivate}>
-                <i className="uil-user-times"></i>
-              </Button>
+              <OverlayTrigger overlay={<Tooltip id="desactivarUser">Desactivar usuario</Tooltip>}>
+                <Button
+                  id="desactivarUser"
+                  variant="outline-warning py-0 px-1"
+                  onClick={showDeactivate}>
+                  <i className="uil-user-times" />
+                </Button>
+              </OverlayTrigger>
             )}
           </>
         )}
         {canDeleteUsuarios && (
-          <Button variant="outline-danger py-0 px-1" onClick={showDelete}>
-            <i className="uil-trash"></i>
-          </Button>
+          <OverlayTrigger overlay={<Tooltip id="eliminarUser">Eliminar usuario</Tooltip>}>
+            <Button id="eliminarUser" variant="outline-danger py-0 px-1" onClick={showDelete}>
+              <i className="uil-trash"></i>
+            </Button>
+          </OverlayTrigger>
         )}
         {!canInactiveUsuarios && !canDeleteUsuarios && <span>No tiene permisos</span>}
       </div>
@@ -259,7 +276,7 @@ const RolesColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
       {row.original.roles.map(({rol}, index, roles) => (
         <Fragment key={index}>
           <Dropdown.Item className="py-0 px-2" disabled>
-            {rol}
+            {rol.toLowerCase()}
           </Dropdown.Item>
           {index !== roles.length - 1 && <Dropdown.Divider className="p-0 m-0" />}
         </Fragment>
@@ -277,7 +294,16 @@ const columns: ColumnDef<Employee>[] = [
     header: 'Usuario',
     accessorKey: 'email',
     cell: ({row}) => (
-      <div className="d-flex align-items-center no-user-text-selectable table-user">
+      <div className="d-flex align-items-center no-user-text-selectable table-user ribbon-box">
+        {DateUtils.isToday(DateUtils.parseStringToDate(row.original.fechaCreacion)) && (
+          <div
+            className="ribbon-two ribbon-two-success end-0"
+            style={{left: '70%', top: '-11px', height: '58px', width: '90px'}}>
+            <span className="font-12" style={{left: '-8px', top: '20px'}}>
+              Nuevo
+            </span>
+          </div>
+        )}
         <img
           src={
             row.original.userImage && row.original.userImage !== ''

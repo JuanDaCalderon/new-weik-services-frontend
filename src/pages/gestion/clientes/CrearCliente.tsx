@@ -17,7 +17,8 @@ const clienteDatosIniciales: Cliente = {
   nombre: '',
   domain: '',
   branding: '',
-  logo: ''
+  logo: '',
+  fechaCreacion: ''
 };
 
 const CrearCliente = memo(function CrearCliente() {

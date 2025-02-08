@@ -4,6 +4,7 @@ export type Cliente = {
   domain: string;
   branding: string;
   logo: string;
+  fechaCreacion: string;
 };
 
 export type PayLoadClientType = {

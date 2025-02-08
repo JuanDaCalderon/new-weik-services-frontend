@@ -1,5 +1,5 @@
 import {db} from '@/firebase';
-import {doc, setDoc} from 'firebase/firestore';
+import {doc, setDoc, Timestamp} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
@@ -12,7 +12,10 @@ export default function useAddClient() {
   const addClient = useCallback(async (cliente: Cliente): Promise<void> => {
     setIsLoadingAddClient(true);
     try {
-      await setDoc(doc(db, CLIENTES_PATH, cliente.domain), cliente);
+      await setDoc(doc(db, CLIENTES_PATH, cliente.domain), {
+        ...cliente,
+        fechaCreacion: Timestamp.now()
+      });
       toast.success(`Has agregado a ${cliente.nombre.toLowerCase()} como cliente correctamente`);
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

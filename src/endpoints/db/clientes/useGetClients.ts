@@ -1,8 +1,16 @@
 import {useCallback} from 'react';
-import {collection, getDocs, onSnapshot, query, Unsubscribe, where} from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  Timestamp,
+  Unsubscribe,
+  where
+} from 'firebase/firestore';
 import {db} from '@/firebase';
 import {CLIENTES_PATH, MAIN_DOMAIN} from '@/constants';
-import {DebugUtil} from '@/utils';
+import {DateUtils, DebugUtil} from '@/utils';
 import {useDispatch} from 'react-redux';
 import {clearClientes, isLoadingClientes, setClientes} from '@/store/slices/clientes';
 import {Cliente} from '@/types';
@@ -19,13 +27,16 @@ const useGetClients = () => {
         async (querySnapshotDocs) => {
           const clientes: Cliente[] = [];
           for (const doc of querySnapshotDocs.docs) {
-            const {branding, logo, nombre, domain} = doc.data();
+            const {branding, logo, nombre, domain, fechaCreacion} = doc.data();
             clientes.push({
               id: doc.id,
               branding,
               logo,
               nombre,
-              domain
+              domain,
+              fechaCreacion: fechaCreacion
+                ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
+                : DateUtils.formatDateToString(new Date())
             });
           }
           dispatch(clearClientes());
@@ -52,13 +63,16 @@ const useGetClients = () => {
         query(collection(db, CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN))
       );
       for (const doc of queryDocs.docs) {
-        const {branding, logo, nombre, domain} = doc.data();
+        const {branding, logo, nombre, domain, fechaCreacion} = doc.data();
         clientes.push({
           id: doc.id,
           branding,
           logo,
           nombre,
-          domain
+          domain,
+          fechaCreacion: fechaCreacion
+            ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
+            : DateUtils.formatDateToString(new Date())
         });
       }
       dispatch(clearClientes());
