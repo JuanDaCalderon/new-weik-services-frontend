@@ -9,3 +9,4 @@ export * from './top-bar';
 export * from './menu';
 export * from './modals';
 export * from './rolesUsuariosContext';
+export * from './clock';

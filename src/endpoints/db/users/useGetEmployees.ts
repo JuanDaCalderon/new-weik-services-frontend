@@ -12,7 +12,7 @@ import {
 import {db} from '@/firebase';
 import {USUARIOS_PATH} from '@/constants';
 import {DebugUtil, DateUtils} from '@/utils';
-import {Employee, Permiso, Rol} from '@/types';
+import {Employee, HorasTrabajoToFirestore, Permiso, Rol} from '@/types';
 import {useDispatch} from 'react-redux';
 import {setUsers, clearUsers, setIsloadingUsers} from '@/store/slices/users';
 
@@ -75,7 +75,6 @@ const useGetEmployees = () => {
             permisosOtorgados,
             permisosDenegados,
             horario,
-            horasExtra,
             horasTrabajo,
             vacaciones,
             informacionLaboral
@@ -108,8 +107,13 @@ const useGetEmployees = () => {
               ? await Promise.all(thisPermisosDenegados)
               : [],
             horario: horario ?? [],
-            horasExtra: horasExtra ?? [],
-            horasTrabajo: horasTrabajo ?? [],
+            horasTrabajo:
+              ((horasTrabajo as HorasTrabajoToFirestore[]) || []).map((h) => ({
+                ...h,
+                checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
+                checkOut:
+                  h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
+              })) ?? [],
             informacionLaboral: informacionLaboral ?? [],
             vacaciones: vacaciones ?? []
           };
@@ -148,7 +152,6 @@ const useGetEmployees = () => {
           permisosOtorgados,
           permisosDenegados,
           horario,
-          horasExtra,
           horasTrabajo,
           vacaciones,
           informacionLaboral
@@ -177,8 +180,13 @@ const useGetEmployees = () => {
           permisosOtorgados: thisPermisosOtorgados ? await Promise.all(thisPermisosOtorgados) : [],
           permisosDenegados: thisPermisosDenegados ? await Promise.all(thisPermisosDenegados) : [],
           horario: horario ?? [],
-          horasExtra: horasExtra ?? [],
-          horasTrabajo: horasTrabajo ?? [],
+          horasTrabajo:
+            ((horasTrabajo as HorasTrabajoToFirestore[]) || []).map((h) => ({
+              ...h,
+              checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
+              checkOut:
+                h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
+            })) ?? [],
           informacionLaboral: informacionLaboral ?? [],
           vacaciones: vacaciones ?? []
         };

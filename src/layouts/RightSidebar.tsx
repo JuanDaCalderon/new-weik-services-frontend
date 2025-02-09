@@ -2,6 +2,8 @@ import SimpleBar from 'simplebar-react';
 import {useThemeContext} from '@/common';
 import {useCallback} from 'react';
 import {Offcanvas} from 'react-bootstrap';
+import TeamMembers from '@/components/TeamMembers';
+import HorarioStatus from '@/components/HorarioStatus';
 
 const RightSideBar = () => {
   const {updateSettings, settings} = useThemeContext();
@@ -24,9 +26,10 @@ const RightSideBar = () => {
           <h5 className="text-white m-0">Centro de operaciones</h5>
         </Offcanvas.Header>
 
-        <Offcanvas.Body>
+        <Offcanvas.Body className="px-0">
           <SimpleBar scrollbarMaxSize={320} className="h-100">
-            Aquí debe ir el check-in y el check-out y tambien el modulo de usuarios online y offline
+            <HorarioStatus />
+            <TeamMembers />
           </SimpleBar>
         </Offcanvas.Body>
       </Offcanvas>

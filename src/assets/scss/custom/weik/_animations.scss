@@ -1,0 +1,64 @@
+@keyframes jump-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(-6px);
+  }
+  35% {
+    transform: translateY(-6px) rotate(17deg);
+  }
+  55% {
+    transform: translateY(-6px) rotate(-17deg);
+  }
+  65% {
+    transform: translateY(-6px) rotate(17deg);
+  }
+  75% {
+    transform: translateY(-6px) rotate(-17deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes jump-shaking-soft {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(-1px);
+  }
+  35% {
+    transform: translateY(-1px) rotate(1deg);
+  }
+  55% {
+    transform: translateY(-1px) rotate(-1deg);
+  }
+  65% {
+    transform: translateY(-1px) rotate(1deg);
+  }
+  75% {
+    transform: translateY(-1px) rotate(-1deg);
+  }
+  90% {
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+.rise-shake {
+  animation: jump-shaking 0.83s infinite;
+}
+
+.rise-shake-soft {
+  animation-name: jump-shaking-soft;
+  animation-duration: 2s;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}

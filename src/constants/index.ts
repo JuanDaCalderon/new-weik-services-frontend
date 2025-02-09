@@ -9,3 +9,4 @@ export * from './permisos';
 export * from './filetypes';
 export * from './profileMenu';
 export * from './utils';
+export * from './clock';

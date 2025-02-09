@@ -124,7 +124,6 @@ const CrearUsuarios = memo(function CrearUsuarios() {
         : `${newUser.email}@${clienteSelected}.com`.toLowerCase(),
       estado: ESTADOS.offline,
       horario: [],
-      horasExtra: [],
       horasTrabajo: [],
       permisosDenegados: [],
       permisosOtorgados: [],

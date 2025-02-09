@@ -1,5 +1,6 @@
 import {ESTADOS} from '@/constants';
 import {Permiso, Rol} from '@/types';
+import {Timestamp} from 'firebase/firestore';
 
 export type Estados = ESTADOS.online | ESTADOS.offline | ESTADOS.inactivo;
 
@@ -20,20 +21,34 @@ export type HorarioType = {
   break: string;
 };
 
-export type HorasExtraType = {
-  checkInExtra: string;
-  checkOutExtra: string;
-  dia: string;
-  horasDeTrabajoExtra: number;
-  horasDeTrabajoExtraEnSegundos: number;
+export type HorasTrabajoType = {
+  isInWorkingTime: boolean; // BOOLEAN
+  checkIn: string; // TIMESTAMP
+  hasCheckIn: boolean; // BOOLEAN
+  checkOut: string | null; // TIMESTAMP
+  hasCheckOut: boolean; // BOOLEAN
+  dia: string; // STRING
+  tiempoDeTrabajoEnSegundos: number; //El total de horas en segundos // NUMBER
+  horasDeTrabajo: number; // 1-24 // NUMBER
+  minutosDeTrabajo: number; // 1-60 // NUMBER
+  tiempoDeTrabajoExtraEnSegundos: number; //El total de horas en segundos pero de las horas extra // NUMBER
+  horasDeTrabajoExtra: number; // 1-24 de horas extra // NUMBER
+  minutosDeTrabajoExtra: number; // 1-60 de horas extra // NUMBER
 };
 
-export type HorasTrabajoType = {
-  checkIn: string;
-  checkOut: string;
+export type HorasTrabajoToFirestore = {
+  isInWorkingTime: boolean;
+  checkIn: Timestamp;
+  hasCheckIn: boolean;
+  checkOut: Timestamp | null;
+  hasCheckOut: boolean;
   dia: string;
-  horasDeTrabajo: number;
-  horasDeTrabajoEnSegundos: number;
+  tiempoDeTrabajoEnSegundos: number;
+  horasDeTrabajo: number; // 1-24
+  minutosDeTrabajo: number; // 1-60
+  tiempoDeTrabajoExtraEnSegundos: number;
+  horasDeTrabajoExtra: number; // 1-24
+  minutosDeTrabajoExtra: number; // 1-60
 };
 
 export type VacacionesType = {
@@ -63,7 +78,6 @@ export type Employee = {
   permisosOtorgados: Permiso[];
   permisosDenegados: Permiso[];
   horario: HorarioType[];
-  horasExtra: HorasExtraType[];
   horasTrabajo: HorasTrabajoType[];
   vacaciones: VacacionesType[];
   informacionLaboral: UserWorkData;

@@ -9,6 +9,8 @@ import useAddUser from './db/users/useAddUser';
 import useCreateUserAuth from './auth/useCreateUserAuth';
 import useAuth from './auth/useAuth';
 import useChangePassword from './auth/useChangePassword';
+import useCheckIn from './db/horarios/useCheckIn';
+import useCheckOut from './db/horarios/useCheckOut';
 import useRolesYPermisos from './db/roles-permisos/useRolesYPermisos';
 import useGetUsers from './db/users/useGetUsers';
 import useSetEstadoUser from './db/users/useSetEstadoUser';
@@ -35,5 +37,7 @@ export {
   useChangePassword,
   useUploadImage,
   useDeleteImage,
-  useCreateUserAuth
+  useCreateUserAuth,
+  useCheckIn,
+  useCheckOut
 };
