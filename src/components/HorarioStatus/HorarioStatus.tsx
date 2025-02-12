@@ -3,29 +3,24 @@ import {Card, Row, Col, Button, Alert} from 'react-bootstrap';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {useCheckIn, useCheckOut, useSetEstadoUser} from '@/endpoints';
-import {useDispatch} from 'react-redux';
-import {setCheckIn, setCheckOut} from '@/store/slices/clock';
 import {calcularHorasTrabajo, DateUtils} from '@/utils';
 import {Toaster} from 'react-hot-toast';
 
 const HorarioStatus = memo(function HorarioStatus() {
   const todayDate = new Date().toLocaleDateString();
   const user = useAppSelector(selectUser);
-  const dispatch = useDispatch();
   const {checkIn, isSavingCheckIn} = useCheckIn();
   const {checkOut, isSavingCheckOut} = useCheckOut();
   const {setOfflineUser} = useSetEstadoUser();
 
   const clockIn = useCallback(async () => {
     await checkIn();
-    dispatch(setCheckIn());
-  }, [checkIn, dispatch]);
+  }, [checkIn]);
 
   const clockOut = useCallback(async () => {
     await checkOut();
     await setOfflineUser(user.id);
-    dispatch(setCheckOut());
-  }, [checkOut, dispatch, setOfflineUser, user.id]);
+  }, [checkOut, setOfflineUser, user.id]);
 
   const currentCheckIn: string = useMemo(() => {
     if (user.horasTrabajo.length <= 0) return 'No tienes horas de trabajo registradas';

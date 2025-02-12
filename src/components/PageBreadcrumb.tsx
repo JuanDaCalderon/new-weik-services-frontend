@@ -17,9 +17,9 @@ const PageBreadcrumb = ({title, children}: PageTitleProps) => {
       </Helmet>
       <Row>
         <Col>
-          <div className="page-title-box">
-            <div className="page-title-right">
-              <Breadcrumb listProps={{className: 'm-0'}}>
+          <div className="page-title-box py-1">
+            <div className="page-title-right mt-2">
+              <Breadcrumb listProps={{className: 'm-0 p-0'}}>
                 <Breadcrumb.Item linkAs={'span'} as={'li'}>
                   <Link to="/">Home</Link>
                 </Breadcrumb.Item>

@@ -63,7 +63,11 @@ const Clientes = memo(function Clientes() {
                       )}
                     </Col>
                     <Col sm={12} lg={8} xl={9}>
-                      <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Clientes</h4>
+                      <Card.Header className="p-0">
+                        <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">
+                          Clientes
+                        </h4>
+                      </Card.Header>
                       {!isLoadingClients ? (
                         <ReactTable<Cliente>
                           columns={columns}

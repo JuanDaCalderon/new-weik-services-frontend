@@ -79,7 +79,9 @@ const Usuarios = memo(function Usuarios() {
                   </>
                 ) : (
                   <Col sm={12}>
-                    <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>
+                    <Card.Header className="p-0">
+                      <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>
+                    </Card.Header>
                     {!isLoadingUsers ? (
                       <ReactTable<Employee>
                         columns={columns}

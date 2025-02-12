@@ -4,6 +4,7 @@ import {Outlet, Route, Routes} from 'react-router-dom';
 
 const Clientes = lazy(() => import('@/pages/gestion/clientes'));
 const Usuarios = lazy(() => import('@/pages/gestion/usuarios'));
+const Noticias = lazy(() => import('@/pages/gestion/noticias'));
 const Error404Alt = lazy(() => import('../otherpages/Error404Alt'));
 
 export default function Gestion() {
@@ -13,6 +14,7 @@ export default function Gestion() {
         <Route index element={<Root />} />
         <Route path="clientes" element={<Clientes />} />
         <Route path="usuarios" element={<Usuarios />} />
+        <Route path="noticias" element={<Noticias />} />
         <Route path="*" element={<Error404Alt />} />
       </Route>
     </Routes>

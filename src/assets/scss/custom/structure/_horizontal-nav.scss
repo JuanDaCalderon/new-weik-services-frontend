@@ -183,13 +183,13 @@ html[data-layout="topnav"] {
     html[data-layout="topnav"] {
 
         .container-fluid {
-            max-width: 98%;
+            max-width: 100%;
         }
 
         &[data-layout-mode="boxed"] {
 
             .container-fluid {
-                max-width: 97%;
+                max-width: 99%;
             }
         }
     }
@@ -326,7 +326,7 @@ html[data-layout="topnav"] {
     html[data-layout="topnav"] {
 
         .container-fluid {
-            max-width: 95%;
+            max-width: 98%;
         }
     }
 }

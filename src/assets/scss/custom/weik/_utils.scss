@@ -54,3 +54,9 @@ img.loading {
     overflow-x: unset;
   }
 }
+
+.btn-primary-hover {
+  &:hover {
+    color: $primary !important;
+  }
+}
