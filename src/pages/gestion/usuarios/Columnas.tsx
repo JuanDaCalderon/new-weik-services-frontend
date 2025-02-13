@@ -44,14 +44,13 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
   const onDeleteUser = useCallback(async () => {
     try {
       await deleteUser(row.original.id);
-      toast.success(`el usuario ${row.original.email} ha sido eliminado`);
       hideDelete();
       await getEmployeesSync();
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
       toast.error('Error al eliminar el usuario. Inténtelo más tarde.');
     }
-  }, [deleteUser, getEmployeesSync, hideDelete, row.original.email, row.original.id]);
+  }, [deleteUser, getEmployeesSync, hideDelete, row.original.id]);
 
   const onDeactivateUser = useCallback(async () => {
     try {

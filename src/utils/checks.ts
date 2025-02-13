@@ -25,8 +25,8 @@ export const checkIfClientExists = (cliente: Cliente, clientes: Cliente[]): bool
 export const checkIfRolExists = (rol: Rol, roles: Rol[]): boolean => {
   return roles.some(
     (r) =>
-      r.rol.trim().toLowerCase() === rol.rol.trim().toLowerCase() ||
-      r.descripcion.trim().toLowerCase() === rol.descripcion.trim().toLowerCase()
+      r.rol.trim().toLowerCase() === rol.rol?.trim().toLowerCase() ||
+      r.descripcion.trim().toLowerCase() === rol.descripcion?.trim().toLowerCase()
   );
 };
 

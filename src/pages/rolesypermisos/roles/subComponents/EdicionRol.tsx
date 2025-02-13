@@ -1,7 +1,9 @@
 import {Spinner} from '@/components';
 import {useRolesYPermisos} from '@/endpoints';
-import {RolCreationBasics, thisRol} from '@/types';
-import {getUpdatedFields} from '@/utils';
+import {useAppSelector} from '@/store';
+import {rolesSelector} from '@/store/selectores';
+import {Rol, RolCreationBasics, thisRol} from '@/types';
+import {checkIfRolExists, getUpdatedFields} from '@/utils';
 import {Row as RowTable} from '@tanstack/react-table';
 import {ChangeEvent, memo, useCallback, useMemo, useState} from 'react';
 import {Button, Col, Form, Row} from 'react-bootstrap';
@@ -14,6 +16,7 @@ const EdicionRol = memo(function EdicionRol({row}: {row: RowTable<thisRol>}) {
       descripcion: row.original?.descripcion ?? ''
     };
   }, [row.original?.descripcion, row.original?.rolName]);
+  const rolesFromStore = useAppSelector(rolesSelector);
   const [rolEditedBasics, setRolEditedBasics] = useState<RolCreationBasics>(rolBasicsIniciales);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
   const {updateRolBasics, isLoadingUpdatingBasics} = useRolesYPermisos();
@@ -32,13 +35,19 @@ const EdicionRol = memo(function EdicionRol({row}: {row: RowTable<thisRol>}) {
       rolBasicsIniciales,
       rolEditedBasics
     );
+    if (checkIfRolExists(rolBasicsUpdated as Rol, rolesFromStore)) {
+      toast.error(
+        'No se puede actualizar el rol, ya existe un registro con el mismo nombre o descripción'
+      );
+      return;
+    }
     if (Object.keys(rolBasicsUpdated).length > 0) {
       await updateRolBasics(String(row.original.id), rolBasicsUpdated);
     } else {
       toast.error('No se han realizado cambios');
       setHasTouched(false);
     }
-  }, [rolBasicsIniciales, rolEditedBasics, row.original.id, updateRolBasics]);
+  }, [rolBasicsIniciales, rolEditedBasics, rolesFromStore, row.original.id, updateRolBasics]);
 
   return (
     <Row className="m-0 py-2 column-gap-1 bg-light-subtle">

@@ -12,6 +12,7 @@ export enum PERMISOS_MAP_IDS {
   editarUsuarios = 'editar-usuarios',
   editarClientes = 'editar-clientes',
   /* DE ELIMINACION */
+  eliminarRoles = 'eliminar-roles',
   eliminarClientes = 'eliminar-clientes',
   eliminarUsuarios = 'eliminar-usuarios',
   inactivarUsuarios = 'inactivar-usuarios'

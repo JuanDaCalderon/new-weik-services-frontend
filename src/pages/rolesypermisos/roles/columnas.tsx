@@ -1,14 +1,17 @@
-import {thisRol} from '@/types';
+import {Rol, thisRol} from '@/types';
 import type {ColumnDef} from '@tanstack/react-table';
-import {Badge, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import {DateUtils} from '@/utils';
+import {Badge, Button, Form, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {DateUtils, DebugUtil, hasPermission} from '@/utils';
 import type {Row} from '@tanstack/react-table';
 import {useRolesUsuariosContext} from '@/pages/rolesypermisos/context';
-import {memo, useCallback, useMemo} from 'react';
-import {ROLES_CELLS} from '@/constants';
+import {memo, useCallback, useMemo, JSX, ChangeEvent, useState} from 'react';
+import {PERMISOS_MAP_IDS, ROLES_CELLS} from '@/constants';
 import {useAppSelector} from '@/store';
-import {selectUser} from '@/store/selectores';
+import {selectEmployees, selectUser} from '@/store/selectores';
 import {useToggle} from '@/hooks';
+import {GenericModal} from '@/components';
+import toast from 'react-hot-toast';
+import {useDeleteRol, useRemoveRolesFromUser} from '@/endpoints';
 
 const RolNameColumn = memo(function RolNameColumn({row}: {row: Row<thisRol>}) {
   const {updateRolesCell, rolesUsuarios} = useRolesUsuariosContext();
@@ -128,20 +131,110 @@ const RoleUsuariosColumn = memo(function RoleUsuariosColumn({row}: {row: Row<thi
 
 const EliminarRol = memo(function EliminarRol({row}: {row: Row<thisRol>}) {
   const user = useAppSelector(selectUser);
-  const [_deleteOpen, _deleteToggle, showDelete, _hideDelete] = useToggle();
+  const employees = useAppSelector(selectEmployees);
+  const [rolName, setRolName] = useState<string>('');
+  const [isReadyToBeDeleted, setIsReadyToBeDeleted] = useState<boolean>(true);
+  const [deleteOpen, deleteToggle, showDelete, hideDelete] = useToggle();
+  const {deleteRol, isLoadingDeleteRol} = useDeleteRol();
+  const {removeRolesFromUser, isLoadingRemoveRolesFromUser} = useRemoveRolesFromUser();
+
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setRolName(e.target.value);
+      setIsReadyToBeDeleted(e.target.value !== row.original.rolName);
+    },
+    [row.original.rolName]
+  );
+
+  const onDeleteRol = useCallback(async () => {
+    try {
+      const rolToBeDeleted: Pick<Rol, 'id' | 'rol'> = {
+        id: `${row.original.id}`,
+        rol: row.original.rolName
+      };
+      for (const employee of employees) {
+        await removeRolesFromUser(employee, rolToBeDeleted);
+      }
+      await deleteRol(rolToBeDeleted.id);
+      hideDelete();
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+      toast.error('Error al eliminar el rol. Inténtelo más tarde.');
+    }
+  }, [
+    deleteRol,
+    employees,
+    hideDelete,
+    removeRolesFromUser,
+    row.original.id,
+    row.original.rolName
+  ]);
+
+  const deleteModalBody: JSX.Element = useMemo(
+    () => (
+      <>
+        <div className="w-100 mb-1">
+          <p className="p-0 m-0">
+            Esta seguro que quiere eliminar el rol: <b>{row.original.rolName}</b>
+          </p>
+          <p className="p-0 m-0 text-danger">
+            Eliminar un rol implica la eliminación permanente de todos los registros y datos
+            asociados.
+          </p>
+        </div>
+        <Form.Label className="text-danger cursor-pointer mb-0" htmlFor="rol">
+          <strong>Ingrese el nombre del rol para eliminarlo:</strong>
+        </Form.Label>
+        <Form.Control
+          size="sm"
+          type="text"
+          id="rol"
+          name="rol"
+          placeholder="Ingrese el nombre del rol"
+          value={rolName}
+          onChange={handleInputChange}
+        />
+      </>
+    ),
+    [handleInputChange, rolName, row.original.rolName]
+  );
+
+  const canDeleteRoles = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.eliminarRoles,
+      user.roles,
+      user.permisosOtorgados,
+      user.permisosDenegados
+    );
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (
-    <div className="d-flex gap-1">
-      <OverlayTrigger overlay={<Tooltip id="eliminarRol">Eliminar Rol</Tooltip>}>
-        <Button
-          aria-label={user.id}
-          id="eliminarRol"
-          variant="outline-danger py-0 px-1"
-          onClick={showDelete}>
-          <i className="uil-trash"></i> {row.original.id}
-        </Button>
-      </OverlayTrigger>
-    </div>
+    <>
+      <div className="d-flex gap-1">
+        {canDeleteRoles && (
+          <OverlayTrigger overlay={<Tooltip id="eliminarRol">Eliminar Rol</Tooltip>}>
+            <Button id="eliminarRol" variant="outline-danger py-0 px-1" onClick={showDelete}>
+              <i className="uil-trash"></i>
+            </Button>
+          </OverlayTrigger>
+        )}
+        {!canDeleteRoles && <span>No tiene permisos</span>}
+      </div>
+      {canDeleteRoles && (
+        <GenericModal
+          show={deleteOpen}
+          onToggle={deleteToggle}
+          variant="danger"
+          headerText={`Eliminar rol ${row.original.rolName}`}
+          submitText="Eliminar"
+          secondaryText="Cancelar"
+          body={deleteModalBody}
+          isDisabled={isReadyToBeDeleted || isLoadingDeleteRol || isLoadingRemoveRolesFromUser}
+          isLoading={isLoadingDeleteRol || isLoadingRemoveRolesFromUser}
+          onSend={onDeleteRol}
+        />
+      )}
+    </>
   );
 });
 

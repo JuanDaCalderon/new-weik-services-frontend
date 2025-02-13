@@ -1,5 +1,5 @@
 import {db} from '@/firebase';
-import {arrayRemove, doc, updateDoc} from 'firebase/firestore';
+import {arrayRemove, doc, DocumentReference, getDoc, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {ROLES_PATH, USUARIOS_PATH} from '@/constants';
 import {Employee, Rol} from '@/types';
@@ -13,6 +13,16 @@ export default function useRemoveRolesFromUser() {
       setIsLoadingRemoveRolesFromUser(true);
       try {
         const userRef = doc(db, USUARIOS_PATH, user.id);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) {
+          toast.error('El usuario no existe.');
+          return;
+        }
+        const userData = userSnap.data();
+        const roles: Array<DocumentReference> = userData?.roles || [];
+        if (!roles.some((roleRef) => roleRef.id === rol.id)) {
+          return;
+        }
         const rolRef = doc(db, ROLES_PATH, rol.id);
         await updateDoc(userRef, {
           roles: arrayRemove(rolRef)
