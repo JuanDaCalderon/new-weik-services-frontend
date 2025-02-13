@@ -1,4 +1,4 @@
-import {Cliente, Employee} from '@/types';
+import {Cliente, Employee, Rol} from '@/types';
 
 /**
  * Verifica si un cliente ya existe en la lista de clientes
@@ -10,8 +10,23 @@ import {Cliente, Employee} from '@/types';
 export const checkIfClientExists = (cliente: Cliente, clientes: Cliente[]): boolean => {
   return clientes.some(
     (c) =>
-      c.nombre.toLowerCase() === cliente.nombre.toLowerCase() ||
-      c.domain.toLowerCase() === cliente.domain.toLowerCase()
+      c.nombre.trim().toLowerCase() === cliente.nombre.trim().toLowerCase() ||
+      c.domain.trim().toLowerCase() === cliente.domain.trim().toLowerCase()
+  );
+};
+
+/**
+ * Verifica si un rol ya existe en la lista de roles
+ *
+ * @param {Rol} rol
+ * @param {Rol[]} roles
+ * @returns {boolean} true si el rol ya existe, false si no
+ */
+export const checkIfRolExists = (rol: Rol, roles: Rol[]): boolean => {
+  return roles.some(
+    (r) =>
+      r.rol.trim().toLowerCase() === rol.rol.trim().toLowerCase() ||
+      r.descripcion.trim().toLowerCase() === rol.descripcion.trim().toLowerCase()
   );
 };
 

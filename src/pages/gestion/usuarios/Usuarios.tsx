@@ -11,7 +11,7 @@ import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
 import {useGetEmployees} from '@/endpoints';
 import {hasPermission} from '@/utils';
-import {PERMISOS_MAP_IDS} from '@/constants';
+import {PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
 import {Navigate} from 'react-router-dom';
 
 const Usuarios = memo(function Usuarios() {
@@ -104,7 +104,7 @@ const Usuarios = memo(function Usuarios() {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'

@@ -13,7 +13,7 @@ import {selectisLoadingEmployees} from '@/store/selectores/users';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {selectUser} from '@/store/selectores';
 import {hasPermission} from '@/utils';
-import {PERMISOS_MAP_IDS} from '@/constants';
+import {PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
 
 const tabContents: TabContentItem[] = [
   {id: 'Roles', title: 'Roles'},
@@ -97,7 +97,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'

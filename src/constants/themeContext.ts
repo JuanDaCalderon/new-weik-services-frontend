@@ -15,3 +15,5 @@ export enum THEME {
 export enum SIDEBAR_SIZE {
   default = 'default'
 }
+
+export const LOCALSTORAGE_THEME_MODE_KEY = 'themeMode';

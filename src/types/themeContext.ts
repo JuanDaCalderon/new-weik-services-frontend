@@ -7,6 +7,7 @@ export interface LayoutTheme {
 }
 export interface ThemeType {
   light: THEME.light;
+  dark: THEME.dark;
 }
 export interface TopbarTheme {
   theme: {dark: THEME.dark};

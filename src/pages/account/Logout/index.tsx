@@ -2,7 +2,7 @@ import {useEffect, useMemo, JSX} from 'react';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {DEFAULT_ROUTER_PATH} from '@/constants';
+import {DEFAULT_ROUTER_PATH, TOAST_DURATION} from '@/constants';
 import {useAuth} from '@/endpoints';
 import toast, {Toaster} from 'react-hot-toast';
 
@@ -96,7 +96,7 @@ const Logout = () => {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'

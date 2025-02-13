@@ -1,11 +1,14 @@
 import {thisRol} from '@/types';
 import type {ColumnDef} from '@tanstack/react-table';
-import {Badge} from 'react-bootstrap';
+import {Badge, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {DateUtils} from '@/utils';
 import type {Row} from '@tanstack/react-table';
 import {useRolesUsuariosContext} from '@/pages/rolesypermisos/context';
 import {memo, useCallback, useMemo} from 'react';
 import {ROLES_CELLS} from '@/constants';
+import {useAppSelector} from '@/store';
+import {selectUser} from '@/store/selectores';
+import {useToggle} from '@/hooks';
 
 const RolNameColumn = memo(function RolNameColumn({row}: {row: Row<thisRol>}) {
   const {updateRolesCell, rolesUsuarios} = useRolesUsuariosContext();
@@ -123,6 +126,25 @@ const RoleUsuariosColumn = memo(function RoleUsuariosColumn({row}: {row: Row<thi
   );
 });
 
+const EliminarRol = memo(function EliminarRol({row}: {row: Row<thisRol>}) {
+  const user = useAppSelector(selectUser);
+  const [_deleteOpen, _deleteToggle, showDelete, _hideDelete] = useToggle();
+
+  return (
+    <div className="d-flex gap-1">
+      <OverlayTrigger overlay={<Tooltip id="eliminarRol">Eliminar Rol</Tooltip>}>
+        <Button
+          aria-label={user.id}
+          id="eliminarRol"
+          variant="outline-danger py-0 px-1"
+          onClick={showDelete}>
+          <i className="uil-trash"></i> {row.original.id}
+        </Button>
+      </OverlayTrigger>
+    </div>
+  );
+});
+
 const rolesColumns: ColumnDef<thisRol>[] = [
   {
     header: 'Rol',
@@ -154,6 +176,11 @@ const rolesColumns: ColumnDef<thisRol>[] = [
     header: 'Usuarios del rol',
     accessorKey: 'RoleUsuarios',
     cell: RoleUsuariosColumn
+  },
+  {
+    header: 'Eliminar',
+    accessorKey: 'eliminar',
+    cell: EliminarRol
   }
 ];
 

@@ -7,6 +7,7 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './styles.scss';
+import {TOAST_DURATION} from '@/constants';
 
 const Noticias = memo(function Noticias() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -84,7 +85,7 @@ const Noticias = memo(function Noticias() {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'

@@ -7,7 +7,7 @@ import useRecoverPassword, {
   recoverPasswordFormFields,
   recoverPasswordFormSchema
 } from './useRecoverPassword';
-import {DEFAULT_ROUTER_PATH} from '@/constants';
+import {DEFAULT_ROUTER_PATH, TOAST_DURATION} from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 
 const RecoverPassword = () => {
@@ -57,7 +57,7 @@ const RecoverPassword = () => {
         <Toaster
           position="bottom-right"
           toastOptions={{
-            duration: 5000,
+            duration: TOAST_DURATION,
             style: {
               background: '#4f565c',
               color: '#fff'

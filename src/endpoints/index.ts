@@ -4,6 +4,7 @@ import useAddClient from './db/clientes/useAddClient';
 import useDeleteClient from './db/clientes/useDeleteClient';
 import useUpdateClient from './db/clientes/useUpdateClient';
 /* USUARIOS */
+import useRemoveRolesFromUser from './db/users/useRemoveRolesFromUser';
 import useDeleteUser from './db/users/useDeleteUser';
 import useAddUser from './db/users/useAddUser';
 import useCreateUserAuth from './auth/useCreateUserAuth';
@@ -12,6 +13,7 @@ import useChangePassword from './auth/useChangePassword';
 import useCheckIn from './db/horarios/useCheckIn';
 import useCheckOut from './db/horarios/useCheckOut';
 import useRolesYPermisos from './db/roles-permisos/useRolesYPermisos';
+import useDeleteRol from './db/roles-permisos/useDeleteRol';
 import useGetUsers from './db/users/useGetUsers';
 import useSetEstadoUser from './db/users/useSetEstadoUser';
 import useUpdateUser from './db/users/useUpdateUser';
@@ -25,10 +27,12 @@ export {
   useAddClient,
   useDeleteClient,
   useUpdateClient,
+  useRemoveRolesFromUser,
   useDeleteUser,
   useAddUser,
   useAuth,
   useRolesYPermisos,
+  useDeleteRol,
   useGetUsers,
   useSetEstadoUser,
   useUserProfileImage,

@@ -21,7 +21,7 @@ import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 
-const UsuariosAcciones = memo(function RolNameColumn({row}: {row: Row<Employee>}) {
+const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employee>}) {
   const user = useAppSelector(selectUser);
   const [userEmail, setUserEmail] = useState<string>('');
   const [isReadyToBeDeleted, setIsReadyToBeDeleted] = useState<boolean>(true);

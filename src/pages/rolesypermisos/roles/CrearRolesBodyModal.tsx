@@ -4,10 +4,12 @@ import {RolCreationBasics} from '@/types';
 
 const BodyModal = memo(function BodyModal({
   formData,
-  setFormData
+  setFormData,
+  isTouch
 }: {
   formData: RolCreationBasics;
   setFormData: Dispatch<SetStateAction<RolCreationBasics>>;
+  isTouch: Dispatch<SetStateAction<boolean>>;
 }) {
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,8 +18,9 @@ const BodyModal = memo(function BodyModal({
         ...prev,
         [name]: value
       }));
+      isTouch(true);
     },
-    [setFormData]
+    [isTouch, setFormData]
   );
 
   return (

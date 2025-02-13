@@ -65,5 +65,5 @@ export default function useRoles() {
     [createRol, newRoleIndex]
   );
 
-  return {roles, sendRol, isLoadingCreatinRol};
+  return {roles, sendRol, isLoadingCreatinRol, rolesFromStore};
 }

@@ -5,16 +5,22 @@ import {OverlayTrigger, Tooltip, Image} from 'react-bootstrap';
 import logo from '@/assets/images/logo.png';
 import logoSm from '@/assets/images/logo-sm.png';
 import {useThemeContext} from '@/common';
-import {THEME} from '@/constants';
+import {THEME, LOCALSTORAGE_THEME_MODE_KEY} from '@/constants';
 import {useCallback} from 'react';
 import {TopbarProps} from '@/types';
+import {LocalStorageUtil} from '@/utils';
 
 const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
   const {settings, updateSettings} = useThemeContext();
 
   const toggleDarkMode = useCallback(() => {
-    if (settings.theme === THEME.dark) updateSettings({theme: THEME.light});
-    else updateSettings({theme: THEME.dark});
+    if (settings.theme === THEME.dark) {
+      updateSettings({theme: THEME.light});
+      LocalStorageUtil.setItem<THEME>(LOCALSTORAGE_THEME_MODE_KEY, THEME.light);
+    } else {
+      updateSettings({theme: THEME.dark});
+      LocalStorageUtil.setItem<THEME>(LOCALSTORAGE_THEME_MODE_KEY, THEME.dark);
+    }
   }, [settings.theme, updateSettings]);
 
   const toggleRightSideBar = useCallback(() => {

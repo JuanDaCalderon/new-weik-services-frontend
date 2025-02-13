@@ -9,6 +9,7 @@ import {useGetClients, useRolesYPermisos} from '@/endpoints';
 import {useAppSelector} from '@/store';
 import {permisosSelector, rolesSelector, selectClientes} from '@/store/selectores';
 import {Toaster} from 'react-hot-toast';
+import {TOAST_DURATION} from '@/constants';
 
 const EcommerceDashboard = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -75,7 +76,7 @@ const EcommerceDashboard = () => {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'

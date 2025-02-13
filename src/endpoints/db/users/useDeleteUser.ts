@@ -14,8 +14,8 @@ export default function useDeleteUser() {
   const deleteUser = useCallback(
     async (userId: string): Promise<void> => {
       setIsLoadingDeleteUser(true);
-      const userRef = doc(db, USUARIOS_PATH, userId);
       try {
+        const userRef = doc(db, USUARIOS_PATH, userId);
         const usuarioDoc = await getDoc(userRef);
         const userData = usuarioDoc.data() as Employee;
         await deleteDoc(userRef);

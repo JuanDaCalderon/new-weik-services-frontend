@@ -3,7 +3,7 @@ import {Col, Row} from 'react-bootstrap';
 import {Link, Navigate} from 'react-router-dom';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import useLogin, {LoginFormFields, loginFormSchema} from './useLogin';
-import {PAGE_RECOVERY_PASSWORD} from '@/constants';
+import {PAGE_RECOVERY_PASSWORD, TOAST_DURATION} from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 import {useEffect} from 'react';
 import {useAppSelector} from '@/store';
@@ -61,7 +61,7 @@ export default function Login() {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'

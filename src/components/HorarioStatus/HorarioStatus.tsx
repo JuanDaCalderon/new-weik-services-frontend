@@ -5,6 +5,7 @@ import {selectUser} from '@/store/selectores';
 import {useCheckIn, useCheckOut, useSetEstadoUser} from '@/endpoints';
 import {calcularHorasTrabajo, DateUtils} from '@/utils';
 import {Toaster} from 'react-hot-toast';
+import {TOAST_DURATION} from '@/constants';
 
 const HorarioStatus = memo(function HorarioStatus() {
   const todayDate = new Date().toLocaleDateString();
@@ -176,7 +177,7 @@ const HorarioStatus = memo(function HorarioStatus() {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'

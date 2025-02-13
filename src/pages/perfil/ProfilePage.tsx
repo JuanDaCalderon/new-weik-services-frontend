@@ -6,6 +6,7 @@ import HubLaboral from './HubLaboral';
 import UserRolesYPermisos from './RolesYPermisos';
 import {Toaster} from 'react-hot-toast';
 import PasswordBox from './PasswordBox';
+import {TOAST_DURATION} from '@/constants';
 
 const ProfilePage = () => {
   return (
@@ -33,7 +34,7 @@ const ProfilePage = () => {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          duration: 5000,
+          duration: TOAST_DURATION,
           style: {
             background: '#4f565c',
             color: '#fff'
