@@ -41,6 +41,7 @@ const useGetClients = () => {
           }
           dispatch(clearClientes());
           dispatch(setClientes(clientes));
+          dispatch(isLoadingClientes(false));
           DebugUtil.logSuccess(
             'Se han consultado los clientes correctamente y ya deben estar en el store',
             clientes
@@ -49,8 +50,6 @@ const useGetClients = () => {
       );
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
-    } finally {
-      dispatch(isLoadingClientes(false));
     }
     return unsubscribe;
   }, [dispatch]);

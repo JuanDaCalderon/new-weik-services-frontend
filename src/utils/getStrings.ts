@@ -56,4 +56,12 @@ const getCargoUser = (user: User | Employee | thisUsuarios): string => {
   else return 'Sin Cargo';
 };
 
-export {getNombreCompletoUser, getUserNameUser, getRolesUser, getCargoUser};
+/**
+ * truncate the string to a max number of characters and appends ‘…’
+ */
+const truncateString = (str: string, maxLength: number): string => {
+  if (str.length > maxLength) return str.substring(0, maxLength - 3) + '...';
+  return str;
+};
+
+export {getNombreCompletoUser, getUserNameUser, getRolesUser, getCargoUser, truncateString};

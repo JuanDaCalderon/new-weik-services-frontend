@@ -1,6 +1,6 @@
 import {PageBreadcrumb} from '@/components';
 import {memo, useCallback, MouseEvent, useState} from 'react';
-import {Card, Col, Row} from 'react-bootstrap';
+import {Button, Card, Col, Row, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {Toaster} from 'react-hot-toast';
 import {Mousewheel, Pagination, Autoplay} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/react';
@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './styles.scss';
 import {TOAST_DURATION} from '@/constants';
+import {truncateString} from '@/utils';
 
 const Noticias = memo(function Noticias() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -38,19 +39,56 @@ const Noticias = memo(function Noticias() {
 
               <Swiper
                 slidesPerView={isExpanded ? 3 : 6}
-                spaceBetween={isExpanded ? 30 : 20}
+                spaceBetween={isExpanded ? 20 : 10}
                 grabCursor={true}
                 loop={true}
-                autoplay={{
+                /* autoplay={{
                   delay: 5000,
                   disableOnInteraction: false
-                }}
+                }} */
                 mousewheel={true}
                 direction="vertical"
                 pagination={{clickable: true}}
                 modules={[Mousewheel, Pagination, Autoplay]}>
                 <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-1.jpg" loading="lazy" />
+                  <Card className="p-0 m-0 w-100 h-100">
+                    <Card.Body className="p-0 m-0 w-100 h-100 position-relative">
+                      {isExpanded && (
+                        <OverlayTrigger placement="auto" overlay={<Tooltip>fecha exp</Tooltip>}>
+                          <i
+                            className="d-flex justify-content-center align-items-center uil-info-circle position-absolute font-18 bg-light rounded-5 m-1 cursor-pointer bg-opacity-75"
+                            style={{width: '24px', height: '24px'}}
+                          />
+                        </OverlayTrigger>
+                      )}
+                      <a href="google.com" target="blank">
+                        <img
+                          className="img img-fluid w-100 h-100 object-fit-cover"
+                          src="https://swiperjs.com/demos/images/nature-1.jpg"
+                          loading="lazy"
+                        />
+                      </a>
+
+                      <div className="d-flex justify-content-between align-items-center p-1 position-absolute w-100 bottom-0 bg-gradient bg-light bg-opacity-50">
+                        <h5
+                          className={`m-0 text-dark text-opacity-75 font-${isExpanded ? '14' : '12'}`}>
+                          {isExpanded ? (
+                            <>Titulo Titulo Titulo Titulo Titulo Titulo</>
+                          ) : (
+                            <>{truncateString('Titulo Titulo Titulo Titulo Titulo Titulo', 23)}</>
+                          )}
+                        </h5>
+                        {isExpanded && (
+                          <Button
+                            size="sm"
+                            variant="outline-dark"
+                            className="btn-rounded py-0 px-1 m-0">
+                            <i className="uil-external-link-alt"></i>
+                          </Button>
+                        )}
+                      </div>
+                    </Card.Body>
+                  </Card>
                 </SwiperSlide>
                 <SwiperSlide>
                   <img src="https://swiperjs.com/demos/images/nature-2.jpg" loading="lazy" />

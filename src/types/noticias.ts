@@ -1,0 +1,21 @@
+import {Timestamp} from 'firebase/firestore';
+
+interface BaseNoticia {
+  image: string;
+  titulo: string;
+  link: string;
+}
+
+export interface Noticia extends BaseNoticia {
+  id: string;
+  rangoFechas: string[];
+}
+
+export interface NoticiaToDb extends BaseNoticia {
+  rangoFechas: Timestamp[];
+}
+
+export type PayLoadNoticiasType = {
+  noticias: Noticia[];
+  isLoading: boolean;
+};

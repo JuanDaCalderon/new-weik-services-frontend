@@ -21,6 +21,8 @@ import useUserProfileImage from './db/profile-image/useUserProfileImage';
 import useGetEmployees from './db/users/useGetEmployees';
 import useUploadImage from './db/utils/useUploadImage';
 import useDeleteImage from './db/utils/useDeleteImage';
+import useAddNoticia from './db/noticias/useAddNoticia';
+import useGetNoticias from './db/noticias/useGetNoticias';
 
 export {
   useGetClients,
@@ -43,5 +45,7 @@ export {
   useDeleteImage,
   useCreateUserAuth,
   useCheckIn,
-  useCheckOut
+  useCheckOut,
+  useAddNoticia,
+  useGetNoticias
 };
