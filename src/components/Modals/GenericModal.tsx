@@ -13,7 +13,8 @@ const GenericModal = memo(function GenericModal({
   body,
   onSend,
   isDisabled,
-  isLoading
+  isLoading,
+  showFooter = true
 }: ModalProps) {
   return (
     <Modal show={show} onHide={onToggle}>
@@ -26,19 +27,21 @@ const GenericModal = memo(function GenericModal({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>
-      <Modal.Footer>
-        <Button className="shadow-sm" variant="light" onClick={onToggle}>
-          {secondaryText || 'Cerrar'}
-        </Button>
-        <Button
-          className="shadow-sm"
-          variant={variant || 'primary'}
-          onClick={onSend}
-          disabled={isDisabled}>
-          {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
-          {!isLoading && (submitText || 'Guardar cambios')}
-        </Button>
-      </Modal.Footer>
+      {showFooter && (
+        <Modal.Footer>
+          <Button className="shadow-sm" variant="light" onClick={onToggle}>
+            {secondaryText || 'Cerrar'}
+          </Button>
+          <Button
+            className="shadow-sm"
+            variant={variant || 'primary'}
+            onClick={onSend}
+            disabled={isDisabled}>
+            {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
+            {!isLoading && (submitText || 'Guardar cambios')}
+          </Button>
+        </Modal.Footer>
+      )}
     </Modal>
   );
 });

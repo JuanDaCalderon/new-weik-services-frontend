@@ -1,6 +1,7 @@
 import {PageBreadcrumb} from '@/components';
+import {NoticiaCard} from '@/components/Noticias/NoticiaCard';
 import {memo, useCallback, MouseEvent, useState} from 'react';
-import {Button, Card, Col, Row, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {Card, Col, Row} from 'react-bootstrap';
 import {Toaster} from 'react-hot-toast';
 import {Mousewheel, Pagination, Autoplay} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/react';
@@ -8,7 +9,74 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './styles.scss';
 import {TOAST_DURATION} from '@/constants';
-import {truncateString} from '@/utils';
+import {MapNoticia} from '@/types';
+
+const noticiasData: MapNoticia[] = [
+  {
+    id: '1',
+    expFechas: '2005',
+    image:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Aspect_ratio_-_16x9.svg/1200px-Aspect_ratio_-_16x9.svg.png',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 1'
+  },
+  {
+    id: '2',
+    expFechas: '2006',
+    image: 'https://swiperjs.com/demos/images/nature-2.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 2'
+  },
+  {
+    id: '3',
+    expFechas: '2007',
+    image: 'https://swiperjs.com/demos/images/nature-3.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 3'
+  },
+  {
+    id: '4',
+    expFechas: '2008',
+    image: 'https://swiperjs.com/demos/images/nature-4.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 4'
+  },
+  {
+    id: '5',
+    expFechas: '2009',
+    image: 'https://swiperjs.com/demos/images/nature-5.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 5'
+  },
+  {
+    id: '6',
+    expFechas: '2010',
+    image: 'https://swiperjs.com/demos/images/nature-6.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 6'
+  },
+  {
+    id: '7',
+    expFechas: '2011',
+    image: 'https://swiperjs.com/demos/images/nature-7.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 7'
+  },
+  {
+    id: '8',
+    expFechas: '2012',
+    image: 'https://swiperjs.com/demos/images/nature-8.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 8'
+  },
+  {
+    id: '9',
+    expFechas: '2013',
+    image: 'https://swiperjs.com/demos/images/nature-9.jpg',
+    link: 'https://www.youtube.com/watch?v=ZPUZwriSX4M&list=RDGMEMJQXQAmqrnmK1SEjY_rKBGAVMZPUZwriSX4M&start_radio=1&ab_channel=Slipknot',
+    titulo: 'Titulo Titulo Titulo Titulo Titulo 9'
+  }
+];
 
 const Noticias = memo(function Noticias() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -42,78 +110,27 @@ const Noticias = memo(function Noticias() {
                 spaceBetween={isExpanded ? 20 : 10}
                 grabCursor={true}
                 loop={true}
-                /* autoplay={{
+                autoplay={{
                   delay: 5000,
                   disableOnInteraction: false
-                }} */
+                }}
                 mousewheel={true}
                 direction="vertical"
                 pagination={{clickable: true}}
                 modules={[Mousewheel, Pagination, Autoplay]}>
-                <SwiperSlide>
-                  <Card className="p-0 m-0 w-100 h-100">
-                    <Card.Body className="p-0 m-0 w-100 h-100 position-relative">
-                      {isExpanded && (
-                        <OverlayTrigger placement="auto" overlay={<Tooltip>fecha exp</Tooltip>}>
-                          <i
-                            className="d-flex justify-content-center align-items-center uil-info-circle position-absolute font-18 bg-light rounded-5 m-1 cursor-pointer bg-opacity-75"
-                            style={{width: '24px', height: '24px'}}
-                          />
-                        </OverlayTrigger>
-                      )}
-                      <a href="google.com" target="blank">
-                        <img
-                          className="img img-fluid w-100 h-100 object-fit-cover"
-                          src="https://swiperjs.com/demos/images/nature-1.jpg"
-                          loading="lazy"
-                        />
-                      </a>
-
-                      <div className="d-flex justify-content-between align-items-center p-1 position-absolute w-100 bottom-0 bg-gradient bg-light bg-opacity-50">
-                        <h5
-                          className={`m-0 text-dark text-opacity-75 font-${isExpanded ? '14' : '12'}`}>
-                          {isExpanded ? (
-                            <>Titulo Titulo Titulo Titulo Titulo Titulo</>
-                          ) : (
-                            <>{truncateString('Titulo Titulo Titulo Titulo Titulo Titulo', 23)}</>
-                          )}
-                        </h5>
-                        {isExpanded && (
-                          <Button
-                            size="sm"
-                            variant="outline-dark"
-                            className="btn-rounded py-0 px-1 m-0">
-                            <i className="uil-external-link-alt"></i>
-                          </Button>
-                        )}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-2.jpg" loading="lazy" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-3.jpg" loading="lazy" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-4.jpg" loading="lazy" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-5.jpg" loading="lazy" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-6.jpg" loading="lazy" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-7.jpg" loading="lazy" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-8.jpg" loading="lazy" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="https://swiperjs.com/demos/images/nature-9.jpg" loading="lazy" />
-                </SwiperSlide>
+                {noticiasData.map((noticia, index) => {
+                  return (
+                    <SwiperSlide className="rounded" key={index}>
+                      <NoticiaCard
+                        fechaExp={noticia.expFechas}
+                        isExpanded={isExpanded}
+                        noticiaImg={noticia.image}
+                        titulo={noticia.titulo}
+                        link={noticia.link}
+                      />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </Card.Body>
           </Card>

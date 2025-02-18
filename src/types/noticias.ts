@@ -11,6 +11,11 @@ export interface Noticia extends BaseNoticia {
   rangoFechas: string[];
 }
 
+export interface MapNoticia extends BaseNoticia {
+  id: string;
+  expFechas: string;
+}
+
 export interface NoticiaToDb extends BaseNoticia {
   rangoFechas: Timestamp[];
 }
