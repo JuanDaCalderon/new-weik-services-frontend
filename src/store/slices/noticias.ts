@@ -1,10 +1,10 @@
 import {NOTICIAS_NAME, SESSION_NOTICIAS_KEY} from '@/constants';
 import {Noticia, PayLoadNoticiasType} from '@/types';
-import {CookieUtil} from '@/utils';
+import {SessionStorageUtil} from '@/utils';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: PayLoadNoticiasType = {
-  noticias: CookieUtil.getItem<Noticia[]>(SESSION_NOTICIAS_KEY) ?? ([] as Noticia[]),
+  noticias: SessionStorageUtil.getItem<Noticia[]>(SESSION_NOTICIAS_KEY) ?? ([] as Noticia[]),
   isLoading: false
 };
 
@@ -13,8 +13,7 @@ export const noticiasSlice = createSlice({
   initialState,
   reducers: {
     setNoticias: (state: PayLoadNoticiasType, action: PayloadAction<Noticia[]>) => {
-      //Debido al tamaño de lo que puede almacenar una cookie, creo que deberia pasarse a session storage
-      CookieUtil.setItem<Noticia[]>(SESSION_NOTICIAS_KEY, action.payload, {expires: 60, path: '/'});
+      SessionStorageUtil.setItem<Noticia[]>(SESSION_NOTICIAS_KEY, action.payload);
       if (state.noticias.length === 0) {
         return {
           ...state,
@@ -23,7 +22,7 @@ export const noticiasSlice = createSlice({
       }
     },
     clearNoticias: (state: PayLoadNoticiasType) => {
-      CookieUtil.removeItem(SESSION_NOTICIAS_KEY);
+      SessionStorageUtil.removeItem(SESSION_NOTICIAS_KEY);
       return {
         ...state,
         noticias: []

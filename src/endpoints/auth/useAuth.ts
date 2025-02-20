@@ -11,6 +11,7 @@ import {DebugUtil} from '@/utils';
 import {clearPermisos, clearRoles} from '@/store/slices/roles-permisos';
 import {clearClientes} from '@/store/slices/clientes';
 import {useGetUsers, useSetEstadoUser} from '@/endpoints';
+import {clearNoticias} from '@/store/slices/noticias';
 
 const useAuth = () => {
   const [isLoadingLogOut, setIsLoadingLogOut] = useState<boolean>(true);
@@ -69,6 +70,7 @@ const useAuth = () => {
         dispatch(clearRoles());
         dispatch(clearPermisos());
         dispatch(clearClientes());
+        dispatch(clearNoticias());
         toast.success('¡Sesión cerrada exitosamente!');
         DebugUtil.logSuccess('¡Sesión cerrada exitosamente!');
       }
