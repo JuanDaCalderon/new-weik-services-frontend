@@ -56,12 +56,8 @@ export const navBarFilterByPermissions = (
 ): MenuItemType[] => {
   const hasAccess = (permisoId?: string): boolean => {
     if (!permisoId) return true;
-    const permitidoPorRol = roles.some((rol) =>
-      rol.permisos?.some((permiso) => permiso.permiso === permisoId)
-    );
-    const permitidoDirectamente = permisosOtorgados.some(
-      (permiso) => permiso.permiso === permisoId
-    );
+    const permitidoPorRol = roles.some((rol) => rol.permisos?.some((permiso) => permiso.permiso === permisoId));
+    const permitidoDirectamente = permisosOtorgados.some((permiso) => permiso.permiso === permisoId);
     const denegado = permisosDenegados.some((permiso) => permiso.permiso === permisoId);
     return (permitidoPorRol || permitidoDirectamente) && !denegado;
   };
@@ -71,9 +67,7 @@ export const navBarFilterByPermissions = (
       .map((menu) => {
         if (!hasAccess(menu.permisoId)) return null;
         const filteredChildren = menu.children ? filterMenuRecursive(menu.children) : undefined;
-        return filteredChildren?.length || !menu.children
-          ? {...menu, children: filteredChildren}
-          : null;
+        return filteredChildren?.length || !menu.children ? {...menu, children: filteredChildren} : null;
       })
       .filter((item) => item !== null) as MenuItemType[];
   };
@@ -97,9 +91,7 @@ export const hasPermission = (
   permisosDenegados: Permiso[]
 ): boolean => {
   // Verificar si algún rol del usuario tiene el permiso
-  const hasRolePermission = roles.some((rol) =>
-    rol.permisos?.some((permiso) => permiso.permiso === permisoId)
-  );
+  const hasRolePermission = roles.some((rol) => rol.permisos?.some((permiso) => permiso.permiso === permisoId));
   // Verificar si el permiso está otorgado directamente
   const isGranted = permisosOtorgados.some((permiso) => permiso.permiso === permisoId);
   // Verificar si el permiso está denegado

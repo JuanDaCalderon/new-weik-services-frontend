@@ -1,10 +1,4 @@
-import {
-  SESSION_CLIENTES_KEY,
-  SESSION_PERMISOS_KEY,
-  SESSION_ROLES_KEY,
-  USER_DOMAIN,
-  USER_NAME
-} from '@/constants';
+import {SESSION_CLIENTES_KEY, SESSION_PERMISOS_KEY, SESSION_ROLES_KEY, USER_DOMAIN, USER_NAME} from '@/constants';
 import {HorasTrabajoType, PartialEmployee, PayLoadUserType, User} from '@/types';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
@@ -14,8 +8,7 @@ const userInLocalStorage: User | null = LocalStorageUtil.getItem<User>(USER_NAME
 const userInSessionStorage: User | null = SessionStorageUtil.getItem<User>(USER_NAME) ?? null;
 
 const domainInLocalStorage: string | null = LocalStorageUtil.getItem<string>(USER_DOMAIN) ?? null;
-const domainInSessionStorage: string | null =
-  SessionStorageUtil.getItem<string>(USER_DOMAIN) ?? null;
+const domainInSessionStorage: string | null = SessionStorageUtil.getItem<string>(USER_DOMAIN) ?? null;
 
 let isLoggedInPersistence: boolean = false;
 if (userInLocalStorage) isLoggedInPersistence = true;
@@ -107,6 +100,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const {setUser, logOutUser, updateUserImage, updateDataUser, updateWorkingHoursUser} =
-  userSlice.actions;
+export const {setUser, logOutUser, updateUserImage, updateDataUser, updateWorkingHoursUser} = userSlice.actions;
 export default userSlice.reducer;

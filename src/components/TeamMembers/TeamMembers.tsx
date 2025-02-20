@@ -27,9 +27,7 @@ const TeamMembers = memo(function TeamMembers() {
 
   useEffect(() => {
     if (employeesFromStore.length > 0) {
-      setEmployees([
-        ...employeesFromStore.filter((e) => e.estado === optionFilter.option && e.id !== id)
-      ]);
+      setEmployees([...employeesFromStore.filter((e) => e.estado === optionFilter.option && e.id !== id)]);
     } else setEmployees([]);
   }, [employeesFromStore, id, optionFilter.option]);
 
@@ -68,10 +66,7 @@ const TeamMembers = memo(function TeamMembers() {
                   {employees.length > 0 ? (
                     employees.map((employee, index) => {
                       return (
-                        <div
-                          className="team-card pt-1"
-                          key={index.toString()}
-                          style={{flexShrink: 0, height: '52px'}}>
+                        <div className="team-card pt-1" key={index.toString()} style={{flexShrink: 0, height: '52px'}}>
                           <button
                             key={index}
                             className="border-0 team-button p-1 m-0 w-100 h-100 d-flex align-content-center align-items-center justify-content-between rounded-1 bg-light"
@@ -92,9 +87,7 @@ const TeamMembers = memo(function TeamMembers() {
                                 <h5 className="m-0 p-0 text-capitalize font-14 text-dark">
                                   {getUserNameUser(employee)}
                                 </h5>
-                                <span className="font-12 lh-sm">
-                                  {getCargoUser(employee).toLowerCase()}
-                                </span>
+                                <span className="font-12 lh-sm">{getCargoUser(employee).toLowerCase()}</span>
                               </div>
                             </div>
                             <span className="font-12 text-muted ms-auto">{employee.estado}</span>
@@ -109,9 +102,7 @@ const TeamMembers = memo(function TeamMembers() {
                   ) : (
                     <div className="team-card pt-1" style={{flexShrink: 0, height: '52px'}}>
                       <button className="border-0 team-button p-1 m-0 w-100 h-100 d-flex align-content-center align-items-center justify-content-between rounded-1 bg-light">
-                        <h5 className="m-0 p-0 font-14 text-dark">
-                          No hay usuarios {optionFilter.option}
-                        </h5>
+                        <h5 className="m-0 p-0 font-14 text-dark">No hay usuarios {optionFilter.option}</h5>
                       </button>
                     </div>
                   )}

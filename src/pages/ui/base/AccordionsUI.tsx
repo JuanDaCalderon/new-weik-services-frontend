@@ -1,14 +1,5 @@
 import React, {useContext} from 'react';
-import {
-  Row,
-  Col,
-  Card,
-  Accordion,
-  Button,
-  Collapse,
-  useAccordionButton,
-  AccordionContext
-} from 'react-bootstrap';
+import {Row, Col, Card, Accordion, Button, Collapse, useAccordionButton, AccordionContext} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {useToggle} from '@/hooks';
@@ -38,13 +29,7 @@ type CustomToggleProps = {
   callback?: (eventKey: string) => void;
 };
 
-const CustomToggle = ({
-  children,
-  eventKey,
-  containerClass,
-  linkClass,
-  callback
-}: CustomToggleProps) => {
+const CustomToggle = ({children, eventKey, containerClass, linkClass, callback}: CustomToggleProps) => {
   const {activeEventKey} = useContext(AccordionContext);
 
   const decoratedOnClick = useAccordionButton(eventKey, () => callback && callback(eventKey));
@@ -79,13 +64,12 @@ const CustomAccordion1 = ({item, index}: CustomAccordion1Props) => {
       <Accordion.Collapse eventKey={String(index)}>
         <div>
           <Card.Body>
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-            squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-            quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it
-            squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-            craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
-            butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth
-            nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+            officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+            wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+            excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+            you probably haven't heard of them accusamus labore sustainable VHS.
           </Card.Body>
         </div>
       </Accordion.Collapse>
@@ -97,10 +81,7 @@ const CustomAccordion2 = ({item, index}: CustomAccordion2Props) => {
   return (
     <Card className="mb-0">
       <Card.Header>
-        <CustomToggle
-          eventKey={String(index)}
-          containerClass="m-0"
-          linkClass="custom-accordion-title d-block py-1">
+        <CustomToggle eventKey={String(index)} containerClass="m-0" linkClass="custom-accordion-title d-block py-1">
           Q. {item.title}
           <i className="mdi mdi-chevron-down accordion-arrow"></i>
         </CustomToggle>
@@ -157,8 +138,7 @@ const AccordionsUI = () => {
             <Card.Body>
               <h4 className="header-title">Simple Accordions</h4>
               <p className="text-muted font-14 mb-3">
-                Use <code>Collapse</code> component to create accordions. The details documentation
-                is available
+                Use <code>Collapse</code> component to create accordions. The details documentation is available
                 <Link
                   rel="noreferrer"
                   to={{
@@ -184,8 +164,8 @@ const AccordionsUI = () => {
             <Card.Body>
               <h4 className="header-title">Custom Accordions</h4>
               <p className="text-muted font-14 mb-3">
-                You can have custom look and feel for accorion as well. Just use class{' '}
-                <code>.custom-accordion</code> along with
+                You can have custom look and feel for accorion as well. Just use class <code>.custom-accordion</code>{' '}
+                along with
                 <code>.accordion</code> as a wrapper.
               </p>
 
@@ -219,9 +199,8 @@ const AccordionsUI = () => {
               <Collapse in={isOpen}>
                 <div>
                   <div className="card card-body mb-0">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                    richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes
-                    anderson cred nesciunt sapiente ea proident.
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
                   </div>
                 </div>
               </Collapse>
@@ -254,9 +233,9 @@ const AccordionsUI = () => {
                   <Collapse in={isOpenFirst}>
                     <div>
                       <div className="card card-body mb-0">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                        richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes
-                        anderson cred nesciunt sapiente ea proident.
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+                        proident.
                       </div>
                     </div>
                   </Collapse>
@@ -265,9 +244,9 @@ const AccordionsUI = () => {
                   <Collapse in={isOpenSecond}>
                     <div>
                       <div className="card card-body mb-0">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                        richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes
-                        anderson cred nesciunt sapiente ea proident.
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+                        proident.
                       </div>
                     </div>
                   </Collapse>
@@ -281,8 +260,7 @@ const AccordionsUI = () => {
             <Card.Body>
               <h4 className="header-title">COLLAPSE HORIZONTAL</h4>
               <p className="text-muted font-14 mb-3">
-                Add a collapse toggle animation to an element or component to transition the width
-                instead of height.
+                Add a collapse toggle animation to an element or component to transition the width instead of height.
               </p>
               <Button color="primary" className="ms-1" type="button" onClick={toggleHorizontal}>
                 Toggle Width Collapse
@@ -292,8 +270,8 @@ const AccordionsUI = () => {
                 <Collapse in={isOpenHorizontal} dimension="width">
                   <div id="example-collapse-text">
                     <Card body style={{width: '300px'}}>
-                      This is some placeholder content for a horizontal collapse. It's hidden by
-                      default and shown when triggered.
+                      This is some placeholder content for a horizontal collapse. It's hidden by default and shown when
+                      triggered.
                     </Card>
                   </div>
                 </Collapse>

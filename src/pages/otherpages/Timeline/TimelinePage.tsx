@@ -20,9 +20,7 @@ const TimelinePage = () => {
 
                   {(timelineData[day] || []).map((item, idx) => {
                     return (
-                      <div
-                        key={idx}
-                        className={`timeline-lg-item ${idx % 2 === 0 ? 'timeline-item-left' : ''}`}>
+                      <div key={idx} className={`timeline-lg-item ${idx % 2 === 0 ? 'timeline-item-left' : ''}`}>
                         <div className="timeline-desk">
                           <div className="timeline-box">
                             <span className="arrow-alt"></span>
@@ -61,12 +59,7 @@ const TimelinePage = () => {
 
                             {item.user && (
                               <div className="d-flex">
-                                <img
-                                  src={item.user.image}
-                                  alt="Arya S"
-                                  className="rounded-circle me-2"
-                                  height="24"
-                                />
+                                <img src={item.user.image} alt="Arya S" className="rounded-circle me-2" height="24" />
                                 <div>
                                   <h5 className="mt-1 font-14 mb-0">
                                     {item.user.name}

@@ -36,13 +36,7 @@ const DonutUpdateChart = () => {
   return (
     <>
       <div dir="ltr">
-        <ReactApexChart
-          className="apex-charts"
-          options={DonutUpdateOpt}
-          height={320}
-          series={data}
-          type="donut"
-        />
+        <ReactApexChart className="apex-charts" options={DonutUpdateOpt} height={320} series={data} type="donut" />
       </div>
       <div className="text-center mt-2 d-flex gap-2 justify-content-center">
         <button className="btn btn-sm btn-primary" onClick={randomize}>

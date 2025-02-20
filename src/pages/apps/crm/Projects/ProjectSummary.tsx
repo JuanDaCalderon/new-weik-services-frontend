@@ -13,8 +13,7 @@ const ProjectSummary = () => {
             menuItems={[{label: 'Refresh Report'}, {label: 'Export Report'}]}
           />
           <Alert variant="warning" className="mt-2">
-            <i className="uil-folder-heart me-1 h4 align-middle"></i> <b>38</b> Total Admin & Client
-            Projects
+            <i className="uil-folder-heart me-1 h4 align-middle"></i> <b>38</b> Total Admin & Client Projects
           </Alert>
 
           <div className="d-flex align-items-center border border-light rounded p-2 mb-2">

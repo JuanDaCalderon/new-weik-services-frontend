@@ -23,12 +23,7 @@ const AddEditEvent = ({
   onUpdateEvent,
   onAddEvent
 }: AddEditEventProps) => {
-  const {event, onSubmitEvent, schema} = useAddEditEvent(
-    eventData,
-    isEditable,
-    onUpdateEvent,
-    onAddEvent
-  );
+  const {event, onSubmitEvent, schema} = useAddEditEvent(eventData, isEditable, onUpdateEvent, onAddEvent);
   return (
     <Modal show={isOpen} onHide={onClose} backdrop="static" keyboard={false}>
       <Modal.Header className="pb-2 px-4 border-bottom-0" closeButton>

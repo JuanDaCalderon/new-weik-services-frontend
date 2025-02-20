@@ -25,8 +25,7 @@ const FileUploader = ({
   resetFile = false,
   acceptedFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'] // Por defecto, solo imágenes
 }: FileUploaderProps) => {
-  const {selectedFile, uploadProgress, handleAcceptedFiles, removeFile} =
-    useFileUploader(showPreview);
+  const {selectedFile, uploadProgress, handleAcceptedFiles, removeFile} = useFileUploader(showPreview);
 
   useEffect(() => {
     if (resetFile) removeFile(onFileRemoved);
@@ -35,10 +34,7 @@ const FileUploader = ({
   return (
     <>
       {!selectedFile && (
-        <Dropzone
-          onDrop={(acceptedFiles) =>
-            handleAcceptedFiles(acceptedFiles, onFileUpload, acceptedFileTypes)
-          }>
+        <Dropzone onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles, onFileUpload, acceptedFileTypes)}>
           {({getRootProps, getInputProps}) => (
             <div className={`dropzone ${isRounded && 'rounded-circle'} m-0 p-0`}>
               <div className="dz-message needsclick m-0 p-0" {...getRootProps()}>

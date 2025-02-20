@@ -11,8 +11,8 @@ const BasicPlaceholders = () => {
       <Card.Body>
         <h4 className="header-title">Placeholders</h4>
         <p className="text-muted font-13">
-          In the example below, we take a typical card component and recreate it with placeholders
-          applied to create a “loading card”. Size and proportions are the same between the two.
+          In the example below, we take a typical card component and recreate it with placeholders applied to create a
+          “loading card”. Size and proportions are the same between the two.
         </p>
 
         <Row>
@@ -22,8 +22,7 @@ const BasicPlaceholders = () => {
               <Card.Body>
                 <Card.Title>Card Title</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
+                  Some quick example text to build on the card title and make up the bulk of the card's content.
                 </Card.Text>
                 <Button>Go somewhere</Button>
               </Card.Body>
@@ -57,8 +56,8 @@ const PlaceholdersWithVariants = () => {
       <Card.Body>
         <h4 className="header-title">Color</h4>
         <p className="text-muted font-13">
-          By default, the <code>placeholder</code> uses <code>currentColor</code>. This can be
-          overriden with a custom color or utility class.
+          By default, the <code>placeholder</code> uses <code>currentColor</code>. This can be overriden with a custom
+          color or utility class.
         </p>
 
         <Placeholder xs={12} />
@@ -82,8 +81,7 @@ const PlaceholdersWidth = () => {
       <Card.Body>
         <h4 className="header-title">Width</h4>
         <p className="text-muted font-13">
-          You can change the <code>width</code> through grid column classes, width utilities, or
-          inline styles.
+          You can change the <code>width</code> through grid column classes, width utilities, or inline styles.
         </p>
         <Placeholder xs={6} />
         <Placeholder className="w-75" /> <br />
@@ -99,9 +97,8 @@ const PlaceholdersWithSizes = () => {
       <Card.Body>
         <h4 className="header-title">Sizing</h4>
         <p className="text-muted font-13">
-          The size of <code>placeholder</code>s are based on the typographic style of the parent
-          element. Customize them with sizing props: <code>lg</code>,<code>sm</code>, or{' '}
-          <code>xs</code>.
+          The size of <code>placeholder</code>s are based on the typographic style of the parent element. Customize them
+          with sizing props: <code>lg</code>,<code>sm</code>, or <code>xs</code>.
         </p>
 
         <Placeholder xs={12} size="lg" />
@@ -119,9 +116,9 @@ const PlaceholdersConcept = () => {
       <Card.Body>
         <h4 className="header-title">How it works</h4>
         <p className="text-muted font-13">
-          Create placeholders with the <code>Placeholder</code> component and a grid column prop
-          (e.g., <code>xs={6}</code>) to set the <code>width</code>. They can replace the text
-          inside an element or be added to an existing component via the
+          Create placeholders with the <code>Placeholder</code> component and a grid column prop (e.g.,{' '}
+          <code>xs={6}</code>) to set the <code>width</code>. They can replace the text inside an element or be added to
+          an existing component via the
           <code>as</code> prop.
         </p>
 
@@ -142,8 +139,8 @@ const PlaceholdersAnimation = () => {
         <h4 className="header-title">Animation</h4>
         <p className="text-muted font-13">
           Animate placeholders by setting the prop <code>animation</code> to
-          <code>glow</code> or <code>wave</code> to better convey the perception of something being{' '}
-          <em>actively</em> loaded.
+          <code>glow</code> or <code>wave</code> to better convey the perception of something being <em>actively</em>{' '}
+          loaded.
         </p>
 
         <Placeholder as="p" animation="glow">

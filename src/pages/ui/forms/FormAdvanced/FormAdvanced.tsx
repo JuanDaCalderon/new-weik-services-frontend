@@ -49,13 +49,8 @@ const ReactSelect = () => {
 };
 
 const Typeaheads = () => {
-  const {
-    options,
-    singleSelections,
-    multiSelections,
-    onChangeSingleSelection,
-    onChangeMultipleSelection
-  } = useTypeahead();
+  const {options, singleSelections, multiSelections, onChangeSingleSelection, onChangeMultipleSelection} =
+    useTypeahead();
 
   return (
     <Card>
@@ -212,9 +207,7 @@ const InputMasks = () => {
     <Card>
       <Card.Body>
         <h4 className="header-title">Input Masks</h4>
-        <p className="text-muted font-14">
-          A jQuery Plugin to make masks on form fields and HTML elements.
-        </p>
+        <p className="text-muted font-14">A jQuery Plugin to make masks on form fields and HTML elements.</p>
 
         <Row>
           <Col md={6}>
@@ -341,22 +334,7 @@ const InputMasks = () => {
               <div className="mb-3">
                 <label className="form-label">Telephone with Code Area</label>
                 <MaskedInput
-                  mask={[
-                    '(',
-                    /[1-9]/,
-                    /\d/,
-                    ')',
-                    ' ',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '-',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/
-                  ]}
+                  mask={['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                   placeholder="(__)____-____"
                   className="form-control"
                 />
@@ -365,22 +343,7 @@ const InputMasks = () => {
               <div className="mb-3">
                 <label className="form-label">US Telephone</label>
                 <MaskedInput
-                  mask={[
-                    '(',
-                    /[1-9]/,
-                    /\d/,
-                    /\d/,
-                    ')',
-                    ' ',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '-',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/
-                  ]}
+                  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                   placeholder="(___)___-____"
                   className="form-control"
                 />
@@ -389,23 +352,7 @@ const InputMasks = () => {
               <div className="mb-3">
                 <label className="form-label">São Paulo Celphones</label>
                 <MaskedInput
-                  mask={[
-                    '(',
-                    /[1-9]/,
-                    /\d/,
-                    ')',
-                    ' ',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '-',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/
-                  ]}
+                  mask={['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                   placeholder="(__)_____-____"
                   className="form-control"
                 />
@@ -414,23 +361,7 @@ const InputMasks = () => {
               <div className="mb-3">
                 <label className="form-label">CPF</label>
                 <MaskedInput
-                  mask={[
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '.',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '.',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '-',
-                    /\d/,
-                    /\d/
-                  ]}
+                  mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
                   placeholder="___.___.____-__"
                   className="form-control"
                 />
@@ -467,23 +398,7 @@ const InputMasks = () => {
               <div>
                 <label className="form-label">IP Address</label>
                 <MaskedInput
-                  mask={[
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '.',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '.',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '.',
-                    /\d/,
-                    /\d/,
-                    /\d/
-                  ]}
+                  mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/]}
                   placeholder="___.___.___.___"
                   className="form-control"
                 />
@@ -539,11 +454,7 @@ const FlatpickrDatepicker = () => {
           <Col lg={6}>
             <div className="mb-3">
               <label className="form-label">Basic</label>
-              <CustomFlatpickr
-                className="form-control"
-                placeholder="Basic datepicker"
-                options={{enableTime: false}}
-              />
+              <CustomFlatpickr className="form-control" placeholder="Basic datepicker" options={{enableTime: false}} />
             </div>
             <div className="mb-3">
               <label className="form-label">DateTime</label>
@@ -754,9 +665,8 @@ const FormMaxLength = () => {
         <div>
           <h4 className="header-title">Bootstrap Maxlength</h4>
           <p className="text-muted font-14">
-            Uses the HTML5 attribute "maxlength" to work. Just specify{' '}
-            <code>data-toggle="maxlength"</code> attribute to have maxlength indication on any
-            input.
+            Uses the HTML5 attribute "maxlength" to work. Just specify <code>data-toggle="maxlength"</code> attribute to
+            have maxlength indication on any input.
           </p>
         </div>
 

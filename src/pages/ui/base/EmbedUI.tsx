@@ -33,9 +33,7 @@ const EmbedUI = () => {
 
               {/* 1:1 aspect ratio */}
               <div className="ratio ratio-1x1">
-                <iframe
-                  src="https://www.youtube.com/embed/PrUxWZiQfy4?ecver=1"
-                  title="iframe"></iframe>
+                <iframe src="https://www.youtube.com/embed/PrUxWZiQfy4?ecver=1" title="iframe"></iframe>
               </div>
             </Card.Body>
           </Card>
@@ -67,9 +65,7 @@ const EmbedUI = () => {
 
               {/* 4:3 aspect ratio */}
               <div className="ratio ratio-4x3">
-                <iframe
-                  src="https://www.youtube.com/embed/PrUxWZiQfy4?ecver=1"
-                  title="iframe"></iframe>
+                <iframe src="https://www.youtube.com/embed/PrUxWZiQfy4?ecver=1" title="iframe"></iframe>
               </div>
             </Card.Body>
           </Card>

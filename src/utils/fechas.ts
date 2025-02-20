@@ -27,9 +27,7 @@ class DateUtils {
   static parseStringToDate(dateString: string): Date {
     const regex = /^\d{4}\/\d{2}\/\d{2}, \d{2}:\d{2}:\d{2} GMT[+-]\d{1,2}$/;
     if (!regex.test(dateString)) {
-      throw new Error(
-        'Formato de fecha no válido. El formato correcto es "YYYY/MM/DD, HH:MM:SS GMT-Z"'
-      );
+      throw new Error('Formato de fecha no válido. El formato correcto es "YYYY/MM/DD, HH:MM:SS GMT-Z"');
     }
     return new Date(dateString);
   }
@@ -90,20 +88,7 @@ class DateUtils {
 
   /** Devuelve la fecha en formato corto (en español), con o sin la hora incluida */
   static formatShortDate(date: Date, includeTime: boolean = false): string {
-    const monthNames = [
-      'Ene',
-      'Feb',
-      'Mar',
-      'Abr',
-      'May',
-      'Jun',
-      'Jul',
-      'Ago',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dic'
-    ];
+    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     const formattedDate: string = `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
     if (includeTime) return `${formattedDate}, ${DateUtils.getTimeOnly(date)}`;
     return formattedDate;

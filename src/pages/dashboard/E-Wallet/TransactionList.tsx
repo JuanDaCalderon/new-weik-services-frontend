@@ -38,12 +38,7 @@ const TransactionList = ({transactionList}: TransactionListProps) => {
                   <td>
                     <div className="d-flex align-items-center">
                       <div className="flex-shrink-0">
-                        <img
-                          src={transaction.avatar}
-                          alt=""
-                          className="rounded-circle"
-                          width="33"
-                        />
+                        <img src={transaction.avatar} alt="" className="rounded-circle" width="33" />
                       </div>
                       <div className="flex-grow-1 ms-2">{transaction.name}</div>
                     </div>

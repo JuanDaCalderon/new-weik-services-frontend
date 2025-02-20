@@ -16,8 +16,8 @@ const Error404AltPage = () => {
                 <h1 className="text-error mt-4">404</h1>
                 <h4 className="text-uppercase text-danger mt-3">Página no encontrada</h4>
                 <p className="text-muted mt-3">
-                  Parece que has tomado el camino equivocado. No te preocupes... nos pasa a los
-                  mejores. Aquí tienes un pequeño consejo que puede ayudarte a retomar el rumbo.
+                  Parece que has tomado el camino equivocado. No te preocupes... nos pasa a los mejores. Aquí tienes un
+                  pequeño consejo que puede ayudarte a retomar el rumbo.
                 </p>
                 <Link className="btn btn-info mt-3" to="/" replace>
                   <i className="mdi mdi-reply"></i> Regresar a weik services

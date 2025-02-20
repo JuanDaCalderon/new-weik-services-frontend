@@ -27,14 +27,8 @@ const UsuariosColumn = memo(function UsuariosColumn({row}: {row: Row<thisUsuario
         </span>
       )}
       <img
-        src={
-          row.original.userImage && row.original.userImage !== ''
-            ? row.original.userImage
-            : fallBackLogo
-        }
-        alt={
-          row.original.userImage && row.original.userImage !== '' ? row.original.userImage : 'user'
-        }
+        src={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : fallBackLogo}
+        alt={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : 'user'}
         className="rounded-circle avatar-xs"
       />
       <div className="ms-1 d-flex flex-column">
@@ -81,17 +75,12 @@ const RolesColumn = memo(function RolesColumn({row}: {row: Row<thisUsuarios>}) {
   );
 });
 
-const PermisosOtorgadosColumn = memo(function PermisosOtorgadosColumn({
-  row
-}: {
-  row: Row<thisUsuarios>;
-}) {
+const PermisosOtorgadosColumn = memo(function PermisosOtorgadosColumn({row}: {row: Row<thisUsuarios>}) {
   const {updateUsuariosCell, rolesUsuarios} = useRolesUsuariosContext();
 
   const onClickHandled = useCallback(() => {
     const toggleHandler = row.getToggleExpandedHandler();
-    if (row.getIsExpanded() && rolesUsuarios.usuariosCell !== USUARIOS_CELLS.permisosOtorgados)
-      toggleHandler();
+    if (row.getIsExpanded() && rolesUsuarios.usuariosCell !== USUARIOS_CELLS.permisosOtorgados) toggleHandler();
     updateUsuariosCell(USUARIOS_CELLS.permisosOtorgados);
     toggleHandler();
   }, [rolesUsuarios.usuariosCell, row, updateUsuariosCell]);
@@ -101,9 +90,7 @@ const PermisosOtorgadosColumn = memo(function PermisosOtorgadosColumn({
   }, [row.original.permisosOtorgados.length]);
 
   const getfeedbackIcon = (): string => {
-    return row.getIsExpanded() && rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosOtorgados
-      ? '👇'
-      : '👉';
+    return row.getIsExpanded() && rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosOtorgados ? '👇' : '👉';
   };
 
   return (
@@ -122,17 +109,12 @@ const PermisosOtorgadosColumn = memo(function PermisosOtorgadosColumn({
   );
 });
 
-const PermisosDenegadosColumn = memo(function PermisosDenegadosColumn({
-  row
-}: {
-  row: Row<thisUsuarios>;
-}) {
+const PermisosDenegadosColumn = memo(function PermisosDenegadosColumn({row}: {row: Row<thisUsuarios>}) {
   const {updateUsuariosCell, rolesUsuarios} = useRolesUsuariosContext();
 
   const onClickHandled = useCallback(() => {
     const toggleHandler = row.getToggleExpandedHandler();
-    if (row.getIsExpanded() && rolesUsuarios.usuariosCell !== USUARIOS_CELLS.permisosDenegados)
-      toggleHandler();
+    if (row.getIsExpanded() && rolesUsuarios.usuariosCell !== USUARIOS_CELLS.permisosDenegados) toggleHandler();
     updateUsuariosCell(USUARIOS_CELLS.permisosDenegados);
     toggleHandler();
   }, [rolesUsuarios.usuariosCell, row, updateUsuariosCell]);
@@ -142,9 +124,7 @@ const PermisosDenegadosColumn = memo(function PermisosDenegadosColumn({
   }, [row.original.permisosDenegados.length]);
 
   const getfeedbackIcon = (): string => {
-    return row.getIsExpanded() && rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosDenegados
-      ? '👇'
-      : '👉';
+    return row.getIsExpanded() && rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosDenegados ? '👇' : '👉';
   };
 
   return (

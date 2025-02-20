@@ -49,8 +49,7 @@ export default function useCheckOut() {
             ...updatedHorasTrabajo.map((h) => ({
               ...h,
               checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
-              checkOut:
-                h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
+              checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
             }))
           ])
         );

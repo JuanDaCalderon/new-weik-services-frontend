@@ -12,43 +12,39 @@ type DatepickerInputProps = {
 };
 
 /* Datepicker with Input */
-const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(
-  function DatepickerInput(props, ref) {
-    const onDateValueChange = () => {
-      console.log('date value changed');
-    };
-    return (
-      <input
-        type="text"
-        className="form-control date"
-        onClick={props.onClick}
-        value={props.value}
-        onChange={onDateValueChange}
-        ref={ref}
-      />
-    );
-  }
-);
+const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(function DatepickerInput(props, ref) {
+  const onDateValueChange = () => {
+    console.log('date value changed');
+  };
+  return (
+    <input
+      type="text"
+      className="form-control date"
+      onClick={props.onClick}
+      value={props.value}
+      onChange={onDateValueChange}
+      ref={ref}
+    />
+  );
+});
 
 /* Datepicker with Addon Input */
-const DatepickerInputWithAddon = forwardRef<HTMLInputElement, DatepickerInputProps>(
-  (props, ref) => (
-    <div className="input-group" ref={ref}>
-      <input
-        type="text"
-        className="form-control form-control-light"
-        onClick={props.onClick}
-        value={props.value}
-        readOnly
-      />
-      <div className="input-group-append">
-        <span className="input-group-text bg-primary border-primary text-white">
-          <i className="mdi mdi-calendar-range font-13"></i>
-        </span>
-      </div>
+const DatepickerInputWithAddon = forwardRef<HTMLInputElement, DatepickerInputProps>((props, ref) => (
+  <div className="input-group" ref={ref}>
+    <input
+      type="text"
+      className="form-control form-control-light"
+      onClick={props.onClick}
+      value={props.value}
+      readOnly
+    />
+    <div className="input-group-append">
+      <span className="input-group-text bg-primary border-primary text-white">
+        <i className="mdi mdi-calendar-range font-13"></i>
+      </span>
     </div>
-  )
-);
+  </div>
+));
 
 type HyperDatepickerProps = {
   value: Date;
@@ -74,10 +70,7 @@ const CustomDatePicker = (props: HyperDatepickerProps) => {
     (props.hideAddon || false) === true ? (
       <DatepickerInput inputClass={props.inputClass ?? ''} value={props.value.toDateString()} />
     ) : (
-      <DatepickerInputWithAddon
-        inputClass={props.inputClass ?? ''}
-        value={props.value.toDateString()}
-      />
+      <DatepickerInputWithAddon inputClass={props.inputClass ?? ''} value={props.value.toDateString()} />
     );
 
   return (

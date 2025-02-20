@@ -5,23 +5,10 @@ import {GenericModal} from '@/components/Modals/GenericModal';
 import {memo, useCallback, useMemo, JSX, useState, ChangeEvent} from 'react';
 import {Button, Form, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
-import {
-  useDeleteClient,
-  useDeleteImage,
-  useGetClients,
-  useUpdateClient,
-  useUploadImage
-} from '@/endpoints';
+import {useDeleteClient, useDeleteImage, useGetClients, useUpdateClient, useUploadImage} from '@/endpoints';
 import {useAppSelector} from '@/store';
 import {selectClientes, selectUser} from '@/store/selectores';
-import {
-  DateUtils,
-  formatDomain,
-  formatText,
-  getUpdatedFields,
-  hasPermission,
-  isValidName
-} from '@/utils';
+import {DateUtils, formatDomain, formatText, getUpdatedFields, hasPermission, isValidName} from '@/utils';
 import toast from 'react-hot-toast';
 import {FileUploader} from '@/components';
 import {ACCEPTED_FILE_TYPES, PERMISOS_MAP_IDS, STORAGE_CLIENTES_PATH} from '@/constants';
@@ -40,10 +27,8 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
   const [domain, setDomain] = useState<string>('');
 
   const [editClienteOpen, editClienteToggle, showEditCliente, hideEditCliente] = useToggle();
-  const [deleteClienteOpen, deleteClienteToggle, showDeleteCliente, hideDeleteCliente] =
-    useToggle();
-  const {file, isFileManagerEdit, toggleFileManagerEdit, handleFileRemoved, handleFile} =
-    useFileManager();
+  const [deleteClienteOpen, deleteClienteToggle, showDeleteCliente, hideDeleteCliente] = useToggle();
+  const {file, isFileManagerEdit, toggleFileManagerEdit, handleFileRemoved, handleFile} = useFileManager();
 
   const {getClientesSync} = useGetClients();
   const {isLoadingDeleteCliente, deleteCliente} = useDeleteClient();
@@ -82,9 +67,7 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
       }
       if (file) {
         await deleteImage(row.original.logo);
-        const refName = formatText(
-          clienteUpdated.nombre ? clienteUpdated.nombre : row.original.nombre
-        );
+        const refName = formatText(clienteUpdated.nombre ? clienteUpdated.nombre : row.original.nombre);
         const refDomain = formatDomain(row.original.domain);
         const imgName = `${refName}_${refDomain}_${DateUtils.getDateOnly(new Date(), '_')}`;
         newImageUrl = await uploadImage(STORAGE_CLIENTES_PATH, imgName, file);
@@ -126,12 +109,10 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
           />
           <div className="w-75">
             <p className="p-0 m-0">
-              Esta seguro que quiere eliminar el cliente con el nombre: <b>{row.original.nombre}</b>
-              .
+              Esta seguro que quiere eliminar el cliente con el nombre: <b>{row.original.nombre}</b>.
             </p>
             <p className="p-0 m-0 text-danger">
-              Eliminar el cliente implica la eliminación de todos los registros y datos asociados a
-              este.
+              Eliminar el cliente implica la eliminación de todos los registros y datos asociados a este.
             </p>
           </div>
         </div>
@@ -235,21 +216,11 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
   );
 
   const canEditClientes = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.editarClientes,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.editarClientes, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const canDeleteClientes = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.eliminarClientes,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.eliminarClientes, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (
@@ -331,9 +302,7 @@ const columns: ColumnDef<Cliente>[] = [
   {
     header: 'Fecha creación',
     accessorKey: 'fechaCreacion',
-    cell: ({row}) => (
-      <>{DateUtils.formatShortDate(DateUtils.parseStringToDate(row.original.fechaCreacion))}</>
-    )
+    cell: ({row}) => <>{DateUtils.formatShortDate(DateUtils.parseStringToDate(row.original.fechaCreacion))}</>
   },
   {
     header: 'Dominio',
@@ -343,11 +312,7 @@ const columns: ColumnDef<Cliente>[] = [
     header: 'Link de branding',
     accessorKey: 'branding',
     cell: ({row}) => (
-      <a
-        className="link-opacity-100-hover"
-        href={row.original.branding}
-        target="_blank"
-        rel="noreferrer">
+      <a className="link-opacity-100-hover" href={row.original.branding} target="_blank" rel="noreferrer">
         Ir al link
       </a>
     )

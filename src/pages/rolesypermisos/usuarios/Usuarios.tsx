@@ -16,20 +16,10 @@ const Usuarios = memo(function Usuarios() {
   const navigate = useNavigate();
   const {usuarios} = useUsuarios();
   const canCrearUsuario = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.crearUsuario,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.crearUsuario, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
   const canEditUsuarios = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.editarUsuarios,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.editarUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
   const onNavigateToCrearUsuario = useCallback(() => {
     navigate(PAGE_GESTION_USUARIOS);
@@ -42,13 +32,10 @@ const Usuarios = memo(function Usuarios() {
         <Col xs="auto" className="me-auto mb-2 mb-md-0">
           <h4 className="header-title text-dark m-0">Gestión de permisos por usuarios</h4>
         </Col>
-        <Col
-          xs="auto"
-          className="d-flex column-gap-1 justify-content-end align-items-center text-end ms-auto">
+        <Col xs="auto" className="d-flex column-gap-1 justify-content-end align-items-center text-end ms-auto">
           {!canCrearUsuario && (
             <span className="m-0 p-0 text-danger font-11 text-end">
-              Permiso para "crear usuario" denegado. <br /> Contacta a tu administrador si lo
-              necesitas.
+              Permiso para "crear usuario" denegado. <br /> Contacta a tu administrador si lo necesitas.
             </span>
           )}
           <Button
@@ -77,8 +64,7 @@ const Usuarios = memo(function Usuarios() {
           {!canEditUsuarios && (
             <div className="w-100 text-end mt-1">
               <span className="m-0 p-0 text-danger font-11 text-end">
-                Permiso para "editar usuarios" denegado. Contacta a tu administrador si lo
-                necesitas.
+                Permiso para "editar usuarios" denegado. Contacta a tu administrador si lo necesitas.
               </span>
             </div>
           )}

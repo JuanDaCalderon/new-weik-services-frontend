@@ -3,11 +3,7 @@ import {ApexOptions} from 'apexcharts';
 import messenger from '@/assets/images/brands/messenger.png';
 import instagram from '@/assets/images/brands/instagram.png';
 
-function generateDayWiseTimeSeries(
-  baseval: number,
-  count: number,
-  yrange: {max: number; min: number}
-): number[][] {
+function generateDayWiseTimeSeries(baseval: number, count: number, yrange: {max: number; min: number}): number[][] {
   let i = 0;
   const series = [];
   while (i < count) {

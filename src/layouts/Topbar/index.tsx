@@ -66,9 +66,7 @@ const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
             </OverlayTrigger>
           </li>
           <li className="d-none d-sm-inline-block">
-            <OverlayTrigger
-              placement="bottom"
-              overlay={<Tooltip id="dark-mode-toggler">Tema</Tooltip>}>
+            <OverlayTrigger placement="bottom" overlay={<Tooltip id="dark-mode-toggler">Tema</Tooltip>}>
               <div className="nav-link" id="light-dark-mode" onClick={toggleDarkMode}>
                 <i className="ri-moon-line font-22" />
               </div>

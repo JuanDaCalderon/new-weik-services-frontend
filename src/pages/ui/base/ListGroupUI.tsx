@@ -8,8 +8,8 @@ const Basic = () => {
         <h4 className="header-title">Basic example</h4>
 
         <p className="text-muted font-14">
-          The most basic list group is an unordered list with list items and the proper classes.
-          Build upon it with the options that follow, or with your own CSS as needed.
+          The most basic list group is an unordered list with list items and the proper classes. Build upon it with the
+          options that follow, or with your own CSS as needed.
         </p>
 
         <ListGroup>
@@ -41,8 +41,7 @@ const ActiveItems = () => {
         <h4 className="header-title">Active items</h4>
 
         <p className="text-muted font-14">
-          Add <code>.active</code> to a <code>ListGroup.Item</code> to indicate the current active
-          selection.
+          Add <code>.active</code> to a <code>ListGroup.Item</code> to indicate the current active selection.
         </p>
 
         <ListGroup>
@@ -140,8 +139,8 @@ const Flush = () => {
         <h4 className="header-title">Flush</h4>
 
         <p className="text-muted font-14">
-          Add <code>flush</code> attribute to remove some borders and rounded corners to render list
-          group items edge-to-edge in a parent container (e.g., cards).
+          Add <code>flush</code> attribute to remove some borders and rounded corners to render list group items
+          edge-to-edge in a parent container (e.g., cards).
         </p>
 
         <ListGroup variant="flush">
@@ -163,8 +162,8 @@ const Horizontal = () => {
         <h4 className="header-title">Horizontal</h4>
 
         <p className="text-muted font-14">
-          Add <code>horizontal</code> prop to change the layout of list group items from vertical to
-          horizontal across all breakpoints.
+          Add <code>horizontal</code> prop to change the layout of list group items from vertical to horizontal across
+          all breakpoints.
         </p>
 
         <ListGroup horizontal className="mb-3">
@@ -266,8 +265,8 @@ const CustomContent = () => {
         <h4 className="header-title">Custom content</h4>
 
         <p className="text-muted font-14">
-          Add nearly any HTML within, even for linked list groups like the one below, with the help
-          of flexbox utilities.
+          Add nearly any HTML within, even for linked list groups like the one below, with the help of flexbox
+          utilities.
         </p>
 
         <ListGroup>
@@ -277,8 +276,7 @@ const CustomContent = () => {
               <small className="text-muted">3 days ago</small>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-              blandit.
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
             </p>
             <small className="text-muted">Donec id elit non mi porta.</small>
           </ListGroup.Item>
@@ -288,8 +286,7 @@ const CustomContent = () => {
               <small className="text-muted">3 days ago</small>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-              blandit.
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
             </p>
             <small className="text-muted">Donec id elit non mi porta.</small>
           </ListGroup.Item>
@@ -299,8 +296,7 @@ const CustomContent = () => {
               <small className="text-muted">3 days ago</small>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-              blandit.
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
             </p>
             <small className="text-muted">Donec id elit non mi porta.</small>
           </ListGroup.Item>
@@ -317,8 +313,7 @@ const Badges = () => {
         <h4 className="header-title">With badges</h4>
 
         <p className="text-muted font-14">
-          Add badges to any list group item to show unread counts, activity, and more with the help
-          of some utilities.
+          Add badges to any list group item to show unread counts, activity, and more with the help of some utilities.
         </p>
 
         <ListGroup>
@@ -358,9 +353,9 @@ const CheckboxesandRadios = () => {
       <Card.Body>
         <h4 className="header-title">Checkboxes and radios</h4>
         <p className="text-muted font-14">
-          Place Bootstrap’s checkboxes and radios within list group items and customize as needed.
-          You can use them without <code>&lt;label&gt;</code>s, but please remember to include an{' '}
-          <code>aria-label</code> attribute and value for accessibility.
+          Place Bootstrap’s checkboxes and radios within list group items and customize as needed. You can use them
+          without <code>&lt;label&gt;</code>s, but please remember to include an <code>aria-label</code> attribute and
+          value for accessibility.
         </p>
 
         <ListGroup>

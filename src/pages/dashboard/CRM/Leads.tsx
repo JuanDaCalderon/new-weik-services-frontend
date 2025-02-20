@@ -24,12 +24,7 @@ const Leads = ({recentLeads}: LeadsProps) => {
               className={classNames('d-flex', 'align-items-start', {
                 'mt-3': index !== recentLeads.length
               })}>
-              <img
-                className="me-3 rounded-circle"
-                src={item.profile}
-                width="40"
-                alt="Generic placeholder"
-              />
+              <img className="me-3 rounded-circle" src={item.profile} width="40" alt="Generic placeholder" />
               <div className="w-100 overflow-hidden">
                 <span
                   className={classNames('badge', 'float-end', {

@@ -70,9 +70,7 @@ class DebugUtil {
    */
   static logRequestStatus<T>(url: string, status: number, responseTime: number, data?: T): void {
     const emoji = status >= 200 && status < 300 ? '🟢' : '🔴';
-    console.log(
-      `${emoji} [REQUEST]: ${url} | Status: ${status} | Response Time: ${responseTime}ms`
-    );
+    console.log(`${emoji} [REQUEST]: ${url} | Status: ${status} | Response Time: ${responseTime}ms`);
     if (data) console.log('📋 Data:', data);
     console.log('📍 Stack Trace:\n', this.getStackTrace());
   }

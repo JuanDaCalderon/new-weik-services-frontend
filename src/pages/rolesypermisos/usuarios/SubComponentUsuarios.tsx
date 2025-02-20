@@ -12,12 +12,8 @@ const RenderSubComponent = ({row}: {row: RowTable<thisUsuarios>}) => {
     <>
       {rolesUsuarios.usuariosCell === USUARIOS_CELLS.cargo && <CargoUsuario row={row} />}
       {rolesUsuarios.usuariosCell === USUARIOS_CELLS.roles && <RoleEnUsuario row={row} />}
-      {rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosOtorgados && (
-        <PermisosOtorgados row={row} />
-      )}
-      {rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosDenegados && (
-        <PermisosDenegados row={row} />
-      )}
+      {rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosOtorgados && <PermisosOtorgados row={row} />}
+      {rolesUsuarios.usuariosCell === USUARIOS_CELLS.permisosDenegados && <PermisosDenegados row={row} />}
     </>
   );
 };

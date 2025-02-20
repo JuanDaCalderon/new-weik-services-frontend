@@ -18,10 +18,7 @@ const CheckoutEcom = () => {
           <Col>
             <Card>
               <Card.Body>
-                <Nav
-                  as="ul"
-                  variant="pills"
-                  className="nav nav-pills bg-nav-pills nav-justified mb-3">
+                <Nav as="ul" variant="pills" className="nav nav-pills bg-nav-pills nav-justified mb-3">
                   <Nav.Item as="li" className="nav-item">
                     <Nav.Link href="" eventKey="1" className="nav-link rounded-0">
                       <i className={classnames('mdi mdi-account-circle', 'font-18')}></i>

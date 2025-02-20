@@ -14,14 +14,7 @@ type StatisticsChartWidget2Props = {
 /**
  * Renders the chart in widget area
  */
-const StatisticsChartWidget2 = ({
-  title,
-  subtitle,
-  type,
-  colors,
-  name,
-  data
-}: StatisticsChartWidget2Props) => {
+const StatisticsChartWidget2 = ({title, subtitle, type, colors, name, data}: StatisticsChartWidget2Props) => {
   // default options
   const options: ApexOptions = {
     chart: {
@@ -58,13 +51,7 @@ const StatisticsChartWidget2 = ({
   return (
     <Card>
       <Card.Body className="p-0">
-        <Chart
-          className="apex-charts"
-          options={options}
-          series={series}
-          type={type || 'bar'}
-          height={172}
-        />
+        <Chart className="apex-charts" options={options} series={series} type={type || 'bar'} height={172} />
       </Card.Body>
     </Card>
   );

@@ -61,10 +61,7 @@ export default function TextInput({
               {helpText}
             </Form.Text>
           )}
-          {errors ||
-            (fieldState.error && (
-              <FeedbackInvalidText errorMessage={fieldState.error['message'] ?? ''} />
-            ))}
+          {errors || (fieldState.error && <FeedbackInvalidText errorMessage={fieldState.error['message'] ?? ''} />)}
         </Form.Group>
       )}
     />

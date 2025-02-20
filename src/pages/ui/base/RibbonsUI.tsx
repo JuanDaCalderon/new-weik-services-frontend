@@ -21,19 +21,13 @@ const Ribbon1 = ({label, color, direction}: RibbonProps & {direction: 'left' | '
           )}>
           <i className="mdi mdi-access-point me-1"></i> {label}
         </div>
-        <h5
-          className={classNames(
-            'text-' + color,
-            'mt-0',
-            direction === 'left' ? 'float-end' : 'float-start'
-          )}>
+        <h5 className={classNames('text-' + color, 'mt-0', direction === 'left' ? 'float-end' : 'float-start')}>
           {label} Header
         </h5>
         <div className="ribbon-content">
           <p className="mb-0">
-            Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at
-            volutpat. In egestas mattis dui. Aliquam mattis dictum aliquet. Nulla sapien mauris,
-            eleifend et sem ac, commodo dapibus odio.
+            Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas
+            mattis dui. Aliquam mattis dictum aliquet. Nulla sapien mauris, eleifend et sem ac, commodo dapibus odio.
           </p>
         </div>
       </Card.Body>
@@ -49,10 +43,9 @@ const Ribbon2 = ({label, color}: RibbonProps) => {
           <span>{label}</span>
         </div>
         <p className="mb-0">
-          Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at
-          volutpat. In egestas mattis dui. Aliquam mattis dictum aliquet. Nulla sapien mauris,
-          eleifend et sem ac, commodo dapibus odio. Vivamus pretium nec odio cursus elementum.
-          Suspendisse molestie ullamcorper ornare.
+          Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis
+          dui. Aliquam mattis dictum aliquet. Nulla sapien mauris, eleifend et sem ac, commodo dapibus odio. Vivamus
+          pretium nec odio cursus elementum. Suspendisse molestie ullamcorper ornare.
         </p>
       </Card.Body>
     </Card>

@@ -6,27 +6,17 @@ import {Link} from 'react-router-dom';
 const getVisiblePages = (totalPages: number, currentPage: number): number[] => {
   if (totalPages > 1) {
     if (currentPage === 1) {
-      return [currentPage, currentPage + 1, currentPage + 2].filter(
-        (page) => page > 0 && page <= totalPages
-      );
+      return [currentPage, currentPage + 1, currentPage + 2].filter((page) => page > 0 && page <= totalPages);
     } else if (currentPage === totalPages) {
-      return [currentPage - 2, currentPage - 1, currentPage].filter(
-        (page) => page > 0 && page <= totalPages
-      );
+      return [currentPage - 2, currentPage - 1, currentPage].filter((page) => page > 0 && page <= totalPages);
     } else {
-      return [currentPage - 1, currentPage, currentPage + 1].filter(
-        (page) => page > 0 && page <= totalPages
-      );
+      return [currentPage - 1, currentPage, currentPage + 1].filter((page) => page > 0 && page <= totalPages);
     }
   }
   return [1];
 };
 
-const Pagination = <RowType,>({
-  table,
-  currentPage,
-  totalPages
-}: ReactTablePaginationProps<RowType>) => {
+const Pagination = <RowType,>({table, currentPage, totalPages}: ReactTablePaginationProps<RowType>) => {
   const [visiblePages, setVisiblePages] = useState<number[]>([1]);
   const pageSizeList = [10, 25, 50, 100];
 

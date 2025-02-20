@@ -1,16 +1,42 @@
 import {db} from '@/firebase';
-import {Unsubscribe, collection, onSnapshot} from 'firebase/firestore';
+import {Unsubscribe, collection, getDocs, onSnapshot} from 'firebase/firestore';
 import {useDispatch} from 'react-redux';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import {DateUtils, DebugUtil} from '@/utils';
-import {isLoadingNoticias, resetNoticias, setNoticias} from '@/store/slices/noticias';
+import {isLoadingNoticias, clearNoticias, setNoticias} from '@/store/slices/noticias';
 import {NOTICIAS_PATH} from '@/constants';
 import {Noticia, NoticiaToDb} from '@/types';
 
 export default function useGetNoticias() {
   const dispatch = useDispatch();
+  const [isListening, setIsListening] = useState<boolean>(false);
+
+  const getNoticiasSync = useCallback(async (): Promise<void> => {
+    dispatch(isLoadingNoticias(true));
+    try {
+      const querySnapshotDocs = await getDocs(collection(db, NOTICIAS_PATH));
+      const noticias: Noticia[] = querySnapshotDocs.docs.map((doc) => ({
+        ...(doc.data() as Noticia),
+        id: doc.id,
+        rangoFechas: [
+          DateUtils.formatDateToString((doc.data() as NoticiaToDb).rangoFechas[0].toDate()),
+          DateUtils.formatDateToString((doc.data() as NoticiaToDb).rangoFechas[1].toDate())
+        ]
+      }));
+      dispatch(clearNoticias());
+      dispatch(setNoticias(noticias));
+      DebugUtil.logSuccess('Noticias cacheadas y actualizadas en el store.', noticias);
+    } catch (error: any) {
+      DebugUtil.logError(error.message, error);
+    } finally {
+      dispatch(isLoadingNoticias(false));
+    }
+  }, [dispatch]);
 
   const getNoticiasListener = useCallback((): Unsubscribe => {
+    if (isListening) return {} as Unsubscribe;
+    setIsListening(true);
+
     dispatch(isLoadingNoticias(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
@@ -20,26 +46,25 @@ export default function useGetNoticias() {
           noticias.push({
             ...(doc.data() as Noticia),
             id: doc.id,
-            rangoFechas: (doc.data() as NoticiaToDb).rangoFechas.map((date) =>
-              DateUtils.formatDateToString(date.toDate())
-            )
+            rangoFechas: [
+              DateUtils.formatDateToString((doc.data() as NoticiaToDb).rangoFechas[0].toDate()),
+              DateUtils.formatDateToString((doc.data() as NoticiaToDb).rangoFechas[1].toDate())
+            ]
           });
         });
-        dispatch(resetNoticias());
+        dispatch(clearNoticias());
         dispatch(setNoticias(noticias));
         dispatch(isLoadingNoticias(false));
-        DebugUtil.logSuccess(
-          'Se han consultado las noticias correctamente y ya deben estar en el store',
-          noticias
-        );
+        DebugUtil.logSuccess('Se han consultado las noticias correctamente y ya deben estar en el store', noticias);
       });
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
     return unsubscribe;
-  }, [dispatch]);
+  }, [dispatch, isListening]);
 
   return {
-    getNoticiasListener
+    getNoticiasListener,
+    getNoticiasSync
   };
 }

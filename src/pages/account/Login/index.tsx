@@ -40,22 +40,12 @@ export default function Login() {
             />
           </Col>
         </Row>
-        <PasswordInput
-          label={'Contraseña'}
-          name="password"
-          placeholder={'Ingresa tu contraseña'}
-          containerClass="mb-2">
+        <PasswordInput label={'Contraseña'} name="password" placeholder={'Ingresa tu contraseña'} containerClass="mb-2">
           <Link to={PAGE_RECOVERY_PASSWORD} className="text-dark text-opacity-75 float-end">
             <small>Olvidaste tu contraseña?</small>
           </Link>
         </PasswordInput>
-        <CheckInput
-          name="rememberme"
-          type="checkbox"
-          label="Recuerdame"
-          containerClass="mb-1"
-          defaultChecked={false}
-        />
+        <CheckInput name="rememberme" type="checkbox" label="Recuerdame" containerClass="mb-1" defaultChecked={false} />
         <SendButton loading={loading} text="Ingresar" />
       </Form>
       <Toaster

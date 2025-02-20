@@ -8,8 +8,8 @@ const Example = () => {
       <Card.Body>
         <h4 className="header-title">Example</h4>
         <p className="text-muted font-14">
-          Indicate the current page’s location within a navigational hierarchy that automatically
-          adds separators via CSS. Please read the official
+          Indicate the current page’s location within a navigational hierarchy that automatically adds separators via
+          CSS. Please read the official
           <Link
             target="_blank"
             rel="noreferrer"
@@ -45,9 +45,7 @@ const WithIcons = () => {
     <Card>
       <Card.Body>
         <h4 className="header-title">With Icons</h4>
-        <p className="text-muted font-14">
-          Optionally you can also specify the icon with your breadcrumb item.
-        </p>
+        <p className="text-muted font-14">Optionally you can also specify the icon with your breadcrumb item.</p>
 
         <Breadcrumb listProps={{className: 'bg-light-lighten p-2'}}>
           <Breadcrumb.Item active>

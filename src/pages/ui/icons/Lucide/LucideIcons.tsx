@@ -26,9 +26,7 @@ const LucideIcons = () => {
               <p className="card-title-desc mb-2">
                 Use <code>&lt;i data-lucide="accessibility"&gt;&lt;/i&gt;</code>
               </p>
-              <Row
-                className="row-cols-lg-5 row-cols-md-3 row-cols-1 g-2 font-18 icons-list-demo"
-                id="icons">
+              <Row className="row-cols-lg-5 row-cols-md-3 row-cols-1 g-2 font-18 icons-list-demo" id="icons">
                 {lucideIcons.map((icon, index) => (
                   <Col xl={3} lg={4} sm={6} key={index}>
                     <IconifyIcon icon={`lucide:${icon}`} /> {icon}

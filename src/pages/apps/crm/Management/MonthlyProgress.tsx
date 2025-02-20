@@ -15,12 +15,7 @@ const MonthlyProgress = ({progressDetails}: MonthlyProgressProps) => {
         <CardTitle
           containerClass="d-flex align-items-center justify-content-between"
           title="Monthly Progress"
-          menuItems={[
-            {label: 'Today'},
-            {label: 'Yesterday'},
-            {label: 'Last Week'},
-            {label: 'Last Month'}
-          ]}
+          menuItems={[{label: 'Today'}, {label: 'Yesterday'}, {label: 'Last Week'}, {label: 'Last Month'}]}
         />
         <Table responsive className="table-centered table-nowrap mb-0">
           <thead>

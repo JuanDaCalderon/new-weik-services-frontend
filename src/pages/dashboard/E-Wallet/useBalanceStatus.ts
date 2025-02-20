@@ -36,10 +36,7 @@ export default function useBalanceStatus() {
 
     for (let i = 0; i < 100; i++) {
       const start = new Date();
-      monthBalanceData.push([
-        start.setDate(start.getDate() + i * 30 - 100 * 30),
-        monthDummyData[i]
-      ]);
+      monthBalanceData.push([start.setDate(start.getDate() + i * 30 - 100 * 30), monthDummyData[i]]);
     }
     return [{data: monthBalanceData}];
   };
@@ -50,10 +47,7 @@ export default function useBalanceStatus() {
 
     for (let i = 0; i < 100; i++) {
       const start = new Date();
-      yearBalanceData.push([
-        start.setDate(start.getDate() + i * 365 - 100 * 365),
-        yearDummyData[i]
-      ]);
+      yearBalanceData.push([start.setDate(start.getDate() + i * 365 - 100 * 365), yearDummyData[i]]);
     }
     return [{data: yearBalanceData}];
   };

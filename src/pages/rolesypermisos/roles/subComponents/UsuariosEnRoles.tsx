@@ -77,8 +77,8 @@ const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
         <strong>Usuarios del rol {row.original.rolName}</strong>
       </span>
       <p className="my-0 py-0">
-        Asigna usuarios a este rol utilizando el selector que se muestra a continuación. Agrega o
-        elimina según sea necesario y guarda los cambios.
+        Asigna usuarios a este rol utilizando el selector que se muestra a continuación. Agrega o elimina según sea
+        necesario y guarda los cambios.
       </p>
       <Col className="mt-1" lg={12}>
         <Form.Label className="mb-0" htmlFor="cargo">
@@ -98,9 +98,7 @@ const UsuariosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
       </Col>
       <Col xs="auto" md={12} className="ms-auto mt-2">
         <Button className="shadow-sm" variant="info" onClick={handleSave} disabled={!hasTouched}>
-          {isLoadingAddAndRemoveRolToUser && (
-            <Spinner className="spinner-border-sm" tag="span" color="white" />
-          )}
+          {isLoadingAddAndRemoveRolToUser && <Spinner className="spinner-border-sm" tag="span" color="white" />}
           {!isLoadingAddAndRemoveRolToUser && 'Guardar cambios'}
         </Button>
       </Col>

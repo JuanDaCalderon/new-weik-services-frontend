@@ -14,17 +14,13 @@ const GenericModal = memo(function GenericModal({
   onSend,
   isDisabled,
   isLoading,
-  showFooter = true
+  showFooter = true,
+  size = undefined
 }: ModalProps) {
   return (
-    <Modal show={show} onHide={onToggle}>
-      <Modal.Header
-        onHide={onToggle}
-        closeButton
-        className={`${variant ? 'modal-colored-header bg-' + variant : ''}`}>
-        <Modal.Title className={`${variant ? 'text-light' : ''}`}>
-          {headerText || 'Header'}
-        </Modal.Title>
+    <Modal show={show} onHide={onToggle} size={size}>
+      <Modal.Header onHide={onToggle} closeButton className={`${variant ? 'modal-colored-header bg-' + variant : ''}`}>
+        <Modal.Title className={`${variant ? 'text-light' : ''}`}>{headerText || 'Header'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>
       {showFooter && (
@@ -32,11 +28,7 @@ const GenericModal = memo(function GenericModal({
           <Button className="shadow-sm" variant="light" onClick={onToggle}>
             {secondaryText || 'Cerrar'}
           </Button>
-          <Button
-            className="shadow-sm"
-            variant={variant || 'primary'}
-            onClick={onSend}
-            disabled={isDisabled}>
+          <Button className="shadow-sm" variant={variant || 'primary'} onClick={onSend} disabled={isDisabled}>
             {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
             {!isLoading && (submitText || 'Guardar cambios')}
           </Button>

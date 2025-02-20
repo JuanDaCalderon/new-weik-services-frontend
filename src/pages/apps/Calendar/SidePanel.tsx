@@ -12,11 +12,7 @@ const SidePanel = () => {
           return (
             <div
               key={index.toString()}
-              className={classNames(
-                'external-event',
-                event.className + '-lighten',
-                event.textClass
-              )}
+              className={classNames('external-event', event.className + '-lighten', event.textClass)}
               title={event.title}
               data-class={event.className}>
               <i className="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>
@@ -31,16 +27,16 @@ const SidePanel = () => {
 
         <ul className="ps-3">
           <li className="text-muted mb-3">
-            It has survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+            essentially unchanged.
           </li>
           <li className="text-muted mb-3">
-            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up
-            one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage.
+            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more
+            obscure Latin words, consectetur, from a Lorem Ipsum passage.
           </li>
           <li className="text-muted mb-3">
-            It has survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+            essentially unchanged.
           </li>
         </ul>
       </div>

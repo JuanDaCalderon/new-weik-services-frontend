@@ -103,17 +103,7 @@ export const MultipleHeatmapOps: ApexOptions = {
   dataLabels: {
     enabled: false
   },
-  colors: [
-    '#F3B415',
-    '#F27036',
-    '#663F59',
-    '#6A6E94',
-    '#4E88B4',
-    '#00A7C6',
-    '#18D8D8',
-    '#A9D794',
-    '#46AF78'
-  ],
+  colors: ['#F3B415', '#F27036', '#663F59', '#6A6E94', '#4E88B4', '#00A7C6', '#18D8D8', '#A9D794', '#46AF78'],
   series: [
     {
       name: 'Metric 1',

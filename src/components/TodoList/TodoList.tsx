@@ -31,11 +31,7 @@ const TodoList = ({addTodo, height}: TodoListProps) => {
                 </h5>
               </Col>
               <Col className="col-auto">
-                <Button
-                  className="float-end btn-sm"
-                  variant="light"
-                  id="btn-archive"
-                  onClick={archiveTodos}>
+                <Button className="float-end btn-sm" variant="light" id="btn-archive" onClick={archiveTodos}>
                   Archive
                 </Button>
               </Col>

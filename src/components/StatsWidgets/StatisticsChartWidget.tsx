@@ -83,12 +83,7 @@ const StatisticsChartWidget = ({
         <Row className="align-items-center">
           <Col className="col-6">
             <h5
-              className={classNames(
-                'fw-normal',
-                'mt-0',
-                'text-truncate',
-                textClass ? textClass : 'text-muted'
-              )}
+              className={classNames('fw-normal', 'mt-0', 'text-truncate', textClass ? textClass : 'text-muted')}
               title={description}>
               {title}
             </h5>
@@ -105,13 +100,7 @@ const StatisticsChartWidget = ({
 
           <Col className="col-6">
             <div className="text-end">
-              <Chart
-                className="apex-charts"
-                options={options}
-                series={series}
-                type={type || 'bar'}
-                height={60}
-              />
+              <Chart className="apex-charts" options={options} series={series} type={type || 'bar'} height={60} />
             </div>
           </Col>
         </Row>

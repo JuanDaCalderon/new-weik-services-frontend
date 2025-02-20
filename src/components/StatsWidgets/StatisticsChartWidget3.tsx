@@ -66,13 +66,7 @@ const StatisticsChartWidget3 = ({
         </h6>
         <h3 className="mb-4 mt-2">{stats}</h3>
 
-        <Chart
-          className="apex-charts mb-3"
-          options={options}
-          series={series}
-          type={type || 'bar'}
-          height={100}
-        />
+        <Chart className="apex-charts mb-3" options={options} series={series} type={type || 'bar'} height={100} />
 
         <Row className="text-center">
           <Col>

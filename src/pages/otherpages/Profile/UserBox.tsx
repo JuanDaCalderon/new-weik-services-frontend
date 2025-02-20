@@ -10,12 +10,7 @@ const UserBox = () => {
             <Row className="align-items-center">
               <Col className="col-auto">
                 <div className="avatar-lg">
-                  <img
-                    src={profileImg}
-                    style={{height: '100px'}}
-                    alt=""
-                    className="rounded-circle img-thumbnail"
-                  />
+                  <img src={profileImg} style={{height: '100px'}} alt="" className="rounded-circle img-thumbnail" />
                 </div>
               </Col>
               <Col>

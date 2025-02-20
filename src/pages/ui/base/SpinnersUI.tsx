@@ -7,9 +7,7 @@ const BorderedSpinners = () => {
     <Card>
       <Card.Body>
         <h4 className="mt-0 header-title">Border spinner</h4>
-        <p className="text-muted mb-4">
-          Use the border spinners for a lightweight loading indicator.
-        </p>
+        <p className="text-muted mb-4">Use the border spinners for a lightweight loading indicator.</p>
         <Spinner />
       </Card.Body>
     </Card>
@@ -22,8 +20,7 @@ const GrowingSpinners = () => {
       <Card.Body>
         <h4 className="mt-0 header-title">Growing spinner</h4>
         <p className="text-muted mb-4">
-          You can go for growing spinner as well. While it doesn’t technically spin, it does
-          repeatedly grow!
+          You can go for growing spinner as well. While it doesn’t technically spin, it does repeatedly grow!
         </p>
         <Spinner type="grow" />
       </Card.Body>
@@ -37,8 +34,8 @@ const Variants = () => {
       <Card.Body>
         <h4 className="mt-0 header-title">Variants</h4>
         <p className="text-muted mb-4">
-          All standard visual variants are available for both animation styles by setting the{' '}
-          <code>variant</code> property.
+          All standard visual variants are available for both animation styles by setting the <code>variant</code>{' '}
+          property.
         </p>
 
         {extendedColorVariants.map((color, index) => {
@@ -88,8 +85,8 @@ const ButtonSpinners = () => {
       <Card.Body>
         <h4 className="mt-0 header-title">Buttons spinner</h4>
         <p className="text-muted mb-4">
-          Use spinners within buttons to indicate an action is currently processing or taking place.
-          You may also swap the text out of the spinner element and utilize button text as needed.
+          Use spinners within buttons to indicate an action is currently processing or taking place. You may also swap
+          the text out of the spinner element and utilize button text as needed.
         </p>
         <Row>
           <Col lg={6}>
@@ -138,8 +135,8 @@ const SpinnersUI = () => {
             <Card.Body>
               <h4 className="mt-0 header-title">Alignment</h4>
               <p className="text-muted mb-4">
-                Use flexbox utilities, float utilities, or text alignment utilities to place
-                spinners exactly where you need them in any situation.
+                Use flexbox utilities, float utilities, or text alignment utilities to place spinners exactly where you
+                need them in any situation.
               </p>
               <div className="d-flex justify-content-center">
                 <Spinner />
@@ -158,8 +155,7 @@ const SpinnersUI = () => {
               <h4 className="mt-0 header-title">Placement</h4>
               <p className="text-muted mb-4">
                 Use <code>flexbox utilities</code>, <code>float utilities</code>, or
-                <code>text alignment</code> utilities to place spinners exactly where you need them
-                in any situation.
+                <code>text alignment</code> utilities to place spinners exactly where you need them in any situation.
               </p>
               <div className="d-flex align-items-center">
                 <strong>Loading...</strong>

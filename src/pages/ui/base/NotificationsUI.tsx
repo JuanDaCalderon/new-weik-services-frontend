@@ -1,14 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Row,
-  Col,
-  Card,
-  Toast,
-  ToastContainer,
-  Form,
-  Button,
-  ToastContainerProps
-} from 'react-bootstrap';
+import {Row, Col, Card, Toast, ToastContainer, Form, Button, ToastContainerProps} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
 import {PageBreadcrumb} from '@/components';
 import logo from '@/assets/images/logo-dark-sm.png';
@@ -48,17 +39,15 @@ const DefaultToasts = () => {
       <Card.Body>
         <h4 className="header-title">Bootstrap Toasts</h4>
         <p className="text-muted font-14">
-          Push notifications to your visitors with a toast, a lightweight and easily customizable
-          alert message.
+          Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
         </p>
 
         <Row>
           <Col md={6}>
             <h5 className="mb-2">Basic</h5>
             <p className="text-muted font-14">
-              Toasts are as flexible as you need and have very little required markup. At a minimum,
-              we require a single element to contain your “toasted” content and strongly encourage a
-              dismiss button.
+              Toasts are as flexible as you need and have very little required markup. At a minimum, we require a single
+              element to contain your “toasted” content and strongly encourage a dismiss button.
             </p>
             <div className="p-3">
               <Toast onClose={hide} show={isOpen} autohide>
@@ -75,9 +64,8 @@ const DefaultToasts = () => {
           <Col md={6}>
             <h5 className="mb-2">Translucent</h5>
             <p className="text-muted font-14">
-              Toasts are slightly translucent, too, so they blend over whatever they might appear
-              over. For browsers that support the backdrop-filter CSS property, we’ll also attempt
-              to blur the elements under a toast.
+              Toasts are slightly translucent, too, so they blend over whatever they might appear over. For browsers
+              that support the backdrop-filter CSS property, we’ll also attempt to blur the elements under a toast.
             </p>
 
             <div className="p-3 bg-light">
@@ -98,22 +86,14 @@ const DefaultToasts = () => {
           <Col md={6} className="mt-4">
             <h5 className="mb-2">Stacking</h5>
             <p className="text-muted font-14">
-              When you have multiple toasts, we default to vertiaclly stacking them in a readable
-              manner.
+              When you have multiple toasts, we default to vertiaclly stacking them in a readable manner.
             </p>
             <div className="p-3">
-              <div
-                aria-live="polite"
-                aria-atomic="true"
-                style={{position: 'relative', minHeight: '200px'}}>
+              <div aria-live="polite" aria-atomic="true" style={{position: 'relative', minHeight: '200px'}}>
                 <div className="toast-container" style={{position: 'absolute', top: 0, right: 0}}>
                   {stacked.map((item, index) => {
                     return (
-                      <Toast
-                        key={index.toString()}
-                        onClose={() => handleClose(index)}
-                        delay={5000}
-                        autohide>
+                      <Toast key={index.toString()} onClose={() => handleClose(index)} delay={5000} autohide>
                         <Toast.Header>
                           <img src={logo} alt="brand-logo" height="12" className="me-1" />
                           <strong className="me-auto">Hyper</strong>
@@ -131,9 +111,8 @@ const DefaultToasts = () => {
           <Col md={6} className="mt-4">
             <h5 className="mb-2">Placement</h5>
             <p className="text-muted font-14">
-              Place toasts with custom CSS as you need them. The top right is often used for
-              notifications, as is the top middle. If you’re only ever going to show one toast at a
-              time, put the positioning styles right on the
+              Place toasts with custom CSS as you need them. The top right is often used for notifications, as is the
+              top middle. If you’re only ever going to show one toast at a time, put the positioning styles right on the
               <code>.toast</code>.
             </p>
 
@@ -170,9 +149,7 @@ const CustomToast = () => {
     <Card>
       <Card.Body>
         <h4 className="header-title">Custom content</h4>
-        <p className="text-muted">
-          Alternatively, you can also add additional controls and components to toasts.
-        </p>
+        <p className="text-muted">Alternatively, you can also add additional controls and components to toasts.</p>
         <Toast
           className="d-flex align-items-center mt-4"
           show={isOpenCustom1}
@@ -190,10 +167,7 @@ const CustomToast = () => {
           autohide>
           <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
 
-          <Button
-            variant=""
-            onClick={hideCustom2}
-            className="btn-close btn-close-white ms-auto me-2"></Button>
+          <Button variant="" onClick={hideCustom2} className="btn-close btn-close-white ms-auto me-2"></Button>
         </Toast>
         <Toast className="mt-4" show={isOpenCustom3} onClose={hideCustom3} delay={8000} autohide>
           <Toast.Body>
@@ -208,12 +182,7 @@ const CustomToast = () => {
             </div>
           </Toast.Body>
         </Toast>
-        <Toast
-          className="text-white bg-primary mt-4"
-          show={isOpenCustom4}
-          onClose={hideCustom4}
-          delay={10000}
-          autohide>
+        <Toast className="text-white bg-primary mt-4" show={isOpenCustom4} onClose={hideCustom4} delay={10000} autohide>
           <Toast.Body>
             Hello, world! This is a toast message.
             <div className="mt-2 pt-2 border-top">
@@ -251,9 +220,8 @@ const PlacementToast = () => {
       <Card.Body>
         <h4 className="header-title">Placement</h4>
         <p className="text-muted font-14">
-          Place toasts with custom CSS as you need them. The top right is often used for
-          notifications, as is the top middle. If you’re only ever going to show one toast at a
-          time, put the positioning styles right on the
+          Place toasts with custom CSS as you need them. The top right is often used for notifications, as is the top
+          middle. If you’re only ever going to show one toast at a time, put the positioning styles right on the
           <code>.toast</code>.
         </p>
         <div className="mb-3">
@@ -272,11 +240,7 @@ const PlacementToast = () => {
           </Form.Select>
         </div>
 
-        <div
-          aria-live="polite"
-          aria-atomic="true"
-          className="bg-light position-relative"
-          style={{minHeight: '294px'}}>
+        <div aria-live="polite" aria-atomic="true" className="bg-light position-relative" style={{minHeight: '294px'}}>
           <ToastContainer className="p-3" position={position}>
             <Toast>
               <Toast.Header closeButton={false}>

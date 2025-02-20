@@ -14,13 +14,7 @@ type FullCalendarWidgetProps = {
   events: Array<EventInput>;
 };
 
-const FullCalendarWidget = ({
-  onDateClick,
-  onEventClick,
-  onDrop,
-  onEventDrop,
-  events
-}: FullCalendarWidgetProps) => {
+const FullCalendarWidget = ({onDateClick, onEventClick, onDrop, onEventDrop, events}: FullCalendarWidgetProps) => {
   return (
     <>
       {/* full calendar control */}

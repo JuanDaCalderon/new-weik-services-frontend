@@ -39,17 +39,10 @@ export default function useRoles() {
         ribbonUpdatedDate: DateUtils.parseStringToDate(rol.fechaActualizacion),
         createdDate: DateUtils.formatShortDate(DateUtils.parseStringToDate(rol.fechaCreacion)),
         updatedBy: rol.usuarioUpdated.email,
-        updatedDate: DateUtils.formatShortDate(
-          DateUtils.parseStringToDate(rol.fechaActualizacion),
-          true
-        ),
+        updatedDate: DateUtils.formatShortDate(DateUtils.parseStringToDate(rol.fechaActualizacion), true),
         RolePermisos: `${numeroRoles} ${numeroRoles === 1 ? 'permiso' : 'permisos'}`,
-        RoleUsuarios: !isLoadingEmployees
-          ? `${numeroUsuarios} ${numeroUsuarios === 1 ? 'usuario' : 'usuarios'}`
-          : null,
-        usuarios: employeesFromStore.filter((employee) =>
-          employee.roles.some((thisRol) => thisRol.id === String(id))
-        )
+        RoleUsuarios: !isLoadingEmployees ? `${numeroUsuarios} ${numeroUsuarios === 1 ? 'usuario' : 'usuarios'}` : null,
+        usuarios: employeesFromStore.filter((employee) => employee.roles.some((thisRol) => thisRol.id === String(id)))
       };
     });
   }, [employeesFromStore, isLoadingEmployees, rolesFromStore]);

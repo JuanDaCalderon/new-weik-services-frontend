@@ -1,10 +1,4 @@
-import {
-  CLIENTES_NAME,
-  NOTICIAS_NAME,
-  ROLES_PERMISOS_NAME,
-  USER_NAME,
-  USERS_NAME
-} from '@/constants';
+import {CLIENTES_NAME, NOTICIAS_NAME, ROLES_PERMISOS_NAME, USER_NAME, USERS_NAME} from '@/constants';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import userReducer from '@/store/slices/user';

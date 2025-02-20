@@ -10,18 +10,12 @@ export default function useChatUsers() {
   const filterUsers = (group: string) => {
     setSelectedGroup(group);
     setUser(
-      group !== 'All'
-        ? [...users].filter((u) => u.groups.toLowerCase().indexOf(group.toLowerCase()) >= 0)
-        : [...users]
+      group !== 'All' ? [...users].filter((u) => u.groups.toLowerCase().indexOf(group.toLowerCase()) >= 0) : [...users]
     );
   };
 
   const search = (text: string) => {
-    setUser(
-      text
-        ? [...users].filter((u) => u.name.toLowerCase().indexOf(text.toLowerCase()) >= 0)
-        : [...users]
-    );
+    setUser(text ? [...users].filter((u) => u.name.toLowerCase().indexOf(text.toLowerCase()) >= 0) : [...users]);
   };
 
   const activateUser = (user: ChatUser) => {

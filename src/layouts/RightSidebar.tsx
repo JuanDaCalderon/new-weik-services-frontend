@@ -19,10 +19,7 @@ const RightSideBar = () => {
         onHide={toggleRightSideBar}
         placement="end"
         id="Settings-right-side-bar">
-        <Offcanvas.Header
-          className="d-flex align-items-center bg-primary p-3"
-          closeVariant="white"
-          closeButton>
+        <Offcanvas.Header className="d-flex align-items-center bg-primary p-3" closeVariant="white" closeButton>
           <h5 className="text-white m-0">Centro de operaciones</h5>
         </Offcanvas.Header>
 

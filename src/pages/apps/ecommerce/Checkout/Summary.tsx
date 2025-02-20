@@ -17,13 +17,7 @@ const Summary = ({cart}: SummaryProps) => {
               return (
                 <tr key={index.toString()}>
                   <td>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      title="contact-img"
-                      className="rounded me-2"
-                      height="48"
-                    />
+                    <img src={item.image} alt={item.name} title="contact-img" className="rounded me-2" height="48" />
                     <p className="m-0 d-inline-block align-middle">
                       <Link to="" className="text-body fw-semibold">
                         {item.name}
@@ -49,9 +43,7 @@ const Summary = ({cart}: SummaryProps) => {
               <td>
                 <h6 className="m-0">Shipping:</h6>
               </td>
-              <td className="text-end">
-                {cart.shipping ? '$' + cart.shipping.toFixed(2) : 'FREE'}
-              </td>
+              <td className="text-end">{cart.shipping ? '$' + cart.shipping.toFixed(2) : 'FREE'}</td>
             </tr>
             <tr className="text-end">
               <td>

@@ -24,9 +24,7 @@ const Shipping = ({updateShipping}: ShippingProps) => {
     <Row>
       <Col>
         <h4 className="mt-2">Saved Address</h4>
-        <p className="text-muted mb-3">
-          Fill the form below in order to send you the order's invoice.
-        </p>
+        <p className="text-muted mb-3">Fill the form below in order to send you the order's invoice.</p>
 
         <Row>
           <Col md={6}>
@@ -59,12 +57,7 @@ const Shipping = ({updateShipping}: ShippingProps) => {
             <div className="border p-3 rounded">
               <address className="mb-0 address-lg">
                 <div className="form-check">
-                  <input
-                    type="radio"
-                    id="customRadio2"
-                    name="customRadio"
-                    className="form-check-input"
-                  />
+                  <input type="radio" id="customRadio2" name="customRadio" className="form-check-input" />
                   <label className="form-check-label font-16 fw-bold" htmlFor="customRadio2">
                     Office
                   </label>
@@ -82,9 +75,7 @@ const Shipping = ({updateShipping}: ShippingProps) => {
         </Row>
 
         <h4 className="mt-4">Add New Address</h4>
-        <p className="text-muted mb-4">
-          Fill the form below so we can send you the order's invoice.
-        </p>
+        <p className="text-muted mb-4">Fill the form below so we can send you the order's invoice.</p>
 
         <Form onSubmit={() => {}} schema={schema}>
           <Row>
@@ -124,22 +115,7 @@ const Shipping = ({updateShipping}: ShippingProps) => {
               <div className="form-group mb-3">
                 <label className="form-label">Phone</label>
                 <MaskedInput
-                  mask={[
-                    '(',
-                    /[1-9]/,
-                    /\d/,
-                    /\d/,
-                    ')',
-                    ' ',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '-',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/
-                  ]}
+                  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                   placeholder="(xxx) xxxx-xxxx"
                   className="form-control"
                 />
@@ -194,18 +170,13 @@ const Shipping = ({updateShipping}: ShippingProps) => {
             <Col md={12}>
               <div className="form-group mb-3">
                 <label className="form-label">Country</label>
-                <Select
-                  className="react-select"
-                  classNamePrefix="react-select"
-                  options={countries}></Select>
+                <Select className="react-select" classNamePrefix="react-select" options={countries}></Select>
               </div>
             </Col>
           </Row>
 
           <h4 className="mt-4">Shipping Method</h4>
-          <p className="text-muted mb-3">
-            Fill the form below in order to send you the order's invoice.
-          </p>
+          <p className="text-muted mb-3">Fill the form below in order to send you the order's invoice.</p>
 
           <Row>
             <Col md={6}>
@@ -221,15 +192,11 @@ const Shipping = ({updateShipping}: ShippingProps) => {
                       updateShipping(0);
                     }}
                   />
-                  <label
-                    className="form-check-label font-16 fw-bold"
-                    htmlFor="shippingMethodRadio1">
+                  <label className="form-check-label font-16 fw-bold" htmlFor="shippingMethodRadio1">
                     Standard Delivery - FREE
                   </label>
                 </div>
-                <p className="mb-0 ps-3 pt-1">
-                  Estimated 5-7 days shipping (Duties and tax may be due upon delivery)
-                </p>
+                <p className="mb-0 ps-3 pt-1">Estimated 5-7 days shipping (Duties and tax may be due upon delivery)</p>
               </div>
             </Col>
             <Col md={6}>
@@ -244,15 +211,11 @@ const Shipping = ({updateShipping}: ShippingProps) => {
                       updateShipping(25);
                     }}
                   />
-                  <label
-                    className="form-check-label font-16 fw-bold"
-                    htmlFor="shippingMethodRadio2">
+                  <label className="form-check-label font-16 fw-bold" htmlFor="shippingMethodRadio2">
                     Fast Delivery - $25
                   </label>
                 </div>
-                <p className="mb-0 ps-3 pt-1">
-                  Estimated 1-2 days shipping (Duties and tax may be due upon delivery)
-                </p>
+                <p className="mb-0 ps-3 pt-1">Estimated 1-2 days shipping (Duties and tax may be due upon delivery)</p>
               </div>
             </Col>
           </Row>

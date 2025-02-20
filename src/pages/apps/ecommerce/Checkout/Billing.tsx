@@ -24,9 +24,7 @@ const Billing = () => {
     <Row>
       <Col>
         <h4 className="mt-2">Billing information</h4>
-        <p className="text-muted mb-4">
-          Fill the form below in order to send you the order's invoice.
-        </p>
+        <p className="text-muted mb-4">Fill the form below in order to send you the order's invoice.</p>
 
         <Form onSubmit={() => {}} schema={schema}>
           <Row>
@@ -66,22 +64,7 @@ const Billing = () => {
               <div className="form-group mb-3">
                 <label className="form-label">Phone</label>
                 <MaskedInput
-                  mask={[
-                    '(',
-                    /[1-9]/,
-                    /\d/,
-                    /\d/,
-                    ')',
-                    ' ',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    '-',
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/
-                  ]}
+                  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                   placeholder="(xxx) xxxx-xxxx"
                   className="form-control"
                 />

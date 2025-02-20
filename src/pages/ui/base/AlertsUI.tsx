@@ -12,9 +12,8 @@ const DefaultAlerts = () => {
       <Card.Body>
         <h4 className="header-title">Default Alert</h4>
         <p className="text-muted font-14 mb-3">
-          Provide contextual feedback messages for typical user actions with the handful of
-          available and flexible alert messages. Alerts are available for any length of text, as
-          well as an optional dismiss button.
+          Provide contextual feedback messages for typical user actions with the handful of available and flexible alert
+          messages. Alerts are available for any length of text, as well as an optional dismiss button.
         </p>
         <p>
           For proper styling, use one of the eight
@@ -56,8 +55,8 @@ const DismissibleAlerts = () => {
       <Card.Body>
         <h4 className="header-title">Dismissing Alerts</h4>
         <p className="text-muted font-14 mb-3">
-          Add a dismiss button and the <code>.alert-dismissible</code> class, which adds extra
-          padding to the right of the alert and positions the
+          Add a dismiss button and the <code>.alert-dismissible</code> class, which adds extra padding to the right of
+          the alert and positions the
           <code>.btn-close</code> button.
         </p>
 
@@ -83,20 +82,14 @@ const DismissibleAlerts = () => {
 const AlertsWithIcon = () => {
   const [colors] = useState<string[]>(['success', 'danger', 'warning', 'info']);
 
-  const icons: string[] = [
-    'ri-check-line',
-    'ri-close-circle-line',
-    'ri-alert-line',
-    'ri-information-line'
-  ];
+  const icons: string[] = ['ri-check-line', 'ri-close-circle-line', 'ri-alert-line', 'ri-information-line'];
 
   return (
     <Card>
       <Card.Body>
         <h4 className="header-title">Icons with Alerts</h4>
         <p className="text-muted font-14">
-          You can also include additional elements like icons, heading, etc along side the actual
-          message.
+          You can also include additional elements like icons, heading, etc along side the actual message.
         </p>
 
         {colors.map((color, index) => {
@@ -124,14 +117,11 @@ const AlertsWithRichContent = () => {
         <Alert variant="success">
           <h4 className="alert-heading">Well done!</h4>
           <p>
-            Aww yeah, you successfully read this important alert message. This example text is going
-            to run a bit longer so that you can see how spacing within an alert works with this kind
-            of content.
+            Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer
+            so that you can see how spacing within an alert works with this kind of content.
           </p>
           <hr />
-          <p className="mb-0">
-            Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
-          </p>
+          <p className="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
         </Alert>
       </Card.Body>
     </Card>
@@ -144,17 +134,14 @@ const CustomAlerts = () => {
       <Card.Body>
         <h4 className="header-title">Custom Alerts</h4>
         <p className="text-muted font-14">
-          Display alert with transparent background and with contextual text color. Use classes{' '}
-          <code>.bg-white</code>, and <code>.text-*</code>. E.g.
+          Display alert with transparent background and with contextual text color. Use classes <code>.bg-white</code>,
+          and <code>.text-*</code>. E.g.
           <code>bg-white text-primary</code>.
         </p>
 
         {(extendedColorVariants || []).map((color, index) => {
           return (
-            <Alert
-              variant={color}
-              className={classNames('bg-transparent', 'text-' + color)}
-              key={index.toString()}>
+            <Alert variant={color} className={classNames('bg-transparent', 'text-' + color)} key={index.toString()}>
               This is a <strong>{color}</strong> alert—check it out!
             </Alert>
           );
@@ -170,8 +157,7 @@ const AlertsWithLink = () => {
       <Card.Body>
         <h4 className="header-title">Link Color</h4>
         <p className="text-muted font-14">
-          Use the <code>.alert-link</code> utility class to quickly provide matching colored links
-          within any alert.
+          Use the <code>.alert-link</code> utility class to quickly provide matching colored links within any alert.
         </p>
 
         {(extendedColorVariants || []).map((color, index) => {
@@ -207,17 +193,13 @@ const LiveAlert = () => {
       <Card.Body>
         <h4 className="header-title">Alert Live example</h4>
         <p className="sub-header">
-          Click the button below to show an alert (hidden with inline styles to start), then dismiss
-          (and destroy) it with the built-in close button.
+          Click the button below to show an alert (hidden with inline styles to start), then dismiss (and destroy) it
+          with the built-in close button.
         </p>
 
         {(list || []).map((color, idx) => {
           return (
-            <Alert
-              key={idx.toString()}
-              variant="success"
-              onClose={() => handleClose(idx)}
-              dismissible>
+            <Alert key={idx.toString()} variant="success" onClose={() => handleClose(idx)} dismissible>
               Nice, you triggered this alert message!
             </Alert>
           );

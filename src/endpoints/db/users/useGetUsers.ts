@@ -1,13 +1,5 @@
 import {useCallback} from 'react';
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  Timestamp,
-  DocumentReference,
-  getDoc
-} from 'firebase/firestore';
+import {collection, getDocs, query, where, Timestamp, DocumentReference, getDoc} from 'firebase/firestore';
 import {db} from '@/firebase';
 import {USUARIOS_PATH} from '@/constants';
 import {DebugUtil, DateUtils} from '@/utils';
@@ -35,14 +27,7 @@ const useGetUsers = () => {
           id: rolDocSnap.id,
           rol: rolDocSnap.data()?.rol ?? '',
           permisos: thisPermisos ? await Promise.all(thisPermisos) : []
-        } as Omit<
-          Rol,
-          | 'descripcion'
-          | 'usuarioCreacion'
-          | 'fechaCreacion'
-          | 'fechaActualizacion'
-          | 'usuarioUpdated'
-        >;
+        } as Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion' | 'usuarioUpdated'>;
       });
     },
     [getPermisos]
@@ -52,9 +37,7 @@ const useGetUsers = () => {
     async (userEmail: string): Promise<Employee | null> => {
       let usuario: Employee | null = null;
       try {
-        const queryDocs = await getDocs(
-          query(collection(db, USUARIOS_PATH), where('email', '==', userEmail))
-        );
+        const queryDocs = await getDocs(query(collection(db, USUARIOS_PATH), where('email', '==', userEmail)));
         const firstDoc = queryDocs.docs[0];
         if (!firstDoc) throw new Error('El usuario no persiste en la base de datos.');
         const {
@@ -105,19 +88,14 @@ const useGetUsers = () => {
             ((horasTrabajo as HorasTrabajoToFirestore[]) || []).map((h) => ({
               ...h,
               checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
-              checkOut:
-                h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
+              checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
             })) ?? [],
           informacionLaboral: informacionLaboral ?? [],
           vacaciones: vacaciones ?? []
         };
-        DebugUtil.logSuccess(
-          'El usuario se ha consultado correctamente desde la base de datos',
-          usuario
-        );
+        DebugUtil.logSuccess('El usuario se ha consultado correctamente desde la base de datos', usuario);
       } catch (error: any) {
-        if (error.message === 'El usuario no persiste en la base de datos.')
-          toast.error(error.message);
+        if (error.message === 'El usuario no persiste en la base de datos.') toast.error(error.message);
         else toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
         DebugUtil.logError(error.message, error);
       }

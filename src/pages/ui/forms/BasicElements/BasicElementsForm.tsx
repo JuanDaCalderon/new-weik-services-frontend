@@ -1,14 +1,4 @@
-import {
-  Row,
-  Col,
-  Card,
-  Form,
-  FloatingLabel,
-  InputGroup,
-  Button,
-  Dropdown,
-  DropdownButton
-} from 'react-bootstrap';
+import {Row, Col, Card, Form, FloatingLabel, InputGroup, Button, Dropdown, DropdownButton} from 'react-bootstrap';
 import {
   PasswordInput,
   TextAreaInput,
@@ -26,11 +16,10 @@ const BasicInputElements = () => {
       <Card.Body>
         <h4 className="header-title">Input Types</h4>
         <p className="text-muted">
-          Most common form control, text-based input fields. Includes support for all HTML5 types:{' '}
-          <code>text</code>, <code>password</code>, <code>datetime</code>,
-          <code>datetime-local</code>, <code>date</code>, <code>month</code>,<code>time</code>,{' '}
-          <code>week</code>, <code>number</code>, <code>email</code>,<code>url</code>,{' '}
-          <code>search</code>, <code>tel</code>, and <code>color</code>.
+          Most common form control, text-based input fields. Includes support for all HTML5 types: <code>text</code>,{' '}
+          <code>password</code>, <code>datetime</code>,<code>datetime-local</code>, <code>date</code>,{' '}
+          <code>month</code>,<code>time</code>, <code>week</code>, <code>number</code>, <code>email</code>,
+          <code>url</code>, <code>search</code>, <code>tel</code>, and <code>color</code>.
         </p>
 
         <Row>
@@ -64,13 +53,7 @@ const BasicInputElements = () => {
                 key="placeholder"
               />
 
-              <TextAreaInput
-                label="Text Area"
-                name="textarea"
-                rows={5}
-                containerClass={'mb-3'}
-                key="textarea"
-              />
+              <TextAreaInput label="Text Area" name="textarea" rows={5} containerClass={'mb-3'} key="textarea" />
 
               <TextInput
                 label="Read only"
@@ -104,9 +87,7 @@ const BasicInputElements = () => {
                   Helping text
                 </Form.Label>
                 <Form.Control type="text" name="text" id="text3" placeholder="Helping text" />
-                <Form.Text>
-                  A block of help text that breaks onto a new line and may extend beyond one line.
-                </Form.Text>
+                <Form.Text>A block of help text that breaks onto a new line and may extend beyond one line.</Form.Text>
               </Form.Group>
             </RHForm>
           </Col>
@@ -140,23 +121,11 @@ const BasicInputElements = () => {
                 <option>5</option>
               </SelectInput>
 
-              <FileInput
-                label="Default file input"
-                type="file"
-                name="file"
-                containerClass={'mb-3'}
-                key="file"
-              />
+              <FileInput label="Default file input" type="file" name="file" containerClass={'mb-3'} key="file" />
 
               <DateInput label="Date" type="date" name="date" containerClass={'mb-3'} key="date" />
 
-              <DateInput
-                label="Month"
-                type="month"
-                name="month"
-                containerClass={'mb-3'}
-                key="month"
-              />
+              <DateInput label="Month" type="month" name="month" containerClass={'mb-3'} key="month" />
 
               <DateInput label="Time" type="time" name="time" containerClass={'mb-3'} key="time" />
 
@@ -194,8 +163,8 @@ const FloatingLabels = () => {
           Wrap a <code>&lt;Form.Control&gt;</code> element in
           <code>&lt;FloatingLabel&gt;</code>
           to enable floating labels with Bootstrap’s textual form fields. A<code>placeholder</code>
-          is required on each <code>&lt;Form.Control&gt;</code> as our method of CSS-only floating
-          labels uses the <code>:placeholder-shown</code> pseudo-element.
+          is required on each <code>&lt;Form.Control&gt;</code> as our method of CSS-only floating labels uses the{' '}
+          <code>:placeholder-shown</code> pseudo-element.
         </p>
 
         <Row>
@@ -210,11 +179,7 @@ const FloatingLabels = () => {
 
             <h5 className="mb-3 mt-4">Textareas</h5>
             <FloatingLabel controlId="floatingTextarea2" label="Comments">
-              <Form.Control
-                as="textarea"
-                placeholder="Leave a comment here"
-                style={{height: '100px'}}
-              />
+              <Form.Control as="textarea" placeholder="Leave a comment here" style={{height: '100px'}} />
             </FloatingLabel>
           </Col>
 
@@ -282,8 +247,8 @@ const Switches = () => {
       <h4 className="header-title mt-4">Switches</h4>
       <p className="text-muted">
         A switch has the markup of a custom checkbox but uses the
-        <code>.custom-switch</code> class to render a toggle switch. Switches also support the{' '}
-        <code>disabled</code> attribute.
+        <code>.custom-switch</code> class to render a toggle switch. Switches also support the <code>disabled</code>{' '}
+        attribute.
       </p>
 
       <Form>
@@ -308,12 +273,7 @@ const CustomCheckboxes = () => {
       </Form.Label>
       <div>
         <Form.Check type="checkbox" id="default-checkbox" label="Check this custom checkbox" />
-        <Form.Check
-          type="checkbox"
-          id="default-checkbox"
-          label="But not this disabled one"
-          disabled
-        />
+        <Form.Check type="checkbox" id="default-checkbox" label="But not this disabled one" disabled />
       </div>
     </Form.Group>
   );
@@ -393,8 +353,8 @@ const InputGroups = () => {
       <Card.Body>
         <h4 className="header-title">Input Group</h4>
         <p className="text-muted">
-          Easily extend form conrols by adding text, buttons, or button groups on either side of
-          textual inputs, custom selects, and custom file inputs
+          Easily extend form conrols by adding text, buttons, or button groups on either side of textual inputs, custom
+          selects, and custom file inputs
         </p>
 
         <Form>
@@ -402,11 +362,7 @@ const InputGroups = () => {
             <Form.Label htmlFor="Static">Static</Form.Label>
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-              <Form.Control
-                placeholder="Username"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              />
+              <Form.Control placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
             </InputGroup>
           </Form.Group>
 
@@ -467,12 +423,7 @@ const DefaultForm = () => {
         <Form>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="exampleEmail2">Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              id="exampleEmail2"
-              placeholder="Enter your email"
-            />
+            <Form.Control type="email" name="email" id="exampleEmail2" placeholder="Enter your email" />
             <Form.Text>We'll never share your email with anyone else.</Form.Text>
           </Form.Group>
 
@@ -511,12 +462,7 @@ const HorizontalForm = () => {
               Email
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                type="email"
-                name="email"
-                id="exampleEmail3"
-                placeholder="Enter your email"
-              />
+              <Form.Control type="email" name="email" id="exampleEmail3" placeholder="Enter your email" />
               <Form.Text>We'll never share your email with anyone else.</Form.Text>
             </Col>
           </Form.Group>
@@ -592,12 +538,7 @@ const InlineForm = () => {
           </Col>
 
           <Col>
-            <PasswordInput
-              type="password"
-              name="password"
-              id="examplePassword5"
-              placeholder="password placeholder"
-            />
+            <PasswordInput type="password" name="password" id="examplePassword5" placeholder="password placeholder" />
           </Col>
 
           <Col>
@@ -627,12 +568,7 @@ const InlineForm = () => {
               </InputGroup>
             </Col>
             <Col xs="auto">
-              <Form.Check
-                type="checkbox"
-                id="autoSizingCheck"
-                className="mb-2"
-                label="Remember me"
-              />
+              <Form.Check type="checkbox" id="autoSizingCheck" className="mb-2" label="Remember me" />
             </Col>
             <Col xs="auto">
               <Button type="submit" className="mb-2">

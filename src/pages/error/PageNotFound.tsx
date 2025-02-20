@@ -25,8 +25,8 @@ const ErrorPageNotFound = () => {
                     </h1>
                     <h2 className="text-uppercase text-danger mt-2">Página no encontrada</h2>
                     <p className="text-dark text-opacity-75">
-                      Parece que has tomado el camino equivocado. No te preocupes... nos pasa a los
-                      mejores. Aquí tienes un pequeño consejo que puede ayudarte a retomar el rumbo.
+                      Parece que has tomado el camino equivocado. No te preocupes... nos pasa a los mejores. Aquí tienes
+                      un pequeño consejo que puede ayudarte a retomar el rumbo.
                     </p>
                     <Link className="btn btn-info mt-1" to="/" replace>
                       <i className="mdi mdi-reply"></i> Regresar a weik services

@@ -6,13 +6,7 @@ import {useToggle} from '@/hooks';
 import {useTask} from '../hooks';
 import {ListTaskItem} from '../types';
 
-const Task = ({
-  task,
-  selectTask
-}: {
-  task: ListTaskItem;
-  selectTask: (task: ListTaskItem) => void;
-}) => {
+const Task = ({task, selectTask}: {task: ListTaskItem; selectTask: (task: ListTaskItem) => void}) => {
   const {completed, markCompleted} = useTask(task);
 
   return (
@@ -26,10 +20,7 @@ const Task = ({
             checked={completed}
             onChange={(event) => markCompleted(event, selectTask)}
           />
-          <label
-            className="form-check-label"
-            htmlFor={`task-${task.id}`}
-            onClick={() => selectTask(task)}>
+          <label className="form-check-label" htmlFor={`task-${task.id}`} onClick={() => selectTask(task)}>
             {task.title}
           </label>
         </div>
@@ -37,9 +28,7 @@ const Task = ({
       <Col sm={6}>
         <div className="d-flex justify-content-between">
           <div>
-            <OverlayTrigger
-              placement="right"
-              overlay={<Tooltip>Assigned to {task.assigned_to}</Tooltip>}>
+            <OverlayTrigger placement="right" overlay={<Tooltip>Assigned to {task.assigned_to}</Tooltip>}>
               <img
                 src={task.assignee_avatar}
                 alt=""

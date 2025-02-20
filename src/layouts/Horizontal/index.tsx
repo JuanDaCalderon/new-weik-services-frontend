@@ -48,10 +48,7 @@ const HorizontalLayout = () => {
   const TestBox: JSX.Element = useMemo(() => {
     if (getBoolean(config.IS_TESTING ?? 'false'))
       return (
-        <div
-          className="alert alert-info position-fixed bottom-0"
-          role="alert"
-          style={{zIndex: '9999'}}>
+        <div className="alert alert-info position-fixed bottom-0" role="alert" style={{zIndex: '9999'}}>
           <span className="text-primary">TEST ENV - {packageJson.version}</span>
         </div>
       );

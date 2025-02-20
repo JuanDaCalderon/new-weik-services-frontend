@@ -57,8 +57,8 @@ const BodyModal = memo(function BodyModal({
         El máximo permitido de caracteres para la descripción es 100.
       </span>
       <p className="p-0 mb-0 mt-1">
-        Los permisos se pueden asignar manualmente posterior a la creación del rol, asi como asociar
-        usuarios a este rol desde la ventana de 'Usuarios'.
+        Los permisos se pueden asignar manualmente posterior a la creación del rol, asi como asociar usuarios a este rol
+        desde la ventana de 'Usuarios'.
       </p>
     </>
   );

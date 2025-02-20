@@ -118,8 +118,7 @@ const TableHeadOption = () => {
       <Card.Body>
         <h4 className="header-title">Table head options</h4>
         <p className="text-muted font-14">
-          Use one of two modifier classes to make <code>&lt;thead&gt;</code>s appear light or dark
-          gray.
+          Use one of two modifier classes to make <code>&lt;thead&gt;</code>s appear light or dark gray.
         </p>
 
         <Table className="table-centered mb-0">
@@ -197,8 +196,7 @@ const BorderedColorTable = () => {
       <Card.Body>
         <h4 className="header-title">Bordered table</h4>
         <p className="text-muted font-14">
-          Add <code>.table-bordered</code> & <code>.border-primary</code> can be added to change
-          colors.
+          Add <code>.table-bordered</code> & <code>.border-primary</code> can be added to change colors.
         </p>
 
         <Table className="mb-0 border-primary table-centered" bordered>
@@ -276,8 +274,7 @@ const SmallTable = () => {
       <Card.Body>
         <h4 className="header-title">Small table</h4>
         <p className="text-muted font-14">
-          Add <code>size="sm"</code> attribute to make tables more compact by cutting cell padding
-          in half
+          Add <code>size="sm"</code> attribute to make tables more compact by cutting cell padding in half
         </p>
 
         <Table className="mb-0" size="sm">

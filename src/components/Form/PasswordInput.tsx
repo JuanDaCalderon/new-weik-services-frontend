@@ -57,9 +57,7 @@ export default function PasswordInput({
               isInvalid={Boolean(fieldState.error?.message)}
             />
             <div
-              className={`input-group-text input-group-password ${
-                showPassword ? 'show-password' : ''
-              }`}
+              className={`input-group-text input-group-password ${showPassword ? 'show-password' : ''}`}
               data-password={showPassword ? 'true' : 'false'}>
               <span
                 className="password-eye"
@@ -74,10 +72,7 @@ export default function PasswordInput({
             </Form.Text>
           )}
           {fieldState.error && (
-            <FeedbackInvalidText
-              errorMessage={fieldState.error['message'] ?? ''}
-              customClassNames="d-block"
-            />
+            <FeedbackInvalidText errorMessage={fieldState.error['message'] ?? ''} customClassNames="d-block" />
           )}
         </Form.Group>
       )}

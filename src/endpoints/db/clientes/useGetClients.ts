@@ -1,13 +1,5 @@
 import {useCallback} from 'react';
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  Timestamp,
-  Unsubscribe,
-  where
-} from 'firebase/firestore';
+import {collection, getDocs, onSnapshot, query, Timestamp, Unsubscribe, where} from 'firebase/firestore';
 import {db} from '@/firebase';
 import {CLIENTES_PATH, MAIN_DOMAIN} from '@/constants';
 import {DateUtils, DebugUtil} from '@/utils';
@@ -42,10 +34,7 @@ const useGetClients = () => {
           dispatch(clearClientes());
           dispatch(setClientes(clientes));
           dispatch(isLoadingClientes(false));
-          DebugUtil.logSuccess(
-            'Se han consultado los clientes correctamente y ya deben estar en el store',
-            clientes
-          );
+          DebugUtil.logSuccess('Se han consultado los clientes correctamente y ya deben estar en el store', clientes);
         }
       );
     } catch (error: any) {
@@ -58,9 +47,7 @@ const useGetClients = () => {
     dispatch(isLoadingClientes(true));
     try {
       const clientes: Cliente[] = [];
-      const queryDocs = await getDocs(
-        query(collection(db, CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN))
-      );
+      const queryDocs = await getDocs(query(collection(db, CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN)));
       for (const doc of queryDocs.docs) {
         const {branding, logo, nombre, domain, fechaCreacion} = doc.data();
         clientes.push({
@@ -76,10 +63,7 @@ const useGetClients = () => {
       }
       dispatch(clearClientes());
       dispatch(setClientes(clientes));
-      DebugUtil.logSuccess(
-        'Se han consultado los clientes correctamente sync y ya deben estar en el store',
-        clientes
-      );
+      DebugUtil.logSuccess('Se han consultado los clientes correctamente sync y ya deben estar en el store', clientes);
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     } finally {

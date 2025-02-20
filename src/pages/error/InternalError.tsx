@@ -21,9 +21,7 @@ const InternalError = () => {
                 <Card.Body>
                   <div className="text-center">
                     <h1 className="text-uppercase text-danger mt-1 h3">Error interno</h1>
-                    <p className="text-dark text-opacity-75">
-                      ¿Por qué no intentas actualizar tu página?
-                    </p>
+                    <p className="text-dark text-opacity-75">¿Por qué no intentas actualizar tu página?</p>
                     <Link className="btn btn-info mt-1" to="/" replace>
                       <i className="mdi mdi-reply"></i> Regresar a weik services
                     </Link>

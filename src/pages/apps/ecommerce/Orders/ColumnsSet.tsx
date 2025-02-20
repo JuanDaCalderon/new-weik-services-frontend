@@ -37,13 +37,9 @@ const columns: ColumnDef<Order>[] = [
             'badge-warning-lighten': row.original.payment_status === 'Awaiting Authorization'
           })}>
           {row.original.payment_status === 'Paid' && <i className="mdi mdi-bitcoin me-1"></i>}
-          {row.original.payment_status === 'Payment Failed' && (
-            <i className="mdi mdi-cancel me-1"></i>
-          )}
+          {row.original.payment_status === 'Payment Failed' && <i className="mdi mdi-cancel me-1"></i>}
           {row.original.payment_status === 'Unpaid' && <i className="mdi mdi-cash me-1"></i>}
-          {row.original.payment_status === 'Awaiting Authorization' && (
-            <i className="mdi mdi-timer-sand me-1"></i>
-          )}
+          {row.original.payment_status === 'Awaiting Authorization' && <i className="mdi mdi-timer-sand me-1"></i>}
           {row.original.payment_status}
         </span>
       </h5>

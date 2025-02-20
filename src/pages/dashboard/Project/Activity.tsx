@@ -13,12 +13,7 @@ const Activity = () => {
         <CardTitle
           containerClass="d-flex align-items-center justify-content-between mb-2"
           title="Recent Activities"
-          menuItems={[
-            {label: 'Weekly Report'},
-            {label: 'Monthly Report'},
-            {label: 'Action'},
-            {label: 'Settings'}
-          ]}
+          menuItems={[{label: 'Weekly Report'}, {label: 'Monthly Report'}, {label: 'Action'}, {label: 'Settings'}]}
         />
 
         <Table hover responsive className="table-centered table-nowrap mb-0">

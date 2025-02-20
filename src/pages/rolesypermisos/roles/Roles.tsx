@@ -40,9 +40,7 @@ const Roles = memo(function Roles() {
       return;
     }
     if (checkIfRolExists(rolCreationBasics as Rol, rolesFromStore)) {
-      toast.error(
-        'No se pudo crear el rol, ya existe un registro con el mismo nombre o descripción'
-      );
+      toast.error('No se pudo crear el rol, ya existe un registro con el mismo nombre o descripción');
       crearRolOpenToggle();
       return;
     }
@@ -62,11 +60,7 @@ const Roles = memo(function Roles() {
         submitText="Crear"
         secondaryText="Cerrar"
         body={
-          <BodyModal
-            formData={rolCreationBasics}
-            setFormData={setRolCreationBasics}
-            isTouch={setIsReadyToBeSend}
-          />
+          <BodyModal formData={rolCreationBasics} setFormData={setRolCreationBasics} isTouch={setIsReadyToBeSend} />
         }
         isDisabled={isLoadingCreatinRol || !isReadyToBeSend}
         isLoading={isLoadingCreatinRol}
@@ -76,9 +70,7 @@ const Roles = memo(function Roles() {
         <Col xs="auto" className="me-auto">
           <h4 className="header-title text-dark m-0">Gestor de roles</h4>
         </Col>
-        <Col
-          xs="auto"
-          className="d-flex column-gap-1 justify-content-end align-items-center text-end ms-auto">
+        <Col xs="auto" className="d-flex column-gap-1 justify-content-end align-items-center text-end ms-auto">
           {!canCrearRol && (
             <span className="m-0 p-0 text-danger font-11 text-end">
               Permiso para "crear rol" denegado. <br /> Contacta a tu administrador si lo necesitas.

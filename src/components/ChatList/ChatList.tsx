@@ -44,9 +44,7 @@ const ChatItem = ({
   placement: string;
   className?: string;
 }) => {
-  return (
-    <li className={classNames('clearfix', {odd: placement === 'left'}, className)}>{children}</li>
-  );
+  return <li className={classNames('clearfix', {odd: placement === 'left'}, className)}>{children}</li>;
 };
 
 /**
@@ -77,12 +75,8 @@ const ChatList = ({chatMessages, className}: ChatListProps) => {
             <ul className={classNames('conversation-list', className, 'px-3')}>
               {(messages || []).map((message, index) => {
                 return (
-                  <ChatItem
-                    key={index.toString()}
-                    placement={index > 0 ? (index % 2 === 0 ? '' : 'left') : 'right'}>
-                    {message.userPic && (
-                      <ChatItemAvatar userAvatar={message.userPic} postedOn={message.postedOn} />
-                    )}
+                  <ChatItem key={index.toString()} placement={index > 0 ? (index % 2 === 0 ? '' : 'left') : 'right'}>
+                    {message.userPic && <ChatItemAvatar userAvatar={message.userPic} postedOn={message.postedOn} />}
                     <ChatItemText userName={message.userName} text={message.text} />
                   </ChatItem>
                 );

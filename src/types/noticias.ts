@@ -8,7 +8,7 @@ interface BaseNoticia {
 
 export interface Noticia extends BaseNoticia {
   id: string;
-  rangoFechas: string[];
+  rangoFechas: [string, string];
 }
 
 export interface MapNoticia extends BaseNoticia {

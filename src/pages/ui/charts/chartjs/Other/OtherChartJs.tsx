@@ -1,15 +1,7 @@
 import {Card, Col, Row} from 'react-bootstrap';
 import Chart, {type ChartItem} from 'chart.js/auto';
 import {useEffect} from 'react';
-import {
-  bubbleConfig,
-  donutConfig,
-  pieConfig,
-  polarAreaConfig,
-  radarConfig,
-  scatterConfig,
-  barLineConfig
-} from './data';
+import {bubbleConfig, donutConfig, pieConfig, polarAreaConfig, radarConfig, scatterConfig, barLineConfig} from './data';
 
 import {PageBreadcrumb} from '@/components';
 
@@ -97,10 +89,7 @@ const OtherChartJs = () => {
               <h4 className="header-title mb-4">Polar Area</h4>
               <div dir="ltr">
                 <div className="mt-3 chartjs-chart" style={{height: 320}}>
-                  <canvas
-                    id="polar-area-example"
-                    data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2, #f56f36"
-                  />
+                  <canvas id="polar-area-example" data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
                 </div>
               </div>
             </Card.Body>

@@ -11,8 +11,8 @@ const DefaultBadges = () => {
       <Card.Body>
         <h4 className="header-title">Default</h4>
         <p className="text-muted font-14 mb-3">
-          A simple labeling component. Badges scale to match the size of the immediate parent
-          element by using relative font sizing and <code>em</code> units.
+          A simple labeling component. Badges scale to match the size of the immediate parent element by using relative
+          font sizing and <code>em</code> units.
         </p>
 
         <h1>
@@ -47,8 +47,8 @@ const ContexualBadges = () => {
       <Card.Body>
         <h4 className="header-title">Contexual variations</h4>
         <p className="text-muted font-14 mb-3">
-          Add any of the below mentioned modifier classes to change the appearance of a badge. Badge
-          can be more contextual as well. Just use regular convention e.g.
+          Add any of the below mentioned modifier classes to change the appearance of a badge. Badge can be more
+          contextual as well. Just use regular convention e.g.
           <code>badge-*color</code>,<code>bg-primary</code> to have badge with different background.
         </p>
 
@@ -66,16 +66,12 @@ const ContexualBadges = () => {
 
         <h5 className="mt-4">Lighten Badges</h5>
         <p className="text-muted font-14 mb-3">
-          Using the <code>.badge-*-lighten</code> modifier class, you can have more soften
-          variation.
+          Using the <code>.badge-*-lighten</code> modifier class, you can have more soften variation.
         </p>
 
         {extendedColorVariants.map((color, index) => {
           return (
-            <Badge
-              bg=""
-              className={classNames('me-1', 'badge-' + color + '-lighten')}
-              key={index.toString()}>
+            <Badge bg="" className={classNames('me-1', 'badge-' + color + '-lighten')} key={index.toString()}>
               {toSentenceCase(color)}
             </Badge>
           );
@@ -88,10 +84,7 @@ const ContexualBadges = () => {
 
         {extendedColorVariants.map((color, index) => {
           return (
-            <Badge
-              bg=""
-              className={classNames('me-1', 'badge-outline-' + color)}
-              key={index.toString()}>
+            <Badge bg="" className={classNames('me-1', 'badge-outline-' + color)} key={index.toString()}>
               {toSentenceCase(color)}
             </Badge>
           );
@@ -130,11 +123,7 @@ const PillBadges = () => {
 
         {extendedColorVariants.map((color, index) => {
           return (
-            <Badge
-              bg=""
-              pill
-              className={classNames('me-1', 'badge-' + color + '-lighten')}
-              key={index.toString()}>
+            <Badge bg="" pill className={classNames('me-1', 'badge-' + color + '-lighten')} key={index.toString()}>
               {toSentenceCase(color)}
             </Badge>
           );
@@ -147,11 +136,7 @@ const PillBadges = () => {
 
         {extendedColorVariants.map((color, index) => {
           return (
-            <Badge
-              bg=""
-              pill
-              className={classNames('me-1', 'badge-outline-' + color)}
-              key={index.toString()}>
+            <Badge bg="" pill className={classNames('me-1', 'badge-outline-' + color)} key={index.toString()}>
               {toSentenceCase(color)}
             </Badge>
           );
@@ -167,8 +152,7 @@ const BadgePosition = () => {
       <Card.Body>
         <h4 className="header-title">Badge Positioned</h4>
         <p className="text-muted font-14 mb-3">
-          Use utilities to modify a <code>.badge</code> and position it in the corner of a link or
-          button.
+          Use utilities to modify a <code>.badge</code> and position it in the corner of a link or button.
         </p>
 
         <Row>

@@ -28,9 +28,7 @@ const MovableCard = ({item}: {item: Color}) => {
     <Card className={classNames('mb-0', 'mt-3', 'text-white', 'bg-' + item.color)}>
       <Card.Body>
         <blockquote className="card-bodyquote mb-0">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-          </p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           <footer>
             Someone famous in <cite title="Source Title">Source Title</cite>
           </footer>
@@ -45,11 +43,7 @@ const MovableCard2 = ({item}: {item: TeamMember}) => {
     <Card className="mb-0 mt-2">
       <Card.Body>
         <div className="d-flex align-itames-start">
-          <img
-            src={item.avatar}
-            alt=""
-            className="me-3 d-none d-sm-block avatar-sm rounded-circle"
-          />
+          <img src={item.avatar} alt="" className="me-3 d-none d-sm-block avatar-sm rounded-circle" />
           <div className="w-100">
             <h5 className="mb-1 mt-0">{item.name}</h5>
             <p> {item.position} </p>
@@ -71,11 +65,7 @@ const MovableCard3 = ({item}: {item: TeamMember}) => {
     <Card className="mb-0 mt-2">
       <Card.Body>
         <div className="d-flex align-itames-start">
-          <img
-            src={item.avatar}
-            alt=""
-            className="me-3 d-none d-sm-block avatar-sm rounded-circle"
-          />
+          <img src={item.avatar} alt="" className="me-3 d-none d-sm-block avatar-sm rounded-circle" />
           <div className="w-100 overflow-hidden">
             <h5 className="mb-1 mt-1">{item.name}</h5>
             <p className="mb-0"> {item.position} </p>
@@ -241,11 +231,7 @@ const DragNDropUI = () => {
                 <Col md={6}>
                   <div className="bg-dragula p-2 p-lg-4">
                     <h5 className="mt-0">Part 1</h5>
-                    <ReactSortable
-                      group="teamList"
-                      list={team1}
-                      setList={setTeam1}
-                      className="py-2">
+                    <ReactSortable group="teamList" list={team1} setList={setTeam1} className="py-2">
                       {(team1 || []).map((item, index) => {
                         return <MovableCard2 key={index.toString()} item={item} />;
                       })}
@@ -255,11 +241,7 @@ const DragNDropUI = () => {
                 <Col md={6}>
                   <div className="bg-dragula p-2 p-lg-4">
                     <h5 className="mt-0">Part 2</h5>
-                    <ReactSortable
-                      group="teamList"
-                      list={team2}
-                      setList={setTeam2}
-                      className="py-2">
+                    <ReactSortable group="teamList" list={team2} setList={setTeam2} className="py-2">
                       {(team2 || []).map((item, index) => {
                         return <MovableCard2 key={index.toString()} item={item} />;
                       })}

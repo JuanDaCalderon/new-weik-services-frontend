@@ -10,8 +10,8 @@ const SingleButtonDropdown = () => {
       <Card.Body>
         <h4 className="header-title">Single button dropdowns</h4>
         <p className="text-muted font-14">
-          You can use <code>DropdownButton</code> to create a simple dropdown. Also, you can use
-          prop <code>as</code> to create custom element typeof dropdown.
+          You can use <code>DropdownButton</code> to create a simple dropdown. Also, you can use prop <code>as</code> to
+          create custom element typeof dropdown.
         </p>
 
         <Row>
@@ -66,9 +66,7 @@ const ColorVariantButtonDropdown = () => {
     <Card>
       <Card.Body>
         <h4 className="header-title">Variant</h4>
-        <p className="text-muted font-14 mb-3">
-          The best part is you can do this with any button variant, too:
-        </p>
+        <p className="text-muted font-14 mb-3">The best part is you can do this with any button variant, too:</p>
 
         {colorVariants.map((color, index) => {
           return (
@@ -95,8 +93,7 @@ const AnimatedButtonDropdown = () => {
       <Card.Body>
         <h4 className="header-title">Animated Dropdown</h4>
         <p className="text-muted font-14">
-          Add <code>.dropdown-menu-animated</code> to a <code>Dropdown.Menu</code> to have animated
-          dropdown menu.
+          Add <code>.dropdown-menu-animated</code> to a <code>Dropdown.Menu</code> to have animated dropdown menu.
         </p>
         <Dropdown>
           <Dropdown.Toggle variant="light">Animated Dropdown</Dropdown.Toggle>
@@ -241,11 +238,7 @@ const SplitColorVariantButtonDropdown = () => {
 
         {colorVariants.map((color, index) => {
           return (
-            <SplitButton
-              key={index.toString()}
-              variant={color}
-              title={toSentenceCase(color)}
-              className="me-1 mb-1">
+            <SplitButton key={index.toString()} variant={color} title={toSentenceCase(color)} className="me-1 mb-1">
               <Dropdown.Item eventKey="1">Action</Dropdown.Item>
               <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
               <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
@@ -265,8 +258,7 @@ const ButtonDropdownSizes = () => {
       <Card.Body>
         <h4 className="header-title">Sizing</h4>
         <p className="text-muted font-14">
-          Button dropdowns work with buttons of all sizes, including default and split dropdown
-          buttons.
+          Button dropdowns work with buttons of all sizes, including default and split dropdown buttons.
         </p>
 
         {[DropdownButton, SplitButton].map((DropdownType, index) => (
@@ -380,8 +372,8 @@ const DropdownWithText = () => {
         <h4 className="header-title">Text</h4>
 
         <p className="text-muted font-14">
-          Place any freeform text within a dropdown menu with text and use spacing utilities. Note
-          that you’ll likely need additional sizing styles to constrain the menu width.
+          Place any freeform text within a dropdown menu with text and use spacing utilities. Note that you’ll likely
+          need additional sizing styles to constrain the menu width.
         </p>
 
         <Dropdown>
@@ -403,8 +395,8 @@ const CustomDropdown = () => {
         <h4 className="header-title">Forms</h4>
 
         <p className="text-muted font-14">
-          Put a form within a dropdown menu, or make it into a dropdown menu, and use margin or
-          padding utilities to give it the negative space you require.
+          Put a form within a dropdown menu, or make it into a dropdown menu, and use margin or padding utilities to
+          give it the negative space you require.
         </p>
 
         <Dropdown>

@@ -1,11 +1,6 @@
 import {Card, Col, Row} from 'react-bootstrap';
 import ReactApexChart from 'react-apexcharts';
-import {
-  BasicHeatmapOps,
-  MultipleHeatmapOps,
-  ColorRangeHeatmapOps,
-  RangewithoutShadeOps
-} from './data';
+import {BasicHeatmapOps, MultipleHeatmapOps, ColorRangeHeatmapOps, RangewithoutShadeOps} from './data';
 
 import {PageBreadcrumb} from '@/components';
 

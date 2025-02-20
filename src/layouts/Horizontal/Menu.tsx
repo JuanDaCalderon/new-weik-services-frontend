@@ -35,12 +35,7 @@ const MenuItemWithChildren = memo(function MenuItemWithChildren({
   );
 
   return (
-    <Tag
-      className={classNames(
-        'dropdown',
-        className,
-        activeMenuItems!.includes(item.key) ? 'active' : ''
-      )}>
+    <Tag className={classNames('dropdown', className, activeMenuItems!.includes(item.key) ? 'active' : '')}>
       <Link
         to=""
         onClick={toggleMenuItem}
@@ -67,10 +62,7 @@ const MenuItemWithChildren = memo(function MenuItemWithChildren({
                     <MenuItemWithChildren
                       item={child}
                       tag="div"
-                      linkClassName={classNames(
-                        'dropdown-item',
-                        activeMenuItems!.includes(child.key) ? 'active' : ''
-                      )}
+                      linkClassName={classNames('dropdown-item', activeMenuItems!.includes(child.key) ? 'active' : '')}
                       activeMenuItems={activeMenuItems}
                       className=""
                       subMenuClassNames={classNames('dropdown-menu')}

@@ -12,61 +12,57 @@ const TypographyUI = () => {
             <Card.Body>
               <h4 className="header-title">Display headings</h4>
               <p className="text-muted font-14">
-                Traditional heading elements are designed to work best in the meat of your page
-                content. When you need a heading to stand out, consider using a display heading—a
-                larger, slightly more opinionated heading style.
+                Traditional heading elements are designed to work best in the meat of your page content. When you need a
+                heading to stand out, consider using a display heading—a larger, slightly more opinionated heading
+                style.
               </p>
 
               <h1 className="display-1">Display 1</h1>
               <p className="text-muted">
-                Suspendisse vel quam malesuada, aliquet sem sit amet, fringilla elit. Morbi tempor
-                tincidunt tempor. Etiam id turpis viverra, vulputate sapien nec, varius sem.
-                Curabitur ullamcorper fringilla eleifend. In ut eros hendrerit est consequat posuere
-                et at velit.
+                Suspendisse vel quam malesuada, aliquet sem sit amet, fringilla elit. Morbi tempor tincidunt tempor.
+                Etiam id turpis viverra, vulputate sapien nec, varius sem. Curabitur ullamcorper fringilla eleifend. In
+                ut eros hendrerit est consequat posuere et at velit.
               </p>
 
               <div className="clearfix"></div>
 
               <h1 className="display-2">Display 2</h1>
               <p className="text-muted">
-                In nec rhoncus eros. Vestibulum eu mattis nisl. Quisque viverra viverra magna nec
-                pulvinar. Maecenas pellentesque porta augue, consectetur facilisis diam porttitor
-                sed. Suspendisse tempor est sodales augue rutrum tincidunt. Quisque a malesuada
-                purus.
+                In nec rhoncus eros. Vestibulum eu mattis nisl. Quisque viverra viverra magna nec pulvinar. Maecenas
+                pellentesque porta augue, consectetur facilisis diam porttitor sed. Suspendisse tempor est sodales augue
+                rutrum tincidunt. Quisque a malesuada purus.
               </p>
 
               <div className="clearfix"></div>
 
               <h1 className="display-3">Display 3</h1>
               <p className="text-muted">
-                Vestibulum auctor tincidunt semper. Phasellus ut vulputate lacus. Suspendisse
-                ultricies mi eros, sit amet tempor nulla varius sed. Proin nisl nisi, feugiat quis
-                bibendum vitae, dapibus in tellus.
+                Vestibulum auctor tincidunt semper. Phasellus ut vulputate lacus. Suspendisse ultricies mi eros, sit
+                amet tempor nulla varius sed. Proin nisl nisi, feugiat quis bibendum vitae, dapibus in tellus.
               </p>
 
               <div className="clearfix"></div>
 
               <h1 className="display-4">Display 4</h1>
               <p className="text-muted mb-0">
-                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit,
-                velit a consectetur egestas, diam arcu fermentum justo, eget ultrices arcu eros vel
-                erat.
+                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit, velit a consectetur
+                egestas, diam arcu fermentum justo, eget ultrices arcu eros vel erat.
               </p>
 
               <div className="clearfix"></div>
 
               <h1 className="display-5">Display 5</h1>
               <p className="text-muted mb-0">
-                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit,
-                velit a consectetur egestas, diam arcu fermentum justo, eget.
+                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit, velit a consectetur
+                egestas, diam arcu fermentum justo, eget.
               </p>
 
               <div className="clearfix"></div>
 
               <h1 className="display-6">Display 6</h1>
               <p className="text-muted mb-0">
-                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit,
-                velit a consectetur egestas, diam arcu fermentum justo, eget.
+                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit, velit a consectetur
+                egestas, diam arcu fermentum justo, eget.
               </p>
             </Card.Body>
           </Card>
@@ -82,63 +78,58 @@ const TypographyUI = () => {
                 All HTML headings,
                 <code className="highlighter-rouge">&lt;h1&gt;</code> through
                 <code>&lt;h6&gt;</code>, are available. <code>.h1</code> through
-                <code>.h6</code> classes are also available, for when you want to match the font
-                styling of a heading but still want your text to be displayed inline.
+                <code>.h6</code> classes are also available, for when you want to match the font styling of a heading
+                but still want your text to be displayed inline.
               </p>
 
               <h1>This is a Heading 1</h1>
               <p className="text-muted">
-                Suspendisse vel quam malesuada, aliquet sem sit amet, fringilla elit. Morbi tempor
-                tincidunt tempor. Etiam id turpis viverra, vulputate sapien nec, varius sem.
-                Curabitur ullamcorper fringilla eleifend. In ut eros hendrerit est consequat posuere
-                et at velit.
+                Suspendisse vel quam malesuada, aliquet sem sit amet, fringilla elit. Morbi tempor tincidunt tempor.
+                Etiam id turpis viverra, vulputate sapien nec, varius sem. Curabitur ullamcorper fringilla eleifend. In
+                ut eros hendrerit est consequat posuere et at velit.
               </p>
 
               <div className="clearfix"></div>
 
               <h2>This is a Heading 2</h2>
               <p className="text-muted">
-                In nec rhoncus eros. Vestibulum eu mattis nisl. Quisque viverra viverra magna nec
-                pulvinar. Maecenas pellentesque porta augue, consectetur facilisis diam porttitor
-                sed. Suspendisse tempor est sodales augue rutrum tincidunt. Quisque a malesuada
-                purus.
+                In nec rhoncus eros. Vestibulum eu mattis nisl. Quisque viverra viverra magna nec pulvinar. Maecenas
+                pellentesque porta augue, consectetur facilisis diam porttitor sed. Suspendisse tempor est sodales augue
+                rutrum tincidunt. Quisque a malesuada purus.
               </p>
 
               <div className="clearfix"></div>
 
               <h3>This is a Heading 3</h3>
               <p className="text-muted">
-                Vestibulum auctor tincidunt semper. Phasellus ut vulputate lacus. Suspendisse
-                ultricies mi eros, sit amet tempor nulla varius sed. Proin nisl nisi, feugiat quis
-                bibendum vitae, dapibus in tellus.
+                Vestibulum auctor tincidunt semper. Phasellus ut vulputate lacus. Suspendisse ultricies mi eros, sit
+                amet tempor nulla varius sed. Proin nisl nisi, feugiat quis bibendum vitae, dapibus in tellus.
               </p>
 
               <div className="clearfix"></div>
 
               <h4>This is a Heading 4</h4>
               <p className="text-muted">
-                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit,
-                velit a consectetur egestas, diam arcu fermentum justo, eget ultrices arcu eros vel
-                erat.
+                Nulla et mattis nunc. Curabitur scelerisque commodo condimentum. Mauris blandit, velit a consectetur
+                egestas, diam arcu fermentum justo, eget ultrices arcu eros vel erat.
               </p>
 
               <div className="clearfix"></div>
 
               <h5>This is a Heading 5</h5>
               <p className="text-muted">
-                Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at
-                volutpat. In egestas mattis dui. Aliquam mattis dictum aliquet. Nulla sapien mauris,
-                eleifend et sem ac, commodo dapibus odio. Vivamus pretium nec odio cursus elementum.
-                Suspendisse molestie ullamcorper ornare.
+                Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas
+                mattis dui. Aliquam mattis dictum aliquet. Nulla sapien mauris, eleifend et sem ac, commodo dapibus
+                odio. Vivamus pretium nec odio cursus elementum. Suspendisse molestie ullamcorper ornare.
               </p>
 
               <div className="clearfix"></div>
 
               <h6>This is a Heading 6</h6>
               <p className="text-muted mb-0">
-                Donec ultricies, lacus id tempor condimentum, orci leo faucibus sem, a molestie
-                libero lectus ac justo. ultricies mi eros, sit amet tempor nulla varius sed. Proin
-                nisl nisi, feugiat quis bibendum vitae, dapibus in tellus.
+                Donec ultricies, lacus id tempor condimentum, orci leo faucibus sem, a molestie libero lectus ac justo.
+                ultricies mi eros, sit amet tempor nulla varius sed. Proin nisl nisi, feugiat quis bibendum vitae,
+                dapibus in tellus.
               </p>
             </Card.Body>
           </Card>
@@ -186,25 +177,15 @@ const TypographyUI = () => {
               <h4 className="header-title">Contextual Text Colors</h4>
               <p className="text-muted font-14">Available color variations.</p>
 
-              <p className="text-muted">
-                Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.
-              </p>
+              <p className="text-muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>
               <p className="text-primary">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p className="text-success">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </p>
-              <p className="text-info">
-                Maecenas sed diam eget risus varius blandit sit amet non magna.
-              </p>
+              <p className="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+              <p className="text-info">Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
               <p className="text-warning">Etiam porta sem malesuada magna mollis euismod.</p>
               <p className="text-danger">Donec ullamcorper nulla non metus auctor fringilla.</p>
               <p className="text-dark">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p className="text-light bg-dark">
-                Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.
-              </p>
-              <p className="text-black-50">
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
+              <p className="text-light bg-dark">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>
+              <p className="text-black-50">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
               <p className="text-white-50 bg-dark mb-0">
                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
               </p>
@@ -218,9 +199,7 @@ const TypographyUI = () => {
           <Card>
             <Card.Body>
               <h4 className="header-title">Unordered</h4>
-              <p className="text-muted">
-                A list of items in which the order does not explicitly matter.
-              </p>
+              <p className="text-muted">A list of items in which the order does not explicitly matter.</p>
 
               <ul>
                 <li>Lorem ipsum dolor sit amet</li>
@@ -247,9 +226,7 @@ const TypographyUI = () => {
           <Card>
             <Card.Body>
               <h4 className="header-title">Ordered</h4>
-              <p className="text-muted">
-                A list of items in which the order does explicitly matter.
-              </p>
+              <p className="text-muted">A list of items in which the order does explicitly matter.</p>
 
               <ol>
                 <li>Lorem ipsum dolor sit amet</li>
@@ -277,8 +254,8 @@ const TypographyUI = () => {
             <Card.Body>
               <h4 className="header-title">Unstyled</h4>
               <p className="text-muted">
-                <strong>This only applies to immediate children list items</strong>, meaning you
-                will need to add the class for any nested lists as well.
+                <strong>This only applies to immediate children list items</strong>, meaning you will need to add the
+                class for any nested lists as well.
               </p>
 
               <ul className="list-unstyled">
@@ -323,8 +300,7 @@ const TypographyUI = () => {
 
               <blockquote className="blockquote">
                 <p className="mb-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-                  ante.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
                 </p>
               </blockquote>
               <figcaption className="blockquote-footer">
@@ -337,8 +313,7 @@ const TypographyUI = () => {
 
               <blockquote className="blockquote text-center">
                 <p className="mb-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-                  ante.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
                 </p>
               </blockquote>
               <figcaption className="blockquote-footer text-center">
@@ -347,8 +322,7 @@ const TypographyUI = () => {
 
               <blockquote className="blockquote text-end">
                 <p className="mb-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-                  ante.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
                 </p>
               </blockquote>
               <figcaption className="blockquote-footer text-end">
@@ -362,10 +336,9 @@ const TypographyUI = () => {
             <Card.Body>
               <h4 className="header-title">Description list alignment</h4>
               <p className="text-muted">
-                Align terms and descriptions horizontally by using our grid system’s predefined
-                classes (or semantic mixins). For longer terms, you can optionally add a
-                <code className="highlighter-rouge">.text-truncate</code> class to truncate the text
-                with an ellipsis.
+                Align terms and descriptions horizontally by using our grid system’s predefined classes (or semantic
+                mixins). For longer terms, you can optionally add a
+                <code className="highlighter-rouge">.text-truncate</code> class to truncate the text with an ellipsis.
               </p>
 
               <dl className="row">
@@ -374,9 +347,7 @@ const TypographyUI = () => {
 
                 <dt className="col-sm-3">Euismod</dt>
                 <dd className="col-sm-9">
-                  <p>
-                    Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-                  </p>
+                  <p>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</p>
                   <p>Donec id elit non mi porta gravida at eget metus.</p>
                 </dd>
 
@@ -385,17 +356,15 @@ const TypographyUI = () => {
 
                 <dt className="col-sm-3 text-truncate">Truncated term is truncated</dt>
                 <dd className="col-sm-9">
-                  Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                  fermentum massa justo sit amet risus.
+                  Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit
+                  amet risus.
                 </dd>
 
                 <dt className="col-sm-3">Nesting</dt>
                 <dd className="col-sm-9">
                   <dl className="row">
                     <dt className="col-sm-4">Nested definition list</dt>
-                    <dd className="col-sm-8">
-                      Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.
-                    </dd>
+                    <dd className="col-sm-8">Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.</dd>
                   </dl>
                 </dd>
               </dl>

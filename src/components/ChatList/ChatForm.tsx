@@ -2,11 +2,7 @@ import {Row, Col} from 'react-bootstrap';
 import {Form, TextInput} from '@/components';
 import {NewMessagePosted, chatMessageSchema} from './hooks/useChatList';
 
-const ChatForm = ({
-  onNewMessagesPosted
-}: {
-  onNewMessagesPosted: (message: NewMessagePosted) => void;
-}) => {
+const ChatForm = ({onNewMessagesPosted}: {onNewMessagesPosted: (message: NewMessagePosted) => void}) => {
   return (
     <Form
       name="chat-form"

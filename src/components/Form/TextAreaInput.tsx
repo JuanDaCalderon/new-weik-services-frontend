@@ -55,9 +55,7 @@ export default function TextInput({
             </Form.Text>
           )}
           {errors && fieldState.error && (
-            <Form.Control.Feedback type="invalid">
-              {fieldState.error['message']}
-            </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{fieldState.error['message']}</Form.Control.Feedback>
           )}
         </Form.Group>
       )}

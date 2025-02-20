@@ -31,14 +31,9 @@ const EdicionRol = memo(function EdicionRol({row}: {row: RowTable<thisRol>}) {
   }, []);
 
   const enviarRolBasics = useCallback(async () => {
-    const rolBasicsUpdated = getUpdatedFields<RolCreationBasics>(
-      rolBasicsIniciales,
-      rolEditedBasics
-    );
+    const rolBasicsUpdated = getUpdatedFields<RolCreationBasics>(rolBasicsIniciales, rolEditedBasics);
     if (checkIfRolExists(rolBasicsUpdated as Rol, rolesFromStore)) {
-      toast.error(
-        'No se puede actualizar el rol, ya existe un registro con el mismo nombre o descripción'
-      );
+      toast.error('No se puede actualizar el rol, ya existe un registro con el mismo nombre o descripción');
       return;
     }
     if (Object.keys(rolBasicsUpdated).length > 0) {
@@ -56,8 +51,7 @@ const EdicionRol = memo(function EdicionRol({row}: {row: RowTable<thisRol>}) {
         <strong>Edición del rol {row.original.rolName}</strong>
       </span>
       <p className="my-0 py-0">
-        Edita el nombre y la descripción del rol utilizando los campos a continuación, y guarda los
-        cambios.
+        Edita el nombre y la descripción del rol utilizando los campos a continuación, y guarda los cambios.
       </p>
       <Col className="mt-1" lg={12}>
         <Form.Label className="mb-0" htmlFor="rol">
@@ -92,14 +86,8 @@ const EdicionRol = memo(function EdicionRol({row}: {row: RowTable<thisRol>}) {
         </span>
       </Col>
       <Col xs="auto" md={12} className="ms-auto">
-        <Button
-          className="shadow-sm"
-          variant="info"
-          disabled={!hasTouched}
-          onClick={enviarRolBasics}>
-          {isLoadingUpdatingBasics && (
-            <Spinner className="spinner-border-sm" tag="span" color="white" />
-          )}
+        <Button className="shadow-sm" variant="info" disabled={!hasTouched} onClick={enviarRolBasics}>
+          {isLoadingUpdatingBasics && <Spinner className="spinner-border-sm" tag="span" color="white" />}
           {!isLoadingUpdatingBasics && 'Guardar cambios'}
         </Button>
       </Col>

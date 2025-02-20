@@ -31,10 +31,7 @@ export default function useTask(task: ListTaskItem) {
   /*
    * mark completd on selected task
    */
-  const markCompleted = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    callback?: (task: ListTaskItem) => void
-  ) => {
+  const markCompleted = (e: React.ChangeEvent<HTMLInputElement>, callback?: (task: ListTaskItem) => void) => {
     setCompleted(e.target.checked);
     if (callback) callback(task);
   };

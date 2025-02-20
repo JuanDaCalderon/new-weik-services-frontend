@@ -10,9 +10,7 @@ export default function useOrders() {
     let updatedData = orders;
     //  filter
     updatedData =
-      OrderStatusGroup === 'All'
-        ? orders
-        : [...orders].filter((o) => o.payment_status?.includes(OrderStatusGroup));
+      OrderStatusGroup === 'All' ? orders : [...orders].filter((o) => o.payment_status?.includes(OrderStatusGroup));
     setOrderList(updatedData);
   };
 

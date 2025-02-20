@@ -23,15 +23,7 @@ export type PayLoadRolesPermisosType = {
 };
 
 export type RolCreationBasics = Partial<
-  Omit<
-    Rol,
-    | 'id'
-    | 'usuarioCreacion'
-    | 'usuarioUpdated'
-    | 'fechaCreacion'
-    | 'fechaActualizacion'
-    | 'permisos'
-  >
+  Omit<Rol, 'id' | 'usuarioCreacion' | 'usuarioUpdated' | 'fechaCreacion' | 'fechaActualizacion' | 'permisos'>
 >;
 
 /* -------- Utils -------- */

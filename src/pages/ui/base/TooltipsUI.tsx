@@ -12,31 +12,21 @@ const Basic = () => {
 
         <p className="muted mb-0">
           Tight pants next level keffiyeh
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="overlay-example"> Default title </Tooltip>}>
+          <OverlayTrigger placement="top" overlay={<Tooltip id="overlay-example"> Default title </Tooltip>}>
             <Link to=""> you probably </Link>
           </OverlayTrigger>
-          haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag
-          stumptown. Farm-to-table seitan, mcsweeney's fixie sustainable quinoa 8-bit american
-          apparel
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="overlay-example"> Another one </Tooltip>}>
+          haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown. Farm-to-table
+          seitan, mcsweeney's fixie sustainable quinoa 8-bit american apparel
+          <OverlayTrigger placement="top" overlay={<Tooltip id="overlay-example"> Another one </Tooltip>}>
             <Link to=""> have a </Link>
           </OverlayTrigger>
-          terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo thundercats. Tofu
-          biodiesel williamsburg marfa, four loko mcsweeney's cleanse vegan chambray. A really
-          ironic artisan
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="overlay-example"> Another one here too </Tooltip>}>
+          terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo thundercats. Tofu biodiesel
+          williamsburg marfa, four loko mcsweeney's cleanse vegan chambray. A really ironic artisan
+          <OverlayTrigger placement="top" overlay={<Tooltip id="overlay-example"> Another one here too </Tooltip>}>
             <Link to=""> whatever </Link>
           </OverlayTrigger>
           keytar, scenester farm-to-table banksy Austin
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="overlay-example"> The last tip! </Tooltip>}>
+          <OverlayTrigger placement="top" overlay={<Tooltip id="overlay-example"> The last tip! </Tooltip>}>
             <Link to=""> twitter handle </Link>
           </OverlayTrigger>
           freegan cred raw denim single-origin coffee viral.
@@ -58,9 +48,7 @@ const Direction = () => {
     <Card>
       <Card.Body>
         <h4 className="header-title">Four Directions</h4>
-        <p className="text-muted font-14">
-          Four options are available: top, right, bottom, and left aligned.
-        </p>
+        <p className="text-muted font-14">Four options are available: top, right, bottom, and left aligned.</p>
 
         {directions.map((direction, index) => (
           <OverlayTrigger
@@ -87,9 +75,8 @@ const DisabledElements = () => {
       <Card.Body>
         <h4 className="header-title">Disabled Elements</h4>
         <p className="text-muted font-14">
-          Elements with the <code>disabled</code> attribute aren’t interactive, meaning users cannot
-          hover or click them to trigger a popover (or tooltip). As a workaround, you’ll want to
-          trigger the popover from a wrapper
+          Elements with the <code>disabled</code> attribute aren’t interactive, meaning users cannot hover or click them
+          to trigger a popover (or tooltip). As a workaround, you’ll want to trigger the popover from a wrapper
           <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> and override the
           <code>pointer-events</code> on the disabled element.
         </p>

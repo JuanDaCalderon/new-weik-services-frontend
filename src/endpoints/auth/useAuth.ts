@@ -73,35 +73,29 @@ const useAuth = () => {
         DebugUtil.logSuccess('¡Sesión cerrada exitosamente!');
       }
     } catch (error: any) {
-      DebugUtil.logError(
-        '¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!',
-        error
-      );
+      DebugUtil.logError('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!', error);
       toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
     } finally {
       setIsLoadingLogOut(false);
     }
   }, [dispatch, id, isLoggedIn, setOfflineUser]);
 
-  const authRecoverPassword = useCallback(
-    async ({email}: {email: string}): Promise<string | null> => {
-      let returnEmail: string | null = null;
-      try {
-        await sendPasswordResetEmail(auth, email);
-        returnEmail = email;
-        DebugUtil.logSuccess('La solicitud ha sido creada correctamente', email);
-      } catch (error: any) {
-        let code: string = '';
-        error instanceof Error && (code = error.message);
-        DebugUtil.logError(code, error);
-        if (code === 'Firebase: Error (auth/user-not-found).')
-          toast.error('¡Ups parece que no tenemos ningún usuario registrado con este email!');
-        else toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
-      }
-      return returnEmail;
-    },
-    []
-  );
+  const authRecoverPassword = useCallback(async ({email}: {email: string}): Promise<string | null> => {
+    let returnEmail: string | null = null;
+    try {
+      await sendPasswordResetEmail(auth, email);
+      returnEmail = email;
+      DebugUtil.logSuccess('La solicitud ha sido creada correctamente', email);
+    } catch (error: any) {
+      let code: string = '';
+      error instanceof Error && (code = error.message);
+      DebugUtil.logError(code, error);
+      if (code === 'Firebase: Error (auth/user-not-found).')
+        toast.error('¡Ups parece que no tenemos ningún usuario registrado con este email!');
+      else toast.error('¡Ups parece que ha ocurrido un error, intenta de nuevo más tarde!');
+    }
+    return returnEmail;
+  }, []);
 
   return {isLoadingLogOut, authLogIn, authLogOut, authRecoverPassword};
 };

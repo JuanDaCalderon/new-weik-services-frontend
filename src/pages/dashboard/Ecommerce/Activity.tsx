@@ -10,12 +10,7 @@ const Activity = () => {
         <CardTitle
           containerClass="d-flex align-items-center justify-content-between mb-2"
           title="Recent Activity"
-          menuItems={[
-            {label: 'Sales Report'},
-            {label: 'Export Report'},
-            {label: 'Profit'},
-            {label: 'Action'}
-          ]}
+          menuItems={[{label: 'Sales Report'}, {label: 'Export Report'}, {label: 'Profit'}, {label: 'Action'}]}
         />
       </Card.Body>
       <SimpleBar style={{maxHeight: '412px', width: '100%'}}>

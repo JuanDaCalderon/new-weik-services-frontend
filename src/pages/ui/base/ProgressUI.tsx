@@ -26,8 +26,8 @@ const WithLabels = () => {
       <Card.Body>
         <h4 className="header-title">Labels</h4>
         <p className="text-muted font-14">
-          Add a <code>label</code> prop to show a visible percentage. For low percentages, consider
-          adding a min-width to ensure the label's text is fully visible.
+          Add a <code>label</code> prop to show a visible percentage. For low percentages, consider adding a min-width
+          to ensure the label's text is fully visible.
         </p>
 
         <ProgressBar now={25} label={'25%'} />
@@ -78,10 +78,9 @@ const Height = () => {
       <Card.Body>
         <h4 className="header-title">Height</h4>
         <p className="text-muted font-14">
-          We only set a <code>height</code> value on the <code>ProgressBar</code>, so if you change
-          that value the inner <code>.progress-bar</code> will automatically resize accordingly. Use{' '}
-          <code>.progress-sm</code>,<code>.progress-md</code>,<code>.progress-lg</code>,
-          <code>.progress-xl</code> classes.
+          We only set a <code>height</code> value on the <code>ProgressBar</code>, so if you change that value the inner{' '}
+          <code>.progress-bar</code> will automatically resize accordingly. Use <code>.progress-sm</code>,
+          <code>.progress-md</code>,<code>.progress-lg</code>,<code>.progress-xl</code> classes.
         </p>
 
         <ProgressBar now={25} variant="danger" style={{height: 1}} />
@@ -101,8 +100,8 @@ const Striped = () => {
       <Card.Body>
         <h4 className="header-title">Striped</h4>
         <p className="text-muted font-14">
-          Add <code>striped</code> to any <code>ProgressBar</code> to apply a stripe via CSS
-          gradient over the progressBar bar’s background color.
+          Add <code>striped</code> to any <code>ProgressBar</code> to apply a stripe via CSS gradient over the
+          progressBar bar’s background color.
         </p>
 
         <ProgressBar now={10} striped />

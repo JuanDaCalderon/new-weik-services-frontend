@@ -4,15 +4,8 @@ import {Card, InputGroup, Form, Button} from 'react-bootstrap';
 import usePassword from './usePassword';
 
 const PasswordBox = memo(function PasswordBox() {
-  const {
-    isLoading,
-    handleInputChange,
-    isFormChanged,
-    passwordForm,
-    setShowPassword,
-    showPassword,
-    updateNewPassword
-  } = usePassword();
+  const {isLoading, handleInputChange, isFormChanged, passwordForm, setShowPassword, showPassword, updateNewPassword} =
+    usePassword();
 
   return (
     <Card>
@@ -32,9 +25,7 @@ const PasswordBox = memo(function PasswordBox() {
               value={passwordForm.password}
             />
             <div
-              className={`input-group-text input-group-password py-0 px-2 ${
-                showPassword ? 'show-password' : ''
-              }`}
+              className={`input-group-text input-group-password py-0 px-2 ${showPassword ? 'show-password' : ''}`}
               data-password={showPassword ? 'true' : 'false'}>
               <span
                 className="password-eye"
@@ -57,9 +48,7 @@ const PasswordBox = memo(function PasswordBox() {
               value={passwordForm.confirmPassword}
             />
             <div
-              className={`input-group-text input-group-password py-0 px-2 ${
-                showPassword ? 'show-password' : ''
-              }`}
+              className={`input-group-text input-group-password py-0 px-2 ${showPassword ? 'show-password' : ''}`}
               data-password={showPassword ? 'true' : 'false'}>
               <span
                 className="password-eye"

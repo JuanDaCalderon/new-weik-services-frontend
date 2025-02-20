@@ -12,8 +12,7 @@ const GridUI = () => {
             <Card.Body>
               <h4 className="header-title">Grid options</h4>
               <p className="text-muted font-13">
-                See how aspects of the Bootstrap grid system work across multiple devices with a
-                handy table.
+                See how aspects of the Bootstrap grid system work across multiple devices with a handy table.
               </p>
 
               <Table responsive bordered striped>

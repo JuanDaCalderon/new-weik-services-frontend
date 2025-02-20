@@ -14,4 +14,5 @@ export type ModalProps = {
   onHide?: () => void;
   onShow?: () => void;
   showFooter?: boolean;
+  size?: 'sm' | 'lg' | 'xl';
 };

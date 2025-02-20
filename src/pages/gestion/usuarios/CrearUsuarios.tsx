@@ -21,10 +21,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   const clientes = useAppSelector(clientesOptionsSelector);
   const clientesOptions: Option[] = useMemo(() => {
     const optionsClients: Option[] = [];
-    optionsClients.push(
-      {value: THIS_CLIENT_INFO.DOMAIN, label: THIS_CLIENT_INFO.LABEL},
-      ...clientes
-    );
+    optionsClients.push({value: THIS_CLIENT_INFO.DOMAIN, label: THIS_CLIENT_INFO.LABEL}, ...clientes);
     return optionsClients;
   }, [clientes]);
   const roles = useAppSelector(rolesSelector);
@@ -32,9 +29,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   const [deactivateAutoEmail, setDeactivateAutoEmail] = useState<boolean>(false);
   const [clienteSelected, setClienteSelected] = useState<string>(clientesOptions[0].value);
   const [password, setpassword] = useState<string>('000000');
-  const [selectedOptionsRoles, setSelectedOptionsRoles] = useState<
-    {value: string; label: string}[]
-  >([]);
+  const [selectedOptionsRoles, setSelectedOptionsRoles] = useState<{value: string; label: string}[]>([]);
   const [newUser, setNewUser] = useState<Employee>(userDatosIniciales);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
   const {getEmployeesSync} = useGetEmployees();
@@ -42,10 +37,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   const {createAuthUser, isLoadingCreateAuthUser} = useCreateUserAuth();
   const {updatedRolesOfUser, isLoadingUsersToRol} = useUpdateUser();
 
-  const rolesOptions: Option[] = useMemo(
-    () => roles.map((rol) => ({value: rol.id, label: rol.rol})),
-    [roles]
-  );
+  const rolesOptions: Option[] = useMemo(() => roles.map((rol) => ({value: rol.id, label: rol.rol})), [roles]);
 
   const handleCheckBoxChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setDeactivateAutoEmail(e.target.checked);
@@ -64,10 +56,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
         const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         setNewUser((prev) => ({
           ...prev,
-          [name]:
-            name === 'email' && !isValidEmail(value)
-              ? value.split('@')[0].toLowerCase()
-              : value.toLowerCase()
+          [name]: name === 'email' && !isValidEmail(value) ? value.split('@')[0].toLowerCase() : value.toLowerCase()
         }));
       }
       setHasTouched(true);
@@ -174,11 +163,9 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   return (
     <>
       <p className="weik-text-grey-200 my-1">
-        Completa los campos y haz clic en "Crear" para añadir un usuario enlazado a un cliente en
-        específico.
+        Completa los campos y haz clic en "Crear" para añadir un usuario enlazado a un cliente en específico.
         <br />
-        El nombre de usuario "username" se genera automáticamente, pero puede cambiarse desde el
-        perfil.
+        El nombre de usuario "username" se genera automáticamente, pero puede cambiarse desde el perfil.
       </p>
       <Form.Label className="mb-0" htmlFor="nombres">
         <strong>Nombres del usuario:</strong>
@@ -222,11 +209,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
       <Form.Label className="mb-0 mt-1" htmlFor="cliente">
         <strong>Cliente asociado:</strong>
       </Form.Label>
-      <Form.Select
-        size="sm"
-        id="cliente"
-        aria-label="Cliente asociado"
-        onChange={handleClienteSelectChange}>
+      <Form.Select size="sm" id="cliente" aria-label="Cliente asociado" onChange={handleClienteSelectChange}>
         {clientesOptions.map((cliente, index) => (
           <option key={index} value={cliente.value}>
             {cliente.label}
@@ -256,10 +239,9 @@ const CrearUsuarios = memo(function CrearUsuarios() {
         onChange={handleInputChange}
       />
       <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
-        Solo ingresa la parte antes del @ para crear el email, ya que al seleccionar el cliente,
-        este se autocompletará automáticamente. Todos los usuarios deben estar asociados a el
-        dominio de un cliente, ya sea un cliente externo o el cliente raíz (Weikstudio), donde
-        pueden tener roles como diseñador, administrador u otros.
+        Solo ingresa la parte antes del @ para crear el email, ya que al seleccionar el cliente, este se autocompletará
+        automáticamente. Todos los usuarios deben estar asociados a el dominio de un cliente, ya sea un cliente externo
+        o el cliente raíz (Weikstudio), donde pueden tener roles como diseñador, administrador u otros.
       </p>
       <Form.Label className="mb-0 mt-1" htmlFor="password">
         <strong>Contraseña:</strong>
@@ -275,9 +257,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
           value={password}
         />
         <div
-          className={`input-group-text input-group-password py-0 px-2 ${
-            showPassword ? 'show-password' : ''
-          }`}
+          className={`input-group-text input-group-password py-0 px-2 ${showPassword ? 'show-password' : ''}`}
           data-password={showPassword ? 'true' : 'false'}>
           <span
             className="password-eye"
@@ -286,9 +266,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
             }}></span>
         </div>
       </InputGroup>
-      <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
-        La contraseña por defecto sera 000000
-      </p>
+      <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">La contraseña por defecto sera 000000</p>
       <Form.Label className="mb-0" htmlFor="roles">
         <strong>Roles:</strong>
       </Form.Label>

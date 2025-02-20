@@ -39,7 +39,7 @@ module.exports = {
 		'@typescript-eslint/no-explicit-any': 'off',
 		'prettier/prettier': ['error',
 			{
-				printWidth: 100,
+				printWidth: 120,
 				tabWidth: 2,
 				semi: true,
 				singleQuote: true,

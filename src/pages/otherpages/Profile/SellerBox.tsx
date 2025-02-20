@@ -7,10 +7,9 @@ const SellerBox = () => {
       <Card.Body>
         <h4 className="header-title mt-0 mb-3">Seller Information</h4>
         <p className="text-muted font-13">
-          Hye, I’m Michael Franklin residing in this beautiful world. I create websites and mobile
-          apps with great UX and UI design. I have done work with big companies like Nokia, Google
-          and Yahoo. Meet me or Contact me for any queries. One Extra line for filling space. Fill
-          as many you want.
+          Hye, I’m Michael Franklin residing in this beautiful world. I create websites and mobile apps with great UX
+          and UI design. I have done work with big companies like Nokia, Google and Yahoo. Meet me or Contact me for any
+          queries. One Extra line for filling space. Fill as many you want.
         </p>
 
         <hr />

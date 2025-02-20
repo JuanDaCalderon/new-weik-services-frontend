@@ -11,13 +11,7 @@ type FlatpickrProps = {
 const CustomFlatpickr = ({className, value, options, placeholder}: FlatpickrProps) => {
   return (
     <>
-      <Flatpickr
-        className={className}
-        data-enable-time
-        value={value}
-        options={options}
-        placeholder={placeholder}
-      />
+      <Flatpickr className={className} data-enable-time value={value} options={options} placeholder={placeholder} />
     </>
   );
 };

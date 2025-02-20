@@ -25,21 +25,11 @@ const Clientes = memo(function Clientes() {
   }, [clientes.length, getClientesSync]);
 
   const canCrearClientes = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.crearCliente,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.crearCliente, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   if (
-    !hasPermission(
-      PERMISOS_MAP_IDS.accesoGestionClientes,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    )
+    !hasPermission(PERMISOS_MAP_IDS.accesoGestionClientes, user.roles, user.permisosOtorgados, user.permisosDenegados)
   ) {
     return <Navigate to="/services/dashboard" replace />;
   }
@@ -56,17 +46,11 @@ const Clientes = memo(function Clientes() {
                 {canCrearClientes ? (
                   <>
                     <Col sm={12} lg={4} xl={3} className="mb-3 mb-lg-0">
-                      {!isLoadingClients ? (
-                        <CrearCliente />
-                      ) : (
-                        <SkeletonLoader height="300px" customClass="p-0" />
-                      )}
+                      {!isLoadingClients ? <CrearCliente /> : <SkeletonLoader height="300px" customClass="p-0" />}
                     </Col>
                     <Col sm={12} lg={8} xl={9}>
                       <Card.Header className="p-0">
-                        <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">
-                          Clientes
-                        </h4>
+                        <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Clientes</h4>
                       </Card.Header>
                       {!isLoadingClients ? (
                         <ReactTable<Cliente>

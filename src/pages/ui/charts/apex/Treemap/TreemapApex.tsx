@@ -1,11 +1,6 @@
 import {Card, Col, Row} from 'react-bootstrap';
 import ReactApexChart from 'react-apexcharts';
-import {
-  BasicTreemapOpt,
-  MultipleSeriesTreemapOpt,
-  DistributedTreemapOpt,
-  ColorRangeTreemapOpt
-} from './data';
+import {BasicTreemapOpt, MultipleSeriesTreemapOpt, DistributedTreemapOpt, ColorRangeTreemapOpt} from './data';
 
 import {PageBreadcrumb} from '@/components';
 

@@ -26,8 +26,8 @@ const OffCanvasWithBackdrop = ({name, ...props}: BackdropOption) => {
           <Offcanvas.Title>Offcanvas</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you have chosen. Like,
-          text, images, lists, etc.
+          Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
+          etc.
         </Offcanvas.Body>
       </Offcanvas>
     </>
@@ -47,8 +47,7 @@ const OffcanvasPlacement = ({name, ...props}: PlacementOption) => {
           <Offcanvas.Title>Offcanvas {name}</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Content for the offcanvas goes here. You can place just about any Bootstrap component or
-          custom elements here.
+          Content for the offcanvas goes here. You can place just about any Bootstrap component or custom elements here.
         </Offcanvas.Body>
       </Offcanvas>
     </>
@@ -63,9 +62,9 @@ const DefaultOffcanvas = () => {
       <Card.Body>
         <h4 className="header-title">Offcanvas</h4>
         <p className="text-muted font-13">
-          <code>Offcanvas</code> includes support for a header with a close button and an optional
-          body class for some initial padding. We suggest that you include offcanvas headers with
-          dismiss actions whenever possible, or provide an explicit dismiss action.
+          <code>Offcanvas</code> includes support for a header with a close button and an optional body class for some
+          initial padding. We suggest that you include offcanvas headers with dismiss actions whenever possible, or
+          provide an explicit dismiss action.
         </p>
         <Button variant="primary" onClick={toggle}>
           Launch
@@ -76,8 +75,8 @@ const DefaultOffcanvas = () => {
             <Offcanvas.Title>Offcanvas</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            Some text as placeholder. In real life you can have the elements you have chosen. Like,
-            text, images, lists, etc.
+            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
+            etc.
             <h5 className="mt-3">List</h5>
             <ul className="ps-3">
               <li className="">Nemo enim ipsam voluptatem quia aspernatur</li>
@@ -158,11 +157,7 @@ const OffcanvasUI = () => {
               </ul>
               <div className="button-list d-flex flex-wrap gap-2">
                 {placementOptions.map((option, index) => (
-                  <OffcanvasPlacement
-                    key={index.toString()}
-                    placement={option.placement}
-                    name={option.name}
-                  />
+                  <OffcanvasPlacement key={index.toString()} placement={option.placement} name={option.name} />
                 ))}
               </div>
             </Card.Body>
@@ -174,8 +169,8 @@ const OffcanvasUI = () => {
             <Card.Body>
               <h4 className="header-title">Offcanvas Backdrop</h4>
               <p className="text-muted font-13">
-                Scrolling the <code>&lt;body&gt;</code> element is disabled when an offcanvas and
-                its backdrop are visible. Use the <code>scroll</code>
+                Scrolling the <code>&lt;body&gt;</code> element is disabled when an offcanvas and its backdrop are
+                visible. Use the <code>scroll</code>
                 prop to toggle <code>&lt;body&gt;</code> scrolling and
                 <code>backdrop</code> prop to toggle the backdrop.
               </p>

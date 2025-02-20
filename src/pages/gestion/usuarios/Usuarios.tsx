@@ -25,21 +25,11 @@ const Usuarios = memo(function Usuarios() {
   }, [getEmployeesSync, users.length]);
 
   const canCrearUsuarios = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.crearUsuario,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.crearUsuario, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   if (
-    !hasPermission(
-      PERMISOS_MAP_IDS.accesoGestionUsuarios,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    )
+    !hasPermission(PERMISOS_MAP_IDS.accesoGestionUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados)
   ) {
     return <Navigate to="/services/dashboard" replace />;
   }
@@ -56,11 +46,7 @@ const Usuarios = memo(function Usuarios() {
                 {canCrearUsuarios ? (
                   <>
                     <Col sm={12} lg={4} xl={3} className="mb-3 mb-lg-0">
-                      {!isLoadingUsers ? (
-                        <CrearUsuarios />
-                      ) : (
-                        <SkeletonLoader height="300px" customClass="p-0" />
-                      )}
+                      {!isLoadingUsers ? <CrearUsuarios /> : <SkeletonLoader height="300px" customClass="p-0" />}
                     </Col>
                     <Col sm={12} lg={8} xl={9}>
                       <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>

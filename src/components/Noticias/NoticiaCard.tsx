@@ -13,36 +13,77 @@ type NoticiaCardProps = {
   link: string;
 };
 
-const NoticiaCard = memo(function NoticiaCard({
+const ImageContainer = memo(function ImageContainer({
+  src,
+  alt,
+  hasLoaded,
+  objectFit = 'contain',
+  onLoad
+}: {
+  src: string;
+  alt: string;
+  hasLoaded: boolean;
+  objectFit?: 'contain' | 'fill';
+  onLoad: () => void;
+}) {
+  return (
+    <>
+      {!hasLoaded && <SkeletonLoader customClass="p-0 m-0 position-absolute top-0 start-0 rounded z-1" />}
+      <Image
+        src={src}
+        alt={alt}
+        fluid
+        loading="lazy"
+        className={`w-100 h-100 object-fit-${objectFit} rounded`}
+        onLoad={onLoad}
+      />
+    </>
+  );
+});
+
+const CardFooter = memo(function CardFooter({
   isExpanded,
-  fechaExp,
-  noticiaImg,
   titulo,
   link
-}: NoticiaCardProps) {
+}: {
+  isExpanded: boolean;
+  titulo: string;
+  link: string;
+}) {
+  return (
+    <div className="d-flex justify-content-between align-items-center p-1 position-absolute w-100 bottom-0 bg-gradient bg-light bg-opacity-50">
+      <h5 className={`m-0 text-dark text-opacity-75 font-${isExpanded ? '14' : '12'}`}>
+        {isExpanded ? titulo : truncateString(titulo, 23)}
+      </h5>
+      {isExpanded && (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-outline-dark btn-sm btn-rounded py-0 px-1 m-0">
+          <i className="uil-external-link-alt"></i>
+        </a>
+      )}
+    </div>
+  );
+});
+
+const NoticiaCard = memo(function NoticiaCard({isExpanded, fechaExp, noticiaImg, titulo, link}: NoticiaCardProps) {
   const [boardImageHasLoad, setBoardImageHasLoad] = useState<boolean>(false);
   const [modalImageHasLoad, setModalImageHasLoad] = useState<boolean>(false);
   const {isOpen, toggle, show} = useTogglev2();
 
   useEffect(() => {
-    if (isOpen === false && modalImageHasLoad !== false) setModalImageHasLoad(false);
+    if (!isOpen && modalImageHasLoad) setModalImageHasLoad(false);
   }, [isOpen, modalImageHasLoad]);
 
-  const onExpandImage = useCallback(
+  const handleExpandImage = useCallback(
     (e: MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       show();
     },
     [show]
   );
-
-  const boardImageOnLoad = useCallback(() => {
-    setBoardImageHasLoad(true);
-  }, []);
-
-  const modalImageOnLoad = useCallback(() => {
-    setModalImageHasLoad(true);
-  }, []);
 
   return (
     <>
@@ -52,30 +93,16 @@ const NoticiaCard = memo(function NoticiaCard({
         variant="info"
         headerText={titulo}
         showFooter={false}
+        size="lg"
         body={
-          <>
-            <div style={{width: '100%', aspectRatio: '1/1', position: 'relative'}}>
-              {!modalImageHasLoad && (
-                <SkeletonLoader customClass="p-0 m-0 position-absolute top-0 start-0 rounded" />
-              )}
-              <Image
-                src={noticiaImg}
-                alt="Descripción de la imagen"
-                fluid
-                loading="lazy"
-                className="rounded"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0
-                }}
-                onLoad={modalImageOnLoad}
-              />
-            </div>
-          </>
+          <div className="w-100 position-relative ratio ratio-4x3">
+            <ImageContainer
+              src={noticiaImg}
+              alt={titulo}
+              hasLoaded={modalImageHasLoad}
+              onLoad={() => setModalImageHasLoad(true)}
+            />
+          </div>
         }
       />
       <Card className="p-0 m-0 w-100 h-100 rounded">
@@ -88,33 +115,16 @@ const NoticiaCard = memo(function NoticiaCard({
               />
             </OverlayTrigger>
           )}
-          <a href="#" role="button" onClick={onExpandImage} className="rounded">
-            {!boardImageHasLoad && (
-              <SkeletonLoader customClass="p-0 m-0 position-absolute rounded" />
-            )}
-            <Image
+          <a href="#" role="button" onClick={handleExpandImage} className="rounded">
+            <ImageContainer
               src={noticiaImg}
-              alt={noticiaImg}
-              fluid
-              loading="lazy"
-              className="w-100 h-100 object-fit-cover rounded"
-              onLoad={boardImageOnLoad}
+              alt={titulo}
+              hasLoaded={boardImageHasLoad}
+              objectFit="fill"
+              onLoad={() => setBoardImageHasLoad(true)}
             />
           </a>
-          <div className="d-flex justify-content-between align-items-center p-1 position-absolute w-100 bottom-0 bg-gradient bg-light bg-opacity-50">
-            <h5 className={`m-0 text-dark text-opacity-75 font-${isExpanded ? '14' : '12'}`}>
-              {isExpanded ? <>{titulo}</> : <>{truncateString(titulo, 23)}</>}
-            </h5>
-            {isExpanded && (
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline-dark btn-sm btn-rounded py-0 px-1 m-0">
-                <i className="uil-external-link-alt"></i>
-              </a>
-            )}
-          </div>
+          <CardFooter isExpanded={isExpanded} titulo={titulo} link={link} />
         </Card.Body>
       </Card>
     </>

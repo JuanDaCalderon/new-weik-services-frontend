@@ -14,11 +14,7 @@ import img2 from '@/assets/images/small/small-3.jpg';
 const RoundedCircle = ({size}: {size: string}) => {
   return (
     <Col md={4}>
-      <img
-        src={avatar3}
-        alt=""
-        className={classNames('img-fluid', 'rounded-circle', 'avatar-' + size)}
-      />
+      <img src={avatar3} alt="" className={classNames('img-fluid', 'rounded-circle', 'avatar-' + size)} />
       <p>
         <code>.avatar-{size} .rounded-circle</code>
       </p>
@@ -37,9 +33,8 @@ const AvatarsUI = () => {
             <Card.Body>
               <h4 className="header-title">Sizing - Images</h4>
               <p className="text-muted font-14 mb-3">
-                Create and group avatars of different sizes and shapes with the css classes. Using
-                Bootstrap's naming convention, you can control size of avatar including standard
-                avatar, or scale it up to different sizes.
+                Create and group avatars of different sizes and shapes with the css classes. Using Bootstrap's naming
+                convention, you can control size of avatar including standard avatar, or scale it up to different sizes.
               </p>
 
               <Row>
@@ -103,8 +98,8 @@ const AvatarsUI = () => {
             <Card.Body>
               <h4 className="header-title">Sizing - Background Color</h4>
               <p className="text-muted font-14 mb-3">
-                Using utilities classes of background e.g. <code>bg-*</code> allows you to have any
-                background color as well.
+                Using utilities classes of background e.g. <code>bg-*</code> allows you to have any background color as
+                well.
               </p>
 
               <Row>
@@ -127,9 +122,7 @@ const AvatarsUI = () => {
 
                 <Col md={3}>
                   <div className="avatar-md">
-                    <span className="avatar-title bg-info-lighten text-info font-20 rounded">
-                      MD
-                    </span>
+                    <span className="avatar-title bg-info-lighten text-info font-20 rounded">MD</span>
                   </div>
 
                   <p className="mb-0 font-14 mt-1">
@@ -149,9 +142,7 @@ const AvatarsUI = () => {
 
                 <Col md={3}>
                   <div className="avatar-xl">
-                    <span className="avatar-title bg-warning-lighten text-warning font-24 rounded">
-                      XL
-                    </span>
+                    <span className="avatar-title bg-warning-lighten text-warning font-24 rounded">XL</span>
                   </div>
 
                   <p className="mb-0 font-14 mt-1">
@@ -174,9 +165,7 @@ const AvatarsUI = () => {
               <Row>
                 <Col md={4}>
                   <div className="avatar-md">
-                    <span className="avatar-title bg-secondary-lighten text-secondary font-20 rounded-circle">
-                      MD
-                    </span>
+                    <span className="avatar-title bg-secondary-lighten text-secondary font-20 rounded-circle">MD</span>
                   </div>
 
                   <p className="mb-0 font-14 mt-1">
@@ -185,9 +174,7 @@ const AvatarsUI = () => {
                 </Col>
                 <Col md={4}>
                   <div className="avatar-lg">
-                    <span className="avatar-title bg-light text-dark font-22 rounded-circle">
-                      LG
-                    </span>
+                    <span className="avatar-title bg-light text-dark font-22 rounded-circle">LG</span>
                   </div>
 
                   <p className="mb-0 font-14 mt-1">
@@ -196,9 +183,7 @@ const AvatarsUI = () => {
                 </Col>
                 <Col md={4}>
                   <div className="avatar-xl">
-                    <span className="avatar-title bg-primary-lighten text-primary font-24 rounded-circle">
-                      XL
-                    </span>
+                    <span className="avatar-title bg-primary-lighten text-primary font-24 rounded-circle">XL</span>
                   </div>
 
                   <p className="mb-0 font-14 mt-1">
@@ -247,12 +232,7 @@ const AvatarsUI = () => {
                 </Col>
 
                 <Col sm={2}>
-                  <img
-                    src={avatar8}
-                    alt=""
-                    className="img-fluid rounded-circle img-thumbnail"
-                    width="120"
-                  />
+                  <img src={avatar8} alt="" className="img-fluid rounded-circle img-thumbnail" width="120" />
                   <p className="mb-0">
                     <code>.rounded-circle .img-thumbnail</code>
                   </p>

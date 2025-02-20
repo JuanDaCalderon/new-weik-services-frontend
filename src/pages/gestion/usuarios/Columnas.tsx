@@ -3,15 +3,7 @@ import type {ColumnDef} from '@tanstack/react-table';
 import type {Row} from '@tanstack/react-table';
 import {GenericModal} from '@/components/Modals/GenericModal';
 import {ChangeEvent, memo, useCallback, useMemo, useState, JSX, Fragment} from 'react';
-import {
-  Badge,
-  Button,
-  Dropdown,
-  DropdownButton,
-  Form,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap';
+import {Badge, Button, Dropdown, DropdownButton, Form, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
 import {getNombreCompletoUser, DateUtils, DebugUtil, hasPermission} from '@/utils';
 import {ESTADOS, PERMISOS_MAP_IDS, RIBBONTYPES} from '@/constants';
@@ -28,8 +20,7 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
   const [deactivateOpen, deactivateToggle, showDeactivate, hideDeactivate] = useToggle();
   const [activateOpen, activateToggle, showActivate, hideActivate] = useToggle();
   const [deleteOpen, deleteToggle, showDelete, hideDelete] = useToggle();
-  const {setInactiveUser, isLoadingInactiveUser, setOfflineUser, isLoadingOfflineUser} =
-    useSetEstadoUser();
+  const {setInactiveUser, isLoadingInactiveUser, setOfflineUser, isLoadingOfflineUser} = useSetEstadoUser();
   const {getEmployeesSync} = useGetEmployees();
   const {deleteUser, isLoadingDeleteUser} = useDeleteUser();
 
@@ -79,10 +70,10 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
   const deactivateModalBody: JSX.Element = useMemo(
     () => (
       <p>
-        Desactivar un usuario no elimina su cuenta ni la información y datos asociados. Sin embargo,
-        el usuario no podrá acceder a la plataforma y quedará en estado <b>INACTIVO</b>. En este
-        estado, el usuario no aparecerá en los módulos de equipo, en el estado de los integrantes y
-        tampoco podrá recibir asignaciones ni realizar ninguna acción dentro del sistema.
+        Desactivar un usuario no elimina su cuenta ni la información y datos asociados. Sin embargo, el usuario no podrá
+        acceder a la plataforma y quedará en estado <b>INACTIVO</b>. En este estado, el usuario no aparecerá en los
+        módulos de equipo, en el estado de los integrantes y tampoco podrá recibir asignaciones ni realizar ninguna
+        acción dentro del sistema.
       </p>
     ),
     []
@@ -98,16 +89,8 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
       <>
         <div className="d-flex w-100 justify-content-around align-items-center gap-1 mb-1">
           <img
-            src={
-              row.original.userImage && row.original.userImage !== ''
-                ? row.original.userImage
-                : fallBackLogo
-            }
-            alt={
-              row.original.userImage && row.original.userImage !== ''
-                ? row.original.userImage
-                : fallBackLogo
-            }
+            src={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : fallBackLogo}
+            alt={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : fallBackLogo}
             loading="lazy"
             width={100}
             height={100}
@@ -118,9 +101,8 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
               Esta seguro que quiere eliminar el usuario con el correo: <b>{row.original.email}</b>.
             </p>
             <p className="p-0 m-0 text-danger">
-              Eliminar un usuario implica la eliminación permanente de todos los registros y datos
-              asociados. Si no deseas perder esta información, considera desactivar el usuario en su
-              lugar.
+              Eliminar un usuario implica la eliminación permanente de todos los registros y datos asociados. Si no
+              deseas perder esta información, considera desactivar el usuario en su lugar.
             </p>
           </div>
         </div>
@@ -153,12 +135,7 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const canDeleteUsuarios = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.eliminarUsuarios,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.eliminarUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (
@@ -174,10 +151,7 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
               </OverlayTrigger>
             ) : (
               <OverlayTrigger overlay={<Tooltip id="desactivarUser">Desactivar usuario</Tooltip>}>
-                <Button
-                  id="desactivarUser"
-                  variant="outline-warning py-0 px-1"
-                  onClick={showDeactivate}>
+                <Button id="desactivarUser" variant="outline-warning py-0 px-1" onClick={showDeactivate}>
                   <i className="uil-user-times" />
                 </Button>
               </OverlayTrigger>
@@ -260,10 +234,7 @@ const EstadosColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
 });
 
 const RolesColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
-  const hasRoles: boolean = useMemo(
-    () => row.original.roles.length > 0,
-    [row.original.roles.length]
-  );
+  const hasRoles: boolean = useMemo(() => row.original.roles.length > 0, [row.original.roles.length]);
   return hasRoles ? (
     <DropdownButton
       variant="info"
@@ -304,16 +275,8 @@ const columns: ColumnDef<Employee>[] = [
           </div>
         )}
         <img
-          src={
-            row.original.userImage && row.original.userImage !== ''
-              ? row.original.userImage
-              : fallBackLogo
-          }
-          alt={
-            row.original.userImage && row.original.userImage !== ''
-              ? row.original.userImage
-              : 'user'
-          }
+          src={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : fallBackLogo}
+          alt={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : 'user'}
           loading="lazy"
           className="me-1 rounded-circle object-fit-contain"
         />
@@ -329,9 +292,7 @@ const columns: ColumnDef<Employee>[] = [
   {
     header: 'Fecha creación',
     accessorKey: 'fechaCreacion',
-    cell: ({row}) => (
-      <>{DateUtils.formatShortDate(DateUtils.parseStringToDate(row.original.fechaCreacion))}</>
-    )
+    cell: ({row}) => <>{DateUtils.formatShortDate(DateUtils.parseStringToDate(row.original.fechaCreacion))}</>
   },
   {
     header: 'Username',

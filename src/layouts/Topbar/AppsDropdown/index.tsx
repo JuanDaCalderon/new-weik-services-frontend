@@ -50,9 +50,7 @@ const AppsDropdown = () => {
 
   return (
     <Dropdown show={isOpen} onToggle={toggleDropdown}>
-      <OverlayTrigger
-        placement="bottom"
-        overlay={<Tooltip id="dark-mode-toggler">Aplicaciones</Tooltip>}>
+      <OverlayTrigger placement="bottom" overlay={<Tooltip id="dark-mode-toggler">Aplicaciones</Tooltip>}>
         <Dropdown.Toggle
           variant="link"
           id="dropdown-apps"

@@ -10,24 +10,14 @@ import logodark from '@/assets/images/logo-dark.png';
 
 const ModalSizes = () => {
   const [isStandardOpen, toggleStandard] = useToggle();
-  const {
-    isOpen,
-    size,
-    className,
-    scroll,
-    toggleModal,
-    openModalWithSize,
-    openModalWithClass,
-    openModalWithScroll
-  } = useModal();
+  const {isOpen, size, className, scroll, toggleModal, openModalWithSize, openModalWithClass, openModalWithScroll} =
+    useModal();
 
   return (
     <Card>
       <Card.Body>
         <h4 className="header-title">Bootstrap Modals</h4>
-        <p className="sub-header">
-          A rendered modal with header, body, and set of actions in the footer.
-        </p>
+        <p className="sub-header">A rendered modal with header, body, and set of actions in the footer.</p>
 
         <div className="button-list d-flex flex-wrap gap-2">
           <Button onClick={toggleStandard}>Standard Modal</Button>
@@ -54,18 +44,16 @@ const ModalSizes = () => {
             <hr />
             <h6>Overflowing text to show scroll behavior</h6>
             <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-              facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-              at eros.
+              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
+              quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
             </p>
             <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor.
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+              laoreet rutrum faucibus dolor auctor.
             </p>
             <p>
-              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-              scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-              auctor fringilla.
+              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl
+              consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
             </p>
           </Modal.Body>
           <Modal.Footer>
@@ -76,12 +64,7 @@ const ModalSizes = () => {
           </Modal.Footer>
         </Modal>
 
-        <Modal
-          show={isOpen}
-          onHide={toggleModal}
-          dialogClassName={className}
-          size={size}
-          scrollable={scroll}>
+        <Modal show={isOpen} onHide={toggleModal} dialogClassName={className} size={size} scrollable={scroll}>
           <Modal.Header onHide={toggleModal} closeButton>
             <h4 className="modal-title">Modal Heading</h4>
           </Modal.Header>
@@ -91,29 +74,26 @@ const ModalSizes = () => {
             <hr />
             <h6>Overflowing text to show scroll behavior</h6>
             <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-              facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-              at eros.
+              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
+              quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
             </p>
             <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor.
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+              laoreet rutrum faucibus dolor auctor.
             </p>
             <p>
-              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-              scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-              auctor fringilla.
+              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl
+              consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
             </p>
             {scroll && (
               <>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas
+                  eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+                  laoreet rutrum faucibus dolor auctor.
                 </p>
               </>
             )}
@@ -164,26 +144,14 @@ const ModalsWithPages = () => {
                 <label htmlFor="username" className="form-label">
                   Name
                 </label>
-                <input
-                  className="form-control"
-                  type="email"
-                  id="username"
-                  required
-                  placeholder="Michael Zenaty"
-                />
+                <input className="form-control" type="email" id="username" required placeholder="Michael Zenaty" />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="emailaddress" className="form-label">
                   Email address
                 </label>
-                <input
-                  className="form-control"
-                  type="email"
-                  id="emailaddress"
-                  required
-                  placeholder="john@deo.com"
-                />
+                <input className="form-control" type="email" id="emailaddress" required placeholder="john@deo.com" />
               </div>
 
               <div className="mb-3">
@@ -232,13 +200,7 @@ const ModalsWithPages = () => {
                 <label htmlFor="emailaddress" className="form-label">
                   Email address
                 </label>
-                <input
-                  className="form-control"
-                  type="email"
-                  id="emailaddress"
-                  required
-                  placeholder="john@deo.com"
-                />
+                <input className="form-control" type="email" id="emailaddress" required placeholder="john@deo.com" />
               </div>
 
               <div className="mb-3">
@@ -306,8 +268,8 @@ const ModalWithAlerts = () => {
                 <i className="ri-check-line h1"></i>
                 <h4 className="mt-2">Well Done!</h4>
                 <p className="mt-3">
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas
+                  eget quam.
                 </p>
                 <Button variant="light" className="my-2" onClick={toggleModal}>
                   Continue
@@ -330,9 +292,8 @@ const ModalPositions = () => {
         <h4 className="header-title">Modal Position</h4>
 
         <p className="text-muted">
-          Specify the position for the modal. You can display modal at top, bottom, center or right
-          of page by specifying classes <code>modal-top</code>,<code>modal-bottom</code>,{' '}
-          <code>modal-dialog-centered</code> and
+          Specify the position for the modal. You can display modal at top, bottom, center or right of page by
+          specifying classes <code>modal-top</code>,<code>modal-bottom</code>, <code>modal-dialog-centered</code> and
           <code>modal-right</code>
           respectively.
         </p>
@@ -382,9 +343,7 @@ const ModalWithColoredHeader = () => {
       <Card.Body>
         <h4 className="header-title">Colored Header Modals</h4>
 
-        <p className="text-muted">
-          A rendered modal with header having contexual background color.
-        </p>
+        <p className="text-muted">A rendered modal with header having contexual background color.</p>
 
         <div className="button-list d-flex flex-wrap gap-2">
           <Button variant="primary" onClick={() => openModalWithClass('primary')}>
@@ -417,13 +376,12 @@ const ModalWithColoredHeader = () => {
           <Modal.Body>
             <h5 className="mt-0">{className} Background</h5>
             <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-              facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-              at eros.
+              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
+              quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
             </p>
             <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor.
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+              laoreet rutrum faucibus dolor auctor.
             </p>
           </Modal.Body>
           <Modal.Footer>
@@ -448,9 +406,7 @@ const ModalWithFilled = () => {
       <Card.Body>
         <h4 className="header-title">Filled Modals</h4>
 
-        <p className="text-muted">
-          A rendered modal with header, body and footer having contexual background color.
-        </p>
+        <p className="text-muted">A rendered modal with header, body and footer having contexual background color.</p>
 
         <div className="button-list d-flex flex-wrap gap-2">
           <Button variant="primary" onClick={() => openModalWithClass('primary')}>
@@ -474,21 +430,17 @@ const ModalWithFilled = () => {
         </div>
 
         <Modal show={isOpen} onHide={toggleModal}>
-          <Modal.Header
-            onHide={toggleModal}
-            closeButton
-            className={classNames('modal-filled', 'bg-' + className)}>
+          <Modal.Header onHide={toggleModal} closeButton className={classNames('modal-filled', 'bg-' + className)}>
             <h4 className="modal-title text-light">{className} Filled Modal</h4>
           </Modal.Header>
           <Modal.Body className={classNames('modal-filled', 'bg-' + className, 'text-light')}>
             <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-              facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-              at eros.
+              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
+              quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
             </p>
             <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor.
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+              laoreet rutrum faucibus dolor auctor.
             </p>
           </Modal.Body>
           <Modal.Footer className={classNames('modal-filled', 'bg-' + className)}>
@@ -515,8 +467,7 @@ const MultipleModal = () => {
         <h4 className="header-title">Multiple Modal</h4>
 
         <p className="text-muted">
-          Display a series of modals one by one to guide your users on multiple aspects or take step
-          wise input.
+          Display a series of modals one by one to guide your users on multiple aspects or take step wise input.
         </p>
 
         <div className="button-list">
@@ -571,8 +522,7 @@ const ToggleBetweenModals = () => {
       <Card.Body>
         <h4 className="header-title">Toggle Between Modals</h4>
         <p className="sub-header">
-          Display a series of modals one by one to guide your users on multiple aspects or take step
-          wise input.
+          Display a series of modals one by one to guide your users on multiple aspects or take step wise input.
         </p>
 
         <div className="button-list">
@@ -626,8 +576,8 @@ const StaticBackdropModal = () => {
         <h4 className="header-title">Static Backdrop</h4>
 
         <p className="text-muted">
-          When backdrop is set to static, the modal will not close when clicking outside it. Click
-          the button below to try it.
+          When backdrop is set to static, the modal will not close when clicking outside it. Click the button below to
+          try it.
         </p>
 
         <div className="button-list">
@@ -640,9 +590,7 @@ const StaticBackdropModal = () => {
           <Modal.Header closeButton>
             <Modal.Title>Modal title</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            I will not close if you click outside me. Don't even try to press escape key.
-          </Modal.Body>
+          <Modal.Body>I will not close if you click outside me. Don't even try to press escape key.</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={toggleModal}>
               Close

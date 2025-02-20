@@ -38,9 +38,7 @@ const AdvancedTable = () => {
           <Card>
             <CardBody>
               <h4 className="header-title">Pagination &amp; Sort</h4>
-              <p className="text-muted font-14 mb-4">
-                A simple example of table with pagination and column sorting
-              </p>
+              <p className="text-muted font-14 mb-4">A simple example of table with pagination and column sorting</p>
 
               <ReactTable<Employee> columns={columns} data={data} pageSize={5} showPagination />
             </CardBody>
@@ -55,13 +53,7 @@ const AdvancedTable = () => {
               <h4 className="header-title">Search</h4>
               <p className="text-muted font-14 mb-4">A Table allowing search</p>
 
-              <ReactTable<Employee>
-                columns={columns}
-                data={data}
-                pageSize={5}
-                showPagination
-                isSearchable={true}
-              />
+              <ReactTable<Employee> columns={columns} data={data} pageSize={5} showPagination isSearchable={true} />
             </CardBody>
           </Card>
         </Col>
@@ -72,17 +64,9 @@ const AdvancedTable = () => {
           <Card>
             <CardBody>
               <h4 className="header-title">Multiple Row Selection</h4>
-              <p className="text-muted font-14 mb-4">
-                This table allowing selection of multiple rows
-              </p>
+              <p className="text-muted font-14 mb-4">This table allowing selection of multiple rows</p>
 
-              <ReactTable<Employee>
-                columns={columns}
-                data={data}
-                pageSize={5}
-                showPagination
-                isSelectable={true}
-              />
+              <ReactTable<Employee> columns={columns} data={data} pageSize={5} showPagination isSelectable={true} />
             </CardBody>
           </Card>
         </Col>

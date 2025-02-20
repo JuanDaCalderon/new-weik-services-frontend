@@ -10,14 +10,7 @@ type SpinnerProps = {
   children?: React.ReactNode;
 };
 
-const Spinner = ({
-  tag = 'div',
-  type = 'bordered',
-  className,
-  color,
-  size,
-  children
-}: SpinnerProps) => {
+const Spinner = ({tag = 'div', type = 'bordered', className, color, size, children}: SpinnerProps) => {
   const Tag: React.ElementType = tag || 'div';
 
   return (

@@ -35,8 +35,7 @@ export default function useUpdateData() {
       ciudadExpedicionDocumento: user.ciudadExpedicionDocumento,
       userName: user.userName,
       numeroDocumento: user.numeroDocumento,
-      fechaNacimiento:
-        DateUtils.getDateOnly(DateUtils.parseStringToDate(user.fechaNacimiento), '-') ?? ''
+      fechaNacimiento: DateUtils.getDateOnly(DateUtils.parseStringToDate(user.fechaNacimiento), '-') ?? ''
     });
     setIsFormChanged(false);
   }, [
@@ -66,9 +65,7 @@ export default function useUpdateData() {
     try {
       const newFormData: typeof formData = {
         ...formData,
-        fechaNacimiento: DateUtils.formatDateToString(
-          new Date(formData.fechaNacimiento.replaceAll('-', '/'))
-        )
+        fechaNacimiento: DateUtils.formatDateToString(new Date(formData.fechaNacimiento.replaceAll('-', '/')))
       };
       const changes = getUpdatedFields<Employee>(user, newFormData);
       if (Object.keys(changes).length === 0) {

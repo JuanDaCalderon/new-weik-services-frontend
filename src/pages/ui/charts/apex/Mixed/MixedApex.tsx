@@ -1,11 +1,6 @@
 import {Card, Col, Row} from 'react-bootstrap';
 import ReactApexChart from 'react-apexcharts';
-import {
-  lineAreaChartOpts,
-  lineColumnAreaChartOpts,
-  lineColumnChartOpts,
-  multipleYAxisChartOpts
-} from './data';
+import {lineAreaChartOpts, lineColumnAreaChartOpts, lineColumnChartOpts, multipleYAxisChartOpts} from './data';
 
 import {PageBreadcrumb} from '@/components';
 

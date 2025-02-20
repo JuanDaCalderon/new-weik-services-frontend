@@ -35,10 +35,7 @@ const CalendarApp = () => {
                 <Col xl={3}>
                   <div className="d-grid">
                     {/* add events */}
-                    <Button
-                      className="btn btn-lg font-16 btn-danger"
-                      id="btn-new-event"
-                      onClick={onOpenModal}>
+                    <Button className="btn btn-lg font-16 btn-danger" id="btn-new-event" onClick={onOpenModal}>
                       <i className="mdi mdi-plus-circle-outline"></i> Create New Event
                     </Button>
                   </div>

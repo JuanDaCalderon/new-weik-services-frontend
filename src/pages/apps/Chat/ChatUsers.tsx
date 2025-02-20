@@ -67,9 +67,7 @@ const ChatUsers = () => {
                         </h5>
                         <p className="mt-1 mb-0 text-muted font-14">
                           <span className="w-25 float-end text-end">
-                            {user.totalUnread && (
-                              <span className="badge badge-danger-lighten">{user.totalUnread}</span>
-                            )}
+                            {user.totalUnread && <span className="badge badge-danger-lighten">{user.totalUnread}</span>}
                           </span>
                           <span className="w-75">{user.lastMessage}</span>
                         </p>

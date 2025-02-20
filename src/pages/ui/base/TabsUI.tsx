@@ -41,9 +41,7 @@ const TabsUI = () => {
           <Card>
             <Card.Body>
               <h4 className="header-title mb-3">Default Tabs</h4>
-              <p className="text-muted font-14 mb-3">
-                Simple widget of tabbable panes of local content.
-              </p>
+              <p className="text-muted font-14 mb-3">Simple widget of tabbable panes of local content.</p>
 
               <Tab.Container defaultActiveKey="Profile">
                 <Nav variant="tabs">
@@ -127,8 +125,8 @@ const TabsUI = () => {
             <Card.Body>
               <h4 className="header-title mb-3">Tabs Vertical Left</h4>
               <p className="text-muted font-14 mb-3">
-                You can stack your navigation by changing the flex item direction with the{' '}
-                <code>.flex-column</code> utility.
+                You can stack your navigation by changing the flex item direction with the <code>.flex-column</code>{' '}
+                utility.
               </p>
 
               <Row>
@@ -139,13 +137,7 @@ const TabsUI = () => {
                         return (
                           <Nav.Item key={index.toString()}>
                             <Nav.Link as={Link} to="" eventKey={tab.title}>
-                              <i
-                                className={classnames(
-                                  tab.icon,
-                                  'd-md-none',
-                                  'd-block',
-                                  'me-1'
-                                )}></i>
+                              <i className={classnames(tab.icon, 'd-md-none', 'd-block', 'me-1')}></i>
                               <span className="d-none d-md-block">{tab.title}</span>
                             </Nav.Link>
                           </Nav.Item>
@@ -180,8 +172,8 @@ const TabsUI = () => {
             <Card.Body>
               <h4 className="header-title mb-3">Tabs Vertical Right</h4>
               <p className="text-muted font-14 mb-3">
-                You can stack your navigation by changing the flex item direction with the{' '}
-                <code>.flex-column</code> utility.
+                You can stack your navigation by changing the flex item direction with the <code>.flex-column</code>{' '}
+                utility.
               </p>
 
               <Row>
@@ -207,13 +199,7 @@ const TabsUI = () => {
                         return (
                           <Nav.Item key={index.toString()}>
                             <Nav.Link as={Link} to="" eventKey={tab.title}>
-                              <i
-                                className={classnames(
-                                  tab.icon,
-                                  'd-md-none',
-                                  'd-block',
-                                  'me-1'
-                                )}></i>
+                              <i className={classnames(tab.icon, 'd-md-none', 'd-block', 'me-1')}></i>
                               <span className="d-none d-md-block">{tab.title}</span>
                             </Nav.Link>
                           </Nav.Item>
@@ -276,9 +262,7 @@ const TabsUI = () => {
           <Card>
             <Card.Body>
               <h4 className="header-title mb-3">Tabs Bordered Justified</h4>
-              <p className="text-muted font-14 mb-3">
-                The navigation item with a simple bottom border and justified.
-              </p>
+              <p className="text-muted font-14 mb-3">The navigation item with a simple bottom border and justified.</p>
 
               <Tab.Container defaultActiveKey="Profile">
                 <Nav variant="tabs" justify className="nav-bordered" as="ul">

@@ -27,11 +27,7 @@ const OrdersCRM = () => {
                     </Col>
                     <Col xs="auto">
                       <Form.Group as={Row} className="align-items-center">
-                        <Form.Label
-                          htmlFor="exampleEmail3"
-                          as={Col}
-                          sm={3}
-                          className="mb-0 fw-medium">
+                        <Form.Label htmlFor="exampleEmail3" as={Col} sm={3} className="mb-0 fw-medium">
                           Status
                         </Form.Label>
                         <Col sm={9}>

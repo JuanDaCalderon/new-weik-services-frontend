@@ -14,8 +14,8 @@ const CardWithImage = () => {
       <Card.Body>
         <Card.Title as="h5">Card title</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of the card's
-          content. Some quick example text to build on the card title and make up.
+          Some quick example text to build on the card title and make up the bulk of the card's content. Some quick
+          example text to build on the card title and make up.
         </Card.Text>
         <button className="btn btn-primary">Button</button>
       </Card.Body>
@@ -50,8 +50,8 @@ const CardWithImage3 = () => {
       <Card.Img src={cardImg4} />
       <Card.Body>
         <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of the card's
-          content. Some quick example text to build on the card title and make up.
+          Some quick example text to build on the card title and make up the bulk of the card's content. Some quick
+          example text to build on the card title and make up.
         </Card.Text>
         <button className="btn btn-primary">Button</button>
       </Card.Body>
@@ -71,8 +71,7 @@ const CardWithTitleAndImage = () => {
       <Card.Img src={cardImg2} className="img-fluid" />
       <Card.Body>
         <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of the card's
-          content.
+          Some quick example text to build on the card title and make up the bulk of the card's content.
         </Card.Text>
         <Card.Link href="">Card link</Card.Link>
         <Card.Link href="">Another link</Card.Link>
@@ -86,9 +85,7 @@ const CardWithSpecialTitle = () => {
     <Card>
       <Card.Body>
         <Card.Title as="h5">Special title treatment</Card.Title>
-        <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
-        </Card.Text>
+        <Card.Text>With supporting text below as a natural lead-in to additional content.</Card.Text>
         <button className="btn btn-primary w-100">Go somewhere</button>
       </Card.Body>
     </Card>
@@ -101,9 +98,7 @@ const CardWithHeader = () => {
       <Card.Header as="h6">Featured</Card.Header>
       <Card.Body>
         <Card.Title as="h5">Special title treatment</Card.Title>
-        <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
-        </Card.Text>
+        <Card.Text>With supporting text below as a natural lead-in to additional content.</Card.Text>
         <button className="btn btn-primary mt-1">Go somewhere</button>
       </Card.Body>
     </Card>
@@ -116,9 +111,7 @@ const CardWithHeaderAndQuote = () => {
       <Card.Header>Quote</Card.Header>
       <Card.Body>
         <blockquote className="card-bodyquote">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-          </p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
         </blockquote>
       </Card.Body>
       <Card.Footer>
@@ -151,12 +144,9 @@ const ColoredCards = () => {
             <Card className={classNames('text-white', 'bg-' + color)}>
               <Card.Body>
                 <Card.Title as="h5">Special title treatment</Card.Title>
+                <Card.Text>With supporting text below as a natural lead-in to additional content.</Card.Text>
                 <Card.Text>
-                  With supporting text below as a natural lead-in to additional content.
-                </Card.Text>
-                <Card.Text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-                  ante.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -178,9 +168,7 @@ const BorderdCards = () => {
             <Card className={classNames('border', [`border-${color}`])}>
               <Card.Body>
                 <Card.Title as="h5">Special title treatment</Card.Title>
-                <Card.Text>
-                  With supporting text below as a natural lead-in to additional content.
-                </Card.Text>
+                <Card.Text>With supporting text below as a natural lead-in to additional content.</Card.Text>
                 <button className={classNames('btn', 'btn-sm', [`btn-${color}`])}>Button</button>
               </Card.Body>
             </Card>
@@ -203,8 +191,8 @@ const HorizontalCards = () => {
           <Card.Body>
             <Card.Title as="h5">Card Title</Card.Title>
             <Card.Text>
-              This is a wider card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.
+              This is a wider card with supporting text below as a natural lead-in to additional content. This content
+              is a little bit longer.
             </Card.Text>
             <Card.Text>
               <small className="text-muted">Last updated 3 mins ago</small>
@@ -227,9 +215,7 @@ const StretchedLinks = () => {
               <Card.Img src={cardImg} />
               <Card.Body>
                 <Card.Title as="h5">Card with stretched link</Card.Title>
-                <button className={classNames('btn', 'stretched-link', 'mt-2', [`btn-${color}`])}>
-                  Go somewhere
-                </button>
+                <button className={classNames('btn', 'stretched-link', 'mt-2', [`btn-${color}`])}>Go somewhere</button>
               </Card.Body>
             </Card>
           </Col>
@@ -246,9 +232,7 @@ const StretchedLinks = () => {
                     Card with stretched link
                   </Link>
                 </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card up the bulk of the card's content.
-                </Card.Text>
+                <Card.Text>Some quick example text to build on the card up the bulk of the card's content.</Card.Text>
               </Card.Body>
             </Card>
           </Col>
@@ -405,14 +389,12 @@ const CardsUI = () => {
         <Col md={4}>
           <Portlet className="mb-md-0 mb-3">
             <p>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson
-              ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-              quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on
-              it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-              excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
-              aesthetic synth nesciunt you probably haven't heard of them accusamus labore
-              sustainable VHS.
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+              moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+              shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+              proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </p>
           </Portlet>
         </Col>
@@ -420,14 +402,12 @@ const CardsUI = () => {
         <Col md={4}>
           <Portlet className="bg-primary text-white mb-md-0 mb-3">
             <p>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson
-              ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-              quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on
-              it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-              excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
-              aesthetic synth nesciunt you probably haven't heard of them accusamus labore
-              sustainable VHS.
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+              moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+              shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+              proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </p>
           </Portlet>
         </Col>
@@ -435,14 +415,12 @@ const CardsUI = () => {
         <Col md={4}>
           <Portlet className="bg-success text-white mb-0">
             <p>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson
-              ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-              quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on
-              it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-              excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
-              aesthetic synth nesciunt you probably haven't heard of them accusamus labore
-              sustainable VHS.
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+              moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+              shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+              proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </p>
           </Portlet>
         </Col>

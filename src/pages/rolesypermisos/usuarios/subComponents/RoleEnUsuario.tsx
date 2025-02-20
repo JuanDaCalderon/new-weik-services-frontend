@@ -77,8 +77,8 @@ const RoleEnUsuario = memo(function RoleEnUsuario({row}: {row: RowTable<thisUsua
         <strong>Roles del usuario {getNombreCompletoUser(row.original)}</strong>
       </span>
       <p className="my-0 py-0">
-        Asigna roles a este usuario utilizando el selector que se muestra a continuación. Agrega o
-        elimina según sea necesario y guarda los cambios.
+        Asigna roles a este usuario utilizando el selector que se muestra a continuación. Agrega o elimina según sea
+        necesario y guarda los cambios.
       </p>
       <Col className="mt-1" lg={12}>
         <Form.Label className="mb-0" htmlFor="cargo">
@@ -98,9 +98,7 @@ const RoleEnUsuario = memo(function RoleEnUsuario({row}: {row: RowTable<thisUsua
       </Col>
       <Col xs="auto" md={12} className="ms-auto mt-2">
         <Button className="shadow-sm" variant="info" onClick={handleSave} disabled={!hasTouched}>
-          {isLoadingUsersToRol && (
-            <Spinner className="spinner-border-sm" tag="span" color="white" />
-          )}
+          {isLoadingUsersToRol && <Spinner className="spinner-border-sm" tag="span" color="white" />}
           {!isLoadingUsersToRol && 'Guardar cambios'}
         </Button>
       </Col>

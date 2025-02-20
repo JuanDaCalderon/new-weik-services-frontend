@@ -40,9 +40,7 @@ const RolNameColumn = memo(function RolNameColumn({row}: {row: Row<thisRol>}) {
           </div>
         )
       )}
-      <div
-        className={`${row.getCanExpand() && 'cursor-pointer scale-hover'}`}
-        onClick={onClickHandled}>
+      <div className={`${row.getCanExpand() && 'cursor-pointer scale-hover'}`} onClick={onClickHandled}>
         <div className=" d-flex justify-content-start align-content-center align-items-center">
           {row.getCanExpand() && (
             <span className="d-block mb-1" style={{width: '20px', height: '20px'}}>
@@ -161,14 +159,7 @@ const EliminarRol = memo(function EliminarRol({row}: {row: Row<thisRol>}) {
       DebugUtil.logError(error.message, error);
       toast.error('Error al eliminar el rol. Inténtelo más tarde.');
     }
-  }, [
-    deleteRol,
-    employees,
-    hideDelete,
-    removeRolesFromUser,
-    row.original.id,
-    row.original.rolName
-  ]);
+  }, [deleteRol, employees, hideDelete, removeRolesFromUser, row.original.id, row.original.rolName]);
 
   const deleteModalBody: JSX.Element = useMemo(
     () => (
@@ -178,8 +169,7 @@ const EliminarRol = memo(function EliminarRol({row}: {row: Row<thisRol>}) {
             Esta seguro que quiere eliminar el rol: <b>{row.original.rolName}</b>
           </p>
           <p className="p-0 m-0 text-danger">
-            Eliminar un rol implica la eliminación permanente de todos los registros y datos
-            asociados.
+            Eliminar un rol implica la eliminación permanente de todos los registros y datos asociados.
           </p>
         </div>
         <Form.Label className="text-danger cursor-pointer mb-0" htmlFor="rol">
@@ -200,12 +190,7 @@ const EliminarRol = memo(function EliminarRol({row}: {row: Row<thisRol>}) {
   );
 
   const canDeleteRoles = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.eliminarRoles,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return hasPermission(PERMISOS_MAP_IDS.eliminarRoles, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (

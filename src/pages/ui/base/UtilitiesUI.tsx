@@ -22,8 +22,8 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Background Color</h4>
               <p className="text-muted font-14">
-                Similar to the contextual text color classes, set the background of an element to
-                any contextual class. Background utilities
+                Similar to the contextual text color classes, set the background of an element to any contextual class.
+                Background utilities
                 <strong>
                   do not set <code>color</code>
                 </strong>
@@ -53,9 +53,8 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Background Gradient Color</h4>
               <p className="text-muted font-14">
-                By adding a <code>.bg-gradient</code> class, a linear gradient is added as
-                background image to the backgrounds. This gradient starts with a semi-transparent
-                white which fades out to the bottom.
+                By adding a <code>.bg-gradient</code> class, a linear gradient is added as background image to the
+                backgrounds. This gradient starts with a semi-transparent white which fades out to the bottom.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="bg-gradient-utilities-preview">
@@ -64,9 +63,7 @@ const UtilitiesUI = () => {
                       .bg-gradient.bg-{color}
                     </div>
                   ))}
-                  <div className="p-2 mb-2 bg-black bg-gradient text-white">
-                    .bg-black.bg-gradient
-                  </div>
+                  <div className="p-2 mb-2 bg-black bg-gradient text-white">.bg-black.bg-gradient</div>
                 </div>
               </div>
             </Card.Body>
@@ -80,8 +77,8 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Soft background</h4>
               <p className="text-muted font-14">
-                Similar to the contextual text color classes, set the background of an element to
-                any contextual class. Background utilities do not set
+                Similar to the contextual text color classes, set the background of an element to any contextual class.
+                Background utilities do not set
                 <code>color</code>, so in some cases you’ll want to use
                 <code>.text-*</code>
                 <a href="https://getbootstrap.com/docs/5.3/utilities/colors/">color utilities</a>.
@@ -122,9 +119,9 @@ const UtilitiesUI = () => {
               <h4 className="header-title">Color &amp; background</h4>
               <p className="text-muted font-14">
                 Color and background helpers combine the power of our
-                <code>.text-*</code> utilities and <code>.bg-*</code> utilities in one class. Using
-                our Sass <code>color-contrast()</code> function, we automatically determine a
-                contrasting <code>color</code> for a particular <code>background-color</code>.
+                <code>.text-*</code> utilities and <code>.bg-*</code> utilities in one class. Using our Sass{' '}
+                <code>color-contrast()</code> function, we automatically determine a contrasting <code>color</code> for
+                a particular <code>background-color</code>.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="bg-color-utilities-preview">
@@ -145,9 +142,8 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Colored links</h4>
               <p className="text-muted font-14">
-                You can use the <code>.link-*</code> classes to colorize links. Unlike the{' '}
-                <code>.text-*</code> classes, these classes have a<code>:hover</code> and{' '}
-                <code>:focus</code> state.
+                You can use the <code>.link-*</code> classes to colorize links. Unlike the <code>.text-*</code> classes,
+                these classes have a<code>:hover</code> and <code>:focus</code> state.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="link-color-utilities-preview">
@@ -171,27 +167,16 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Background Opacity</h4>
               <p className="text-muted font-14">
-                <code>background-color</code> utilities are generated with Sass using CSS variables.
-                This allows for real-time color changes without compilation and dynamic alpha
-                transparency changes.
+                <code>background-color</code> utilities are generated with Sass using CSS variables. This allows for
+                real-time color changes without compilation and dynamic alpha transparency changes.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="bg-opacity-utilities-preview">
-                  <div className="bg-primary p-2 text-white">
-                    This is default primary background
-                  </div>
-                  <div className="bg-primary p-2 text-white bg-opacity-75">
-                    This is 75% opacity primary background
-                  </div>
-                  <div className="bg-primary p-2 text-dark bg-opacity-50">
-                    This is 50% opacity primary background
-                  </div>
-                  <div className="bg-primary p-2 text-dark bg-opacity-25">
-                    This is 25% opacity primary background
-                  </div>
-                  <div className="bg-primary p-2 text-dark bg-opacity-10">
-                    This is 10% opacity success background
-                  </div>
+                  <div className="bg-primary p-2 text-white">This is default primary background</div>
+                  <div className="bg-primary p-2 text-white bg-opacity-75">This is 75% opacity primary background</div>
+                  <div className="bg-primary p-2 text-dark bg-opacity-50">This is 50% opacity primary background</div>
+                  <div className="bg-primary p-2 text-dark bg-opacity-25">This is 25% opacity primary background</div>
+                  <div className="bg-primary p-2 text-dark bg-opacity-10">This is 10% opacity success background</div>
                 </div>
               </div>
             </Card.Body>
@@ -205,8 +190,8 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Text Color</h4>
               <p className="text-muted font-14">
-                Colorize text with color utilities. If you want to colorize links, you can use the{' '}
-                <code>.link-*</code> helper classes which have
+                Colorize text with color utilities. If you want to colorize links, you can use the <code>.link-*</code>{' '}
+                helper classes which have
                 <code>:hover</code>
                 and <code>:focus</code> states.
               </p>
@@ -246,21 +231,15 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Text Opacity Color</h4>
               <p className="text-muted font-14">
-                text color utilities are generated with Sass using CSS variables. This allows for
-                real-time color changes without compilation and dynamic alpha transparency changes.
+                text color utilities are generated with Sass using CSS variables. This allows for real-time color
+                changes without compilation and dynamic alpha transparency changes.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="textopacity-utilities-preview">
                   <div className="text-primary">This is default primary text</div>
-                  <div className="text-primary text-opacity-75">
-                    This is 75% opacity primary text
-                  </div>
-                  <div className="text-primary text-opacity-50">
-                    This is 50% opacity primary text
-                  </div>
-                  <div className="text-primary text-opacity-25">
-                    This is 25% opacity primary text
-                  </div>
+                  <div className="text-primary text-opacity-75">This is 75% opacity primary text</div>
+                  <div className="text-primary text-opacity-50">This is 50% opacity primary text</div>
+                  <div className="text-primary text-opacity-25">This is 25% opacity primary text</div>
                 </div>
               </div>
             </Card.Body>
@@ -271,10 +250,10 @@ const UtilitiesUI = () => {
             <Card.Body>
               <h4 className="header-title">Opacity</h4>
               <p className="text-muted font-14">
-                The <code>opacity</code> property sets the opacity level for an element. The opacity
-                level describes the transparency level, where
-                <code>1</code> is not transparent at all, <code>.5</code> is 50% visible, and{' '}
-                <code>0</code> is completely transparent. Set the
+                The <code>opacity</code> property sets the opacity level for an element. The opacity level describes the
+                transparency level, where
+                <code>1</code> is not transparent at all, <code>.5</code> is 50% visible, and <code>0</code> is
+                completely transparent. Set the
                 <code>opacity</code> of an element using
                 <code>
                   .opacity-{'{'}value{'}'}
@@ -284,9 +263,7 @@ const UtilitiesUI = () => {
               <div className="tab-content">
                 <div className="tab-pane show active" id="opacity-utilities-preview">
                   <div className="d-flex flex-wrap gap-2">
-                    <div className="opacity-100 p-2 bg-primary text-light fw-bold rounded">
-                      100%
-                    </div>
+                    <div className="opacity-100 p-2 bg-primary text-light fw-bold rounded">100%</div>
                     <div className="opacity-75 p-2 bg-primary text-light fw-bold rounded">75%</div>
                     <div className="opacity-50 p-2 bg-primary text-light fw-bold rounded">50%</div>
                     <div className="opacity-25 p-2 bg-primary text-light fw-bold rounded">25%</div>
@@ -303,8 +280,7 @@ const UtilitiesUI = () => {
               <Card.Body>
                 <h4 className="header-title">Additive(Add) Border</h4>
                 <p className="text-muted font-14">
-                  Use border utilities to <b>add</b> an element’s borders. Choose from all borders
-                  or one at a time.
+                  Use border utilities to <b>add</b> an element’s borders. Choose from all borders or one at a time.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="border-utilities-preview">
@@ -335,8 +311,7 @@ const UtilitiesUI = () => {
               <Card.Body>
                 <h4 className="header-title">Subtractive(Remove) Border</h4>
                 <p className="text-muted font-14">
-                  Use border utilities to <b>remove</b> an element’s borders. Choose from all
-                  borders or one at a time.
+                  Use border utilities to <b>remove</b> an element’s borders. Choose from all borders or one at a time.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="bordersubtractive-utilities-preview">
@@ -369,17 +344,13 @@ const UtilitiesUI = () => {
             <Card>
               <Card.Body>
                 <h4 className="header-title">Border Color</h4>
-                <p className="text-muted font-14">
-                  Change the border color using utilities built on our theme colors.
-                </p>
+                <p className="text-muted font-14">Change the border color using utilities built on our theme colors.</p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="bordercolor-utilities-preview">
                     <div className="d-flex align-items-start flex-wrap gap-2">
                       {extendedColorVariants.map((color, index) => (
                         <div key={index} className="text-center">
-                          <div
-                            className={`border border-${color} avatar-md bg-light bg-opacity-50"`}
-                          />
+                          <div className={`border border-${color} avatar-md bg-light bg-opacity-50"`} />
                         </div>
                       ))}
                     </div>
@@ -423,9 +394,7 @@ const UtilitiesUI = () => {
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="borderopacity-utilities-preview">
-                    <div className="border border-success p-2 mb-2">
-                      This is default success border
-                    </div>
+                    <div className="border border-success p-2 mb-2">This is default success border</div>
                     <div className="border border-success p-2 mb-2 border-opacity-75">
                       This is 75% opacity success border
                     </div>
@@ -450,9 +419,7 @@ const UtilitiesUI = () => {
             <Card>
               <Card.Body>
                 <h4 className="header-title">Border subtle Color</h4>
-                <p className="text-muted font-14">
-                  Change the border color using utilities built on our theme colors.
-                </p>
+                <p className="text-muted font-14">Change the border color using utilities built on our theme colors.</p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="bordercolor-utilities-subtle-preview">
                     <div className="d-flex align-items-start flex-wrap gap-2">
@@ -492,31 +459,17 @@ const UtilitiesUI = () => {
             <Card>
               <Card.Body>
                 <h4 className="header-title">Border Radius</h4>
-                <p className="text-muted font-14">
-                  Add classes to an element to easily round its corners.
-                </p>
+                <p className="text-muted font-14">Add classes to an element to easily round its corners.</p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="border-radius-utilities-preview">
                     <div className="d-flex align-items-start flex-wrap gap-2">
                       <img src={avatar2} className="avatar-lg rounded" alt="rounded" />
                       <img src={avatar2} className="avatar-lg rounded-top" alt="rounded-top" />
                       <img src={avatar2} className="avatar-lg rounded-end" alt="rounded-end" />
-                      <img
-                        src={avatar2}
-                        className="avatar-lg rounded-bottom"
-                        alt="rounded-bottom"
-                      />
+                      <img src={avatar2} className="avatar-lg rounded-bottom" alt="rounded-bottom" />
                       <img src={avatar2} className="avatar-lg rounded-start" alt="rounded-start" />
-                      <img
-                        src={avatar2}
-                        className="avatar-lg rounded-circle"
-                        alt="rounded-circle"
-                      />
-                      <img
-                        src={small2}
-                        className="avatar-lg w-auto rounded-pill"
-                        alt="rounded-pill"
-                      />
+                      <img src={avatar2} className="avatar-lg rounded-circle" alt="rounded-circle" />
+                      <img src={small2} className="avatar-lg w-auto rounded-pill" alt="rounded-pill" />
                     </div>
                   </div>
                 </div>
@@ -528,8 +481,8 @@ const UtilitiesUI = () => {
               <Card.Body>
                 <h4 className="header-title">Border Radius Size</h4>
                 <p className="text-muted font-14">
-                  Use the scaling classes for larger or smaller rounded corners. Sizes range from{' '}
-                  <code>0</code> to <code>5</code>.
+                  Use the scaling classes for larger or smaller rounded corners. Sizes range from <code>0</code> to{' '}
+                  <code>5</code>.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="border-radius-size-utilities-preview">
@@ -555,8 +508,7 @@ const UtilitiesUI = () => {
                 <h4 className="header-title">Text Selection</h4>
                 <p className="text-muted font-14">
                   Use <code>user-select-all</code>, <code>user-select-auto</code>, or
-                  <code>user-select-none</code> class to the content which is selected when the user
-                  interacts with it.
+                  <code>user-select-none</code> class to the content which is selected when the user interacts with it.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="text-interactions-utilities-preview">
@@ -618,39 +570,28 @@ const UtilitiesUI = () => {
               <Card.Body>
                 <h4 className="header-title">Overflow</h4>
                 <p className="text-muted font-14">
-                  Adjust the <code>overflow</code> property on the fly with four default values and
-                  classes. These classes are not responsive by default.
+                  Adjust the <code>overflow</code> property on the fly with four default values and classes. These
+                  classes are not responsive by default.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="overflow-utilities-preview">
                     <div className="d-flex flex-wrap gap-4">
-                      <div
-                        className="overflow-auto p-3 bg-light"
-                        style={{maxWidth: 260, maxHeight: 100}}>
+                      <div className="overflow-auto p-3 bg-light" style={{maxWidth: 260, maxHeight: 100}}>
                         This is an example of using
-                        <code>.overflow-auto</code> on an element with set width and height
-                        dimensions. By design, this content will vertically scroll.
+                        <code>.overflow-auto</code> on an element with set width and height dimensions. By design, this
+                        content will vertically scroll.
                       </div>
-                      <div
-                        className="overflow-hidden p-3 bg-light"
-                        style={{maxWidth: 260, maxHeight: 100}}>
+                      <div className="overflow-hidden p-3 bg-light" style={{maxWidth: 260, maxHeight: 100}}>
                         This is an example of using
-                        <code>.overflow-hidden</code> on an element with set width and height
-                        dimensions.
+                        <code>.overflow-hidden</code> on an element with set width and height dimensions.
                       </div>
-                      <div
-                        className="overflow-visible p-3 bg-light"
-                        style={{maxWidth: 260, maxHeight: 100}}>
+                      <div className="overflow-visible p-3 bg-light" style={{maxWidth: 260, maxHeight: 100}}>
                         This is an example of using
-                        <code>.overflow-visible</code> on an element with set width and height
-                        dimensions.
+                        <code>.overflow-visible</code> on an element with set width and height dimensions.
                       </div>
-                      <div
-                        className="overflow-scroll p-3 bg-light"
-                        style={{maxWidth: 260, maxHeight: 100}}>
+                      <div className="overflow-scroll p-3 bg-light" style={{maxWidth: 260, maxHeight: 100}}>
                         This is an example of using
-                        <code>.overflow-scroll</code> on an element with set width and height
-                        dimensions.
+                        <code>.overflow-scroll</code> on an element with set width and height dimensions.
                       </div>
                     </div>
                   </div>
@@ -699,9 +640,7 @@ const UtilitiesUI = () => {
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="position-center-utilities-preview">
-                    <div
-                      className="position-relative m-3 bg-light bg-opacity-50 border rounded"
-                      style={{height: 180}}>
+                    <div className="position-relative m-3 bg-light bg-opacity-50 border rounded" style={{height: 180}}>
                       <div className="position-absolute top-0 start-0 translate-middle avatar-xs bg-dark rounded" />
                       <div className="position-absolute top-0 start-50 translate-middle avatar-xs bg-dark rounded" />
                       <div className="position-absolute top-0 start-100 translate-middle avatar-xs bg-dark rounded" />
@@ -726,14 +665,12 @@ const UtilitiesUI = () => {
                 <h4 className="header-title">Position in Axis</h4>
                 <p className="text-muted font-14">
                   By adding <code>.translate-middle-x</code> or
-                  <code>.translate-middle-y</code> classes, elements can be positioned only in
-                  horizontal or vertical direction.
+                  <code>.translate-middle-y</code> classes, elements can be positioned only in horizontal or vertical
+                  direction.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="position-axis-utilities-preview">
-                    <div
-                      className="position-relative m-3 bg-light border rounded"
-                      style={{height: 180}}>
+                    <div className="position-relative m-3 bg-light border rounded" style={{height: 180}}>
                       <div className="position-absolute top-0 start-0 avatar-xs bg-dark rounded " />
                       <div className="position-absolute top-0 start-50 translate-middle-x avatar-xs bg-dark rounded" />
                       <div className="position-absolute top-0 end-0 avatar-xs bg-dark rounded" />
@@ -754,12 +691,10 @@ const UtilitiesUI = () => {
               <Card.Body>
                 <h4 className="header-title">Shadows</h4>
                 <p className="text-muted font-14">
-                  While shadows on components are disabled by default in Bootstrap and can be
-                  enabled via
+                  While shadows on components are disabled by default in Bootstrap and can be enabled via
                   <code>$enable-shadows</code>, you can also quickly add or remove a shadow with our{' '}
-                  <code>box-shadow</code> utility classes. Includes support for{' '}
-                  <code>.shadow-none</code> and three default sizes (which have associated variables
-                  to match).
+                  <code>box-shadow</code> utility classes. Includes support for <code>.shadow-none</code> and three
+                  default sizes (which have associated variables to match).
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="shadow-utilities-preview">
@@ -782,9 +717,8 @@ const UtilitiesUI = () => {
                 <p className="text-muted font-14">
                   Width utilities are generated from the utility API in
                   <code>_utilities.scss</code>. Includes support for
-                  <code>25%</code>, <code>50%</code>, <code>75%</code>,<code>100%</code>, and{' '}
-                  <code>auto</code> by default. Modify those values as you need to generate
-                  different utilities here.
+                  <code>25%</code>, <code>50%</code>, <code>75%</code>,<code>100%</code>, and <code>auto</code> by
+                  default. Modify those values as you need to generate different utilities here.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="width-utilities-preview">
@@ -805,9 +739,8 @@ const UtilitiesUI = () => {
                 <p className="text-muted font-14">
                   Height utilities are generated from the utility API in
                   <code>_utilities.scss</code>. Includes support for
-                  <code>25%</code>, <code>50%</code>, <code>75%</code>,<code>100%</code>, and{' '}
-                  <code>auto</code> by default. Modify those values as you need to generate
-                  different utilities here.
+                  <code>25%</code>, <code>50%</code>, <code>75%</code>,<code>100%</code>, and <code>auto</code> by
+                  default. Modify those values as you need to generate different utilities here.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="height-utilities-preview">
@@ -835,59 +768,39 @@ const UtilitiesUI = () => {
                   <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit">
                     <code>object-fit</code> property
                   </a>
-                  with our responsive <code>object-fit</code> utility classes. This property tells
-                  the content to fill the parent container in a variety of ways, such as preserving
-                  the aspect ratio or stretching to take up as much space as possible.
+                  with our responsive <code>object-fit</code> utility classes. This property tells the content to fill
+                  the parent container in a variety of ways, such as preserving the aspect ratio or stretching to take
+                  up as much space as possible.
                 </p>
                 <div className="tab-content">
                   <div className="tab-pane show active" id="object-fit-utilities-preview">
                     <div className="d-flex align-items-start flex-wrap gap-3 text-center">
                       <div>
-                        <img
-                          src={small1}
-                          className="object-fit-contain border rounded avatar-xl"
-                          alt="..."
-                        />
+                        <img src={small1} className="object-fit-contain border rounded avatar-xl" alt="..." />
                         <p className="mt-1 mb-0">
                           <code className="user-select-all">.object-fit-contain</code>
                         </p>
                       </div>
                       <div>
-                        <img
-                          src={small1}
-                          className="object-fit-cover border rounded avatar-xl"
-                          alt="..."
-                        />
+                        <img src={small1} className="object-fit-cover border rounded avatar-xl" alt="..." />
                         <p className="mt-1 mb-0">
                           <code className="user-select-all">.object-fit-cover</code>
                         </p>
                       </div>
                       <div>
-                        <img
-                          src={small1}
-                          className="object-fit-fill border rounded avatar-xl"
-                          alt="..."
-                        />
+                        <img src={small1} className="object-fit-fill border rounded avatar-xl" alt="..." />
                         <p className="mt-1 mb-0">
                           <code className="user-select-all">.object-fit-fill</code>
                         </p>
                       </div>
                       <div>
-                        <img
-                          src={small1}
-                          className="object-fit-scale border rounded avatar-xl"
-                          alt="..."
-                        />
+                        <img src={small1} className="object-fit-scale border rounded avatar-xl" alt="..." />
                         <p className="mt-1 mb-0">
                           <code className="user-select-all">.object-fit-scale</code>
                         </p>
                       </div>
                       <div>
-                        <img
-                          src={small1}
-                          className="object-fit-none border rounded avatar-xl"
-                          alt="..."
-                        />
+                        <img src={small1} className="object-fit-none border rounded avatar-xl" alt="..." />
                         <p className="mt-1 mb-0">
                           <code className="user-select-all">.object-fit-none</code>
                         </p>
@@ -905,8 +818,8 @@ const UtilitiesUI = () => {
               <Card.Body>
                 <h4 className="header-title">Z-index</h4>
                 <p className="text-muted font-14">
-                  Use <code>z-index</code> utilities to stack elements on top of one another.
-                  Requires a <code>position</code> value other than
+                  Use <code>z-index</code> utilities to stack elements on top of one another. Requires a{' '}
+                  <code>position</code> value other than
                   <code>static</code>, which can be set with custom styles or using our
                   <a href="/docs/5.3/utilities/position/">position utilities</a>.
                 </p>

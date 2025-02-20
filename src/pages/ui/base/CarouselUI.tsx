@@ -15,25 +15,13 @@ const DefaultSlides = () => {
 
         <Carousel indicators={false} controls={false}>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?sea"
-              alt="First slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?sea" alt="First slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?nature"
-              alt="Second slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?nature" alt="Second slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?island"
-              alt="Third slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?island" alt="Third slide" />
           </Carousel.Item>
         </Carousel>
       </Card.Body>
@@ -49,25 +37,13 @@ const SlidesWithControls = () => {
         <p className="text-muted font-14">Adding in the previous and next controls:</p>
         <Carousel indicators={false}>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?sea"
-              alt="First slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?sea" alt="First slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?nature"
-              alt="Second slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?nature" alt="Second slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?island"
-              alt="Third slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?island" alt="Third slide" />
           </Carousel.Item>
         </Carousel>
       </Card.Body>
@@ -91,25 +67,13 @@ const SlidesWithIndicators = () => {
         </p>
         <Carousel activeIndex={index} onSelect={handleSelect}>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?sea"
-              alt="First slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?sea" alt="First slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?nature"
-              alt="Second slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?nature" alt="Second slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?island"
-              alt="Third slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?island" alt="Third slide" />
           </Carousel.Item>
         </Carousel>
       </Card.Body>
@@ -128,33 +92,21 @@ const SlidesWithCaptions = () => {
         </p>
         <Carousel indicators={false}>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?sea"
-              alt="First slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?sea" alt="First slide" />
             <Carousel.Caption>
               <h3>First slide label</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?nature"
-              alt="Second slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?nature" alt="Second slide" />
             <Carousel.Caption>
               <h3>Second slide label</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?island"
-              alt="Third slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?island" alt="Third slide" />
             <Carousel.Caption>
               <h3>Third slide label</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -172,30 +124,17 @@ const CrossFade = () => {
       <Card.Body>
         <h4 className="header-title">Crossfade</h4>
         <p className="text-muted font-14">
-          Add <code>.carousel-fade</code> to your carousel to animate slides with a fade transition
-          instead of a slide.
+          Add <code>.carousel-fade</code> to your carousel to animate slides with a fade transition instead of a slide.
         </p>
         <Carousel fade indicators={false}>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?sea"
-              alt="First slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?sea" alt="First slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?nature"
-              alt="Second slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?nature" alt="Second slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?island"
-              alt="Third slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?island" alt="Third slide" />
           </Carousel.Item>
         </Carousel>
       </Card.Body>
@@ -209,30 +148,18 @@ const IndividualInterval = () => {
       <Card.Body>
         <h4 className="header-title">Individual interval</h4>
         <p className="text-muted font-14">
-          Add <code>data-bs-interval=""</code> to a <code>.carousel-item</code> to change the amount
-          of time to delay between automatically cycling to the next item.
+          Add <code>data-bs-interval=""</code> to a <code>.carousel-item</code> to change the amount of time to delay
+          between automatically cycling to the next item.
         </p>
         <Carousel fade indicators={false}>
           <Carousel.Item interval={1000}>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?sea"
-              alt="First slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?sea" alt="First slide" />
           </Carousel.Item>
           <Carousel.Item interval={2000}>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?nature"
-              alt="Second slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?nature" alt="Second slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://source.unsplash.com/800x400/?island"
-              alt="Third slide"
-            />
+            <img className="d-block w-100" src="https://source.unsplash.com/800x400/?island" alt="Third slide" />
           </Carousel.Item>
         </Carousel>
       </Card.Body>

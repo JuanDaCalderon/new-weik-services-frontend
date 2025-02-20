@@ -27,8 +27,7 @@ import {selectUser} from '@/store/selectores';
 const useRolesYPermisos = () => {
   const [isLoadingCreatinRol, setIsLoadingCreatinRol] = useState<boolean>(false);
   const [isLoadingUpdatingPermisos, setIsLoadingUpdatingPermisos] = useState<boolean>(false);
-  const [isLoadingAddAndRemoveRolToUser, setIsLoadingAddAndRemoveRolToUser] =
-    useState<boolean>(false);
+  const [isLoadingAddAndRemoveRolToUser, setIsLoadingAddAndRemoveRolToUser] = useState<boolean>(false);
   const [isLoadingUpdatingBasics, setIsLoadingUpdatingBasics] = useState<boolean>(false);
   const {id} = useAppSelector(selectUser);
   const dispatch = useDispatch();
@@ -50,21 +49,11 @@ const useRolesYPermisos = () => {
       unsubscribe = onSnapshot(query(collection(db, ROLES_PATH)), async (querySnapshotDocs) => {
         const roles: Rol[] = [];
         for (const doc of querySnapshotDocs.docs) {
-          const {
-            rol,
-            descripcion,
-            permisos,
-            fechaCreacion,
-            fechaActualizacion,
-            usuarioCreacion,
-            usuarioUpdated
-          } = doc.data();
+          const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion, usuarioUpdated} =
+            doc.data();
           const thisPermisos: Promise<Permiso>[] = getPermisos(permisos);
           const docSnap = await getDoc(usuarioCreacion as DocumentReference);
-          const thisUsuarioCreacion: Pick<
-            Employee,
-            'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
-          > = {
+          const thisUsuarioCreacion: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'> = {
             email: docSnap.data()?.email ?? '',
             apellidos: docSnap.data()?.apellidos ?? '',
             nombres: docSnap.data()?.nombres ?? '',
@@ -72,10 +61,7 @@ const useRolesYPermisos = () => {
             userName: docSnap.data()?.userName ?? ''
           };
           const docSnapUpdated = await getDoc(usuarioUpdated as DocumentReference);
-          const thisUsuarioUpdated: Pick<
-            Employee,
-            'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
-          > = {
+          const thisUsuarioUpdated: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'> = {
             email: docSnapUpdated.data()?.email ?? '',
             apellidos: docSnapUpdated.data()?.apellidos ?? '',
             nombres: docSnapUpdated.data()?.nombres ?? '',
@@ -99,10 +85,7 @@ const useRolesYPermisos = () => {
         }
         dispatch(clearRoles());
         dispatch(setRoles(roles));
-        DebugUtil.logSuccess(
-          'Se han consultado los roles correctamente y ya deben estar en el store',
-          roles
-        );
+        DebugUtil.logSuccess('Se han consultado los roles correctamente y ya deben estar en el store', roles);
       });
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
@@ -115,21 +98,11 @@ const useRolesYPermisos = () => {
       const roles: Rol[] = [];
       const queryDocs = await getDocs(query(collection(db, ROLES_PATH)));
       for (const doc of queryDocs.docs) {
-        const {
-          rol,
-          descripcion,
-          permisos,
-          fechaCreacion,
-          fechaActualizacion,
-          usuarioCreacion,
-          usuarioUpdated
-        } = doc.data();
+        const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion, usuarioUpdated} =
+          doc.data();
         const thisPermisos: Promise<Permiso>[] = getPermisos(permisos);
         const docSnap = await getDoc(usuarioCreacion as DocumentReference);
-        const thisUsuarioCreacion: Pick<
-          Employee,
-          'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
-        > = {
+        const thisUsuarioCreacion: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'> = {
           email: docSnap.data()?.email ?? '',
           apellidos: docSnap.data()?.apellidos ?? '',
           nombres: docSnap.data()?.nombres ?? '',
@@ -137,10 +110,7 @@ const useRolesYPermisos = () => {
           userName: docSnap.data()?.userName ?? ''
         };
         const docSnapUpdated = await getDoc(usuarioUpdated as DocumentReference);
-        const thisUsuarioUpdated: Pick<
-          Employee,
-          'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'
-        > = {
+        const thisUsuarioUpdated: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'> = {
           email: docSnapUpdated.data()?.email ?? '',
           apellidos: docSnapUpdated.data()?.apellidos ?? '',
           nombres: docSnapUpdated.data()?.nombres ?? '',
@@ -163,10 +133,7 @@ const useRolesYPermisos = () => {
         });
       }
       dispatch(setRoles(roles));
-      DebugUtil.logSuccess(
-        'Se han consultado los roles correctamente sync y ya deben estar en el store',
-        roles
-      );
+      DebugUtil.logSuccess('Se han consultado los roles correctamente sync y ya deben estar en el store', roles);
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
@@ -187,10 +154,7 @@ const useRolesYPermisos = () => {
         }
         dispatch(clearPermisos());
         dispatch(setPermisos(permisos));
-        DebugUtil.logSuccess(
-          'Se han consultado los permisos correctamente y ya deben estar en el store',
-          permisos
-        );
+        DebugUtil.logSuccess('Se han consultado los permisos correctamente y ya deben estar en el store', permisos);
       });
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
@@ -211,10 +175,7 @@ const useRolesYPermisos = () => {
         });
       }
       dispatch(setPermisos(permisos));
-      DebugUtil.logSuccess(
-        'Se han consultado los permisos correctamente async y ya deben estar en el store',
-        permisos
-      );
+      DebugUtil.logSuccess('Se han consultado los permisos correctamente async y ya deben estar en el store', permisos);
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
@@ -255,9 +216,7 @@ const useRolesYPermisos = () => {
         });
         DebugUtil.logSuccess(`Se ha actualizado el usuario y hora de actualización del rol`);
       } catch (error: any) {
-        toast.error(
-          'Ha ocurrido un error al actualizar el usuario y hora de actualización del rol'
-        );
+        toast.error('Ha ocurrido un error al actualizar el usuario y hora de actualización del rol');
         DebugUtil.logError(error.message, error);
       }
     },
@@ -303,9 +262,7 @@ const useRolesYPermisos = () => {
         toast.success(`Rol ${rolCreationBasics.rol} creado correctamente`);
       } catch (error: any) {
         DebugUtil.logError(error.message, error);
-        toast.error(
-          'Ocurrió un error al intentar crear el rol, por favor intenta de nuevo más tarde'
-        );
+        toast.error('Ocurrió un error al intentar crear el rol, por favor intenta de nuevo más tarde');
       } finally {
         setIsLoadingCreatinRol(false);
       }

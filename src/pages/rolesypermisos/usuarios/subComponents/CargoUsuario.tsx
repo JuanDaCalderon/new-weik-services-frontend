@@ -42,9 +42,7 @@ const CargoUsuario = memo(function CargoUsuario({row}: {row: RowTable<thisUsuari
         <i className="mdi mdi-arrow-up-left-bold font-16" />
         <strong>Cargo del usuario {getNombreCompletoUser(row.original)}</strong>
       </span>
-      <p className="my-0 py-0">
-        Edita el cargo del usuario utilizando el campo a continuación y guarda los cambios.
-      </p>
+      <p className="my-0 py-0">Edita el cargo del usuario utilizando el campo a continuación y guarda los cambios.</p>
       <Col className="mt-1" lg={12}>
         <Form.Label className="mb-0" htmlFor="cargo">
           <strong>Cargo:</strong>
@@ -60,14 +58,8 @@ const CargoUsuario = memo(function CargoUsuario({row}: {row: RowTable<thisUsuari
         />
       </Col>
       <Col xs="auto" md={12} className="ms-auto mt-2">
-        <Button
-          className="shadow-sm"
-          variant="info"
-          disabled={!hasTouched}
-          onClick={enviarRolBasics}>
-          {isLoadingUpdateCargo && (
-            <Spinner className="spinner-border-sm" tag="span" color="white" />
-          )}
+        <Button className="shadow-sm" variant="info" disabled={!hasTouched} onClick={enviarRolBasics}>
+          {isLoadingUpdateCargo && <Spinner className="spinner-border-sm" tag="span" color="white" />}
           {!isLoadingUpdateCargo && 'Guardar cambios'}
         </Button>
       </Col>

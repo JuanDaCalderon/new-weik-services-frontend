@@ -9,12 +9,7 @@ const Tasks = () => {
         <CardTitle
           containerClass="d-flex align-items-center justify-content-between mb-2"
           title="Tasks"
-          menuItems={[
-            {label: 'Weekly Report'},
-            {label: 'Monthly Report'},
-            {label: 'Action'},
-            {label: 'Settings'}
-          ]}
+          menuItems={[{label: 'Weekly Report'}, {label: 'Monthly Report'}, {label: 'Action'}, {label: 'Settings'}]}
         />
 
         <Card.Header className="bg-light-lighten border-top border-bottom border-light py-1 text-center pb-2">

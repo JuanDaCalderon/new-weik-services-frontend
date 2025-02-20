@@ -46,12 +46,7 @@ const ProfileCard = () => {
     <Card className={classnames('widget-flat')}>
       <Card.Body>
         <span className="float-start m-2 me-4">
-          <img
-            src={profileImg}
-            style={{height: '100px'}}
-            alt=""
-            className="rounded-circle img-thumbnail"
-          />
+          <img src={profileImg} style={{height: '100px'}} alt="" className="rounded-circle img-thumbnail" />
         </span>
 
         <div>
@@ -225,9 +220,7 @@ const Transactions = ({transactions}: TransactionProps) => {
                   </p>
                 </Col>
                 <Col className="col-auto">
-                  <span className={classnames('fw-bold', 'pe-2', item.textClass)}>
-                    {item.amount}
-                  </span>
+                  <span className={classnames('fw-bold', 'pe-2', item.textClass)}>{item.amount}</span>
                 </Col>
               </Row>
             );
@@ -354,8 +347,7 @@ const WidgetsUI = () => {
             title="$424,652"
             subtitle="Sales"
             data={[
-              47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54,
-              43, 19, 46
+              47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46
             ]}></StatisticsChartWidget2>
         </Col>
         <Col xl={4} sm={6}>
@@ -366,8 +358,7 @@ const WidgetsUI = () => {
             subtitle="Profits"
             colors={['#0acf97']}
             data={[
-              47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54,
-              43, 19, 46
+              47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46
             ]}></StatisticsChartWidget2>
         </Col>
       </Row>

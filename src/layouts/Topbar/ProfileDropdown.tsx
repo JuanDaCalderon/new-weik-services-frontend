@@ -23,12 +23,7 @@ const ProfileDropdown = () => {
   }, [user.userImage]);
 
   const profileMenuOptions = useMemo(() => {
-    return filterByPermissions(
-      profileMenus,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
+    return filterByPermissions(profileMenus, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (
@@ -62,10 +57,7 @@ const ProfileDropdown = () => {
           </div>
           {(profileMenuOptions || []).map((item, i) => {
             return (
-              <Link
-                to={item.redirectTo}
-                className="dropdown-item notify-item"
-                key={i + '-profile-menu'}>
+              <Link to={item.redirectTo} className="dropdown-item notify-item" key={i + '-profile-menu'}>
                 <i className={classNames(item.icon, 'me-1')}></i>
                 <span>{item.label}</span>
               </Link>

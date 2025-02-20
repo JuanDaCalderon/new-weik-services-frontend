@@ -6,8 +6,7 @@ const RolesUsuariosContextCreation = createContext<RolesUsuariosContextType | un
 
 export function useRolesUsuariosContext() {
   const context = useContext(RolesUsuariosContextCreation);
-  if (context === undefined)
-    throw new Error('useRolesUsuariosContext must be used within an ThemeProvider');
+  if (context === undefined) throw new Error('useRolesUsuariosContext must be used within an ThemeProvider');
   return context;
 }
 
@@ -26,8 +25,7 @@ export function RolesUsuariosProvider({children}: {children: ReactNode}): JSX.El
   }, []);
 
   return (
-    <RolesUsuariosContextCreation.Provider
-      value={{rolesUsuarios, updateRolesCell, updateUsuariosCell}}>
+    <RolesUsuariosContextCreation.Provider value={{rolesUsuarios, updateRolesCell, updateUsuariosCell}}>
       {children}
     </RolesUsuariosContextCreation.Provider>
   );

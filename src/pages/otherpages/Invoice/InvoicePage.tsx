@@ -203,10 +203,9 @@ const InvoicePage = () => {
                   <div className="clearfix pt-3">
                     <h6 className="text-muted">Notes:</h6>
                     <small>
-                      All accounts are to be paid within 7 days from receipt of invoice. To be paid
-                      by cheque or credit card or direct payment online. If account is not paid
-                      within 7 days the credits details supplied as confirmation of work undertaken
-                      will be charged the agreed quoted fee noted above.
+                      All accounts are to be paid within 7 days from receipt of invoice. To be paid by cheque or credit
+                      card or direct payment online. If account is not paid within 7 days the credits details supplied
+                      as confirmation of work undertaken will be charged the agreed quoted fee noted above.
                     </small>
                   </div>
                 </Col>

@@ -21,20 +21,13 @@ const Payment = () => {
     <Row>
       <Col>
         <h4 className="mt-2">Payment Selection</h4>
-        <p className="text-muted mb-4">
-          Fill the form below in order to send you the order's invoice.
-        </p>
+        <p className="text-muted mb-4">Fill the form below in order to send you the order's invoice.</p>
 
         <div className="border p-3 mb-3 rounded">
           <Row>
             <Col sm={8}>
               <div className="form-check">
-                <input
-                  type="radio"
-                  id="BillingOptRadio2"
-                  name="billingOptions"
-                  className="form-check-input"
-                />
+                <input type="radio" id="BillingOptRadio2" name="billingOptions" className="form-check-input" />
                 <label className="form-check-label font-16 fw-bold" htmlFor="BillingOptRadio2">
                   Pay with Paypal
                 </label>
@@ -65,8 +58,7 @@ const Payment = () => {
                 </label>
               </div>
               <p className="mb-0 ps-3 pt-1">
-                Safe money transfer using your bank account. We support Mastercard, Visa, Discover
-                and Stripe.
+                Safe money transfer using your bank account. We support Mastercard, Visa, Discover and Stripe.
               </p>
             </Col>
             <Col sm={4} className="text-sm-end mt-3 mt-sm-0 d-flex gap-1 justify-content-end">
@@ -105,21 +97,13 @@ const Payment = () => {
               <Col md={3}>
                 <div className="mb-3">
                   <label className="form-label">Expiry date</label>
-                  <MaskedInput
-                    mask={[/\d/, /\d/, '/', /\d/, /\d/]}
-                    placeholder="MM/YY"
-                    className="form-control"
-                  />
+                  <MaskedInput mask={[/\d/, /\d/, '/', /\d/, /\d/]} placeholder="MM/YY" className="form-control" />
                 </div>
               </Col>
               <Col md={3}>
                 <div className="mb-3">
                   <label className="form-label">CVV</label>
-                  <MaskedInput
-                    mask={[/\d/, /\d/, /\d/]}
-                    placeholder="xxx"
-                    className="form-control"
-                  />
+                  <MaskedInput mask={[/\d/, /\d/, /\d/]} placeholder="xxx" className="form-control" />
                 </div>
               </Col>
             </Row>
@@ -130,12 +114,7 @@ const Payment = () => {
           <Row>
             <Col sm={8}>
               <div className="form-check">
-                <input
-                  type="radio"
-                  id="BillingOptRadio3"
-                  name="billingOptions"
-                  className="form-check-input"
-                />
+                <input type="radio" id="BillingOptRadio3" name="billingOptions" className="form-check-input" />
                 <label className="form-check-label font-16 fw-bold" htmlFor="BillingOptRadio3">
                   Pay with Payoneer
                 </label>
@@ -154,12 +133,7 @@ const Payment = () => {
           <Row>
             <Col sm={8}>
               <div className="form-check">
-                <input
-                  type="radio"
-                  id="BillingOptRadio4"
-                  name="billingOptions"
-                  className="form-check-input"
-                />
+                <input type="radio" id="BillingOptRadio4" name="billingOptions" className="form-check-input" />
                 <label className="form-check-label font-16 fw-bold" htmlFor="BillingOptRadio4">
                   Cash on Delivery
                 </label>

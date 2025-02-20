@@ -15,8 +15,8 @@ const Basic = () => {
       <Card.Body>
         <h4 className="header-title">Simple Popover</h4>
         <p className="text-muted font-14">
-          Popover is a component which displays a box with a content after a click on an element -
-          similar to the tooltip but can contain more content.
+          Popover is a component which displays a box with a content after a click on an element - similar to the
+          tooltip but can contain more content.
         </p>
         <OverlayTrigger trigger="click" placement="right" overlay={popover}>
           <Button variant="danger">Click me to see</Button>
@@ -38,9 +38,7 @@ const Direction = () => {
     <Card>
       <Card.Body>
         <h4 className="header-title">Four Directions</h4>
-        <p className="text-muted font-14">
-          Four options are available: top, right, bottom, and left aligned.
-        </p>
+        <p className="text-muted font-14">Four options are available: top, right, bottom, and left aligned.</p>
 
         <div className="d-flex flex-wrap gap-2">
           {directions.map((direction, index) => (
@@ -50,9 +48,7 @@ const Direction = () => {
               placement={direction.placement}
               overlay={
                 <Popover id={`popover-positioned-${direction.placement}`}>
-                  <Popover.Body>
-                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus.
-                  </Popover.Body>
+                  <Popover.Body>Vivamus sagittis lacus vel augue laoreet rutrum faucibus.</Popover.Body>
                 </Popover>
               }>
               <Button variant="primary" className="me-1">
@@ -79,8 +75,8 @@ const DimissibleOnClick = () => {
       <Card.Body>
         <h4 className="header-title">Dismiss on Next Click</h4>
         <p className="text-muted font-14">
-          Use the <code>trigger</code> attribute with value <code>focus</code> to dismiss popovers
-          on the user's next click of a different element than the toggle element.
+          Use the <code>trigger</code> attribute with value <code>focus</code> to dismiss popovers on the user's next
+          click of a different element than the toggle element.
         </p>
         <OverlayTrigger trigger="focus" placement="right" overlay={popover}>
           <Button variant="success">Dismissible popover</Button>
@@ -102,9 +98,8 @@ const DisabledPopover = () => {
       <Card.Body>
         <h4 className="header-title">Disabled Elements</h4>
         <p className="text-muted font-14">
-          Elements with the <code>disabled</code> attribute aren’t interactive, meaning users cannot
-          hover or click them to trigger a popover (or tooltip). As a workaround, you’ll want to
-          trigger the popover from a wrapper
+          Elements with the <code>disabled</code> attribute aren’t interactive, meaning users cannot hover or click them
+          to trigger a popover (or tooltip). As a workaround, you’ll want to trigger the popover from a wrapper
           <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> and override the
           <code>pointer-events</code> on the disabled element.
         </p>
@@ -133,8 +128,7 @@ const HoverPopover = () => {
       <Card.Body>
         <h4 className="header-title">Hover</h4>
         <p className="text-muted font-14">
-          Use the <code>trigger</code> attribute with value <code>hover</code> to show popover on
-          hovering the element.
+          Use the <code>trigger</code> attribute with value <code>hover</code> to show popover on hovering the element.
         </p>
         <OverlayTrigger trigger={['hover', 'focus']} placement="right" overlay={popover}>
           <Button variant="dark">Please Hover me</Button>

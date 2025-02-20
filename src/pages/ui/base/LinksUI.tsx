@@ -22,8 +22,8 @@ const LinksUI = () => {
                   <code>.text-*</code> classes
                 </a>
                 , these classes have a <code>:hover</code> and <code>:focus</code>
-                state. Some of the link styles use a relatively light foreground color, and should
-                only be used on a dark background in order to have sufficient contrast.
+                state. Some of the link styles use a relatively light foreground color, and should only be used on a
+                dark background in order to have sufficient contrast.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="colored-links-preview">
@@ -51,9 +51,8 @@ const LinksUI = () => {
             <Card.Body>
               <h4 className="header-title">Link utilities</h4>
               <p className="text-muted font-14">
-                <a href="ui-utilities.html">Colored link helpers</a> have been updated to pair with
-                our link utilities. Use the new utilities to modify the link opacity, underline
-                opacity, and underline offset.
+                <a href="ui-utilities.html">Colored link helpers</a> have been updated to pair with our link utilities.
+                Use the new utilities to modify the link opacity, underline opacity, and underline offset.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="links-utilities-preview">
@@ -86,9 +85,8 @@ const LinksUI = () => {
             <Card.Body>
               <h4 className="header-title">Link opacity</h4>
               <p className="text-muted font-14">
-                Change the alpha opacity of the link <code>rgba()</code> color value with utilities.
-                Please be aware that changes to a color’s opacity can lead to links with{' '}
-                <em>insufficient</em> contrast.
+                Change the alpha opacity of the link <code>rgba()</code> color value with utilities. Please be aware
+                that changes to a color’s opacity can lead to links with <em>insufficient</em> contrast.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="link-opacity-preview">
@@ -130,9 +128,7 @@ const LinksUI = () => {
           <Card>
             <Card.Body>
               <h4 className="header-title">Underline color</h4>
-              <p className="text-muted font-14">
-                Change the underline’s color independent of the link text color.
-              </p>
+              <p className="text-muted font-14">Change the underline’s color independent of the link text color.</p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="link-underline-color-preview">
                   {extendedColorVariants.map((color, index) => (
@@ -216,8 +212,7 @@ const LinksUI = () => {
               <p className="text-muted font-14">
                 Just like the <code>.link-opacity-*-hover</code> utilities,
                 <code>.link-offset</code> and <code>.link-underline-opacity</code>
-                utilities include <code>:hover</code> variants by default. Mix and match to create
-                unique link styles.
+                utilities include <code>:hover</code> variants by default. Mix and match to create unique link styles.
               </p>
               <div className="tab-content">
                 <div className="tab-pane show active" id="link-hover-variants-preview">

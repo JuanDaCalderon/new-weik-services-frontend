@@ -31,16 +31,12 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
   const [hasTouched, setHasTouched] = useState<boolean>(false);
 
   const handleToggleChange = useCallback((id: string) => {
-    setThisPermisos((prevP) =>
-      prevP.map((p) => (p.id === id ? {...p, activo: !p.activo} : {...p}))
-    );
+    setThisPermisos((prevP) => prevP.map((p) => (p.id === id ? {...p, activo: !p.activo} : {...p})));
     setHasTouched(true);
   }, []);
 
   const enviarPermisos = useCallback(async () => {
-    const permisosCambiados = thisPermisos.filter(
-      (permiso, i) => permiso.activo !== permisosIniciales[i].activo
-    );
+    const permisosCambiados = thisPermisos.filter((permiso, i) => permiso.activo !== permisosIniciales[i].activo);
     if (permisosCambiados.length > 0) {
       await updatePermisosDeRol(String(row.original.id), permisosCambiados);
     } else {
@@ -56,8 +52,8 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
         <strong>Permisos del rol {row.original.rolName}</strong>
       </span>
       <p className="my-0 py-0">
-        Asigna los permisos a este rol utilizando los interruptores que se encuentran a
-        continuación. Activa o desactiva según sea necesario y luego guarda los cambios.
+        Asigna los permisos a este rol utilizando los interruptores que se encuentran a continuación. Activa o desactiva
+        según sea necesario y luego guarda los cambios.
       </p>
       {thisPermisos.map(({id, permiso, labelName, activo}) => (
         <Col key={id} className="d-flex align-items-center mt-2" xs="auto">
@@ -69,23 +65,13 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
             onChange={() => handleToggleChange(id)}
             data-switch="success"
           />
-          <label
-            htmlFor={`${htmlForSwitchRole}_${id}_${permiso}`}
-            data-on-label="Si"
-            data-off-label="No"
-          />
+          <label htmlFor={`${htmlForSwitchRole}_${id}_${permiso}`} data-on-label="Si" data-off-label="No" />
         </Col>
       ))}
       <Col xs="auto" md={12} className="ms-auto mt-2 pt-1">
-        <Button
-          className="shadow-sm"
-          variant="info"
-          onClick={enviarPermisos}
-          disabled={!hasTouched}>
+        <Button className="shadow-sm" variant="info" onClick={enviarPermisos} disabled={!hasTouched}>
           {' '}
-          {isLoadingUpdatingPermisos && (
-            <Spinner className="spinner-border-sm" tag="span" color="white" />
-          )}
+          {isLoadingUpdatingPermisos && <Spinner className="spinner-border-sm" tag="span" color="white" />}
           {!isLoadingUpdatingPermisos && 'Guardar cambios'}
         </Button>
       </Col>

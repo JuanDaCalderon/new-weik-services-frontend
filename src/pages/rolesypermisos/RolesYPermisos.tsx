@@ -38,12 +38,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
   }, [getEmployeesListener, getPermisosListener, getRolesListener]);
 
   if (
-    !hasPermission(
-      PERMISOS_MAP_IDS.accesoRolesPermisos,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    )
+    !hasPermission(PERMISOS_MAP_IDS.accesoRolesPermisos, user.roles, user.permisosOtorgados, user.permisosDenegados)
   ) {
     return <Navigate to="/services/dashboard" replace />;
   }
@@ -56,9 +51,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
           <Row>
             <Tab.Container defaultActiveKey="Roles">
               <Col xs={12} md={2} xxl={1}>
-                <Nav
-                  variant="pills"
-                  className="flex-column bg-light bg-gradient bg-opacity-50 rounded">
+                <Nav variant="pills" className="flex-column bg-light bg-gradient bg-opacity-50 rounded">
                   {tabContents.map((tab, index) => (
                     <Nav.Item className="w-100" key={index}>
                       <Nav.Link as={Link} to="#" eventKey={tab.id}>
@@ -76,13 +69,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
                         <Col sm="12">
                           {tab.id === 'Roles' && <Roles />}
                           {tab.id === 'Usuarios' && (
-                            <>
-                              {!isLoadingUsers ? (
-                                <Usuarios />
-                              ) : (
-                                <SkeletonLoader height="125px"></SkeletonLoader>
-                              )}
-                            </>
+                            <>{!isLoadingUsers ? <Usuarios /> : <SkeletonLoader height="125px"></SkeletonLoader>}</>
                           )}
                         </Col>
                       </Row>

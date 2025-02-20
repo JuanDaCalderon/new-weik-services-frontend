@@ -15,9 +15,7 @@ const Statistics = () => {
 
       const activeViewsElement = document.getElementById('active-views-count');
       if (activeViewsElement) {
-        activeViewsElement.innerHTML = Math.floor(
-          Math.random() * activeUsersCount + 200
-        ).toString();
+        activeViewsElement.innerHTML = Math.floor(Math.random() * activeUsersCount + 200).toString();
       }
     }, 2000);
   };

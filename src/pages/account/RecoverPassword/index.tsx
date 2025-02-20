@@ -3,10 +3,7 @@ import {Form, SendButton, TextInput} from '@/components';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import useRecoverPassword, {
-  recoverPasswordFormFields,
-  recoverPasswordFormSchema
-} from './useRecoverPassword';
+import useRecoverPassword, {recoverPasswordFormFields, recoverPasswordFormSchema} from './useRecoverPassword';
 import {DEFAULT_ROUTER_PATH, TOAST_DURATION} from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 
@@ -39,8 +36,8 @@ const RecoverPassword = () => {
         <div className="text-center w-75 m-auto">
           <h4 className="text-dark text-center mt-0 fw-bold">Restablecer contraseña</h4>
           <p className="text-dark text-opacity-75">
-            Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con
-            instrucciones para restablecer su contraseña.
+            Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con instrucciones para
+            restablecer su contraseña.
           </p>
         </div>
         <Form<recoverPasswordFormFields> onSubmit={onSubmit} schema={recoverPasswordFormSchema}>

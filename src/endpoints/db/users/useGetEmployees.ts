@@ -39,14 +39,7 @@ const useGetEmployees = () => {
           id: rolDocSnap.id,
           rol: rolDocSnap.data()?.rol ?? '',
           permisos: thisPermisos ? await Promise.all(thisPermisos) : []
-        } as Omit<
-          Rol,
-          | 'descripcion'
-          | 'usuarioCreacion'
-          | 'fechaCreacion'
-          | 'fechaActualizacion'
-          | 'usuarioUpdated'
-        >;
+        } as Omit<Rol, 'descripcion' | 'usuarioCreacion' | 'fechaCreacion' | 'fechaActualizacion' | 'usuarioUpdated'>;
       });
     },
     [getPermisos]
@@ -100,19 +93,14 @@ const useGetEmployees = () => {
             estado: estado ?? '',
             cargo: cargo ?? '',
             roles: thisRoles ? await Promise.all(thisRoles) : [],
-            permisosOtorgados: thisPermisosOtorgados
-              ? await Promise.all(thisPermisosOtorgados)
-              : [],
-            permisosDenegados: thisPermisosDenegados
-              ? await Promise.all(thisPermisosDenegados)
-              : [],
+            permisosOtorgados: thisPermisosOtorgados ? await Promise.all(thisPermisosOtorgados) : [],
+            permisosDenegados: thisPermisosDenegados ? await Promise.all(thisPermisosDenegados) : [],
             horario: horario ?? [],
             horasTrabajo:
               ((horasTrabajo as HorasTrabajoToFirestore[]) || []).map((h) => ({
                 ...h,
                 checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
-                checkOut:
-                  h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
+                checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
               })) ?? [],
             informacionLaboral: informacionLaboral ?? [],
             vacaciones: vacaciones ?? []
@@ -184,8 +172,7 @@ const useGetEmployees = () => {
             ((horasTrabajo as HorasTrabajoToFirestore[]) || []).map((h) => ({
               ...h,
               checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
-              checkOut:
-                h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
+              checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
             })) ?? [],
           informacionLaboral: informacionLaboral ?? [],
           vacaciones: vacaciones ?? []

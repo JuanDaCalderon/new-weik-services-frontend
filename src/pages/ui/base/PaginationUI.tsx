@@ -11,9 +11,7 @@ const DefaultPagination = () => {
     <Card>
       <Card.Body>
         <h4 className="header-title">Default Pagination</h4>
-        <p className="text-muted font-14">
-          Simple pagination inspired by Rdio, great for apps and search results.
-        </p>
+        <p className="text-muted font-14">Simple pagination inspired by Rdio, great for apps and search results.</p>
         <Pagination>
           <Pagination.Prev />
           {items}
@@ -31,8 +29,7 @@ const PaginationWithStates = () => {
         <h4 className="header-title">Disabled and active states</h4>
         <p className="text-muted font-14">
           PageItem are customizable for different circumstances. Use <code>disabled</code>
-          prop for links that appear un-clickable and <code>active</code> prop to indicate the
-          current page.
+          prop for links that appear un-clickable and <code>active</code> prop to indicate the current page.
         </p>
         <Pagination>
           <Pagination.Prev disabled>Previous</Pagination.Prev>
@@ -82,8 +79,7 @@ const PaginationSizes = () => {
       <Card.Body>
         <h4 className="header-title">Sizing</h4>
         <p className="text-muted font-14">
-          Add <code>lg</code> or <code>sm</code> type to <code>size</code> prop for additional
-          sizes.
+          Add <code>lg</code> or <code>sm</code> type to <code>size</code> prop for additional sizes.
         </p>
 
         <Pagination size="lg">
@@ -108,8 +104,8 @@ const PaginationWithEllipsis = () => {
       <Card.Body>
         <h4 className="header-title">More options</h4>
         <p className="text-muted font-14">
-          For building more complex pagination UI, there are few convenient sub-components for
-          adding "First", "Previous", "Next", and "Last" buttons, as well as an
+          For building more complex pagination UI, there are few convenient sub-components for adding "First",
+          "Previous", "Next", and "Last" buttons, as well as an
           <code>Ellipsis</code> item for indicating previous or continuing results.
         </p>
 

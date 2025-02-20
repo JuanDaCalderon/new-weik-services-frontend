@@ -15,10 +15,7 @@ import {useEffect, useRef, useState, type HTMLProps} from 'react';
 import {Table} from 'react-bootstrap';
 import Pagination from './Pagination';
 
-const IndeterminateCheckbox = ({
-  indeterminate,
-  ...rest
-}: {indeterminate?: boolean} & HTMLProps<HTMLInputElement>) => {
+const IndeterminateCheckbox = ({indeterminate, ...rest}: {indeterminate?: boolean} & HTMLProps<HTMLInputElement>) => {
   const ref = useRef<HTMLInputElement>(null!);
 
   useEffect(() => {
@@ -114,9 +111,7 @@ const ReactTable = <RowType,>({
               )}
               {headerGroup.headers.map((header) => (
                 <th key={header.id} colSpan={header.colSpan}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
             </tr>

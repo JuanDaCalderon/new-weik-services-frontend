@@ -24,9 +24,7 @@ export default function useFileUploader(showPreview: boolean = true) {
     callback?: (files: FileType) => void,
     acceptedFileTypes?: string[]
   ) => {
-    const validFile = files.find(
-      (file) => !acceptedFileTypes || acceptedFileTypes.includes(file.type)
-    );
+    const validFile = files.find((file) => !acceptedFileTypes || acceptedFileTypes.includes(file.type));
     if (validFile) {
       removeFile(); // Limpia el archivo anterior
       const file = validFile;

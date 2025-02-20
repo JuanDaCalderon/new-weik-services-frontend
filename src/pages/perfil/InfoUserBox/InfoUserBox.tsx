@@ -91,9 +91,7 @@ const InfoUserBox = () => {
             className="cursor-pointer position-absolute top-0 end-0"
             type="switch"
             id="custom-switch"
-            label={
-              <i className={`mdi mdi-wrench cursor-pointer ${isChecked && 'text-primary'}`}></i>
-            }
+            label={<i className={`mdi mdi-wrench cursor-pointer ${isChecked && 'text-primary'}`}></i>}
             checked={isChecked}
             onChange={handleSwitchChange}
           />
@@ -120,11 +118,7 @@ const InfoUserBox = () => {
               ))}
 
           {isChecked && (
-            <Button
-              className="w-100 mt-2"
-              variant="primary"
-              disabled={!isFormChanged}
-              onClick={updateData}>
+            <Button className="w-100 mt-2" variant="primary" disabled={!isFormChanged} onClick={updateData}>
               {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
               {!isLoading && 'Actualizar información'}
             </Button>

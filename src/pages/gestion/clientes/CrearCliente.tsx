@@ -46,12 +46,7 @@ const CrearCliente = memo(function CrearCliente() {
   );
 
   const isValidClient = useCallback((clienteData: Cliente): boolean => {
-    return (
-      !!clienteData &&
-      !!clienteData.nombre.trim() &&
-      !!clienteData.domain.trim() &&
-      !!clienteData.branding.trim()
-    );
+    return !!clienteData && !!clienteData.nombre.trim() && !!clienteData.domain.trim() && !!clienteData.branding.trim();
   }, []);
 
   const resetForm = useCallback(() => {
@@ -62,17 +57,13 @@ const CrearCliente = memo(function CrearCliente() {
 
   const enviarCliente = useCallback(async () => {
     if (!isValidClient(newCliente) || !file) {
-      toast.error(
-        `Complete todos los campos${!file ? ' y asegúrese de haber subido una imagen' : ''}.`
-      );
+      toast.error(`Complete todos los campos${!file ? ' y asegúrese de haber subido una imagen' : ''}.`);
       setShouldResetImage(!file);
       setHasTouched(false);
       return;
     }
     if (checkIfClientExists(newCliente, clientes)) {
-      toast.error(
-        'El cliente no se pudo crear, ya existen registros con el mismo nombre y/o dominio.'
-      );
+      toast.error('El cliente no se pudo crear, ya existen registros con el mismo nombre y/o dominio.');
       return;
     }
     if (!isValidDomain(newCliente.domain) || !isValidName(newCliente.nombre)) {
@@ -102,16 +93,7 @@ const CrearCliente = memo(function CrearCliente() {
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
-  }, [
-    addClient,
-    clientes,
-    file,
-    getClientesSync,
-    isValidClient,
-    newCliente,
-    resetForm,
-    uploadImage
-  ]);
+  }, [addClient, clientes, file, getClientesSync, isValidClient, newCliente, resetForm, uploadImage]);
 
   const isLoadingUploadCliente = useMemo(() => {
     return isLoadingAddClient || isLoadingUploadImage;
@@ -119,9 +101,7 @@ const CrearCliente = memo(function CrearCliente() {
 
   return (
     <>
-      <p className="weik-text-grey-200 my-1">
-        Completa los campos y haz clic en "Crear" para añadir un cliente.
-      </p>
+      <p className="weik-text-grey-200 my-1">Completa los campos y haz clic en "Crear" para añadir un cliente.</p>
       <ul>
         <li>
           <h5 className="d-inline-block weik-text-grey-300 my-0">Nombre del cliente:</h5>
@@ -130,8 +110,7 @@ const CrearCliente = memo(function CrearCliente() {
         <li>
           <h5 className="d-inline-block weik-text-grey-300 my-0">Dominio del cliente:</h5>
           <p className="d-inline-block weik-text-grey-200 ms-1 my-0">
-            @<b>dominio</b>.com, donde se asociarán los correos de los usuarios al cliente. No debe
-            contener espacios.
+            @<b>dominio</b>.com, donde se asociarán los correos de los usuarios al cliente. No debe contener espacios.
           </p>
         </li>
       </ul>
@@ -195,9 +174,7 @@ const CrearCliente = memo(function CrearCliente() {
         variant="success"
         className="w-100 mt-2"
         onClick={enviarCliente}>
-        {isLoadingUploadCliente && (
-          <Spinner className="spinner-border-sm" tag="span" color="white" />
-        )}
+        {isLoadingUploadCliente && <Spinner className="spinner-border-sm" tag="span" color="white" />}
         {!isLoadingUploadCliente && (
           <>
             <i className="mdi mdi-plus-circle me-1" /> Crear

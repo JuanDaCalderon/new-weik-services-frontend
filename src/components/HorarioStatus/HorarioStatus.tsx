@@ -45,10 +45,7 @@ const HorarioStatus = memo(function HorarioStatus() {
     const horasTrabajo = user.horasTrabajo.find((h) => h.dia === todayDate);
     if (!horasTrabajo) return 'No ha hecho check-in';
     const checkOutDate = horasTrabajo.checkOut ? new Date(horasTrabajo.checkOut) : new Date();
-    const {horasDeTrabajo, minutosDeTrabajo} = calcularHorasTrabajo(
-      new Date(horasTrabajo.checkIn),
-      checkOutDate
-    );
+    const {horasDeTrabajo, minutosDeTrabajo} = calcularHorasTrabajo(new Date(horasTrabajo.checkIn), checkOutDate);
     return `${horasDeTrabajo} ${horasDeTrabajo === 1 ? 'Hora' : 'Horas'}, ${minutosDeTrabajo} Minutos`;
   }, [todayDate, user.horasTrabajo]);
 
@@ -95,8 +92,8 @@ const HorarioStatus = memo(function HorarioStatus() {
                       <i className="uil-cloud-check display-6 text-success"></i>
                       <h4 className="m-0 mb-1 text-dark">Has registrado tu salida.</h4>
                       <p className="d-flex justify-content-start w-100 m-0 text-body font-14">
-                        Gracias por tu esfuerzo hoy. Ya has marcado la salida y podrás registrar tu
-                        entrada nuevamente mañana.
+                        Gracias por tu esfuerzo hoy. Ya has marcado la salida y podrás registrar tu entrada nuevamente
+                        mañana.
                       </p>
                     </>
                   ) : (
@@ -110,8 +107,8 @@ const HorarioStatus = memo(function HorarioStatus() {
                 <>
                   <h4 className="m-0 mb-1 text-dark">Aún no has registrado tu entrada.</h4>
                   <p className="d-flex justify-content-start w-100 m-0 text-body font-14">
-                    Ya puedes marcar tu entrada. Ten en cuenta que, una vez lo hagas, no podrás
-                    repetirlo, ya que el botón permanecerá deshabilitado hasta mañana.
+                    Ya puedes marcar tu entrada. Ten en cuenta que, una vez lo hagas, no podrás repetirlo, ya que el
+                    botón permanecerá deshabilitado hasta mañana.
                   </p>
                 </>
               )}
@@ -124,27 +121,19 @@ const HorarioStatus = memo(function HorarioStatus() {
                 </p>
               )}
 
-              <Alert
-                className="w-100 px-2 py-1 d-flex justify-content-between mt-2 mb-0"
-                variant="light">
+              <Alert className="w-100 px-2 py-1 d-flex justify-content-between mt-2 mb-0" variant="light">
                 <span className="text-dark">Entrada</span>
                 <span className="text-muted">{currentCheckIn}</span>
               </Alert>
-              <Alert
-                className="w-100 px-2 py-1 d-flex justify-content-between mt-1 mb-0"
-                variant="light">
+              <Alert className="w-100 px-2 py-1 d-flex justify-content-between mt-1 mb-0" variant="light">
                 <span className="text-dark">Salida</span>
                 <span className="text-muted">{currentCheckOut}</span>
               </Alert>
-              <Alert
-                className="w-100 px-2 py-1 d-flex justify-content-between mt-1 mb-0"
-                variant="light">
+              <Alert className="w-100 px-2 py-1 d-flex justify-content-between mt-1 mb-0" variant="light">
                 <span className="text-dark">Horas trabajadas</span>
                 <span className="text-muted">{currentHorasTrabajadas}</span>
               </Alert>
-              <Alert
-                className="w-100 px-2 py-1 d-flex justify-content-between mt-1 mb-2"
-                variant="light">
+              <Alert className="w-100 px-2 py-1 d-flex justify-content-between mt-1 mb-2" variant="light">
                 <span className="text-dark">Horas extras</span>
                 <span className="text-muted">{currentHorasExtrasTrabajadas}</span>
               </Alert>

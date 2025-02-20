@@ -1,10 +1,6 @@
 import {ApexOptions} from 'apexcharts';
 
-function generateData(
-  baseval: number,
-  count: number,
-  yrange: {min: number; max: number}
-): number[][] {
+function generateData(baseval: number, count: number, yrange: {min: number; max: number}): number[][] {
   let i = 0;
   const series: number[][] = [];
   while (i < count) {
@@ -19,11 +15,7 @@ function generateData(
   return series;
 }
 
-function generateData1(
-  baseval1: number,
-  count: number,
-  yrange: {min: number; max: number}
-): number[][] {
+function generateData1(baseval1: number, count: number, yrange: {min: number; max: number}): number[][] {
   let i = 0;
   const series: number[][] = [];
   while (i < count) {

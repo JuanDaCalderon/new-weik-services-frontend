@@ -45,13 +45,7 @@ const RadarMultiSeries = () => {
 
   return (
     <div dir="ltr">
-      <ReactApexChart
-        className="apex-charts"
-        options={MultipleSeriesOpt}
-        height={350}
-        series={data}
-        type="radar"
-      />
+      <ReactApexChart className="apex-charts" options={MultipleSeriesOpt} height={350} series={data} type="radar" />
       <div className="text-center mt-2">
         <button onClick={update} className="btn btn-sm btn-primary">
           Update

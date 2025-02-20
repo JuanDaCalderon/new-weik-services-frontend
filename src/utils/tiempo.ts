@@ -3,10 +3,7 @@ import {HorasTrabajoType} from '@/types';
 export const calcularHorasTrabajo = (
   checkIn: Date,
   checkOut: Date
-): Omit<
-  HorasTrabajoType,
-  'isInWorkingTime' | 'checkIn' | 'hasCheckIn' | 'checkOut' | 'hasCheckOut' | 'dia'
-> => {
+): Omit<HorasTrabajoType, 'isInWorkingTime' | 'checkIn' | 'hasCheckIn' | 'checkOut' | 'hasCheckOut' | 'dia'> => {
   const segundosTotales = Math.floor((checkOut.getTime() - checkIn.getTime()) / 1000); // Diferencia en segundos
   const maxTiempoRegular = 9 * 3600; // 9 horas en segundos
 

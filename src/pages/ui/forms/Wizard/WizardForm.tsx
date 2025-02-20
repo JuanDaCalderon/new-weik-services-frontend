@@ -20,12 +20,7 @@ const BasicWizard = () => {
                       Email
                     </Form.Label>
                     <Col md={9}>
-                      <Form.Control
-                        type="email"
-                        name="exampleEmail"
-                        id="exampleEmail"
-                        placeholder="Enter email"
-                      />
+                      <Form.Control type="email" name="exampleEmail" id="exampleEmail" placeholder="Enter email" />
                     </Col>
                   </Form.Group>
 
@@ -78,12 +73,7 @@ const BasicWizard = () => {
                       First Name
                     </Form.Label>
                     <Col md={9}>
-                      <Form.Control
-                        type="text"
-                        name="fname"
-                        id="fname"
-                        placeholder="Enter first name"
-                      />
+                      <Form.Control type="text" name="fname" id="fname" placeholder="Enter first name" />
                     </Col>
                   </Form.Group>
 
@@ -92,12 +82,7 @@ const BasicWizard = () => {
                       Last Name
                     </Form.Label>
                     <Col md={9}>
-                      <Form.Control
-                        type="text"
-                        name="lname"
-                        id="lname"
-                        placeholder="enter last name"
-                      />
+                      <Form.Control type="text" name="lname" id="lname" placeholder="enter last name" />
                     </Col>
                   </Form.Group>
 
@@ -106,12 +91,7 @@ const BasicWizard = () => {
                       Phone Number
                     </Form.Label>
                     <Col md={9}>
-                      <Form.Control
-                        type="text"
-                        name="phone"
-                        id="phone"
-                        placeholder="enter phone number"
-                      />
+                      <Form.Control type="text" name="phone" id="phone" placeholder="enter phone number" />
                     </Col>
                   </Form.Group>
 
@@ -142,8 +122,8 @@ const BasicWizard = () => {
                       <h3 className="mt-0">Thank you !</h3>
 
                       <p className="w-75 mb-2 mx-auto">
-                        Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim
-                        eros at volutpat. In egestas mattis dui. Aliquam mattis dictum aliquet.
+                        Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In
+                        egestas mattis dui. Aliquam mattis dictum aliquet.
                       </p>
 
                       <div className="mb-3">
@@ -205,12 +185,7 @@ const WizardWithProgressbar = () => {
                           Email
                         </Form.Label>
                         <Col md={9}>
-                          <Form.Control
-                            type="email"
-                            name="exampleEmail"
-                            id="exampleEmail2"
-                            placeholder="Enter email"
-                          />
+                          <Form.Control type="email" name="exampleEmail" id="exampleEmail2" placeholder="Enter email" />
                         </Col>
                       </Form.Group>
 
@@ -263,12 +238,7 @@ const WizardWithProgressbar = () => {
                           First Name
                         </Form.Label>
                         <Col md={9}>
-                          <Form.Control
-                            type="text"
-                            name="fname"
-                            id="fname"
-                            placeholder="Enter first name"
-                          />
+                          <Form.Control type="text" name="fname" id="fname" placeholder="Enter first name" />
                         </Col>
                       </Form.Group>
 
@@ -277,12 +247,7 @@ const WizardWithProgressbar = () => {
                           Last Name
                         </Form.Label>
                         <Col md={9}>
-                          <Form.Control
-                            type="text"
-                            name="lname"
-                            id="lname"
-                            placeholder="enter last name"
-                          />
+                          <Form.Control type="text" name="lname" id="lname" placeholder="enter last name" />
                         </Col>
                       </Form.Group>
 
@@ -291,12 +256,7 @@ const WizardWithProgressbar = () => {
                           Phone Number
                         </Form.Label>
                         <Col md={9}>
-                          <Form.Control
-                            type="text"
-                            name="phone"
-                            id="phone"
-                            placeholder="enter phone number"
-                          />
+                          <Form.Control type="text" name="phone" id="phone" placeholder="enter phone number" />
                         </Col>
                       </Form.Group>
 
@@ -327,17 +287,14 @@ const WizardWithProgressbar = () => {
                           <h3 className="mt-0">Thank you !</h3>
 
                           <p className="w-75 mb-2 mx-auto">
-                            Quisque nec turpis at urna dictum luctus. Suspendisse convallis
-                            dignissim eros at volutpat. In egestas mattis dui. Aliquam mattis dictum
-                            aliquet.
+                            Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat.
+                            In egestas mattis dui. Aliquam mattis dictum aliquet.
                           </p>
 
                           <div className="mb-3">
                             <Form.Check type="checkbox" className="d-inline-block">
                               <Form.Check.Input type="checkbox" />
-                              <Form.Check.Label>
-                                I agree with the Terms and Conditions
-                              </Form.Check.Label>
+                              <Form.Check.Label>I agree with the Terms and Conditions</Form.Check.Label>
                             </Form.Check>
                           </div>
                         </div>
@@ -408,15 +365,8 @@ const WizardWithFormValidation = () => {
                 <Step
                   id="login"
                   render={({next}) => (
-                    <RHForm<Form1Fields>
-                      onSubmit={(_event, _values) => next()}
-                      schema={validationSchema1}>
-                      <TextInput
-                        label="Username/Email"
-                        type="email"
-                        name="email"
-                        containerClass={'mb-3'}
-                      />
+                    <RHForm<Form1Fields> onSubmit={(_event, _values) => next()} schema={validationSchema1}>
+                      <TextInput label="Username/Email" type="email" name="email" containerClass={'mb-3'} />
                       <PasswordInput label="Password" name="password" containerClass={'mb-3'} />
 
                       <CheckInput label="Remember me" type="checkbox" name="checkbox" />
@@ -434,21 +384,9 @@ const WizardWithFormValidation = () => {
                 <Step
                   id="gandalf"
                   render={({next, previous}) => (
-                    <RHForm<Form2Fields>
-                      onSubmit={(_event, _values) => next()}
-                      schema={validationSchema2}>
-                      <TextInput
-                        label="First Name"
-                        type="text"
-                        name="firstname"
-                        containerClass={'mb-3'}
-                      />
-                      <TextInput
-                        label="Last Name"
-                        type="text"
-                        name="lastname"
-                        containerClass={'mb-3'}
-                      />
+                    <RHForm<Form2Fields> onSubmit={(_event, _values) => next()} schema={validationSchema2}>
+                      <TextInput label="First Name" type="text" name="firstname" containerClass={'mb-3'} />
+                      <TextInput label="Last Name" type="text" name="lastname" containerClass={'mb-3'} />
 
                       <CheckInput
                         label="Agree to terms and conditions"
@@ -484,17 +422,14 @@ const WizardWithFormValidation = () => {
                           <h3 className="mt-0">Thank you !</h3>
 
                           <p className="w-75 mb-2 mx-auto">
-                            Quisque nec turpis at urna dictum luctus. Suspendisse convallis
-                            dignissim eros at volutpat. In egestas mattis dui. Aliquam mattis dictum
-                            aliquet.
+                            Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat.
+                            In egestas mattis dui. Aliquam mattis dictum aliquet.
                           </p>
 
                           <div className="mb-3">
                             <Form.Check type="checkbox" className="d-inline-block">
                               <Form.Check.Input type="checkbox" />
-                              <Form.Check.Label>
-                                I agree with the Terms and Conditions
-                              </Form.Check.Label>
+                              <Form.Check.Label>I agree with the Terms and Conditions</Form.Check.Label>
                             </Form.Check>
                           </div>
                         </div>

@@ -112,20 +112,7 @@ const ColumnWithDataTableOps: ApexOptions = {
     }
   ],
   xaxis: {
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ],
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     position: 'top',
     labels: {
       offsetY: 0
@@ -228,16 +215,7 @@ const StackedColumnOps: ApexOptions = {
     }
   ],
   xaxis: {
-    categories: [
-      '2011 Q1',
-      '2011 Q2',
-      '2011 Q3',
-      '2011 Q4',
-      '2012 Q1',
-      '2012 Q2',
-      '2012 Q3',
-      '2012 Q4'
-    ]
+    categories: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4']
   },
   colors: ['#39afd1', '#ffbc00', '#e3eaef'],
   fill: {
@@ -288,16 +266,7 @@ const FullStackedColumnOps: ApexOptions = {
     }
   ],
   xaxis: {
-    categories: [
-      '2011 Q1',
-      '2011 Q2',
-      '2011 Q3',
-      '2011 Q4',
-      '2012 Q1',
-      '2012 Q2',
-      '2012 Q3',
-      '2012 Q4'
-    ]
+    categories: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4']
   },
   fill: {
     opacity: 1
@@ -663,9 +632,8 @@ const ColumnwithnegativevalueOps: ApexOptions = {
     {
       name: 'Cash Flow',
       data: [
-        1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09, 0.34, 3.88, 13.07, 5.8,
-        2, 7.37, 8.1, 13.57, 15.75, 17.1, 19.8, -27.03, -54.4, -47.2, -43.3, -18.6, -48.6, -41.1,
-        -39.6, -37.6, -29.4, -21.4, -2.4
+        1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09, 0.34, 3.88, 13.07, 5.8, 2, 7.37, 8.1, 13.57,
+        15.75, 17.1, 19.8, -27.03, -54.4, -47.2, -43.3, -18.6, -48.6, -41.1, -39.6, -37.6, -29.4, -21.4, -2.4
       ]
     }
   ],
@@ -762,16 +730,7 @@ const DistributedColumnOps: ApexOptions = {
     categories: ['John', 'Joe', 'Jake', 'Amber', 'Peter', 'Mary', 'David', 'Lily'],
     labels: {
       style: {
-        colors: [
-          '#3e60d5',
-          '#6c757d',
-          '#47ad77',
-          '#fa5c7c',
-          '#ffbc00',
-          '#39afd1',
-          '#e3eaef',
-          '#313a46'
-        ],
+        colors: ['#3e60d5', '#6c757d', '#47ad77', '#fa5c7c', '#ffbc00', '#39afd1', '#e3eaef', '#313a46'],
         fontSize: '14px'
       }
     }

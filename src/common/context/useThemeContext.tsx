@@ -38,8 +38,7 @@ function getInitialThemeSettings(): THEME {
 
 export function useThemeContext(): ThemeContextType {
   const context = useContext(ThemeContext);
-  if (context === undefined)
-    throw new Error('useThemeContext must be used within an ThemeProvider');
+  if (context === undefined) throw new Error('useThemeContext must be used within an ThemeProvider');
   return context;
 }
 
@@ -66,7 +65,5 @@ export function ThemeProvider({children}: {children: ReactNode}): JSX.Element {
     setSettings((prev) => ({...prev, ...newSettings}));
   }, []);
 
-  return (
-    <ThemeContext.Provider value={{settings, updateSettings}}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{settings, updateSettings}}>{children}</ThemeContext.Provider>;
 }
