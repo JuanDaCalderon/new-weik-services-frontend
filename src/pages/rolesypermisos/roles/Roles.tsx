@@ -77,6 +77,7 @@ const Roles = memo(function Roles() {
             </span>
           )}
           <Button
+            size="sm"
             className="shadow-sm"
             style={{maxWidth: '175px'}}
             variant="success"

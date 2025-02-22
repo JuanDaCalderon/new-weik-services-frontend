@@ -10,3 +10,5 @@ export * from './filetypes';
 export * from './profileMenu';
 export * from './utils';
 export * from './toaster';
+export * from './noticias';
+export * from './responsive';

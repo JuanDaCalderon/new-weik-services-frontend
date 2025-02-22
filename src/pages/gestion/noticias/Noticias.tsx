@@ -1,95 +1,96 @@
+import {memo, useCallback} from 'react';
+import {Button, Card, Col, Row} from 'react-bootstrap';
 import {PageBreadcrumb} from '@/components';
-import {NoticiaCard} from '@/components/Noticias/NoticiaCard';
-import {memo, useCallback, MouseEvent, useState, useEffect, useMemo} from 'react';
-import {Card, Col, Row} from 'react-bootstrap';
-import {Mousewheel, Pagination, Autoplay} from 'swiper/modules';
-import {Swiper, SwiperSlide} from 'swiper/react';
-import {MapNoticia, Noticia} from '@/types';
-import {useGetNoticias} from '@/endpoints';
 import {useAppSelector} from '@/store';
+import {useGetNoticias} from '@/endpoints';
 import {selectIsLoadingNoticias, selectNoticias} from '@/store/selectores';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-import {DateUtils, filtrarElementosVigentes} from '@/utils';
+import {noticiasMockData} from '@/constants';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Grid, Mousewheel, Pagination} from 'swiper/modules';
+import {NoticiaCard} from '@/components/Noticias';
 import 'swiper/css';
+import 'swiper/css/grid';
 import 'swiper/css/pagination';
-import './styles.scss';
 
 const Noticias = memo(function Noticias() {
-  const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const isLoadingNews = useAppSelector(selectIsLoadingNoticias);
-  const noticiasFromStore = useAppSelector(selectNoticias);
+  const _noticiasFromStore = useAppSelector(selectNoticias);
   const {getNoticiasSync} = useGetNoticias();
 
-  useEffect(() => {
-    if (noticiasFromStore.length <= 0) getNoticiasSync();
-  }, [getNoticiasSync, noticiasFromStore.length]);
+  const syncNoticias = useCallback(() => {
+    getNoticiasSync();
+  }, [getNoticiasSync]);
 
-  const onClickExpandNoticias = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsExpanded((prev) => !prev);
+  const crearNoticia = useCallback(() => {
+    console.log('Crear noticia');
   }, []);
-
-  const noticiasData: MapNoticia[] = useMemo(() => {
-    if (noticiasFromStore.length === 0) return [];
-    const noticiasFiltradas: Noticia[] = filtrarElementosVigentes(noticiasFromStore);
-    if (noticiasFiltradas.length > 0) {
-      return noticiasFiltradas.map((noticia) => {
-        const expDate: string | undefined = [...noticia.rangoFechas].pop();
-        return {
-          id: noticia.id,
-          expFechas: `Esta publicación desaparecerá del tablero el día ${DateUtils.formatShortDate(expDate ? new Date(expDate) : new Date(), true)}`,
-          image: noticia.image,
-          link: noticia.link,
-          titulo: noticia.titulo
-        };
-      });
-    } else return [];
-  }, [noticiasFromStore]);
-
-  const slidesPerView: number = useMemo(() => {
-    return isExpanded ? 3 : 6;
-  }, [isExpanded]);
 
   return (
     <>
       <PageBreadcrumb title="Gestión Noticias" />
       <Row>
-        <Col className="p-0 m-0" xs={12} lg={3} xxl={isExpanded ? 2 : 1}>
+        <Col xs={12}>
           <Card>
             <Card.Body className="position-relative">
-              <Card.Header className="p-0">
-                <h4 className="header-title text-dark text-opacity-75">
-                  {isExpanded ? 'Tablero de noticias' : 'Noticias'}
-                </h4>
+              <Card.Header className="p-0 d-flex justify-content-between align-items-center mb-1">
+                <div className="d-flex align-items-center gap-2">
+                  <h4 className="header-title text-dark text-opacity-75 d-flex align-items-center w-auto m-0 pb-0 pt-1">
+                    Tablero de noticias
+                  </h4>
+                  <Button
+                    disabled={isLoadingNews}
+                    onClick={syncNoticias}
+                    size="sm"
+                    variant="outline-light"
+                    className="btn-icon py-0 px-1 m-0 d-flex align-items-center">
+                    <i className="uil uil-sync p-0 m-0"></i>
+                  </Button>
+                </div>
+                <Button
+                  size="sm"
+                  className="shadow-sm"
+                  style={{maxWidth: '175px'}}
+                  variant="success"
+                  onClick={crearNoticia}>
+                  <i className="mdi mdi-newspaper-plus me-1" /> Crear Noticia
+                </Button>
               </Card.Header>
-              <button
-                onClick={onClickExpandNoticias}
-                className="btn btn-sm btn-primary-hover position-absolute p-0 mt-1 me-1 border-0 top-0 end-0">
-                <i className={`mdi mdi-arrow-${isExpanded ? 'left' : 'right'}-drop-circle h2`}></i>
-              </button>
               {isLoadingNews ? (
-                <SkeletonLoader customClass="p-0 m-0" height="65vh" />
+                <SkeletonLoader customClass="p-0 m-0" height="67vh" />
               ) : (
                 <Swiper
-                  slidesPerView={slidesPerView}
-                  spaceBetween={isExpanded ? 20 : 10}
-                  grabCursor={true}
-                  loop={noticiasData.length > slidesPerView}
-                  autoplay={{
-                    delay: 5000,
-                    disableOnInteraction: false
+                  style={{height: 'calc(74vh - var(--ct-topbar-height))'}}
+                  slidesPerView={1}
+                  spaceBetween={10}
+                  grid={{rows: 3}}
+                  breakpoints={{
+                    576: {
+                      slidesPerView: 2,
+                      spaceBetween: 10,
+                      grid: {rows: 3}
+                    },
+                    768: {
+                      slidesPerView: 3,
+                      spaceBetween: 20,
+                      grid: {rows: 2}
+                    },
+                    1400: {
+                      slidesPerView: 4,
+                      spaceBetween: 30,
+                      grid: {rows: 2}
+                    }
                   }}
                   mousewheel={true}
-                  direction="vertical"
                   pagination={{clickable: true}}
-                  modules={[Mousewheel, Pagination, Autoplay]}>
-                  {noticiasData.map((noticia, index) => {
+                  modules={[Mousewheel, Pagination, Grid]}>
+                  {noticiasMockData.map((noticia, index) => {
                     return (
                       <SwiperSlide className="rounded" key={`${noticia.id}_${index}`}>
                         <NoticiaCard
                           key={`${noticia.id}_${index}`}
                           fechaExp={noticia.expFechas}
-                          isExpanded={isExpanded}
+                          isExpanded={true}
                           noticiaImg={noticia.image}
                           titulo={noticia.titulo}
                           link={noticia.link}

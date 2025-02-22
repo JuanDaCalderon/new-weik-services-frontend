@@ -4,12 +4,12 @@ import {Link} from 'react-router-dom';
 import {CustomDatePicker} from '@/components';
 import Statistics from './Statistics';
 import Activity from './Activity';
-import Products from './Products';
 import {useGetClients, useRolesYPermisos} from '@/endpoints';
 import {useAppSelector} from '@/store';
 import {permisosSelector, rolesSelector, selectClientes} from '@/store/selectores';
 import {Toaster} from 'react-hot-toast';
 import {TOAST_DURATION} from '@/constants';
+import {TableroNoticias} from '@/components/Noticias';
 
 const EcommerceDashboard = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -62,11 +62,9 @@ const EcommerceDashboard = () => {
       </Row>
 
       <Row>
+        <TableroNoticias></TableroNoticias>
         <Col xl={4} lg={6}>
           <Statistics />
-        </Col>
-        <Col xl={5}>
-          <Products />
         </Col>
         <Col xl={3} lg={{span: 6, order: 1}}>
           <Activity />

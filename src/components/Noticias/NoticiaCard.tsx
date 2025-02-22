@@ -52,9 +52,7 @@ const CardFooter = memo(function CardFooter({
 }) {
   return (
     <div className="d-flex justify-content-between align-items-center p-1 position-absolute w-100 bottom-0 bg-gradient bg-light bg-opacity-50">
-      <h5 className={`m-0 text-dark text-opacity-75 font-${isExpanded ? '14' : '12'}`}>
-        {isExpanded ? titulo : truncateString(titulo, 23)}
-      </h5>
+      <h5 className={`m-0 text-dark text-opacity-75 font-${isExpanded ? '14' : '12'}`}>{truncateString(titulo, 36)}</h5>
       {isExpanded && (
         <a
           href={link}
@@ -68,6 +66,11 @@ const CardFooter = memo(function CardFooter({
   );
 });
 
+/**
+ * Componente que corresponde a la tarjeta de una noticia.
+ * En su interior tiene el modal para poder ver la imagen de la noticia en tamaño
+ * completo.
+ */
 const NoticiaCard = memo(function NoticiaCard({isExpanded, fechaExp, noticiaImg, titulo, link}: NoticiaCardProps) {
   const [boardImageHasLoad, setBoardImageHasLoad] = useState<boolean>(false);
   const [modalImageHasLoad, setModalImageHasLoad] = useState<boolean>(false);
