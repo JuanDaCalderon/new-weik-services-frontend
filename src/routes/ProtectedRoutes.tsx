@@ -9,6 +9,7 @@ import {DEFAULT_ROUTER_PATH} from '@/constants';
 const Profile = lazy(() => import('@/pages/perfil'));
 const RolesYPermisos = lazy(() => import('@/pages/rolesypermisos'));
 const Gestion = lazy(() => import('@/pages/gestion'));
+const Clientes = lazy(() => import('@/pages/clientes'));
 /* NEW PAGES */
 
 const Dashboard = lazy(() => import('../pages/dashboard'));
@@ -28,6 +29,7 @@ export default function ProtectedRoutes() {
           <Route path="perfil" element={<Profile />} />
           <Route path="rolesypermisos" element={<RolesYPermisos />} />
           <Route path="gestion/*" element={<Gestion />} />
+          <Route path="clientes/:cliente" element={<Clientes />} />
           {/* NEW PAGES */}
           <Route path="dashboard/*" element={<Dashboard />} />
           <Route path="apps/*" element={<Apps />} />
