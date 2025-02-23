@@ -17,6 +17,8 @@ type NoticiaCardProps = {
   titulo: string;
   link: string;
   hasExpired?: boolean;
+  isUpcoming?: boolean;
+  showStatus?: boolean;
   ableToAction?: boolean;
   noticiaId?: string;
   rangoFechas?: [Date, Date];
@@ -60,7 +62,8 @@ const CardFooter = memo(function CardFooter({
   link: string;
 }) {
   return (
-    <div className="d-flex justify-content-between align-items-center p-1 position-absolute w-100 bottom-0 bg-gradient bg-light bg-opacity-50">
+    <div
+      className={`d-flex justify-content-between align-items-center p-1 position-absolute w-100 bottom-0 ${titulo.trim() === '' && link !== '' ? '' : 'bg-gradient bg-light bg-opacity-50'}`}>
       {titulo !== '' && (
         <h5 className={`m-0 text-dark text-opacity-75 font-${isExpanded ? '14' : '12'}`}>
           {truncateString(titulo, 36)}
@@ -69,13 +72,15 @@ const CardFooter = memo(function CardFooter({
       {isExpanded && (
         <>
           {link !== '' && (
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline-dark btn-sm btn-rounded py-0 px-1 m-0">
-              <i className="uil-external-link-alt"></i>
-            </a>
+            <OverlayTrigger placement="auto" overlay={<Tooltip>Ir al enlace</Tooltip>}>
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline-dark btn-sm btn-rounded py-0 px-1 m-0">
+                <i className="uil-external-link-alt"></i>
+              </a>
+            </OverlayTrigger>
           )}
         </>
       )}
@@ -96,7 +101,9 @@ const NoticiaCard = memo(function NoticiaCard({
   link,
   noticiaId,
   hasExpired = false,
+  isUpcoming = false,
   ableToAction = false,
+  showStatus = false,
   rangoFechas
 }: NoticiaCardProps) {
   const noticiaDatosInicial = useMemo(() => {
@@ -298,22 +305,36 @@ const NoticiaCard = memo(function NoticiaCard({
           {isExpanded && (
             <OverlayTrigger placement="auto" overlay={<Tooltip>{fechaExp}</Tooltip>}>
               <i
-                className={`d-flex justify-content-center align-items-center uil-info-circle position-absolute font-18 rounded-5 m-1 cursor-pointer bg-opacity-75 z-2 ${hasExpired ? 'bg-danger text-light' : 'bg-light'} `}
+                className={`d-flex justify-content-center align-items-center uil-info-circle position-absolute font-18 rounded-5 m-1 cursor-pointer bg-opacity-75 z-3 ${hasExpired ? 'bg-danger text-white' : 'bg-light'} `}
                 style={{width: '24px', height: '24px'}}
               />
             </OverlayTrigger>
           )}
           {hasExpired && (
             <div
-              className="ribbon-two ribbon-two-danger"
+              className="ribbon-two ribbon-two-danger z-1"
               style={{left: '0px', top: '0px', width: '100px', height: '100px'}}>
               <span style={{width: '150px', left: '-30px', top: '32px'}}>Expirada</span>
+            </div>
+          )}
+          {isUpcoming && (
+            <div
+              className="ribbon-two ribbon-two-primary z-0"
+              style={{left: '0px', top: '0px', width: '100px', height: '100px'}}>
+              <span style={{width: '150px', left: '-30px', top: '32px'}}>Próximamente</span>
+            </div>
+          )}
+          {showStatus && !isUpcoming && !hasExpired && (
+            <div
+              className="ribbon-two ribbon-two-success z-0"
+              style={{left: '0px', top: '0px', width: '100px', height: '100px'}}>
+              <span style={{width: '150px', left: '-30px', top: '32px'}}>En progreso</span>
             </div>
           )}
           {ableToAction && (
             <Dropdown className="position-absolute top-0 end-0 z-2">
               <Dropdown.Toggle as={Link} to={''} className="d-flex arrow-none text-dark z-2">
-                <i className="mdi mdi-dots-vertical font-24 bg-light rounded bg-opacity-25 z-2" />
+                <i className="mdi mdi-dots-vertical font-24 bg-light rounded bg-opacity-10 z-2" />
               </Dropdown.Toggle>
               <Dropdown.Menu align="end" className="m-0 p-0">
                 <Dropdown.Item className="m-0 px-2" onClick={showEdit}>

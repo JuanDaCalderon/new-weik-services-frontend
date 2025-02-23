@@ -16,6 +16,7 @@ export interface MapNoticia extends BaseNoticia {
   expFechas: string;
   rangoFechas?: [Date, Date];
   hasExpired?: boolean;
+  isUpcoming?: boolean;
 }
 
 export interface NoticiaToDb extends BaseNoticia {

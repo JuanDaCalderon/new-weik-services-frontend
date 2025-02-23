@@ -126,6 +126,18 @@ class DateUtils {
     const expDate = typeof expirationDate === 'string' ? new Date(expirationDate) : expirationDate;
     return expDate < now;
   }
+
+  /**
+   * Verifica si una fecha de inicio está en el futuro en función de la fecha y hora actual.
+   *
+   * @param {Date | string} startDate - La fecha de inicio a evaluar (puede ser `Date` o `string`).
+   * @returns {boolean} - `true` si la fecha está en el futuro (el evento aún no ha iniciado), `false` en caso contrario.
+   */
+  static isUpcoming(startDate: Date | string): boolean {
+    const now = new Date(); // Fecha y hora actual
+    const sDate = typeof startDate === 'string' ? new Date(startDate) : startDate;
+    return sDate > now;
+  }
 }
 
 export {DateUtils};

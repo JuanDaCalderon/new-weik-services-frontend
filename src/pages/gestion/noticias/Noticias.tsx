@@ -10,13 +10,13 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Grid, Mousewheel, Pagination} from 'swiper/modules';
 import {NoticiaCard} from '@/components/Noticias';
 import {useDatePicker, useFileManager, useToggle} from '@/hooks';
-import 'swiper/css';
-import 'swiper/css/grid';
-import 'swiper/css/pagination';
 import {CrearNoticiaBodyModal} from './CrearNoticiaBodyModal';
 import {MapNoticia, Noticia, noticiaCreationType} from '@/types';
 import toast, {Toaster} from 'react-hot-toast';
 import {DateUtils} from '@/utils';
+import 'swiper/css';
+import 'swiper/css/grid';
+import 'swiper/css/pagination';
 
 const Noticias = memo(function Noticias() {
   const [shouldResetImage, setShouldResetImage] = useState<boolean>(false);
@@ -40,9 +40,12 @@ const Noticias = memo(function Noticias() {
     return noticiasFromStore.map((noticia) => {
       const expDate: string | undefined = [...noticia.rangoFechas].pop();
       const hasExpired = DateUtils.hasExpired(expDate ?? new Date());
+      const isUpcoming = DateUtils.isUpcoming(noticia.rangoFechas[0]);
       let expFechas = `Esta noticia desaparecerá del tablero el día ${DateUtils.formatShortDate(expDate ? new Date(expDate) : new Date())}`;
       if (hasExpired)
         expFechas = `Esta noticia ha expirado el día ${DateUtils.formatShortDate(expDate ? new Date(expDate) : new Date())}`;
+      if (isUpcoming)
+        expFechas = `Esta noticia aparecerá en el tablero el día ${DateUtils.formatShortDate(new Date(noticia.rangoFechas[0]))}`;
       return {
         id: noticia.id,
         expFechas: expFechas,
@@ -50,7 +53,8 @@ const Noticias = memo(function Noticias() {
         link: noticia.link,
         titulo: noticia.titulo,
         rangoFechas: noticia.rangoFechas.map((date) => DateUtils.parseStringToDate(date)),
-        hasExpired
+        hasExpired,
+        isUpcoming
       } as MapNoticia;
     });
   }, [noticiasFromStore]);
@@ -160,50 +164,60 @@ const Noticias = memo(function Noticias() {
               {isLoadingNews ? (
                 <SkeletonLoader customClass="p-0 m-0" height="67vh" />
               ) : (
-                <Swiper
-                  style={{height: 'calc(74vh - var(--ct-topbar-height))'}}
-                  slidesPerView={1}
-                  spaceBetween={10}
-                  grid={{rows: 3}}
-                  breakpoints={{
-                    576: {
-                      slidesPerView: 2,
-                      spaceBetween: 10,
-                      grid: {rows: 3}
-                    },
-                    768: {
-                      slidesPerView: 3,
-                      spaceBetween: 20,
-                      grid: {rows: 2}
-                    },
-                    1400: {
-                      slidesPerView: 4,
-                      spaceBetween: 30,
-                      grid: {rows: 2}
-                    }
-                  }}
-                  mousewheel={true}
-                  pagination={{clickable: true}}
-                  modules={[Mousewheel, Pagination, Grid]}>
-                  {noticiasData.map((noticia, index) => {
-                    return (
-                      <SwiperSlide className="rounded" key={`${noticia.id}_${index}`}>
-                        <NoticiaCard
-                          key={`${noticia.id}_${index}`}
-                          fechaExp={noticia.expFechas}
-                          isExpanded={true}
-                          noticiaImg={noticia.image}
-                          titulo={noticia.titulo}
-                          link={noticia.link}
-                          hasExpired={noticia.hasExpired}
-                          noticiaId={noticia.id}
-                          rangoFechas={noticia.rangoFechas}
-                          ableToAction
-                        />
-                      </SwiperSlide>
-                    );
-                  })}
-                </Swiper>
+                <>
+                  {noticiasData.length <= 0 ? (
+                    <div className="w-100 text-center p-5">
+                      <h4 className="text-dark text-opacity-75">No hay noticias para mostrar</h4>
+                    </div>
+                  ) : (
+                    <Swiper
+                      style={{height: 'calc(74vh - var(--ct-topbar-height))'}}
+                      slidesPerView={1}
+                      spaceBetween={10}
+                      grid={{rows: 3}}
+                      breakpoints={{
+                        576: {
+                          slidesPerView: 2,
+                          spaceBetween: 10,
+                          grid: {rows: 3}
+                        },
+                        768: {
+                          slidesPerView: 3,
+                          spaceBetween: 20,
+                          grid: {rows: 2}
+                        },
+                        1400: {
+                          slidesPerView: 4,
+                          spaceBetween: 30,
+                          grid: {rows: 2}
+                        }
+                      }}
+                      mousewheel={true}
+                      pagination={{clickable: true}}
+                      modules={[Mousewheel, Pagination, Grid]}>
+                      {noticiasData.map((noticia, index) => {
+                        return (
+                          <SwiperSlide className="rounded" key={`${noticia.id}_${index}`}>
+                            <NoticiaCard
+                              key={`${noticia.id}_${index}`}
+                              fechaExp={noticia.expFechas}
+                              isExpanded={true}
+                              noticiaImg={noticia.image}
+                              titulo={noticia.titulo}
+                              link={noticia.link}
+                              hasExpired={noticia.hasExpired}
+                              noticiaId={noticia.id}
+                              rangoFechas={noticia.rangoFechas}
+                              isUpcoming={noticia.isUpcoming}
+                              showStatus
+                              ableToAction
+                            />
+                          </SwiperSlide>
+                        );
+                      })}
+                    </Swiper>
+                  )}
+                </>
               )}
             </Card.Body>
           </Card>

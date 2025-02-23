@@ -13,7 +13,7 @@ export const noticiasSlice = createSlice({
   initialState,
   reducers: {
     setNoticias: (state: PayLoadNoticiasType, action: PayloadAction<Noticia[]>) => {
-      SessionStorageUtil.setItem<Noticia[]>(SESSION_NOTICIAS_KEY, action.payload);
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Noticia[]>(SESSION_NOTICIAS_KEY, action.payload);
       if (state.noticias.length === 0) {
         return {
           ...state,
