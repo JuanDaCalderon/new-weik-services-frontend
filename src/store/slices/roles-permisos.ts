@@ -14,14 +14,14 @@ export const rolesPermisosSlice = createSlice({
   initialState,
   reducers: {
     setPermisos: (state: PayLoadRolesPermisosType, action: PayloadAction<Permiso[]>) => {
-      SessionStorageUtil.setItem<Permiso[]>(SESSION_PERMISOS_KEY, action.payload);
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Permiso[]>(SESSION_PERMISOS_KEY, action.payload);
       return {
         ...state,
         permisos: [...action.payload]
       };
     },
     setRoles: (state: PayLoadRolesPermisosType, action: PayloadAction<Rol[]>) => {
-      SessionStorageUtil.setItem<Rol[]>(SESSION_ROLES_KEY, action.payload);
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Rol[]>(SESSION_ROLES_KEY, action.payload);
       return {
         ...state,
         roles: [...action.payload]

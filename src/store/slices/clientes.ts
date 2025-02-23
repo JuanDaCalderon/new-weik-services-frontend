@@ -14,7 +14,7 @@ export const clientesSlice = createSlice({
   initialState,
   reducers: {
     setClientes: (state: PayLoadClientType, action: PayloadAction<Cliente[]>) => {
-      SessionStorageUtil.setItem<Cliente[]>(SESSION_CLIENTES_KEY, action.payload);
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Cliente[]>(SESSION_CLIENTES_KEY, action.payload);
       return {
         ...state,
         clientes: action.payload

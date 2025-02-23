@@ -681,12 +681,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             label: 'Vacaciones',
             url: '/services/gestion/oficina/vacaciones',
             parentKey: 'oficina'
-          },
-          {
-            key: 'solicitudes',
-            label: 'Solicitudes',
-            url: '/services/gestion/oficina/solicitudes',
-            parentKey: 'oficina'
           }
         ]
       },
@@ -694,13 +688,8 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         key: 'noticias',
         label: 'Noticias',
         url: '/services/gestion/noticias',
-        parentKey: 'gestion'
-      },
-      {
-        key: 'solicitudes',
-        label: 'Solicitudes',
-        url: '/services/gestion/solicitudes',
-        parentKey: 'gestion'
+        parentKey: 'gestion',
+        permisoId: PERMISOS_MAP_IDS.accesoGestionNoticias
       }
     ]
   }

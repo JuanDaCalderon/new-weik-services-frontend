@@ -55,19 +55,24 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
         Asigna los permisos a este rol utilizando los interruptores que se encuentran a continuación. Activa o desactiva
         según sea necesario y luego guarda los cambios.
       </p>
-      {thisPermisos.map(({id, permiso, labelName, activo}) => (
-        <Col key={id} className="d-flex align-items-center mt-2" xs="auto">
-          <span className="me-1">{labelName}</span>
-          <input
-            type="checkbox"
-            id={`${htmlForSwitchRole}_${id}_${permiso}`}
-            checked={activo}
-            onChange={() => handleToggleChange(id)}
-            data-switch="success"
-          />
-          <label htmlFor={`${htmlForSwitchRole}_${id}_${permiso}`} data-on-label="Si" data-off-label="No" />
-        </Col>
-      ))}
+      <Col className="p-0 m-0" xs={12}>
+        <Row className="p-0 m-0">
+          {thisPermisos.map(({id, permiso, labelName, activo}) => (
+            <Col key={id} className="d-flex justify-content-between align-items-center mt-2" xs={2}>
+              <span className="me-1">{labelName}</span>
+              <i className="mdi mdi-arrow-right font-12" />
+              <input
+                type="checkbox"
+                id={`${htmlForSwitchRole}_${id}_${permiso}`}
+                checked={activo}
+                onChange={() => handleToggleChange(id)}
+                data-switch="success"
+              />
+              <label htmlFor={`${htmlForSwitchRole}_${id}_${permiso}`} data-on-label="Si" data-off-label="No" />
+            </Col>
+          ))}
+        </Row>
+      </Col>
       <Col xs="auto" md={12} className="ms-auto mt-2 pt-1">
         <Button className="shadow-sm" variant="info" onClick={enviarPermisos} disabled={!hasTouched}>
           {' '}

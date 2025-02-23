@@ -3,9 +3,9 @@ import {Button, Card, Col, Row} from 'react-bootstrap';
 import {FileType, GenericModal, PageBreadcrumb} from '@/components';
 import {useAppSelector} from '@/store';
 import {useAddNoticia, useGetNoticias, useUploadImage} from '@/endpoints';
-import {selectIsLoadingNoticias, selectNoticias} from '@/store/selectores';
+import {selectIsLoadingNoticias, selectNoticias, selectUser} from '@/store/selectores';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-import {STORAGE_NOTICIAS_PATH, TOAST_DURATION} from '@/constants';
+import {PERMISOS_MAP_IDS, STORAGE_NOTICIAS_PATH, TOAST_DURATION} from '@/constants';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Grid, Mousewheel, Pagination} from 'swiper/modules';
 import {NoticiaCard} from '@/components/Noticias';
@@ -13,10 +13,11 @@ import {useDatePicker, useFileManager, useToggle} from '@/hooks';
 import {CrearNoticiaBodyModal} from './CrearNoticiaBodyModal';
 import {MapNoticia, Noticia, noticiaCreationType} from '@/types';
 import toast, {Toaster} from 'react-hot-toast';
-import {DateUtils} from '@/utils';
+import {DateUtils, hasPermission} from '@/utils';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
+import {Navigate} from 'react-router-dom';
 
 const Noticias = memo(function Noticias() {
   const [shouldResetImage, setShouldResetImage] = useState<boolean>(false);
@@ -30,6 +31,7 @@ const Noticias = memo(function Noticias() {
   const {file, handleFile, handleFileRemoved} = useFileManager();
   const {isLoadingUploadImage, uploadImage} = useUploadImage();
   const {isSavingTheNoticia, addNoticia} = useAddNoticia();
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     if (noticiasFromStore.length <= 0) getNoticiasSync();
@@ -109,6 +111,21 @@ const Noticias = memo(function Noticias() {
     uploadImage
   ]);
 
+  const getPermission = useCallback(
+    (permisoId: string) => {
+      return hasPermission(permisoId, user.roles, user.permisosOtorgados, user.permisosDenegados);
+    },
+    [user.permisosDenegados, user.permisosOtorgados, user.roles]
+  );
+
+  const canCrearNoticia = useMemo(() => getPermission(PERMISOS_MAP_IDS.crearNoticias), [getPermission]);
+
+  if (
+    !hasPermission(PERMISOS_MAP_IDS.accesoGestionNoticias, user.roles, user.permisosOtorgados, user.permisosDenegados)
+  ) {
+    return <Navigate to="/services/dashboard" replace />;
+  }
+
   return (
     <>
       <GenericModal
@@ -152,14 +169,22 @@ const Noticias = memo(function Noticias() {
                     <i className="uil uil-sync p-0 m-0"></i>
                   </Button>
                 </div>
-                <Button
-                  size="sm"
-                  className="shadow-sm"
-                  style={{maxWidth: '175px'}}
-                  variant="success"
-                  onClick={crearNoticiaToggle}>
-                  <i className="mdi mdi-newspaper-plus me-1" /> Crear Noticia
-                </Button>
+                <div className="p-0 m-0 d-flex justify-content-end align-items-center gap-2">
+                  {!canCrearNoticia && (
+                    <span className="m-0 p-0 text-danger font-11 text-end">
+                      Permiso para "crear noticia" denegado. <br /> Contacta a tu administrador si lo necesitas.
+                    </span>
+                  )}
+                  <Button
+                    size="sm"
+                    className="shadow-sm"
+                    style={{maxWidth: '175px'}}
+                    variant="success"
+                    disabled={!canCrearNoticia}
+                    onClick={crearNoticiaToggle}>
+                    <i className="mdi mdi-newspaper-plus me-1" /> Crear Noticia
+                  </Button>
+                </div>
               </Card.Header>
               {isLoadingNews ? (
                 <SkeletonLoader customClass="p-0 m-0" height="67vh" />

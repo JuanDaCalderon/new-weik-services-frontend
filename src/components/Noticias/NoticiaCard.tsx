@@ -1,6 +1,6 @@
 import {memo, useCallback, MouseEvent, useState, useEffect, ChangeEvent, useMemo} from 'react';
 import {Card, OverlayTrigger, Tooltip, Image, Dropdown, Form} from 'react-bootstrap';
-import {DateUtils, getUpdatedFields, truncateString} from '@/utils';
+import {DateUtils, getUpdatedFields, hasPermission, truncateString} from '@/utils';
 import {GenericModal} from '@/components/Modals/GenericModal';
 import {useDatePicker, useToggle, useTogglev2} from '@/hooks';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
@@ -9,6 +9,9 @@ import {useDeleteNoticia, useGetNoticias, useUpdateNoticia} from '@/endpoints';
 import {DatepickerRange} from '@/components/Form';
 import {Noticia, noticiaCreationType} from '@/types';
 import toast from 'react-hot-toast';
+import {useAppSelector} from '@/store';
+import {selectUser} from '@/store/selectores';
+import {PERMISOS_MAP_IDS} from '@/constants';
 
 type NoticiaCardProps = {
   isExpanded: boolean;
@@ -124,6 +127,7 @@ const NoticiaCard = memo(function NoticiaCard({
   const {isDeletingTheNoticia, deleteNoticia} = useDeleteNoticia();
   const {getNoticiasSync} = useGetNoticias();
   const {isUpdatingTheNoticia, updateNoticia} = useUpdateNoticia();
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     if (!isOpen && modalImageHasLoad) setModalImageHasLoad(false);
@@ -208,6 +212,16 @@ const NoticiaCard = memo(function NoticiaCard({
     },
     [onDateChangeRange]
   );
+
+  const getPermission = useCallback(
+    (permisoId: string) => {
+      return hasPermission(permisoId, user.roles, user.permisosOtorgados, user.permisosDenegados);
+    },
+    [user.permisosDenegados, user.permisosOtorgados, user.roles]
+  );
+
+  const canEditNoticia = useMemo(() => getPermission(PERMISOS_MAP_IDS.editarNoticias), [getPermission]);
+  const canDeleteNoticia = useMemo(() => getPermission(PERMISOS_MAP_IDS.eliminarNoticias), [getPermission]);
 
   return (
     <>
@@ -331,20 +345,24 @@ const NoticiaCard = memo(function NoticiaCard({
               <span style={{width: '150px', left: '-30px', top: '32px'}}>En progreso</span>
             </div>
           )}
-          {ableToAction && (
+          {ableToAction && (canEditNoticia || canDeleteNoticia) && (
             <Dropdown className="position-absolute top-0 end-0 z-2">
               <Dropdown.Toggle as={Link} to={''} className="d-flex arrow-none text-dark z-2">
                 <i className="mdi mdi-dots-vertical font-24 bg-light rounded bg-opacity-10 z-2" />
               </Dropdown.Toggle>
               <Dropdown.Menu align="end" className="m-0 p-0">
-                <Dropdown.Item className="m-0 px-2" onClick={showEdit}>
-                  <i className="uil uil-edit-alt me-1" />
-                  Editar noticia
-                </Dropdown.Item>
-                <Dropdown.Divider className="m-0 p-0" />
-                <Dropdown.Item className="m-0 px-2" onClick={showDelete}>
-                  <i className="uil uil-trash" /> Eliminar noticia
-                </Dropdown.Item>
+                {canEditNoticia && (
+                  <Dropdown.Item className="m-0 px-2" onClick={showEdit}>
+                    <i className="uil uil-edit-alt me-1" />
+                    Editar noticia
+                  </Dropdown.Item>
+                )}
+                {canEditNoticia && canDeleteNoticia && <Dropdown.Divider className="m-0 p-0" />}
+                {canDeleteNoticia && (
+                  <Dropdown.Item className="m-0 px-2" onClick={showDelete}>
+                    <i className="uil uil-trash" /> Eliminar noticia
+                  </Dropdown.Item>
+                )}
               </Dropdown.Menu>
             </Dropdown>
           )}
