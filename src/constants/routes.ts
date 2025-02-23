@@ -1,4 +1,5 @@
 /* ROUTER PATHS */
+const DEFAULT_HOME_ROUTER_PATH: string = '/home';
 const DEFAULT_ROUTER_PATH: string = '/account/login';
 const PAGE_LOG_OUT: string = '/account/logout';
 const PAGE_RECOVERY_PASSWORD: string = '/account/recover-password';
@@ -19,5 +20,6 @@ export {
   PAGE_ERROR,
   PAGE_PROFILE,
   PAGE_ROLES_PERMISOS,
-  PAGE_GESTION_USUARIOS
+  PAGE_GESTION_USUARIOS,
+  DEFAULT_HOME_ROUTER_PATH
 };

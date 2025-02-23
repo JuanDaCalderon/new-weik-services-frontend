@@ -11,7 +11,7 @@ import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
 import {useGetEmployees} from '@/endpoints';
 import {hasPermission} from '@/utils';
-import {PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
+import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
 import {Navigate} from 'react-router-dom';
 
 const Usuarios = memo(function Usuarios() {
@@ -31,7 +31,7 @@ const Usuarios = memo(function Usuarios() {
   if (
     !hasPermission(PERMISOS_MAP_IDS.accesoGestionUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados)
   ) {
-    return <Navigate to="/services/dashboard" replace />;
+    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
   }
 
   return (

@@ -3,7 +3,7 @@ import {Col, Row} from 'react-bootstrap';
 import {Link, Navigate} from 'react-router-dom';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import useLogin, {LoginFormFields, loginFormSchema} from './useLogin';
-import {PAGE_RECOVERY_PASSWORD, TOAST_DURATION} from '@/constants';
+import {DEFAULT_HOME_ROUTER_PATH, PAGE_RECOVERY_PASSWORD, TOAST_DURATION} from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 import {useEffect} from 'react';
 import {useAppSelector} from '@/store';
@@ -15,7 +15,7 @@ export default function Login() {
   useEffect(() => {
     toast.remove();
   }, []);
-  if (isLoggedIn) return <Navigate to="/services/dashboard" />;
+  if (isLoggedIn) return <Navigate to={DEFAULT_HOME_ROUTER_PATH} />;
   return (
     <AccountWrapper>
       <div className="text-center w-75 m-auto">

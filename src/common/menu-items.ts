@@ -2,7 +2,7 @@ import {PERMISOS_MAP_IDS} from '@/constants';
 import {MenuItemType} from '@/types';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
-  {
+  /* {
     key: 'dashboards',
     icon: 'uil-dashboard',
     label: 'Dashboards',
@@ -617,7 +617,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ]
       }
     ]
-  },
+  }, */
   {
     key: 'clientes',
     icon: 'uil-user-square',

@@ -11,7 +11,7 @@ import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {CrearCliente} from '@/pages/gestion/clientes/CrearCliente';
 import {useGetClients} from '@/endpoints';
 import {hasPermission} from '@/utils';
-import {PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
+import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
 import {Navigate} from 'react-router-dom';
 
 const Clientes = memo(function Clientes() {
@@ -31,7 +31,7 @@ const Clientes = memo(function Clientes() {
   if (
     !hasPermission(PERMISOS_MAP_IDS.accesoGestionClientes, user.roles, user.permisosOtorgados, user.permisosDenegados)
   ) {
-    return <Navigate to="/services/dashboard" replace />;
+    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
   }
 
   return (
