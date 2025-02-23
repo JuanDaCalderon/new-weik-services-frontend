@@ -1,4 +1,4 @@
-import {Card, Button, ProgressBar} from 'react-bootstrap';
+import {Card, Button, ProgressBar, Image} from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import useFileUploader from './useFileUploader';
 import {useEffect} from 'react';
@@ -15,6 +15,7 @@ type FileUploaderProps = {
   showPreview?: boolean;
   isRounded?: boolean;
   acceptedFileTypes?: string[];
+  isSquarePreview?: boolean;
 };
 
 const FileUploader = ({
@@ -23,6 +24,7 @@ const FileUploader = ({
   isRounded = false,
   onFileRemoved,
   resetFile = false,
+  isSquarePreview = false,
   acceptedFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'] // Por defecto, solo imágenes
 }: FileUploaderProps) => {
   const {selectedFile, uploadProgress, handleAcceptedFiles, removeFile} = useFileUploader(showPreview);
@@ -48,16 +50,33 @@ const FileUploader = ({
       )}
 
       {showPreview && !!selectedFile && (
-        <div className="dropzone-previews rounded-circle w-100 h-100" id="uploadPreviewTemplate">
-          <Card className="m-0 p-0 rounded-circle shadow-none border w-100 h-100">
+        <div
+          className={`dropzone-previews ${!isSquarePreview ? 'rounded-circle' : ''} w-100 ${!isSquarePreview ? 'h-100' : ''}`}
+          id="uploadPreviewTemplate">
+          <Card
+            className={`m-0 p-0 ${!isSquarePreview ? 'rounded-circle' : ''} shadow-none border w-100 ${!isSquarePreview ? 'h-100' : ''}`}>
             {selectedFile.preview && (
-              <img
-                className="img-thumbnail rounded-circle bg-light object-fit-cover h-100"
-                width="100%"
-                height="100%"
-                alt={selectedFile.name}
-                src={selectedFile.preview}
-              />
+              <>
+                {isSquarePreview ? (
+                  <div className="w-100 position-relative ratio ratio-4x3">
+                    <Image
+                      src={selectedFile.preview}
+                      alt={selectedFile.name}
+                      fluid
+                      loading="lazy"
+                      className="w-100 h-100 object-fit-fill rounded"
+                    />
+                  </div>
+                ) : (
+                  <img
+                    className={`img-thumbnail ${!isSquarePreview ? 'rounded-circle' : ''} bg-light object-fit-cover h-100`}
+                    width="100%"
+                    height="100%"
+                    alt={selectedFile.name}
+                    src={selectedFile.preview}
+                  />
+                )}
+              </>
             )}
 
             <Button

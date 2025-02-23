@@ -14,6 +14,8 @@ export interface Noticia extends BaseNoticia {
 export interface MapNoticia extends BaseNoticia {
   id: string;
   expFechas: string;
+  rangoFechas?: [Date, Date];
+  hasExpired?: boolean;
 }
 
 export interface NoticiaToDb extends BaseNoticia {
@@ -23,4 +25,9 @@ export interface NoticiaToDb extends BaseNoticia {
 export type PayLoadNoticiasType = {
   noticias: Noticia[];
   isLoading: boolean;
+};
+
+export type noticiaCreationType = {
+  titulo: string;
+  link: string;
 };

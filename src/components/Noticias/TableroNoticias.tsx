@@ -11,7 +11,7 @@ import {MapNoticia, Noticia} from '@/types';
 import {DateUtils, filtrarElementosVigentes, LocalStorageUtil} from '@/utils';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {LOCALSTORAGE_EXPAND_NOTICIAS_BOARD, noticiasMockData} from '@/constants';
+import {LOCALSTORAGE_EXPAND_NOTICIAS_BOARD} from '@/constants';
 
 /**
  * Componente que contiene el tablero de noticias en vertical.
@@ -51,7 +51,7 @@ const TableroNoticias = memo(function TableroNoticias() {
         const expDate: string | undefined = [...noticia.rangoFechas].pop();
         return {
           id: noticia.id,
-          expFechas: `Esta publicación desaparecerá del tablero el día ${DateUtils.formatShortDate(expDate ? new Date(expDate) : new Date(), true)}`,
+          expFechas: `Esta noticia desaparecerá del tablero el día ${DateUtils.formatShortDate(expDate ? new Date(expDate) : new Date())}`,
           image: noticia.image,
           link: noticia.link,
           titulo: noticia.titulo
@@ -105,7 +105,7 @@ const TableroNoticias = memo(function TableroNoticias() {
               direction="vertical"
               pagination={{clickable: true}}
               modules={[Mousewheel, Pagination, Autoplay]}>
-              {[...noticiasData, ...noticiasMockData].map((noticia, index) => {
+              {noticiasData.map((noticia, index) => {
                 return (
                   <SwiperSlide className="rounded" key={`${noticia.id}_${index}`}>
                     <NoticiaCard

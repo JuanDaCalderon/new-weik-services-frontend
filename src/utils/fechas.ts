@@ -102,6 +102,30 @@ class DateUtils {
       date.getFullYear() === today.getFullYear()
     );
   }
+  /**
+   * Suma ó Resta un número específico de días a una fecha dada.
+   *
+   * @param {Date} date - La fecha base a la que se sumarán o restarán los días.
+   * @param {number} days - El número de días a sumar (puede ser negativo para restar).
+   * @returns {Date} - Una nueva fecha con los días sumados ó restado.
+   */
+  static addDays(date: Date, days: number): Date {
+    const result = new Date(date); // Clonar la fecha para no modificar la original
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
+  /**
+   * Verifica si una fecha ha expirado en función de la fecha y hora actual.
+   *
+   * @param {Date | string} expirationDate - La fecha de expiración a evaluar (puede ser `Date` o `string`).
+   * @returns {boolean} - `true` si la fecha ya expiró, `false` si aún no ha expirado.
+   */
+  static hasExpired(expirationDate: Date | string): boolean {
+    const now = new Date(); // Fecha y hora actual
+    const expDate = typeof expirationDate === 'string' ? new Date(expirationDate) : expirationDate;
+    return expDate < now;
+  }
 }
 
 export {DateUtils};

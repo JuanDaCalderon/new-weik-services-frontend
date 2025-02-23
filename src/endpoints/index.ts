@@ -23,6 +23,8 @@ import useUploadImage from './db/utils/useUploadImage';
 import useDeleteImage from './db/utils/useDeleteImage';
 import useAddNoticia from './db/noticias/useAddNoticia';
 import useGetNoticias from './db/noticias/useGetNoticias';
+import useDeleteNoticia from './db/noticias/useDeleteNoticia';
+import useUpdateNoticia from './db/noticias/useUpdateNoticia';
 
 export {
   useGetClients,
@@ -47,5 +49,7 @@ export {
   useCheckIn,
   useCheckOut,
   useAddNoticia,
-  useGetNoticias
+  useGetNoticias,
+  useDeleteNoticia,
+  useUpdateNoticia
 };

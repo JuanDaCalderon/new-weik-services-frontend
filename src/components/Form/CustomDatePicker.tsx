@@ -12,7 +12,10 @@ type DatepickerInputProps = {
 };
 
 /* Datepicker with Input */
-const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(function DatepickerInput(props, ref) {
+const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(function DatepickerInput(
+  props: DatepickerInputProps,
+  ref
+) {
   const onDateValueChange = () => {
     console.log('date value changed');
   };
@@ -29,22 +32,27 @@ const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(funct
 });
 
 /* Datepicker with Addon Input */
-const DatepickerInputWithAddon = forwardRef<HTMLInputElement, DatepickerInputProps>((props, ref) => (
-  <div className="input-group" ref={ref}>
-    <input
-      type="text"
-      className="form-control form-control-light"
-      onClick={props.onClick}
-      value={props.value}
-      readOnly
-    />
-    <div className="input-group-append">
-      <span className="input-group-text bg-primary border-primary text-white">
-        <i className="mdi mdi-calendar-range font-13"></i>
-      </span>
+const DatepickerInputWithAddon = forwardRef<HTMLInputElement, DatepickerInputProps>(function DatepickerInputWithAddon(
+  props: DatepickerInputProps,
+  ref
+) {
+  return (
+    <div className="input-group" ref={ref}>
+      <input
+        type="text"
+        className="form-control form-control-light"
+        onClick={props.onClick}
+        value={props.value}
+        readOnly
+      />
+      <div className="input-group-append">
+        <span className="input-group-text bg-primary border-primary text-white">
+          <i className="mdi mdi-calendar-range font-13"></i>
+        </span>
+      </div>
     </div>
-  </div>
-));
+  );
+});
 
 type HyperDatepickerProps = {
   value: Date;
