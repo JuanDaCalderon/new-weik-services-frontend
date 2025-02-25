@@ -7,11 +7,34 @@ export enum BREAKPOINTS {
   xxl = 'xxl'
 }
 
+/**
+ * RESPONSIVE BREAKPOINTS VALUES
+ *
+ * xs -> 0 Mobile
+ *
+ * sm -> 576 Mobile
+ *
+ * md -> 768 Tablet
+ *
+ * lg -> 992 Desktop y Tablet
+ *
+ * xl -> 1200 Desktop
+ *
+ * xxl -> 1400 Desktop
+ *
+ * @type {Record<BREAKPOINTS, number>}
+ */
 export const BREAKPOINTS_VALUES: Record<BREAKPOINTS, number> = {
-  [BREAKPOINTS.xs]: 0,
-  [BREAKPOINTS.sm]: 576,
-  [BREAKPOINTS.md]: 768,
-  [BREAKPOINTS.lg]: 992,
-  [BREAKPOINTS.xl]: 1200,
-  [BREAKPOINTS.xxl]: 1400
+  /** Smaller Mobile */
+  [BREAKPOINTS.xs]: 0, // Mobile
+  /** Normal Mobile */
+  [BREAKPOINTS.sm]: 576, // Mobile
+  /** Tablet */
+  [BREAKPOINTS.md]: 768, // Tablet
+  /** Small Desktop or Bigger Tablets */
+  [BREAKPOINTS.lg]: 992, // Desktop y Tablet
+  /* Desktop */
+  [BREAKPOINTS.xl]: 1200, // Desktop
+  /* Bigger Desktop */
+  [BREAKPOINTS.xxl]: 1400 // Desktop
 };

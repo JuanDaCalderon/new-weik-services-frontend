@@ -11,7 +11,9 @@ const getBreakpoint = (width: number): BREAKPOINTS => {
 };
 
 const useBreakpoint = () => {
-  const [breakpoint, setBreakpoint] = useState<BREAKPOINTS>(() => getBreakpoint(window.innerWidth));
+  const [breakpoint, setBreakpoint] = useState<BREAKPOINTS>(() =>
+    typeof window !== 'undefined' ? getBreakpoint(window.innerWidth) : BREAKPOINTS.xs
+  );
 
   useEffect(() => {
     const handleResize = () => setBreakpoint(getBreakpoint(window.innerWidth));
@@ -20,6 +22,11 @@ const useBreakpoint = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const isHugeScreen = breakpoint === BREAKPOINTS.xxl;
+  const isDesktop = [BREAKPOINTS.xxl, BREAKPOINTS.xl, BREAKPOINTS.lg].includes(breakpoint);
+  const isTablet = [BREAKPOINTS.lg, BREAKPOINTS.md].includes(breakpoint);
+  const isMobile = [BREAKPOINTS.sm, BREAKPOINTS.xs].includes(breakpoint);
+
   return {
     breakpoint,
     isXS: breakpoint === BREAKPOINTS.xs,
@@ -27,7 +34,14 @@ const useBreakpoint = () => {
     isMD: breakpoint === BREAKPOINTS.md,
     isLG: breakpoint === BREAKPOINTS.lg,
     isXL: breakpoint === BREAKPOINTS.xl,
-    isXXL: breakpoint === BREAKPOINTS.xxl
+    isXXL: breakpoint === BREAKPOINTS.xxl,
+    isHugeScreen,
+    isDesktop,
+    isTablet,
+    isMobile,
+    isNotDesktop: !isDesktop,
+    isNotTablet: !isTablet,
+    isNotMobile: !isMobile
   };
 };
 

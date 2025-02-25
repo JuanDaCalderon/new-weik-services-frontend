@@ -12,6 +12,7 @@ import {DateUtils, filtrarElementosVigentes, LocalStorageUtil} from '@/utils';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import {LOCALSTORAGE_EXPAND_NOTICIAS_BOARD} from '@/constants';
+import {useBreakpoint} from '@/hooks';
 
 /**
  * Componente que contiene el tablero de noticias en vertical.
@@ -26,6 +27,7 @@ const TableroNoticias = memo(function TableroNoticias() {
   const isLoadingNews = useAppSelector(selectIsLoadingNoticias);
   const noticiasFromStore = useAppSelector(selectNoticias);
   const {getNoticiasSync} = useGetNoticias();
+  const {isDesktop, isNotDesktop, isMobile, isHugeScreen} = useBreakpoint();
 
   useEffect(() => {
     if (noticiasFromStore.length <= 0) getNoticiasSync();
@@ -60,13 +62,16 @@ const TableroNoticias = memo(function TableroNoticias() {
     } else return [];
   }, [noticiasFromStore]);
 
-  const slidesPerView: number = useMemo(() => {
-    return isExpanded ? 3 : 6;
-  }, [isExpanded]);
+  const slidesPerView = useMemo(() => {
+    if (!isDesktop) return isMobile ? 1 : 2;
+    return isExpanded ? 3 : isHugeScreen ? 6 : 5;
+  }, [isExpanded, isHugeScreen, isMobile, isDesktop]);
+
+  const spaceBetween = useMemo(() => (isDesktop ? (isExpanded ? 30 : 20) : 15), [isDesktop, isExpanded]);
 
   return (
     noticiasData.length > 0 && (
-      <Col className="p-0 m-0" xs={12} lg={3} xxl={isExpanded ? 2 : 1}>
+      <Col className="p-0 m-0" xs={12} lg={isExpanded ? 3 : 2} xxl={isExpanded ? 2 : 1}>
         <Card>
           <Card.Body className="position-relative">
             <Card.Header className="p-0 pb-1 d-flex align-items-center gap-2">
@@ -84,18 +89,20 @@ const TableroNoticias = memo(function TableroNoticias() {
                 </Button>
               )}
             </Card.Header>
-            <button
-              onClick={onClickExpandNoticias}
-              className="btn btn-sm btn-primary-hover position-absolute p-0 mt-1 me-1 border-0 top-0 end-0">
-              <i className={`mdi mdi-arrow-${isExpanded ? 'left' : 'right'}-drop-circle h2`}></i>
-            </button>
+            {isDesktop && (
+              <button
+                onClick={onClickExpandNoticias}
+                className="btn btn-sm btn-primary-hover position-absolute p-0 mt-1 me-1 border-0 top-0 end-0">
+                <i className={`mdi mdi-arrow-${isExpanded ? 'left' : 'right'}-drop-circle h2`}></i>
+              </button>
+            )}
             {isLoadingNews ? (
               <SkeletonLoader customClass="p-0 m-0" height="68vh" />
             ) : (
               <Swiper
-                style={{height: 'calc(75vh - var(--ct-topbar-height))'}}
+                style={{height: `calc(${isNotDesktop ? 36 : 75}vh - var(--ct-topbar-height))`}}
                 slidesPerView={slidesPerView}
-                spaceBetween={isExpanded ? 30 : 20}
+                spaceBetween={spaceBetween}
                 grabCursor={true}
                 loop={noticiasData.length > slidesPerView}
                 autoplay={{
@@ -103,7 +110,7 @@ const TableroNoticias = memo(function TableroNoticias() {
                   disableOnInteraction: false
                 }}
                 mousewheel={true}
-                direction="vertical"
+                direction={isNotDesktop ? 'horizontal' : 'vertical'}
                 pagination={{clickable: true}}
                 modules={[Mousewheel, Pagination, Autoplay]}>
                 {noticiasData.map((noticia, index) => {
