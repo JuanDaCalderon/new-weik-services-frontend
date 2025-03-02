@@ -1,4 +1,34 @@
-import {Cliente, Employee, Rol} from '@/types';
+import {Apps, Cliente, Employee, Noticia, Rol} from '@/types';
+
+/**
+ * Verifica si un acceso directo ya existe en la lista de accesos
+ *
+ * @param {Apps} app
+ * @param {Apps[]} apps
+ * @returns {boolean} true si el app ya existe, false si no
+ */
+export const checkIfAppExists = (app: Apps, apps: Apps[]): boolean => {
+  return apps.some(
+    (a) =>
+      a.name.trim().toLowerCase() === app.name.trim().toLowerCase() ||
+      a.redirectTo.trim().toLowerCase() === app.redirectTo.trim().toLowerCase()
+  );
+};
+
+/**
+ * Verifica si una noticia ya existe en la lista de noticias
+ *
+ * @param {Noticia} noticia
+ * @param {Noticia[]} noticias
+ * @returns {boolean} true si la noticia ya existe, false si no
+ */
+export const checkIfNoticiaExists = (noticia: Noticia, noticias: Noticia[]): boolean => {
+  return noticias.some(
+    (n) =>
+      n.titulo.trim().toLowerCase() === noticia.titulo.trim().toLowerCase() ||
+      n.link.trim().toLowerCase() === noticia.link.trim().toLowerCase()
+  );
+};
 
 /**
  * Verifica si un cliente ya existe en la lista de clientes

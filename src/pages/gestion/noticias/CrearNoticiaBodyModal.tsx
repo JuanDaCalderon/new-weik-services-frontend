@@ -1,8 +1,9 @@
 import {Form} from 'react-bootstrap';
 import {ChangeEvent, Dispatch, memo, SetStateAction, useCallback} from 'react';
 import {DatepickerRange, FileType, FileUploader} from '@/components';
-import {ACCEPTED_FILE_TYPES} from '@/constants';
+import {ACCEPTED_FILE_TYPES, TOAST_DURATION} from '@/constants';
 import {noticiaCreationType} from '@/types';
+import {Toaster} from 'react-hot-toast';
 
 const CrearNoticiaBodyModal = memo(function CrearNoticiaBodyModal({
   formData,
@@ -48,7 +49,7 @@ const CrearNoticiaBodyModal = memo(function CrearNoticiaBodyModal({
             isSquarePreview
           />
         </div>
-        <p className="text-danger">
+        <p className="text-danger my-1">
           Recuerda que para una visualización óptima, la imagen debe tener una relación de aspecto de 4:3 (por ejemplo:
           400x300px ó 1200x900px).
         </p>
@@ -87,6 +88,16 @@ const CrearNoticiaBodyModal = memo(function CrearNoticiaBodyModal({
         startDate={dateRange[0]}
         endDate={dateRange[1]}
         onChange={onDateChangeRange}
+      />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: TOAST_DURATION,
+          style: {
+            background: '#4f565c',
+            color: '#fff'
+          }
+        }}
       />
     </>
   );

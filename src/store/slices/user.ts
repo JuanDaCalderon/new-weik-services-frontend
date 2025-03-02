@@ -1,4 +1,11 @@
-import {SESSION_CLIENTES_KEY, SESSION_PERMISOS_KEY, SESSION_ROLES_KEY, USER_DOMAIN, USER_NAME} from '@/constants';
+import {
+  SESSION_APPS_KEY,
+  SESSION_CLIENTES_KEY,
+  SESSION_PERMISOS_KEY,
+  SESSION_ROLES_KEY,
+  USER_DOMAIN,
+  USER_NAME
+} from '@/constants';
 import {HorasTrabajoType, PartialEmployee, PayLoadUserType, User} from '@/types';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
@@ -89,6 +96,7 @@ export const userSlice = createSlice({
       SessionStorageUtil.removeItem(SESSION_CLIENTES_KEY);
       SessionStorageUtil.removeItem(SESSION_PERMISOS_KEY);
       SessionStorageUtil.removeItem(SESSION_ROLES_KEY);
+      SessionStorageUtil.removeItem(SESSION_APPS_KEY);
       return {
         ...state,
         user: {} as User,

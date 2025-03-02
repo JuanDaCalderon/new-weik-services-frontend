@@ -189,14 +189,14 @@ const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>})
           onChange={handleInputChangeEdit}
         />
         <Form.Label className="cursor-pointer mt-1 mb-0" htmlFor="branding">
-          <strong>Link al branding del cliente:</strong>
+          <strong>Link del cliente:</strong>
         </Form.Label>
         <Form.Control
           size="sm"
           type="text"
           id="branding"
           name="branding"
-          placeholder="Branding del cliente"
+          placeholder="Link del cliente"
           value={updatedClient.branding}
           onChange={handleInputChangeEdit}
         />
@@ -309,7 +309,7 @@ const columns: ColumnDef<Cliente>[] = [
     accessorKey: 'domain'
   },
   {
-    header: 'Link de branding',
+    header: 'Link',
     accessorKey: 'branding',
     cell: ({row}) => (
       <a className="link-opacity-100-hover" href={row.original.branding} target="_blank" rel="noreferrer">

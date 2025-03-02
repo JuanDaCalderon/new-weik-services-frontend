@@ -156,7 +156,7 @@ const CrearCliente = memo(function CrearCliente() {
         una vez creado el dominio, no podrá ser modificado.
       </p>
       <Form.Label className="mb-0 mt-1" htmlFor="branding">
-        <strong>Link al branding del cliente:</strong>
+        <strong>Link del cliente:</strong>
       </Form.Label>
       <Form.Control
         size="sm"
@@ -165,7 +165,7 @@ const CrearCliente = memo(function CrearCliente() {
         name="branding"
         pattern="https://.*"
         required
-        placeholder="Ingrese la URL del branding del cliente"
+        placeholder="Ingrese la URL del link del cliente"
         value={newCliente.branding}
         onChange={handleInputChange}
       />

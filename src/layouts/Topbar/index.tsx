@@ -4,7 +4,7 @@ import AppsDropdown from '@/layouts/Topbar/AppsDropdown';
 import {OverlayTrigger, Tooltip, Image} from 'react-bootstrap';
 import logo from '@/assets/images/logo.png';
 import logoSm from '@/assets/images/logo-sm.png';
-import {useThemeContext} from '@/common';
+import {useThemeContext} from '@/common/context';
 import {THEME, LOCALSTORAGE_THEME_MODE_KEY} from '@/constants';
 import {useCallback} from 'react';
 import {TopbarProps} from '@/types';

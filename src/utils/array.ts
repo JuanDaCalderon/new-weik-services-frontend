@@ -1,18 +1,4 @@
 /**
- * split array into chunks
- * @param array - array to split
- * @param chunkSize - chunk size
- * @returns
- */
-const splitArray = <T>(array: Array<T>, chunkSize: number) => {
-  const chunks = Array(Math.ceil(array.length / chunkSize))
-    .fill(1)
-    .map((_, index) => index * chunkSize)
-    .map((begin) => array.slice(begin, begin + chunkSize));
-  return chunks;
-};
-
-/**
  * Filter elements with a date range
  * @template {{rangoFechas: [string, string]}} T
  * @param {T[]} elementos
@@ -25,4 +11,4 @@ const filtrarElementosVigentes = <T extends {rangoFechas: [string, string]}>(ele
   );
 };
 
-export {splitArray, filtrarElementosVigentes};
+export {filtrarElementosVigentes};

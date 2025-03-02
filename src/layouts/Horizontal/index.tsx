@@ -26,10 +26,6 @@ const HorizontalLayout = () => {
   }, []);
 
   useEffect(() => {
-    changeHTMLAttribute('data-bs-theme', settings.theme);
-  }, [settings.theme]);
-
-  useEffect(() => {
     changeHTMLAttribute('data-layout-mode', settings.layout.mode);
   }, [settings.layout.mode]);
 

@@ -25,6 +25,9 @@ import useAddNoticia from './db/noticias/useAddNoticia';
 import useGetNoticias from './db/noticias/useGetNoticias';
 import useDeleteNoticia from './db/noticias/useDeleteNoticia';
 import useUpdateNoticia from './db/noticias/useUpdateNoticia';
+import useGetApps from './db/apps/useGetApps';
+import useAddApp from './db/apps/useAddApp';
+import useDeleteApp from './db/apps/useDeleteApp';
 
 export {
   useGetClients,
@@ -51,5 +54,8 @@ export {
   useAddNoticia,
   useGetNoticias,
   useDeleteNoticia,
-  useUpdateNoticia
+  useUpdateNoticia,
+  useGetApps,
+  useAddApp,
+  useDeleteApp
 };

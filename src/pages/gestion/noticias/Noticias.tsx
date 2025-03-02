@@ -13,7 +13,7 @@ import {useDatePicker, useFileManager, useToggle} from '@/hooks';
 import {CrearNoticiaBodyModal} from './CrearNoticiaBodyModal';
 import {MapNoticia, Noticia, noticiaCreationType} from '@/types';
 import toast, {Toaster} from 'react-hot-toast';
-import {DateUtils, hasPermission} from '@/utils';
+import {checkIfNoticiaExists, DateUtils, hasPermission} from '@/utils';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
@@ -76,13 +76,17 @@ const Noticias = memo(function Noticias() {
 
   const onSendCrearNoticia = useCallback(async () => {
     if (!file) {
-      toast.error('No hay ninguna noticia subida para crear');
+      toast.error('No hay ninguna noticia subida para crear, La imagen es requerida.');
       crearNoticiaToggle();
       setIsReadyToBeSend(false);
       return;
     }
     if (dateRange[0] === null || dateRange[1] === null) {
       toast.error('Por favor selecciona un rango de fechas');
+      return;
+    }
+    if (checkIfNoticiaExists(noticiaCreation as Noticia, noticiasFromStore)) {
+      toast.error('La noticia no se pudo crear, ya existe una noticia con el mismo titulo y/o link.');
       return;
     }
     const dateRangeFormatted: [string, string] = [

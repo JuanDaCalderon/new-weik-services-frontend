@@ -59,15 +59,17 @@ const PermisosDenegados = memo(function PermisosDenegados({row}: {row: RowTable<
           {thisPermisos.map(({id, permiso, labelName, activo}) => (
             <Col key={id} className="d-flex justify-content-between align-items-center mt-2" xs={2}>
               <span className="me-1">{labelName}</span>
-              <i className="mdi mdi-arrow-right font-12" />
-              <input
-                type="checkbox"
-                id={`${htmlForSwitchPermiso}_${id}_${permiso}`}
-                checked={activo}
-                onChange={() => handleToggleChange(id)}
-                data-switch="danger"
-              />
-              <label htmlFor={`${htmlForSwitchPermiso}_${id}_${permiso}`} data-on-label="No" data-off-label="Si" />
+              <div className="d-flex justify-content-end align-content-center align-items-center gap-1">
+                <i className="mdi mdi-arrow-right font-12" />
+                <input
+                  type="checkbox"
+                  id={`${htmlForSwitchPermiso}_${id}_${permiso}`}
+                  checked={activo}
+                  onChange={() => handleToggleChange(id)}
+                  data-switch="danger"
+                />
+                <label htmlFor={`${htmlForSwitchPermiso}_${id}_${permiso}`} data-on-label="No" data-off-label="Si" />
+              </div>
             </Col>
           ))}
         </Row>

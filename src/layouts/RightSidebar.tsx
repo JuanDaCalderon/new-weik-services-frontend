@@ -1,5 +1,5 @@
 import SimpleBar from 'simplebar-react';
-import {useThemeContext} from '@/common';
+import {useThemeContext} from '@/common/context';
 import {useCallback} from 'react';
 import {Offcanvas} from 'react-bootstrap';
 import TeamMembers from '@/components/TeamMembers';

@@ -2,7 +2,7 @@ import {CLIENTES_MENU_KEY, PERMISOS_MAP_IDS} from '@/constants';
 import {MenuItemType} from '@/types';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
-  /* {
+  {
     key: 'dashboards',
     icon: 'uil-dashboard',
     label: 'Dashboards',
@@ -617,7 +617,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ]
       }
     ]
-  }, */
+  },
   {
     key: CLIENTES_MENU_KEY,
     icon: 'uil-user-square',
@@ -646,6 +646,13 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         permisoId: PERMISOS_MAP_IDS.accesoGestionUsuarios
       },
       {
+        key: 'noticias',
+        label: 'Noticias',
+        url: '/services/gestion/noticias',
+        parentKey: 'gestion',
+        permisoId: PERMISOS_MAP_IDS.accesoGestionNoticias
+      },
+      {
         key: 'oficina',
         label: 'Oficina',
         parentKey: 'gestion',
@@ -663,13 +670,6 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             parentKey: 'oficina'
           }
         ]
-      },
-      {
-        key: 'noticias',
-        label: 'Noticias',
-        url: '/services/gestion/noticias',
-        parentKey: 'gestion',
-        permisoId: PERMISOS_MAP_IDS.accesoGestionNoticias
       }
     ]
   }

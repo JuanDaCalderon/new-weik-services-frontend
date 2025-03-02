@@ -5,8 +5,17 @@ import ErrorPages from '@/pages/error';
 import ProtectedRoutes from '@/routes/ProtectedRoutes';
 import ProtectedHomeRoutes from '@/routes/ProtectedHomeRoutes';
 import {PAGE_NOT_FOUND_PATH} from '@/constants';
+import {useEffect} from 'react';
+import {changeHTMLAttribute} from '@/utils';
+import {useThemeContext} from '@/common/context';
 
 export default function AppRoutes() {
+  const {settings} = useThemeContext();
+
+  useEffect(() => {
+    changeHTMLAttribute('data-bs-theme', settings.theme);
+  }, [settings.theme]);
+
   return (
     <ReactRoutes>
       <Route index element={<Root />}></Route>

@@ -16,6 +16,7 @@ type FileUploaderProps = {
   isRounded?: boolean;
   acceptedFileTypes?: string[];
   isSquarePreview?: boolean;
+  ratio?: string;
 };
 
 const FileUploader = ({
@@ -25,7 +26,8 @@ const FileUploader = ({
   onFileRemoved,
   resetFile = false,
   isSquarePreview = false,
-  acceptedFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'] // Por defecto, solo imágenes
+  acceptedFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'], // Por defecto, solo imágenes
+  ratio = '4x3'
 }: FileUploaderProps) => {
   const {selectedFile, uploadProgress, handleAcceptedFiles, removeFile} = useFileUploader(showPreview);
 
@@ -58,7 +60,7 @@ const FileUploader = ({
             {selectedFile.preview && (
               <>
                 {isSquarePreview ? (
-                  <div className="w-100 position-relative ratio ratio-4x3">
+                  <div className={`w-100 position-relative ratio ratio-${ratio}`}>
                     <Image
                       src={selectedFile.preview}
                       alt={selectedFile.name}
