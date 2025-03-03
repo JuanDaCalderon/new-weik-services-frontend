@@ -658,15 +658,21 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         parentKey: 'gestion',
         children: [
           {
-            key: 'equipo',
-            label: 'Equipo',
-            url: '/services/gestion/oficina/equipo',
+            key: 'horarios',
+            label: 'Horarios',
+            url: '/services/gestion/oficina/horarios',
             parentKey: 'oficina'
           },
           {
             key: 'vacaciones',
             label: 'Vacaciones',
             url: '/services/gestion/oficina/vacaciones',
+            parentKey: 'oficina'
+          },
+          {
+            key: 'reportes',
+            label: 'Reportes',
+            url: '/services/gestion/oficina/reportes',
             parentKey: 'oficina'
           }
         ]

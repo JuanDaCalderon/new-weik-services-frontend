@@ -11,10 +11,7 @@ import {useThemeContext} from '@/common/context';
 
 export default function AppRoutes() {
   const {settings} = useThemeContext();
-
-  useEffect(() => {
-    changeHTMLAttribute('data-bs-theme', settings.theme);
-  }, [settings.theme]);
+  useEffect(() => changeHTMLAttribute('data-bs-theme', settings.theme), [settings.theme]);
 
   return (
     <ReactRoutes>

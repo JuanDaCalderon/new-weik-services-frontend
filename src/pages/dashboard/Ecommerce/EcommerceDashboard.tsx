@@ -1,36 +1,14 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {Row, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {CustomDatePicker} from '@/components';
 import Statistics from './Statistics';
 import Activity from './Activity';
-import {useGetClients, useRolesYPermisos} from '@/endpoints';
-import {useAppSelector} from '@/store';
-import {permisosSelector, rolesSelector, selectClientes} from '@/store/selectores';
 import {Toaster} from 'react-hot-toast';
 import {TOAST_DURATION} from '@/constants';
-import {TableroNoticias} from '@/components/Noticias';
 
 const EcommerceDashboard = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
-  const {getRolesSync, getPermisosSync} = useRolesYPermisos();
-  const {getClientesSync} = useGetClients();
-  const clientes = useAppSelector(selectClientes);
-  const roles = useAppSelector(rolesSelector);
-  const permisos = useAppSelector(permisosSelector);
-
-  useEffect(() => {
-    if (clientes.length <= 0) getClientesSync();
-  }, [clientes.length, getClientesSync]);
-
-  useEffect(() => {
-    if (roles.length <= 0) getRolesSync();
-  }, [roles.length, getRolesSync]);
-
-  useEffect(() => {
-    if (permisos.length <= 0) getPermisosSync();
-  }, [permisos.length, getPermisosSync]);
 
   return (
     <>
@@ -62,7 +40,6 @@ const EcommerceDashboard = () => {
       </Row>
 
       <Row>
-        <TableroNoticias></TableroNoticias>
         <Col xl={4} lg={6}>
           <Statistics />
         </Col>

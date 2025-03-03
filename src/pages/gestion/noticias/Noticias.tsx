@@ -110,8 +110,8 @@ const Noticias = memo(function Noticias() {
     dateRange,
     file,
     getNoticiasSync,
-    noticiaCreation.link,
-    noticiaCreation.titulo,
+    noticiaCreation,
+    noticiasFromStore,
     uploadImage
   ]);
 

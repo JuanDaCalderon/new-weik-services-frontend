@@ -4,6 +4,7 @@ export enum PERMISOS_MAP_IDS {
   accesoGestionClientes = 'acceso-gestion-clientes',
   accesoGestionUsuarios = 'acceso-gestion-usuarios',
   accesoGestionNoticias = 'acceso-gestion-noticias',
+  accesoGestionOficina = 'acceso-gestion-oficina',
   accesoApps = 'acceso-apps',
   /* DE ESCRITURA */
   crearUsuario = 'crear-usuario',

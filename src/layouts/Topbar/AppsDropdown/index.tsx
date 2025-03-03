@@ -16,6 +16,7 @@ const appDatosIniciales: AppsToDb = {name: '', icon: '', redirectTo: ''};
 const AppsDropdown = () => {
   const apps = useAppSelector(selectApps);
   const isLoadingApps = useAppSelector(selectIsLoadingApps);
+  const [iconHasLoad, setIconHasLoad] = useState<boolean>(false);
   const [newApp, setnewApp] = useState<Partial<AppsToDb>>(appDatosIniciales);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
   const [shouldResetImage, setShouldResetImage] = useState<boolean>(false);
@@ -229,19 +230,23 @@ const AppsDropdown = () => {
                     <Col xs={isNotPermisonsLayout} key={index.toString()}>
                       <div className="position-relative p-0 m-0">
                         <a
-                          className="dropdown-icon-item"
+                          className="dropdown-icon-item position-relative"
                           href="#"
                           onClick={(e: MouseEvent<HTMLElement>) => {
                             e.preventDefault();
                             e.stopPropagation();
                             redirectTo(item.redirectTo);
                           }}>
+                          {!iconHasLoad && (
+                            <SkeletonLoader customClass="position-absolute top-50 start-50 translate-middle rounded w-75" />
+                          )}
                           <Image
                             className="object-fit-contain"
                             width={24}
                             height="auto"
                             src={item.icon}
                             alt={item.name}
+                            onLoad={() => setIconHasLoad(true)}
                             fluid
                           />
                           <span>{item.name}</span>

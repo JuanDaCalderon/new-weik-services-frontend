@@ -5,12 +5,15 @@ import {OverlayTrigger, Tooltip, Image} from 'react-bootstrap';
 import logo from '@/assets/images/logo.png';
 import logoSm from '@/assets/images/logo-sm.png';
 import {useThemeContext} from '@/common/context';
-import {THEME, LOCALSTORAGE_THEME_MODE_KEY} from '@/constants';
-import {useCallback} from 'react';
+import {THEME, LOCALSTORAGE_THEME_MODE_KEY, PERMISOS_MAP_IDS} from '@/constants';
+import {useCallback, useMemo} from 'react';
 import {TopbarProps} from '@/types';
-import {LocalStorageUtil} from '@/utils';
+import {hasPermission, LocalStorageUtil} from '@/utils';
+import {useAppSelector} from '@/store';
+import {selectUser} from '@/store/selectores';
 
 const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
+  const user = useAppSelector(selectUser);
   const {settings, updateSettings} = useThemeContext();
 
   const toggleDarkMode = useCallback(() => {
@@ -26,6 +29,15 @@ const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
   const toggleRightSideBar = useCallback(() => {
     updateSettings({rightSidebar: {toggle: true}});
   }, [updateSettings]);
+
+  const getPermission = useCallback(
+    (permisoId: string) => {
+      return hasPermission(permisoId, user.roles, user.permisosOtorgados, user.permisosDenegados);
+    },
+    [user.permisosDenegados, user.permisosOtorgados, user.roles]
+  );
+
+  const canSeeApps = useMemo(() => getPermission(PERMISOS_MAP_IDS.accesoApps), [getPermission]);
 
   return (
     <div className="navbar-custom">
@@ -51,9 +63,11 @@ const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
           </button>
         </div>
         <ul className="topbar-menu d-flex align-items-center gap-3">
-          <li className="dropdown d-none d-sm-inline-block">
-            <AppsDropdown />
-          </li>
+          {canSeeApps && (
+            <li className="dropdown d-none d-sm-inline-block">
+              <AppsDropdown />
+            </li>
+          )}
           <li className="d-none d-sm-inline-block">
             <OverlayTrigger
               placement="bottom"
