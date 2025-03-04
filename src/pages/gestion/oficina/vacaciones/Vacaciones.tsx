@@ -11,7 +11,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import BootstrapTheme from '@fullcalendar/bootstrap';
 
-const Horarios = memo(function Horarios() {
+const Vacaciones = memo(function Vacaciones() {
   return (
     <>
       <PageBreadcrumb title="Horario" />
@@ -20,10 +20,7 @@ const Horarios = memo(function Horarios() {
           <Card>
             <Card.Body>
               <Row>
-                <Col xl={2}>
-                  <p>Usuarios</p>
-                </Col>
-                <Col xl={10}>
+                <Col xl={12}>
                   <div id="calendar">
                     <FullCalendar
                       initialView="dayGridMonth"
@@ -74,4 +71,4 @@ const Horarios = memo(function Horarios() {
   );
 });
 
-export {Horarios};
+export {Vacaciones};
