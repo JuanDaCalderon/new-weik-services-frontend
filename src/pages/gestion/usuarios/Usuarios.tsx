@@ -1,32 +1,40 @@
 import {PageBreadcrumb} from '@/components';
-import ReactTable from '@/components/table/ReactTable';
-import {memo, useEffect, useMemo} from 'react';
-import {Card, Col, Row} from 'react-bootstrap';
-import {columns} from './Columnas';
-import {Employee} from '@/types';
+import {memo, useMemo} from 'react';
+import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
+import {TabContentItem} from '@/types';
 import {useAppSelector} from '@/store';
-import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
+import {selectisLoadingEmployees, selectUser} from '@/store/selectores';
 import {Toaster} from 'react-hot-toast';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
-import {useGetEmployees} from '@/endpoints';
 import {hasPermission} from '@/utils';
-import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
-import {Navigate} from 'react-router-dom';
+import {
+  DEFAULT_HOME_ROUTER_PATH,
+  PERMISOS_MAP_IDS,
+  TABS_USUARIOS_CREAR,
+  TABS_USUARIOS_LISTA,
+  TOAST_DURATION
+} from '@/constants';
+import {Link, Navigate} from 'react-router-dom';
+import {ListaUsuarios} from './ListaUsuarios';
+
+const tabContents: TabContentItem[] = [
+  {id: TABS_USUARIOS_CREAR, title: TABS_USUARIOS_CREAR},
+  {id: TABS_USUARIOS_LISTA, title: TABS_USUARIOS_LISTA}
+];
 
 const Usuarios = memo(function Usuarios() {
   const user = useAppSelector(selectUser);
-  const {getEmployeesSync} = useGetEmployees();
-  const users = useAppSelector(selectEmployees);
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
-
-  useEffect(() => {
-    if (users.length <= 0) getEmployeesSync();
-  }, [getEmployeesSync, users.length]);
 
   const canCrearUsuarios = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.crearUsuario, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
+  const listContentOptions: TabContentItem[] = useMemo(() => {
+    if (!canCrearUsuarios) return tabContents.filter((tab) => tab.id !== TABS_USUARIOS_CREAR);
+    else return tabContents;
+  }, [canCrearUsuarios]);
 
   if (
     !hasPermission(PERMISOS_MAP_IDS.accesoGestionUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados)
@@ -38,54 +46,41 @@ const Usuarios = memo(function Usuarios() {
     <>
       <PageBreadcrumb title="Gestión usuarios" />
 
-      <Row>
-        <Col xs={12}>
-          <Card>
-            <Card.Body>
-              <Row>
-                {canCrearUsuarios ? (
-                  <>
-                    <Col sm={12} lg={4} xl={3} className="mb-3 mb-lg-0">
-                      {!isLoadingUsers ? <CrearUsuarios /> : <SkeletonLoader height="300px" customClass="p-0" />}
-                    </Col>
-                    <Col sm={12} lg={8} xl={9}>
-                      <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>
-                      {!isLoadingUsers ? (
-                        <ReactTable<Employee>
-                          columns={columns}
-                          data={users}
-                          pageSize={10}
-                          tableClass="table-striped"
-                          showPagination
-                        />
-                      ) : (
-                        <SkeletonLoader height="100%" customClass="px-0" />
-                      )}
-                    </Col>
-                  </>
-                ) : (
-                  <Col sm={12}>
-                    <Card.Header className="p-0">
-                      <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>
-                    </Card.Header>
-                    {!isLoadingUsers ? (
-                      <ReactTable<Employee>
-                        columns={columns}
-                        data={users}
-                        pageSize={10}
-                        tableClass="table-striped"
-                        showPagination
-                      />
-                    ) : (
-                      <SkeletonLoader height="100%" customClass="px-0" />
-                    )}
-                  </Col>
-                )}
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      <Card>
+        <Card.Body>
+          <Row>
+            <Tab.Container defaultActiveKey={TABS_USUARIOS_LISTA}>
+              <Col xs={12} md={2} xxl={1}>
+                <Nav variant="pills" className="flex-column bg-light bg-gradient bg-opacity-50 rounded">
+                  {listContentOptions.map((tab, index) => (
+                    <Nav.Item className="w-100" key={index}>
+                      <Nav.Link as={Link} to="#" eventKey={tab.id}>
+                        {tab.title}
+                      </Nav.Link>
+                    </Nav.Item>
+                  ))}
+                </Nav>
+              </Col>
+              <Col xs={12} md={10} xxl={11} className="mt-2 mt-md-0">
+                <Tab.Content>
+                  {listContentOptions.map((tab, index) => (
+                    <Tab.Pane eventKey={tab.id} key={index}>
+                      <Row>
+                        <Col sm={12}>
+                          {tab.id === TABS_USUARIOS_CREAR &&
+                            (!isLoadingUsers ? <CrearUsuarios /> : <SkeletonLoader height="500px" customClass="p-0" />)}
+                          {tab.id === TABS_USUARIOS_LISTA &&
+                            (!isLoadingUsers ? <ListaUsuarios /> : <SkeletonLoader height="500px" customClass="p-0" />)}
+                        </Col>
+                      </Row>
+                    </Tab.Pane>
+                  ))}
+                </Tab.Content>
+              </Col>
+            </Tab.Container>
+          </Row>
+        </Card.Body>
+      </Card>
 
       <Toaster
         position="bottom-right"

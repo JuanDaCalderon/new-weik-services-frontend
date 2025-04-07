@@ -4,7 +4,14 @@ export type Cliente = {
   domain: string;
   branding: string;
   logo: string;
+  documento: string;
   fechaCreacion: string;
+  telefonoCliente: string;
+  nombrePersonaContacto: string;
+  emailPersonaContacto: string;
+  telefonoPersonaContacto: string;
+  direccionFisicaCliente: string;
+  idNitCliente: string;
 };
 
 export type PayLoadClientType = {

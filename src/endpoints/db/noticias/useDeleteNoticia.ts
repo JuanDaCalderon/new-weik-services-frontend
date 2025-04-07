@@ -4,12 +4,12 @@ import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
 import {NOTICIAS_PATH} from '@/constants';
-import useDeleteImage from '@/endpoints/db/utils/useDeleteImage';
+import useDeleteFile from '@/endpoints/db/utils/useDeleteFile';
 import {Noticia} from '@/types';
 
 export default function useDeleteNoticia() {
   const [isDeletingTheNoticia, setIsDeletingTheNoticia] = useState<boolean>(false);
-  const {deleteImage} = useDeleteImage();
+  const {deleteFile} = useDeleteFile();
 
   const deleteNoticia = useCallback(
     async (noticiaId: string): Promise<void> => {
@@ -19,7 +19,7 @@ export default function useDeleteNoticia() {
         const noticiaDoc = await getDoc(noticiaRef);
         const noticiaData = noticiaDoc.data() as Noticia;
         await deleteDoc(noticiaRef);
-        if (noticiaData.image) await deleteImage(noticiaData.image);
+        if (noticiaData.image) await deleteFile(noticiaData.image);
         toast.success(`Se ha eliminado la noticia correctamente`);
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
@@ -28,7 +28,7 @@ export default function useDeleteNoticia() {
         setIsDeletingTheNoticia(false);
       }
     },
-    [deleteImage]
+    [deleteFile]
   );
 
   return {

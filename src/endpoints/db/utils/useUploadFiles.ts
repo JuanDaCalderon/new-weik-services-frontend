@@ -5,27 +5,27 @@ import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
 import {FileType} from '@/components';
 
-export default function useUploadImage() {
-  const [isLoadingUploadImage, setIsLoadingUploadImage] = useState<boolean>(false);
+export default function useUploadFiles() {
+  const [isLoadingUploadFile, setIsLoadingUploadFile] = useState<boolean>(false);
 
-  const uploadImage = useCallback(async (path: string, name: string, image: FileType): Promise<string> => {
-    setIsLoadingUploadImage(true);
-    let imageUrl: string = '';
+  const uploadFile = useCallback(async (path: string, name: string, file: FileType): Promise<string> => {
+    setIsLoadingUploadFile(true);
+    let fileUrl: string = '';
     const storageRef = ref(storage, `${path}/${name}`);
     try {
-      await uploadBytes(storageRef, image);
-      imageUrl = await getDownloadURL(storageRef);
+      await uploadBytes(storageRef, file);
+      fileUrl = await getDownloadURL(storageRef);
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
       DebugUtil.logError(error.message, error);
     } finally {
-      setIsLoadingUploadImage(false);
+      setIsLoadingUploadFile(false);
     }
-    return imageUrl;
+    return fileUrl;
   }, []);
 
   return {
-    isLoadingUploadImage,
-    uploadImage
+    isLoadingUploadFile,
+    uploadFile
   };
 }

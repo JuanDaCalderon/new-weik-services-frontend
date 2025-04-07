@@ -1,6 +1,7 @@
 export const USUARIOS_PATH: string = 'usuarios';
 export const CLIENTES_PATH: string = 'clientes';
-export const STORAGE_CLIENTES_PATH: string = 'clientes';
+export const STORAGE_LOGOS_CLIENTES_PATH: string = 'clientes';
+export const STORAGE_DOCS_CLIENTES_PATH: string = 'clientesDocs';
 export const STORAGE_NOTICIAS_PATH: string = 'noticias';
 export const STORAGE_APPS_PATH: string = 'apps';
 export const ROLES_PATH: string = 'roles';

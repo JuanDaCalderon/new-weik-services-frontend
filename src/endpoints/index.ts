@@ -19,8 +19,8 @@ import useSetEstadoUser from './db/users/useSetEstadoUser';
 import useUpdateUser from './db/users/useUpdateUser';
 import useUserProfileImage from './db/profile-image/useUserProfileImage';
 import useGetEmployees from './db/users/useGetEmployees';
-import useUploadImage from './db/utils/useUploadImage';
-import useDeleteImage from './db/utils/useDeleteImage';
+import useUploadFiles from './db/utils/useUploadFiles';
+import useDeleteFile from './db/utils/useDeleteFile';
 import useAddNoticia from './db/noticias/useAddNoticia';
 import useGetNoticias from './db/noticias/useGetNoticias';
 import useDeleteNoticia from './db/noticias/useDeleteNoticia';
@@ -46,8 +46,8 @@ export {
   useUpdateUser,
   useGetEmployees,
   useChangePassword,
-  useUploadImage,
-  useDeleteImage,
+  useUploadFiles,
+  useDeleteFile,
   useCreateUserAuth,
   useCheckIn,
   useCheckOut,

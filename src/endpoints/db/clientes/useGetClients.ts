@@ -19,15 +19,35 @@ const useGetClients = () => {
         async (querySnapshotDocs) => {
           const clientes: Cliente[] = [];
           for (const doc of querySnapshotDocs.docs) {
-            const {branding, logo, nombre, domain, fechaCreacion} = doc.data();
-            clientes.push({
-              id: doc.id,
+            const {
               branding,
               logo,
               nombre,
               domain,
+              fechaCreacion,
+              documento,
+              direccionFisicaCliente,
+              emailPersonaContacto,
+              idNitCliente,
+              nombrePersonaContacto,
+              telefonoCliente,
+              telefonoPersonaContacto
+            } = doc.data() as Cliente;
+            clientes.push({
+              id: doc.id,
+              branding: branding || '',
+              logo: logo || '',
+              documento: documento || '',
+              nombre: nombre || '',
+              domain: domain || '',
+              direccionFisicaCliente: direccionFisicaCliente || '',
+              emailPersonaContacto: emailPersonaContacto || '',
+              idNitCliente: idNitCliente || '',
+              nombrePersonaContacto: nombrePersonaContacto || '',
+              telefonoCliente: telefonoCliente || '',
+              telefonoPersonaContacto: telefonoPersonaContacto || '',
               fechaCreacion: fechaCreacion
-                ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
+                ? DateUtils.formatDateToString((fechaCreacion as unknown as Timestamp).toDate())
                 : DateUtils.formatDateToString(new Date())
             });
           }
@@ -49,15 +69,35 @@ const useGetClients = () => {
       const clientes: Cliente[] = [];
       const queryDocs = await getDocs(query(collection(db, CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN)));
       for (const doc of queryDocs.docs) {
-        const {branding, logo, nombre, domain, fechaCreacion} = doc.data();
-        clientes.push({
-          id: doc.id,
+        const {
           branding,
           logo,
           nombre,
           domain,
+          fechaCreacion,
+          direccionFisicaCliente,
+          documento,
+          emailPersonaContacto,
+          idNitCliente,
+          nombrePersonaContacto,
+          telefonoCliente,
+          telefonoPersonaContacto
+        } = doc.data() as Cliente;
+        clientes.push({
+          id: doc.id,
+          branding: branding || '',
+          logo: logo || '',
+          nombre: nombre || '',
+          domain: domain || '',
+          documento: documento || '',
+          direccionFisicaCliente: direccionFisicaCliente || '',
+          emailPersonaContacto: emailPersonaContacto || '',
+          idNitCliente: idNitCliente || '',
+          nombrePersonaContacto: nombrePersonaContacto || '',
+          telefonoCliente: telefonoCliente || '',
+          telefonoPersonaContacto: telefonoPersonaContacto || '',
           fechaCreacion: fechaCreacion
-            ? DateUtils.formatDateToString((fechaCreacion as Timestamp).toDate())
+            ? DateUtils.formatDateToString((fechaCreacion as unknown as Timestamp).toDate())
             : DateUtils.formatDateToString(new Date())
         });
       }

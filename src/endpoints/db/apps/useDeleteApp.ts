@@ -4,12 +4,12 @@ import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
 import {APPS_PATH} from '@/constants';
-import useDeleteImage from '@/endpoints/db/utils/useDeleteImage';
+import useDeleteFile from '@/endpoints/db/utils/useDeleteFile';
 import {Apps} from '@/types';
 
 export default function useDeleteApp() {
   const [isDeletingApp, setIsDeletingApp] = useState<boolean>(false);
-  const {deleteImage} = useDeleteImage();
+  const {deleteFile} = useDeleteFile();
 
   const deleteApp = useCallback(
     async (appId: string): Promise<void> => {
@@ -19,7 +19,7 @@ export default function useDeleteApp() {
         const appDoc = await getDoc(appRef);
         const appData = appDoc.data() as Apps;
         await deleteDoc(appRef);
-        if (appData.icon) await deleteImage(appData.icon);
+        if (appData.icon) await deleteFile(appData.icon);
         toast.success(`Se ha eliminado el acceso directo correctamente`);
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
@@ -28,7 +28,7 @@ export default function useDeleteApp() {
         setIsDeletingApp(false);
       }
     },
-    [deleteImage]
+    [deleteFile]
   );
 
   return {

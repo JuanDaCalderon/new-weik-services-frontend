@@ -3,7 +3,7 @@ import type {ColumnDef} from '@tanstack/react-table';
 import type {Row} from '@tanstack/react-table';
 import {GenericModal} from '@/components/Modals/GenericModal';
 import {ChangeEvent, memo, useCallback, useMemo, useState, JSX, Fragment} from 'react';
-import {Badge, Button, Dropdown, DropdownButton, Form, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {Badge, Button, Dropdown, DropdownButton, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {useToggle} from '@/hooks';
 import {getNombreCompletoUser, DateUtils, DebugUtil, hasPermission} from '@/utils';
 import {ESTADOS, PERMISOS_MAP_IDS, RIBBONTYPES} from '@/constants';
@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
+import {InputField} from '@/components/Form2';
 
 const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employee>}) {
   const user = useAppSelector(selectUser);
@@ -100,21 +101,14 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
             <p className="p-0 m-0">
               Esta seguro que quiere eliminar el usuario con el correo: <b>{row.original.email}</b>.
             </p>
-            <p className="p-0 m-0 text-danger">
-              Eliminar un usuario implica la eliminación permanente de todos los registros y datos asociados. Si no
-              deseas perder esta información, considera desactivar el usuario en su lugar.
-            </p>
           </div>
         </div>
-        <Form.Label className="text-danger cursor-pointer mb-0" htmlFor="usuario">
-          <strong>Ingrese el correo del usuario para eliminarlo:</strong>
-        </Form.Label>
-        <Form.Control
-          size="sm"
+        <InputField
+          label="Ingrese el correo del usuario para eliminarlo"
           type="text"
-          id="usuario"
           name="usuario"
-          placeholder="Ingrese el correo del usuario"
+          error="Eliminar un usuario implica la eliminación permanente de todos los registros y datos asociados. Si no
+              deseas perder esta información, considera desactivar el usuario en su lugar."
           value={userEmail}
           onChange={handleInputChange}
         />

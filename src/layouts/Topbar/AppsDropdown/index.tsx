@@ -8,7 +8,7 @@ import toast, {Toaster} from 'react-hot-toast';
 import {checkIfAppExists, DateUtils, DebugUtil, hasPermission} from '@/utils';
 import {useAppSelector} from '@/store';
 import {selectApps, selectIsLoadingApps, selectUser} from '@/store/selectores';
-import {useAddApp, useDeleteApp, useGetApps, useUploadImage} from '@/endpoints';
+import {useAddApp, useDeleteApp, useGetApps, useUploadFiles} from '@/endpoints';
 import {PERMISOS_MAP_IDS, STORAGE_APPS_PATH, TOAST_DURATION} from '@/constants';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 const appDatosIniciales: AppsToDb = {name: '', icon: '', redirectTo: ''};
@@ -25,7 +25,7 @@ const AppsDropdown = () => {
   const {file, handleFile, handleFileRemoved} = useFileManager();
   const {getAppsSync} = useGetApps();
   const {addApp, isSavingApp} = useAddApp();
-  const {isLoadingUploadImage, uploadImage} = useUploadImage();
+  const {isLoadingUploadFile, uploadFile} = useUploadFiles();
   const {isDeletingApp, deleteApp} = useDeleteApp();
   const user = useAppSelector(selectUser);
 
@@ -142,7 +142,7 @@ const AppsDropdown = () => {
     }
     try {
       const imgName = `${newApp.name!}_${DateUtils.getDateOnly(new Date(), '_')}`;
-      const imgUrl = await uploadImage(STORAGE_APPS_PATH, imgName, file);
+      const imgUrl = await uploadFile(STORAGE_APPS_PATH, imgName, file);
       const app: Apps = {
         name: newApp.name!,
         redirectTo: newApp.redirectTo!,
@@ -155,7 +155,7 @@ const AppsDropdown = () => {
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
-  }, [addApp, apps, file, getAppsSync, isValidApp, newApp, resetForm, toggleModal, uploadImage]);
+  }, [addApp, apps, file, getAppsSync, isValidApp, newApp, resetForm, toggleModal, uploadFile]);
 
   const redirectTo = useCallback(
     (redirectTo: string) => {
@@ -287,8 +287,8 @@ const AppsDropdown = () => {
           submitText="Agregar"
           secondaryText="Cancelar"
           body={modalBody}
-          isDisabled={!hasTouched || isSavingApp || isLoadingUploadImage}
-          isLoading={isSavingApp || isLoadingUploadImage}
+          isDisabled={!hasTouched || isSavingApp || isLoadingUploadFile}
+          isLoading={isSavingApp || isLoadingUploadFile}
           onSend={onAddApp}
         />
       )}

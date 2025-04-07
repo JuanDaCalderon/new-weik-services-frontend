@@ -1,5 +1,5 @@
 import {ChangeEvent, memo, useCallback, useMemo, useState} from 'react';
-import {Button, Form, InputGroup} from 'react-bootstrap';
+import {Col, Form, InputGroup, Row} from 'react-bootstrap';
 import {Employee, Option} from '@/types';
 import {useAppSelector} from '@/store';
 import Select, {MultiValue} from 'react-select';
@@ -8,7 +8,7 @@ import {ESTADOS, THIS_CLIENT_INFO} from '@/constants';
 import {checkIfUserExists, DebugUtil, generateUsername, isValidEmail} from '@/utils';
 import {useAddUser, useCreateUserAuth, useGetEmployees, useUpdateUser} from '@/endpoints';
 import toast from 'react-hot-toast';
-import {Spinner} from '@/components';
+import {FormWrapper, InputField} from '@/components/Form2';
 const userDatosIniciales: Employee = {
   nombres: '',
   apellidos: '',
@@ -162,137 +162,150 @@ const CrearUsuarios = memo(function CrearUsuarios() {
 
   return (
     <>
-      <p className="weik-text-grey-200 my-1">
-        Completa los campos y haz clic en "Crear" para añadir un usuario enlazado a un cliente en específico.
-        <br />
-        El nombre de usuario "username" se genera automáticamente, pero puede cambiarse desde el perfil.
-      </p>
-      <Form.Label className="mb-0" htmlFor="nombres">
-        <strong>Nombres del usuario:</strong>
-      </Form.Label>
-      <Form.Control
-        size="sm"
-        type="text"
-        id="nombres"
-        name="nombres"
-        required
-        placeholder="Ingrese los nombres del usuario"
-        value={newUser.nombres}
-        onChange={handleInputChange}
-      />
-      <Form.Label className="mb-0 mt-1" htmlFor="apellidos">
-        <strong>Apellidos del usuario:</strong>
-      </Form.Label>
-      <Form.Control
-        size="sm"
-        type="text"
-        id="apellidos"
-        name="apellidos"
-        required
-        placeholder="Ingrese los apellidos del usuario"
-        value={newUser.apellidos}
-        onChange={handleInputChange}
-      />
-      <Form.Label className="mb-0 mt-1" htmlFor="cargo">
-        <strong>Cargo del usuario:</strong>
-      </Form.Label>
-      <Form.Control
-        size="sm"
-        type="url"
-        id="cargo"
-        name="cargo"
-        required
-        placeholder="Ingrese el cargo del usuario"
-        value={newUser.cargo}
-        onChange={handleInputChange}
-      />
-      <Form.Label className="mb-0 mt-1" htmlFor="cliente">
-        <strong>Cliente asociado:</strong>
-      </Form.Label>
-      <Form.Select size="sm" id="cliente" aria-label="Cliente asociado" onChange={handleClienteSelectChange}>
-        {clientesOptions.map((cliente, index) => (
-          <option key={index} value={cliente.value}>
-            {cliente.label}
-          </option>
-        ))}
-      </Form.Select>
-      <div className="d-flex justify-content-between">
-        <Form.Label className="mb-0 mt-1" htmlFor="email">
-          <strong>Email del usuario:</strong>
-        </Form.Label>
-        <Form.Check
-          onChange={handleCheckBoxChange}
-          checked={deactivateAutoEmail}
-          className="mt-1"
-          type="checkbox"
-          label="Desactivar email autogenerado"
+      <Row>
+        <Col xs={12}>
+          <p className="m-0">
+            Completa los campos y haz clic en "Crear" para añadir un usuario enlazado a un cliente en específico, el
+            nombre de usuario "username" se genera automáticamente, pero puede cambiarse desde el perfil.
+          </p>
+        </Col>
+        <Col xs={12}>
+          <hr></hr>
+        </Col>
+      </Row>
+
+      <FormWrapper
+        isDisabled={!hasTouched || isLoadingAddUser || isLoadingCreateAuthUser || isLoadingUsersToRol}
+        isLoading={isLoadingAddUser || isLoadingCreateAuthUser || isLoadingUsersToRol}
+        submitLabel="Crear Usuario"
+        onSubmit={enviarUser}>
+        <InputField
+          xs={12}
+          md={4}
+          label="Nombres del usuario"
+          type="text"
+          required
+          pattern="^[A-Za-zÑñ]+(?: [A-Za-zÑñ]+)*$"
+          name="nombres"
+          helperText="Los nombres del usuario son obligatorios y deben contener solo letras."
+          value={newUser.nombres}
+          onChange={handleInputChange}
         />
-      </div>
-      <Form.Control
-        size="sm"
-        type="text"
-        id="email"
-        name="email"
-        required
-        placeholder="NO es necesario poner @cliente.com"
-        value={newUser.email}
-        onChange={handleInputChange}
-      />
-      <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">
-        Solo ingresa la parte antes del @ para crear el email, ya que al seleccionar el cliente, este se autocompletará
-        automáticamente. Todos los usuarios deben estar asociados a el dominio de un cliente, ya sea un cliente externo
-        o el cliente raíz (Weikstudio), donde pueden tener roles como diseñador, administrador u otros.
-      </p>
-      <Form.Label className="mb-0 mt-1" htmlFor="password">
-        <strong>Contraseña:</strong>
-      </Form.Label>
-      <InputGroup className="mb-0">
-        <Form.Control
-          id="password"
-          size="sm"
-          type={showPassword ? 'text' : 'password'}
-          onChange={handleInputChangePassword}
-          autoComplete="current-password"
-          name="password"
-          value={password}
+        <InputField
+          xs={12}
+          md={4}
+          label="Apellidos del usuario"
+          type="text"
+          required
+          pattern="^[A-Za-zÑñ]+(?: [A-Za-zÑñ]+)*$"
+          name="apellidos"
+          helperText="Los apellidos del usuario son obligatorios y deben contener solo letras."
+          value={newUser.apellidos}
+          onChange={handleInputChange}
         />
-        <div
-          className={`input-group-text input-group-password py-0 px-2 ${showPassword ? 'show-password' : ''}`}
-          data-password={showPassword ? 'true' : 'false'}>
-          <span
-            className="password-eye"
-            onClick={() => {
-              setShowPassword(!showPassword);
-            }}></span>
-        </div>
-      </InputGroup>
-      <p className="d-inline-block p-0 m-0 font-12 text-danger w-100 text-end">La contraseña por defecto sera 000000</p>
-      <Form.Label className="mb-0" htmlFor="roles">
-        <strong>Roles:</strong>
-      </Form.Label>
-      <Select
-        isMulti={true}
-        options={rolesOptions}
-        value={selectedOptionsRoles}
-        onChange={handleSelectChange}
-        className="react-select"
-        classNamePrefix="react-select"
-        placeholder="No hay roles asignados"
-      />
-      <Button
-        disabled={!hasTouched || isLoadingAddUser || isLoadingCreateAuthUser || isLoadingUsersToRol}
-        variant="success"
-        className="w-100 mt-2"
-        onClick={enviarUser}>
-        {(isLoadingAddUser || isLoadingCreateAuthUser || isLoadingUsersToRol) && (
-          <Spinner className="spinner-border-sm" tag="span" color="white" />
-        )}
-        {!isLoadingAddUser && !isLoadingCreateAuthUser && !isLoadingUsersToRol && (
-          <>
-            <i className="mdi mdi-plus-circle me-1" /> Crear
-          </>
-        )}
-      </Button>
+        <InputField
+          xs={12}
+          md={4}
+          label="Cargo del usuario"
+          type="text"
+          required
+          pattern="^[A-Za-zÑñ]+(?: [A-Za-zÑñ]+)*$"
+          name="cargo"
+          helperText="El cargo del usuario es obligatorio y debe contener solo letras."
+          value={newUser.cargo}
+          onChange={handleInputChange}
+        />
+        <Col xs={12} md={6}>
+          <Form.Label htmlFor="cliente" className="mb-1">
+            <strong>Cliente asociado</strong>
+          </Form.Label>
+          <Form.Select
+            required
+            size="sm"
+            id="cliente"
+            aria-label="Cliente asociado"
+            onChange={handleClienteSelectChange}>
+            {clientesOptions.map((cliente, index) => (
+              <option key={index} value={cliente.value}>
+                {cliente.label}
+              </option>
+            ))}
+          </Form.Select>
+        </Col>
+        <Col xs={12} md={6}>
+          <div className="d-flex justify-content-between">
+            <Form.Label htmlFor="email" className="mb-1">
+              <strong>Email del usuario:</strong>
+            </Form.Label>
+            <Form.Check
+              onChange={handleCheckBoxChange}
+              checked={deactivateAutoEmail}
+              type="checkbox"
+              label="Desactivar email autogenerado"
+            />
+          </div>
+          <Form.Control
+            size="sm"
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="NO es necesario poner @cliente.com"
+            value={newUser.email}
+            onChange={handleInputChange}
+          />
+        </Col>
+        <Col xs={12}>
+          <Form.Text className="text-danger">
+            Solo ingresa la parte antes del @ para crear el email, ya que al seleccionar el cliente, este se
+            autocompletará automáticamente. Todos los usuarios deben estar asociados a el dominio de un cliente, ya sea
+            un cliente externo o el cliente raíz (Weikstudio), donde pueden tener roles como diseñador, administrador u
+            otros.
+          </Form.Text>
+        </Col>
+        <Col xs={12} md={6}>
+          <Form.Label className="mb-1" htmlFor="password">
+            <strong>Contraseña:</strong>
+          </Form.Label>
+          <InputGroup className="mb-0">
+            <Form.Control
+              id="password"
+              size="sm"
+              type={showPassword ? 'text' : 'password'}
+              required
+              onChange={handleInputChangePassword}
+              autoComplete="current-password"
+              name="password"
+              value={password}
+            />
+            <div
+              className={`input-group-text input-group-password py-0 px-2 ${showPassword ? 'show-password' : ''}`}
+              data-password={showPassword ? 'true' : 'false'}>
+              <span
+                className="password-eye"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}></span>
+            </div>
+          </InputGroup>
+          <Form.Text className="text-muted">La contraseña por defecto sera 000000</Form.Text>
+        </Col>
+        <Col xs={12} md={6}>
+          <Form.Label className="mb-1" htmlFor="roles">
+            <strong>Roles:</strong>
+          </Form.Label>
+          <Select
+            isMulti={true}
+            options={rolesOptions}
+            value={selectedOptionsRoles}
+            onChange={handleSelectChange}
+            required
+            className="react-select"
+            classNamePrefix="react-select"
+            placeholder="No hay roles asignados"
+          />
+        </Col>
+      </FormWrapper>
     </>
   );
 });

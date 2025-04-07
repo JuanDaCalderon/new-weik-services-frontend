@@ -5,11 +5,11 @@ import {USUARIOS_PATH} from '@/constants';
 import {Employee} from '@/types';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
-import {useDeleteImage} from '@/endpoints';
+import {useDeleteFile} from '@/endpoints';
 
 export default function useDeleteUser() {
   const [isLoadingDeleteUser, setIsLoadingDeleteUser] = useState<boolean>(false);
-  const {deleteImage} = useDeleteImage();
+  const {deleteFile} = useDeleteFile();
 
   const deleteUser = useCallback(
     async (userId: string): Promise<void> => {
@@ -19,7 +19,7 @@ export default function useDeleteUser() {
         const usuarioDoc = await getDoc(userRef);
         const userData = usuarioDoc.data() as Employee;
         await deleteDoc(userRef);
-        if (userData.userImage) await deleteImage(userData.userImage);
+        if (userData.userImage) await deleteFile(userData.userImage);
         toast.success(`Se ha eliminado el usuario ${userData.email} correctamente`);
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
@@ -28,7 +28,7 @@ export default function useDeleteUser() {
         setIsLoadingDeleteUser(false);
       }
     },
-    [deleteImage]
+    [deleteFile]
   );
   return {
     isLoadingDeleteUser,

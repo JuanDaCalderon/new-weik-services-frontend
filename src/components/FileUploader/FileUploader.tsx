@@ -2,6 +2,7 @@ import {Card, Button, ProgressBar, Image} from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import useFileUploader from './useFileUploader';
 import {useEffect} from 'react';
+import {ACCEPTED_DOC_TYPES} from '@/constants';
 
 export type FileType = File & {
   preview?: string;
@@ -53,10 +54,15 @@ const FileUploader = ({
 
       {showPreview && !!selectedFile && (
         <div
-          className={`dropzone-previews ${!isSquarePreview ? 'rounded-circle' : ''} w-100 ${!isSquarePreview ? 'h-100' : ''}`}
+          className={`dropzone-previews ${!isSquarePreview ? 'rounded-circle' : ''} w-100 h-100`}
           id="uploadPreviewTemplate">
-          <Card
-            className={`m-0 p-0 ${!isSquarePreview ? 'rounded-circle' : ''} shadow-none border w-100 ${!isSquarePreview ? 'h-100' : ''}`}>
+          <Card className={`m-0 p-0 ${!isSquarePreview ? 'rounded-circle' : ''} shadow-none border w-100 h-100`}>
+            {ACCEPTED_DOC_TYPES.includes(selectedFile.type) && !selectedFile.preview && (
+              <div className="img-thumbnail w-100 h-100">
+                <p className="mt-3 mb-0 font-14 lh-1">{selectedFile.name}</p>
+                <p className="m-0 p-0 font-10">{selectedFile.size}</p>
+              </div>
+            )}
             {selectedFile.preview && (
               <>
                 {isSquarePreview ? (
