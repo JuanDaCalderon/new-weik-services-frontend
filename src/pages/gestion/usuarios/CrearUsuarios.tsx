@@ -249,7 +249,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
           </div>
           <Form.Control
             size="sm"
-            type="email"
+            type="text"
             id="email"
             name="email"
             required
