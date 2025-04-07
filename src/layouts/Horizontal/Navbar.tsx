@@ -19,10 +19,10 @@ const Navbar = ({isMenuOpened}: NavbarProps) => {
             ...menuItem,
             children: clientes.map<MenuItemType>((cliente) => {
               return {
-                key: cliente.domain,
+                key: `${CLIENTES_MENU_KEY}/${cliente.domain}`,
                 label: cliente.nombre.toLowerCase(),
                 parentKey: CLIENTES_MENU_KEY,
-                url: `/services/${CLIENTES_MENU_KEY}/${cliente.domain}`
+                url: `${CLIENTES_MENU_KEY}/${cliente.domain}`
               };
             })
           }

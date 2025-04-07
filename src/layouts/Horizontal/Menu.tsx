@@ -40,6 +40,7 @@ const MenuItemWithChildren = memo(function MenuItemWithChildren({
         to=""
         onClick={toggleMenuItem}
         data-menu-key={item.key}
+        data-url-match={item.url}
         className={classNames('dropdown-toggle', 'arrow-none', linkClassName)}
         id={item.key}
         role="button"
@@ -99,7 +100,7 @@ const MenuItem = memo(function MenuItem({item, className, linkClassName}: MenuIt
 
 const MenuItemLink = memo(function MenuItemLink({item, className}: MenuItems) {
   return (
-    <Link to={item.url!} target={item.target} className={className} data-menu-key={item.key}>
+    <Link to={item.url!} target={item.target} className={className} data-menu-key={item.key} data-url-match={item.url}>
       {item.icon && <i className={item.icon}></i>}
       <span> {item.label} </span>
     </Link>
@@ -111,23 +112,22 @@ const AppMenu = ({menuItems}: AppMenuProps) => {
 
   const location = useLocation();
 
-  /*
-   * toggle the menus
-   */
+  /* toggle the menus */
   const toggleMenu = (menuItem: MenuItemType, show: boolean) => {
     if (show) setActiveMenuItems([menuItem.key, ...findAllParent(menuItems, menuItem)]);
   };
 
-  /**
-   * activate the menuitems
-   */
+  /** activate the menuitems */
   const activeMenu = useCallback(() => {
     const div = document.getElementById('main-side-menu');
     let matchingMenuItem = null;
     if (div) {
-      const items: HTMLCollectionOf<HTMLAnchorElement> = div.getElementsByTagName('a');
+      const items: HTMLAnchorElement[] = Array.from(div.getElementsByTagName('a')).filter((anchor) =>
+        anchor.hasAttribute('data-url-match')
+      );
       for (let i = 0; i < items.length; ++i) {
-        if (location.pathname === items[i].pathname) {
+        const urlMatch = items[i].getAttribute('data-url-match') || '';
+        if (location.pathname === urlMatch) {
           matchingMenuItem = items[i];
           break;
         }
@@ -135,20 +135,14 @@ const AppMenu = ({menuItems}: AppMenuProps) => {
       if (matchingMenuItem) {
         const mid = matchingMenuItem.getAttribute('data-menu-key');
         const activeMt = findMenuItem(menuItems, mid!);
-        if (activeMt) {
-          setActiveMenuItems([activeMt['key'], ...findAllParent(menuItems, activeMt)]);
-        }
+        if (activeMt) setActiveMenuItems([...new Set([activeMt['key'], ...findAllParent(menuItems, activeMt)])]);
       }
     }
   }, [location.pathname, menuItems]);
 
   useEffect(() => {
-    //if (menuItems && menuItems.length > 0) activeMenu();
+    if (menuItems && menuItems.length > 0) activeMenu();
   }, [activeMenu, menuItems]);
-
-  useEffect(() => {
-    console.log('🚀 ~ AppMenu ~ activeMenuItems:', activeMenuItems);
-  }, [activeMenuItems]);
 
   return (
     <ul className="navbar-nav w-100" id="main-side-menu">

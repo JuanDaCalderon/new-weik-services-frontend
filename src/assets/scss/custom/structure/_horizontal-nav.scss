@@ -94,6 +94,7 @@ html[data-layout="topnav"] {
             &.active {
                 >a {
                     color: $menu-item-active-color;
+                    font-weight: $font-weight-medium;
                 }
             }
 
@@ -242,6 +243,7 @@ html[data-layout="topnav"] {
 
         .dropdown.active>a.dropdown-item {
             color: $dropdown-link-active-color;
+            font-weight: $font-weight-medium;
             @include gradient-bg($dropdown-link-active-bg);
         }
     }
@@ -300,12 +302,14 @@ html[data-layout="topnav"] {
                     &.active,
                     &:active {
                         color: $menu-item-active-color;
+                        font-weight: $font-weight-medium;
                     }
                 }
             }
 
             .dropdown.active>a.dropdown-item {
                 color: $menu-item-active-color;
+                font-weight: $font-weight-medium;
             }
 
             .arrow-down {

@@ -1,4 +1,15 @@
-import {CLIENTES_MENU_KEY, PERMISOS_MAP_IDS} from '@/constants';
+import {
+  CLIENTES_MENU_KEY,
+  GESTION_CLIENTES_MENU_KEY,
+  GESTION_MENU_KEY,
+  GESTION_NOTICIAS_MENU_KEY,
+  GESTION_OFICINA_HORARIOS_MENU_KEY,
+  GESTION_OFICINA_MENU_KEY,
+  GESTION_OFICINA_REPORTES_MENU_KEY,
+  GESTION_OFICINA_VACACIONES_MENU_KEY,
+  GESTION_USUARIOS_MENU_KEY,
+  PERMISOS_MAP_IDS
+} from '@/constants';
 import {MenuItemType} from '@/types';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
@@ -626,54 +637,54 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
     children: []
   },
   {
-    key: 'gestion',
+    key: GESTION_MENU_KEY,
     icon: 'uil-cog',
     label: 'Gestion',
     isTitle: true,
     children: [
       {
-        key: 'clientes',
+        key: GESTION_CLIENTES_MENU_KEY,
         label: 'Clientes',
-        url: '/services/gestion/clientes',
-        parentKey: 'gestion',
+        url: GESTION_CLIENTES_MENU_KEY,
+        parentKey: GESTION_MENU_KEY,
         permisoId: PERMISOS_MAP_IDS.accesoGestionClientes
       },
       {
-        key: 'usuarios',
+        key: GESTION_USUARIOS_MENU_KEY,
         label: 'Usuarios',
-        url: '/services/gestion/usuarios',
-        parentKey: 'gestion',
+        url: GESTION_USUARIOS_MENU_KEY,
+        parentKey: GESTION_MENU_KEY,
         permisoId: PERMISOS_MAP_IDS.accesoGestionUsuarios
       },
       {
-        key: 'noticias',
+        key: GESTION_NOTICIAS_MENU_KEY,
         label: 'Noticias',
-        url: '/services/gestion/noticias',
-        parentKey: 'gestion',
+        url: GESTION_NOTICIAS_MENU_KEY,
+        parentKey: GESTION_MENU_KEY,
         permisoId: PERMISOS_MAP_IDS.accesoGestionNoticias
       },
       {
-        key: 'oficina',
+        key: GESTION_OFICINA_MENU_KEY,
         label: 'Oficina',
-        parentKey: 'gestion',
+        parentKey: GESTION_MENU_KEY,
         children: [
           {
-            key: 'horarios',
+            key: GESTION_OFICINA_HORARIOS_MENU_KEY,
             label: 'Horarios',
-            url: '/services/gestion/oficina/horarios',
-            parentKey: 'oficina'
+            url: GESTION_OFICINA_HORARIOS_MENU_KEY,
+            parentKey: GESTION_OFICINA_MENU_KEY
           },
           {
-            key: 'vacaciones',
+            key: GESTION_OFICINA_VACACIONES_MENU_KEY,
             label: 'Vacaciones',
-            url: '/services/gestion/oficina/vacaciones',
-            parentKey: 'oficina'
+            url: GESTION_OFICINA_VACACIONES_MENU_KEY,
+            parentKey: GESTION_OFICINA_MENU_KEY
           },
           {
-            key: 'reportes',
+            key: GESTION_OFICINA_REPORTES_MENU_KEY,
             label: 'Reportes',
-            url: '/services/gestion/oficina/reportes',
-            parentKey: 'oficina'
+            url: GESTION_OFICINA_REPORTES_MENU_KEY,
+            parentKey: GESTION_OFICINA_MENU_KEY
           }
         ]
       }

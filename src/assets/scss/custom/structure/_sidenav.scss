@@ -282,6 +282,7 @@ html[data-sidenav-user='true'] {
     &.active {
       > a {
         color: $menu-item-active-color;
+        font-weight: $font-weight-medium;
 
         &:hover,
         &:focus,
