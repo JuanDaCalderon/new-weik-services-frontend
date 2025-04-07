@@ -13,6 +13,41 @@ import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {InputField} from '@/components/Form2';
+import {SkeletonLoader} from '@/components/SkeletonLoader';
+
+const UsuarioColumn = memo(function UsuarioColumn({row}: {row: Row<Employee>}) {
+  const [iconHasLoad, setIconHasLoad] = useState<boolean>(false);
+  return (
+    <div className="d-flex align-items-center no-user-text-selectable table-user ribbon-box">
+      {DateUtils.isToday(DateUtils.parseStringToDate(row.original.fechaCreacion)) && (
+        <div
+          className="ribbon-two ribbon-two-success end-0"
+          style={{left: '70%', top: '-11px', height: '58px', width: '90px'}}>
+          <span className="font-12" style={{left: '-8px', top: '20px'}}>
+            Nuevo
+          </span>
+        </div>
+      )}
+      <div className="position-relative">
+        {!iconHasLoad && <SkeletonLoader customClass="position-absolute p-0" />}
+        <img
+          src={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : fallBackLogo}
+          alt={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : 'user'}
+          loading="lazy"
+          className="me-1 rounded-circle object-fit-contain"
+          onLoad={() => setIconHasLoad(true)}
+        />
+      </div>
+
+      <div className="ms-1 d-flex flex-column">
+        <span className="m-0 lh-sm fw-bold text-uppercase text-dark text-opacity-75 d-inline">
+          {getNombreCompletoUser(row.original)}
+        </span>
+        <span className="m-0 lh-sm d-inline">{row.original.email}</span>
+      </div>
+    </div>
+  );
+});
 
 const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employee>}) {
   const user = useAppSelector(selectUser);
@@ -227,7 +262,7 @@ const EstadosColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
   );
 });
 
-const RolesColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
+const RolesColumn = memo(function RolesColumn({row}: {row: Row<Employee>}) {
   const hasRoles: boolean = useMemo(() => row.original.roles.length > 0, [row.original.roles.length]);
   return hasRoles ? (
     <DropdownButton
@@ -257,31 +292,7 @@ const columns: ColumnDef<Employee>[] = [
   {
     header: 'Usuario',
     accessorKey: 'email',
-    cell: ({row}) => (
-      <div className="d-flex align-items-center no-user-text-selectable table-user ribbon-box">
-        {DateUtils.isToday(DateUtils.parseStringToDate(row.original.fechaCreacion)) && (
-          <div
-            className="ribbon-two ribbon-two-success end-0"
-            style={{left: '70%', top: '-11px', height: '58px', width: '90px'}}>
-            <span className="font-12" style={{left: '-8px', top: '20px'}}>
-              Nuevo
-            </span>
-          </div>
-        )}
-        <img
-          src={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : fallBackLogo}
-          alt={row.original.userImage && row.original.userImage !== '' ? row.original.userImage : 'user'}
-          loading="lazy"
-          className="me-1 rounded-circle object-fit-contain"
-        />
-        <div className="ms-1 d-flex flex-column">
-          <span className="m-0 lh-sm fw-bold text-uppercase text-dark text-opacity-75 d-inline">
-            {getNombreCompletoUser(row.original)}
-          </span>
-          <span className="m-0 lh-sm d-inline">{row.original.email}</span>
-        </div>
-      </div>
-    )
+    cell: UsuarioColumn
   },
   {
     header: 'Fecha creación',

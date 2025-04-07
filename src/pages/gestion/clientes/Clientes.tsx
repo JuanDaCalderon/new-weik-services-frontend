@@ -3,20 +3,13 @@ import {memo, useMemo} from 'react';
 import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {TabContentItem} from '@/types';
 import {useAppSelector} from '@/store';
-import {isLoadingClientes, selectUser} from '@/store/selectores';
-import {Toaster} from 'react-hot-toast';
-import {SkeletonLoader} from '@/components/SkeletonLoader';
+import {selectUser} from '@/store/selectores';
 import {CrearCliente} from '@/pages/gestion/clientes/CrearCliente';
 import {hasPermission} from '@/utils';
-import {
-  DEFAULT_HOME_ROUTER_PATH,
-  PERMISOS_MAP_IDS,
-  TABS_CLIENTES_CREAR,
-  TABS_CLIENTES_LISTA,
-  TOAST_DURATION
-} from '@/constants';
+import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_CLIENTES_CREAR, TABS_CLIENTES_LISTA} from '@/constants';
 import {Link, Navigate} from 'react-router-dom';
 import {ListaClientes} from './ListaClientes';
+import {ToastWrapper} from '@/components/Toast';
 
 const tabContents: TabContentItem[] = [
   {id: TABS_CLIENTES_CREAR, title: TABS_CLIENTES_CREAR},
@@ -25,7 +18,6 @@ const tabContents: TabContentItem[] = [
 
 const Clientes = memo(function Clientes() {
   const user = useAppSelector(selectUser);
-  const isLoadingClients = useAppSelector(isLoadingClientes);
 
   const canCrearClientes = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.crearCliente, user.roles, user.permisosOtorgados, user.permisosDenegados);
@@ -43,9 +35,8 @@ const Clientes = memo(function Clientes() {
   }
 
   return (
-    <>
+    <ToastWrapper>
       <PageBreadcrumb title="Gestión cliente" />
-
       <Card>
         <Card.Body>
           <Row>
@@ -67,18 +58,8 @@ const Clientes = memo(function Clientes() {
                     <Tab.Pane eventKey={tab.id} key={index}>
                       <Row>
                         <Col sm={12}>
-                          {tab.id === TABS_CLIENTES_CREAR &&
-                            (!isLoadingClients ? (
-                              <CrearCliente />
-                            ) : (
-                              <SkeletonLoader height="500px" customClass="p-0" />
-                            ))}
-                          {tab.id === TABS_CLIENTES_LISTA &&
-                            (!isLoadingClients ? (
-                              <ListaClientes />
-                            ) : (
-                              <SkeletonLoader height="500px" customClass="p-0" />
-                            ))}
+                          {tab.id === TABS_CLIENTES_CREAR && <CrearCliente />}
+                          {tab.id === TABS_CLIENTES_LISTA && <ListaClientes />}
                         </Col>
                       </Row>
                     </Tab.Pane>
@@ -89,18 +70,7 @@ const Clientes = memo(function Clientes() {
           </Row>
         </Card.Body>
       </Card>
-
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          duration: TOAST_DURATION,
-          style: {
-            background: '#4f565c',
-            color: '#fff'
-          }
-        }}
-      />
-    </>
+    </ToastWrapper>
   );
 });
 

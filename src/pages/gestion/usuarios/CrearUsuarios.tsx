@@ -163,6 +163,9 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   return (
     <>
       <Row>
+        <Col>
+          <h4 className="header-title text-dark text-opacity-75 ms-1 mb-2">Crear usuario</h4>
+        </Col>
         <Col xs={12}>
           <p className="m-0">
             Completa los campos y haz clic en "Crear" para añadir un usuario enlazado a un cliente en específico, el

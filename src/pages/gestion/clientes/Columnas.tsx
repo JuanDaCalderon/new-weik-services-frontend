@@ -20,6 +20,46 @@ import {
 } from '@/constants';
 import {useFileManager} from '@/hooks';
 import {FormWrapper, InputField} from '@/components/Form2';
+import {SkeletonLoader} from '@/components/SkeletonLoader';
+
+const clienteNombre = memo(function ClienteNombreColumn({row}: {row: Row<Cliente>}) {
+  const [iconHasLoad, setIconHasLoad] = useState<boolean>(false);
+  return (
+    <div className="d-flex align-items-center table-user ribbon-box">
+      {DateUtils.isToday(DateUtils.parseStringToDate(row.original.fechaCreacion)) && (
+        <div
+          className="ribbon-two ribbon-two-success end-0"
+          style={{left: '56%', top: '-11px', height: '98px', width: '134px'}}>
+          <span className="font-12" style={{left: '-24px', top: '38px', width: '180px'}}>
+            Nuevo
+          </span>
+        </div>
+      )}
+      <div className="position-relative">
+        {!iconHasLoad && <SkeletonLoader customClass="position-absolute p-0" />}
+        <img
+          src={row.original.logo}
+          alt={row.original.logo}
+          loading="lazy"
+          className="rounded-circle object-fit-contain"
+          onLoad={() => setIconHasLoad(true)}
+        />
+      </div>
+      <div className="d-flex flex-column ms-1">
+        <span className="fw-bold text-dark text-opacity-75">{row.original.nombre}</span>
+        <span className="m-0 lh-sm d-inline">
+          <span className="fw-bold">ID:</span> {row.original.idNitCliente || 'no ID'}
+        </span>
+        <span className="m-0 lh-sm d-inline">
+          <span className="fw-bold">Dirección:</span> {row.original.direccionFisicaCliente || 'No Dirección'}
+        </span>
+        <span className="m-0 lh-sm d-inline">
+          <span className="fw-bold">Teléfono:</span> {row.original.telefonoCliente || 'No Teléfono'}
+        </span>
+      </div>
+    </div>
+  );
+});
 
 const clientesAcciones = memo(function RolNameColumn({row}: {row: Row<Cliente>}) {
   const user = useAppSelector(selectUser);
@@ -424,37 +464,7 @@ const columns: ColumnDef<Cliente>[] = [
   {
     header: 'Cliente',
     accessorKey: 'nombre',
-    cell: ({row}) => (
-      <div className="d-flex align-items-center table-user ribbon-box">
-        {DateUtils.isToday(DateUtils.parseStringToDate(row.original.fechaCreacion)) && (
-          <div
-            className="ribbon-two ribbon-two-success end-0"
-            style={{left: '56%', top: '-11px', height: '98px', width: '134px'}}>
-            <span className="font-12" style={{left: '-24px', top: '38px', width: '180px'}}>
-              Nuevo
-            </span>
-          </div>
-        )}
-        <img
-          src={row.original.logo}
-          alt={row.original.logo}
-          loading="lazy"
-          className="me-1 rounded-circle object-fit-contain"
-        />
-        <div className="d-flex flex-column">
-          <span className="fw-bold text-dark text-opacity-75">{row.original.nombre}</span>
-          <span className="m-0 lh-sm d-inline">
-            <span className="fw-bold">ID:</span> {row.original.idNitCliente || 'no ID'}
-          </span>
-          <span className="m-0 lh-sm d-inline">
-            <span className="fw-bold">Dirección:</span> {row.original.direccionFisicaCliente || 'No Dirección'}
-          </span>
-          <span className="m-0 lh-sm d-inline">
-            <span className="fw-bold">Teléfono:</span> {row.original.telefonoCliente || 'No Teléfono'}
-          </span>
-        </div>
-      </div>
-    )
+    cell: clienteNombre
   },
   {
     header: 'Contacto',

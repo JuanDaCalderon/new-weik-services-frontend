@@ -3,20 +3,13 @@ import {memo, useMemo} from 'react';
 import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {TabContentItem} from '@/types';
 import {useAppSelector} from '@/store';
-import {selectisLoadingEmployees, selectUser} from '@/store/selectores';
-import {Toaster} from 'react-hot-toast';
-import {SkeletonLoader} from '@/components/SkeletonLoader';
+import {selectUser} from '@/store/selectores';
 import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
 import {hasPermission} from '@/utils';
-import {
-  DEFAULT_HOME_ROUTER_PATH,
-  PERMISOS_MAP_IDS,
-  TABS_USUARIOS_CREAR,
-  TABS_USUARIOS_LISTA,
-  TOAST_DURATION
-} from '@/constants';
+import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_USUARIOS_CREAR, TABS_USUARIOS_LISTA} from '@/constants';
 import {Link, Navigate} from 'react-router-dom';
 import {ListaUsuarios} from './ListaUsuarios';
+import {ToastWrapper} from '@/components/Toast';
 
 const tabContents: TabContentItem[] = [
   {id: TABS_USUARIOS_CREAR, title: TABS_USUARIOS_CREAR},
@@ -25,7 +18,6 @@ const tabContents: TabContentItem[] = [
 
 const Usuarios = memo(function Usuarios() {
   const user = useAppSelector(selectUser);
-  const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
 
   const canCrearUsuarios = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.crearUsuario, user.roles, user.permisosOtorgados, user.permisosDenegados);
@@ -43,9 +35,8 @@ const Usuarios = memo(function Usuarios() {
   }
 
   return (
-    <>
+    <ToastWrapper>
       <PageBreadcrumb title="Gestión usuarios" />
-
       <Card>
         <Card.Body>
           <Row>
@@ -67,10 +58,8 @@ const Usuarios = memo(function Usuarios() {
                     <Tab.Pane eventKey={tab.id} key={index}>
                       <Row>
                         <Col sm={12}>
-                          {tab.id === TABS_USUARIOS_CREAR &&
-                            (!isLoadingUsers ? <CrearUsuarios /> : <SkeletonLoader height="500px" customClass="p-0" />)}
-                          {tab.id === TABS_USUARIOS_LISTA &&
-                            (!isLoadingUsers ? <ListaUsuarios /> : <SkeletonLoader height="500px" customClass="p-0" />)}
+                          {tab.id === TABS_USUARIOS_CREAR && <CrearUsuarios />}
+                          {tab.id === TABS_USUARIOS_LISTA && <ListaUsuarios />}
                         </Col>
                       </Row>
                     </Tab.Pane>
@@ -81,18 +70,7 @@ const Usuarios = memo(function Usuarios() {
           </Row>
         </Card.Body>
       </Card>
-
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          duration: TOAST_DURATION,
-          style: {
-            background: '#4f565c',
-            color: '#fff'
-          }
-        }}
-      />
-    </>
+    </ToastWrapper>
   );
 });
 

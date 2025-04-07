@@ -126,6 +126,9 @@ const CrearCliente = memo(function CrearCliente() {
   return (
     <>
       <Row>
+        <Col>
+          <h4 className="header-title text-dark text-opacity-75 ms-1 mb-2">Crear cliente</h4>
+        </Col>
         <Col xs={12} className="d-flex gap-3">
           <div>
             <h5 className="d-inline-block weik-text-grey-300 my-0 me-1">Nombre del cliente:</h5>
