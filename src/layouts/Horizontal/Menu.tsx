@@ -143,8 +143,12 @@ const AppMenu = ({menuItems}: AppMenuProps) => {
   }, [location.pathname, menuItems]);
 
   useEffect(() => {
-    if (menuItems && menuItems.length > 0) activeMenu();
+    //if (menuItems && menuItems.length > 0) activeMenu();
   }, [activeMenu, menuItems]);
+
+  useEffect(() => {
+    console.log('🚀 ~ AppMenu ~ activeMenuItems:', activeMenuItems);
+  }, [activeMenuItems]);
 
   return (
     <ul className="navbar-nav w-100" id="main-side-menu">

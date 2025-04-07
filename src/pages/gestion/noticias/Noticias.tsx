@@ -2,7 +2,7 @@ import {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {Button, Card, Col, Row} from 'react-bootstrap';
 import {FileType, GenericModal, PageBreadcrumb} from '@/components';
 import {useAppSelector} from '@/store';
-import {useAddNoticia, useGetNoticias, useUploadImage} from '@/endpoints';
+import {useAddNoticia, useGetNoticias, useUploadFiles} from '@/endpoints';
 import {selectIsLoadingNoticias, selectNoticias, selectUser} from '@/store/selectores';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, STORAGE_NOTICIAS_PATH, TOAST_DURATION} from '@/constants';
@@ -29,7 +29,7 @@ const Noticias = memo(function Noticias() {
   const {getNoticiasSync} = useGetNoticias();
   const {dateRange, onDateChangeRange} = useDatePicker();
   const {file, handleFile, handleFileRemoved} = useFileManager();
-  const {isLoadingUploadImage, uploadImage} = useUploadImage();
+  const {isLoadingUploadFile, uploadFile} = useUploadFiles();
   const {isSavingTheNoticia, addNoticia} = useAddNoticia();
   const user = useAppSelector(selectUser);
 
@@ -94,7 +94,7 @@ const Noticias = memo(function Noticias() {
       DateUtils.formatDateToString(DateUtils.addDays(dateRange[1]!, 1))
     ];
     const imgName = `${file.name.replaceAll('.', '_')}_${DateUtils.getDateOnly(new Date(), '_')}`;
-    const imgUrl = await uploadImage(STORAGE_NOTICIAS_PATH, imgName, file);
+    const imgUrl = await uploadFile(STORAGE_NOTICIAS_PATH, imgName, file);
     const noticia: Noticia = {
       image: imgUrl,
       link: noticiaCreation.link ?? '',
@@ -112,7 +112,7 @@ const Noticias = memo(function Noticias() {
     getNoticiasSync,
     noticiaCreation,
     noticiasFromStore,
-    uploadImage
+    uploadFile
   ]);
 
   const getPermission = useCallback(
@@ -150,8 +150,8 @@ const Noticias = memo(function Noticias() {
             onDateChangeRange={onDateChangeRange}
           />
         }
-        isDisabled={!isReadyToBeSend || isLoadingUploadImage || isSavingTheNoticia}
-        isLoading={isSavingTheNoticia || isLoadingUploadImage}
+        isDisabled={!isReadyToBeSend || isLoadingUploadFile || isSavingTheNoticia}
+        isLoading={isSavingTheNoticia || isLoadingUploadFile}
         onSend={onSendCrearNoticia}
       />
       <PageBreadcrumb title="Gestión Noticias" />
