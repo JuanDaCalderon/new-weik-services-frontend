@@ -31,6 +31,8 @@ export type RolCreationBasics = Partial<
 export type TabContentItem = {
   id: string;
   title: string;
+  icon?: string;
+  text?: string;
 };
 
 export type thisRol = {

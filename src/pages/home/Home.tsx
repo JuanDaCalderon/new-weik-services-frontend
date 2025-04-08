@@ -1,12 +1,11 @@
 import {PageBreadcrumb} from '@/components';
 import {TableroNoticias} from '@/components/Noticias';
-import {TOAST_DURATION} from '@/constants';
+import {ToastWrapper} from '@/components/Toast';
 import {useGetClients, useRolesYPermisos} from '@/endpoints';
 import {useAppSelector} from '@/store';
 import {permisosSelector, rolesSelector, selectClientes} from '@/store/selectores';
 import {memo, useEffect} from 'react';
 import {Card, Col, Row} from 'react-bootstrap';
-import {Toaster} from 'react-hot-toast';
 
 const Home = memo(function Home() {
   const {getRolesSync, getPermisosSync} = useRolesYPermisos();
@@ -28,7 +27,7 @@ const Home = memo(function Home() {
   }, [permisos.length, getPermisosSync]);
 
   return (
-    <>
+    <ToastWrapper>
       <PageBreadcrumb title="Home" />
 
       <Row>
@@ -43,18 +42,7 @@ const Home = memo(function Home() {
           </Card>
         </Col>
       </Row>
-
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          duration: TOAST_DURATION,
-          style: {
-            background: '#4f565c',
-            color: '#fff'
-          }
-        }}
-      />
-    </>
+    </ToastWrapper>
   );
 });
 
