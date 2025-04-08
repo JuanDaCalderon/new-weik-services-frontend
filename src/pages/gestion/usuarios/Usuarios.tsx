@@ -7,7 +7,7 @@ import {selectUser} from '@/store/selectores';
 import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
 import {hasPermission} from '@/utils';
 import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_USUARIOS_CREAR, TABS_USUARIOS_LISTA} from '@/constants';
-import {Link, Navigate} from 'react-router-dom';
+import {Link, Navigate, useLocation} from 'react-router-dom';
 import {ListaUsuarios} from './ListaUsuarios';
 import {ToastWrapper} from '@/components/Toast';
 
@@ -17,6 +17,9 @@ const tabContents: TabContentItem[] = [
 ];
 
 const Usuarios = memo(function Usuarios() {
+  const {search} = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const tabOption = queryParams.get('option') || TABS_USUARIOS_LISTA;
   const user = useAppSelector(selectUser);
 
   const canCrearUsuarios = useMemo(() => {
@@ -40,7 +43,7 @@ const Usuarios = memo(function Usuarios() {
       <Card>
         <Card.Body>
           <Row>
-            <Tab.Container defaultActiveKey={TABS_USUARIOS_LISTA}>
+            <Tab.Container defaultActiveKey={tabOption}>
               <Col xs={12} md={2} xxl={1}>
                 <Nav variant="pills" className="flex-column bg-light bg-gradient bg-opacity-50 rounded">
                   {listContentOptions.map((tab, index) => (

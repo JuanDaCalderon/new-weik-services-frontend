@@ -6,6 +6,7 @@ import {
   GESTION_OFICINA_HORARIOS_MENU_KEY,
   GESTION_OFICINA_MENU_KEY,
   GESTION_OFICINA_REPORTES_MENU_KEY,
+  GESTION_OFICINA_SOLICITUDES_MENU_KEY,
   GESTION_OFICINA_VACACIONES_MENU_KEY,
   GESTION_USUARIOS_MENU_KEY,
   PERMISOS_MAP_IDS
@@ -684,6 +685,12 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             key: GESTION_OFICINA_REPORTES_MENU_KEY,
             label: 'Reportes',
             url: GESTION_OFICINA_REPORTES_MENU_KEY,
+            parentKey: GESTION_OFICINA_MENU_KEY
+          },
+          {
+            key: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
+            label: 'Solicitudes',
+            url: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
             parentKey: GESTION_OFICINA_MENU_KEY
           }
         ]

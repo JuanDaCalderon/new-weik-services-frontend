@@ -6,6 +6,7 @@ import {USER_NAME} from '@/constants';
 
 const selectPayloadUser = (state: RootState) => state.user;
 export const selectUser = (state: RootState) => state.user.user;
+export const selectUserDomain = (state: RootState) => state.user.domain;
 
 export const isUserLoggedInSelector = createSelector([selectPayloadUser], (user: PayLoadUserType) => {
   let isLoggedInPersistence: boolean = false;

@@ -10,6 +10,7 @@ import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_CLIENTES_CREAR, TABS_CL
 import {Link, Navigate} from 'react-router-dom';
 import {ListaClientes} from './ListaClientes';
 import {ToastWrapper} from '@/components/Toast';
+import {useLocation} from 'react-router-dom';
 
 const tabContents: TabContentItem[] = [
   {id: TABS_CLIENTES_CREAR, title: TABS_CLIENTES_CREAR},
@@ -17,6 +18,9 @@ const tabContents: TabContentItem[] = [
 ];
 
 const Clientes = memo(function Clientes() {
+  const {search} = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const tabOption = queryParams.get('option') || TABS_CLIENTES_LISTA;
   const user = useAppSelector(selectUser);
 
   const canCrearClientes = useMemo(() => {
@@ -40,7 +44,7 @@ const Clientes = memo(function Clientes() {
       <Card>
         <Card.Body>
           <Row>
-            <Tab.Container defaultActiveKey={TABS_CLIENTES_LISTA}>
+            <Tab.Container defaultActiveKey={tabOption}>
               <Col xs={12} md={2} xxl={1}>
                 <Nav variant="pills" className="flex-column bg-light bg-gradient bg-opacity-50 rounded">
                   {listContentOptions.map((tab, index) => (
