@@ -35,7 +35,7 @@ const Cliente = memo(function Cliente() {
       <Row>
         <TableroNoticias />
 
-        <Col>
+        <Col className="px-0 px-lg-2">
           <Card>
             <Card.Header className="pb-0">
               <h4 className="header-title text-dark text-opacity-75 m-0">{cliente ?? 'Cliente'}</h4>

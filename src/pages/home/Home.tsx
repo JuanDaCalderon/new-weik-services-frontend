@@ -48,7 +48,7 @@ const Home = memo(function Home() {
       <Row>
         <TableroNoticias />
 
-        <Col>
+        <Col className="px-0 px-lg-2">
           <Card>
             <Card.Header className="pb-0">
               <h4 className="header-title text-dark text-opacity-75 m-0">Home</h4>
@@ -56,9 +56,9 @@ const Home = memo(function Home() {
             <Card.Body>
               <HomeHeader />
               <Row>
-                <Col className="d-flex justify-content-center gap-2 flex-column flex-xl-row" xs={12}>
+                <Col className="d-flex justify-content-center gap-2 flex-column flex-xxl-row" xs={12}>
                   <Dropdown>
-                    <Dropdown.Toggle as={Link} to="#" className="btn btn-primary w-100">
+                    <Dropdown.Toggle as={Link} to="#" className="btn btn-sm btn-primary w-100">
                       <i className="mdi mdi-account-supervisor" />
                       Clientes
                     </Dropdown.Toggle>
@@ -75,32 +75,50 @@ const Home = memo(function Home() {
                   <Link
                     to={`${GESTION_CLIENTES_MENU_KEY}?option=${TABS_CLIENTES_CREAR}`}
                     type="button"
-                    className="btn btn-dark">
-                    <i className="mdi mdi-account-multiple-plus" /> Agregar cliente
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                    <i className="mdi mdi-account-multiple-plus" /> Crear cliente
                   </Link>
                   <Link
                     to={`${GESTION_USUARIOS_MENU_KEY}?option=${TABS_USUARIOS_CREAR}`}
                     type="button"
-                    className="btn btn-dark">
-                    <i className="mdi mdi-account-box-multiple-outline" /> Agregar usuario
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                    <i className="mdi mdi-account-box-multiple-outline" /> Crear usuario
                   </Link>
-                  <Link to={ROLESYPERMISOS_MENU_KEY} type="button" className="btn btn-dark">
+                  <Link
+                    to={ROLESYPERMISOS_MENU_KEY}
+                    type="button"
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                     <i className="mdi mdi-cog" /> Roles y permisos
                   </Link>
-                  <Link to={GESTION_NOTICIAS_MENU_KEY} type="button" className="btn btn-dark">
-                    <i className="mdi mdi-newspaper" /> Gestionar noticias
+                  <Link
+                    to={GESTION_NOTICIAS_MENU_KEY}
+                    type="button"
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                    <i className="mdi mdi-newspaper" /> Noticias
                   </Link>
-                  <Link to={GESTION_OFICINA_HORARIOS_MENU_KEY} type="button" className="btn btn-dark">
-                    <i className="mdi mdi-hours-24" /> Gestionar horarios
+                  <Link
+                    to={GESTION_OFICINA_HORARIOS_MENU_KEY}
+                    type="button"
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                    <i className="mdi mdi-hours-24" /> Horarios
                   </Link>
-                  <Link to={GESTION_OFICINA_VACACIONES_MENU_KEY} type="button" className="btn btn-dark">
-                    <i className="mdi mdi-beach" /> Gestionar vacaciones
+                  <Link
+                    to={GESTION_OFICINA_VACACIONES_MENU_KEY}
+                    type="button"
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                    <i className="mdi mdi-beach" /> Vacaciones
                   </Link>
-                  <Link to={GESTION_OFICINA_REPORTES_MENU_KEY} type="button" className="btn btn-dark">
-                    <i className="mdi mdi-chart-bar-stacked" /> Gestionar reportes
+                  <Link
+                    to={GESTION_OFICINA_REPORTES_MENU_KEY}
+                    type="button"
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                    <i className="mdi mdi-chart-bar-stacked" /> Reportes
                   </Link>
-                  <Link to={GESTION_OFICINA_SOLICITUDES_MENU_KEY} type="button" className="btn btn-dark">
-                    <i className="mdi mdi-file-document-edit-outline" /> Gestionar solicitudes
+                  <Link
+                    to={GESTION_OFICINA_SOLICITUDES_MENU_KEY}
+                    type="button"
+                    className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                    <i className="mdi mdi-file-document-edit-outline" /> Solicitudes
                   </Link>
                 </Col>
               </Row>

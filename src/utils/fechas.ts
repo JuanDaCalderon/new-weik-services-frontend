@@ -138,6 +138,21 @@ class DateUtils {
     const sDate = typeof startDate === 'string' ? new Date(startDate) : startDate;
     return sDate > now;
   }
+
+  /**
+   * Convierte una hora en formato militar (24 horas) a formato de 12 horas con AM/PM.
+   * @param time Hora en formato militar (ejemplo: "13:30", "01:45", "2:45").
+   * @returns Hora en formato de 12 horas con AM/PM (ejemplo: "1:30 PM").
+   */
+  static convertTo12HourFormat(time: string): string {
+    const [hours, minutes] = time.split(':').map(Number);
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+      throw new Error('Formato de hora no válido. Debe ser "HH:mm" en formato militar.');
+    }
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const adjustedHours = hours % 12 || 12; // Convierte 0 a 12 para el formato de 12 horas
+    return `${adjustedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+  }
 }
 
 export {DateUtils};

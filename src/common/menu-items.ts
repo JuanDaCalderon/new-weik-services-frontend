@@ -14,7 +14,7 @@ import {
 import {MenuItemType} from '@/types';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
-  /* {
+  {
     key: 'dashboards',
     icon: 'uil-dashboard',
     label: 'Dashboards',
@@ -629,7 +629,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ]
       }
     ]
-  }, */
+  },
   {
     key: CLIENTES_MENU_KEY,
     icon: 'uil-user-square',

@@ -18,7 +18,14 @@ export type HorarioType = {
   rangoFechas: string[];
   horaInicio: string;
   horasDeTrabajo: number;
-  break: string;
+  break: number;
+};
+
+export type HorarioTypeToFirestore = {
+  rangoFechas: Timestamp[];
+  horaInicio: string;
+  horasDeTrabajo: number;
+  break: number;
 };
 
 export type HorasTrabajoType = {
@@ -53,7 +60,12 @@ export type HorasTrabajoToFirestore = {
 
 export type VacacionesType = {
   rangoFechas: string[];
-  aprobadas: boolean;
+  aprobadas: boolean | null;
+};
+
+export type VacacionesTypeToFirestore = {
+  rangoFechas: Timestamp[];
+  aprobadas: boolean | null;
 };
 
 export type RolesForUser = Omit<
