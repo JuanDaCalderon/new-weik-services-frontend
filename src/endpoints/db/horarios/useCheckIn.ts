@@ -1,4 +1,4 @@
-import {doc, setDoc, Timestamp} from 'firebase/firestore';
+import {arrayUnion, doc, Timestamp, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {useAppSelector} from '@/store';
@@ -40,6 +40,7 @@ export default function useCheckIn() {
       const {horasTrabajo = []} = user;
       let updatedHorasTrabajo: HorasTrabajoToFirestore[];
       const dayExists = horasTrabajo.some((h) => h.dia === todayDate);
+      const userRef = doc(db, USUARIOS_PATH, user.id);
       if (dayExists) {
         updatedHorasTrabajo = horasTrabajo.map((h) =>
           h.dia === todayDate
@@ -48,35 +49,38 @@ export default function useCheckIn() {
                 isInWorkingTime: h.isInWorkingTime ?? true,
                 checkIn: Timestamp.now(),
                 hasCheckIn: h.hasCheckIn ?? true,
-                checkOut: h.checkOut === null ? null : Timestamp.fromDate(new Date(h.checkOut)),
+                checkOut: h.checkOut ? Timestamp.fromDate(new Date(h.checkOut)) : null,
                 hasCheckOut: h.hasCheckOut ?? false
               }
             : {
                 ...h,
                 checkIn: Timestamp.fromDate(new Date(h.checkIn)),
-                checkOut: h.checkOut === null ? null : Timestamp.fromDate(new Date(h.checkOut))
+                checkOut: h.checkOut ? Timestamp.fromDate(new Date(h.checkOut)) : null
               }
         );
+        await updateDoc(userRef, {horasTrabajo: updatedHorasTrabajo});
       } else {
+        const newEntry = createNewWorkEntry();
+        await updateDoc(userRef, {
+          horasTrabajo: arrayUnion(newEntry)
+        });
         updatedHorasTrabajo = [
           ...horasTrabajo.map((h) => ({
             ...h,
             checkIn: Timestamp.fromDate(new Date(h.checkIn)),
-            checkOut: h.checkOut === null ? null : Timestamp.fromDate(new Date(h.checkOut))
+            checkOut: h.checkOut ? Timestamp.fromDate(new Date(h.checkOut)) : null
           })),
-          createNewWorkEntry()
+          newEntry
         ];
       }
-      const userRef = doc(db, USUARIOS_PATH, user.id);
-      await setDoc(userRef, {horasTrabajo: updatedHorasTrabajo}, {merge: true});
       dispatch(
-        updateWorkingHoursUser([
-          ...updatedHorasTrabajo.map((h) => ({
+        updateWorkingHoursUser(
+          updatedHorasTrabajo.map((h) => ({
             ...h,
             checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
-            checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
+            checkOut: h.checkOut ? DateUtils.formatDateToString(h.checkOut.toDate()) : null
           }))
-        ])
+        )
       );
       toast.success('Check-in Hecho');
     } catch (error: any) {

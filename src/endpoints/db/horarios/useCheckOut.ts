@@ -1,4 +1,4 @@
-import {doc, setDoc, Timestamp} from 'firebase/firestore';
+import {doc, Timestamp, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {useAppSelector} from '@/store';
@@ -20,41 +20,41 @@ export default function useCheckOut() {
     setIsSavingCheckOut(true);
     try {
       const {horasTrabajo = []} = user;
-      const checkoutTime: Date = new Date();
-      if (horasTrabajo?.length > 0) {
-        const updatedHorasTrabajo: HorasTrabajoToFirestore[] = horasTrabajo.map((h) => {
-          const {dia, checkIn} = h;
-          if (dia === todayDate) {
-            const workingTime = calcularHorasTrabajo(new Date(checkIn), checkoutTime);
-            return {
-              ...h,
-              checkIn: Timestamp.fromDate(new Date(h.checkIn)),
-              checkOut: Timestamp.now(),
-              hasCheckOut: true,
-              isInWorkingTime: false,
-              ...workingTime
-            };
-          } else {
-            return {
-              ...h,
-              checkIn: Timestamp.fromDate(new Date(h.checkIn)),
-              checkOut: h.checkOut === null ? null : Timestamp.fromDate(new Date(h.checkOut))
-            };
-          }
-        });
-        const userRef = doc(db, USUARIOS_PATH, user.id);
-        await setDoc(userRef, {horasTrabajo: updatedHorasTrabajo}, {merge: true});
-        dispatch(
-          updateWorkingHoursUser([
-            ...updatedHorasTrabajo.map((h) => ({
-              ...h,
-              checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
-              checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
-            }))
-          ])
-        );
-        toast.success('Check-out Hecho');
-      } else toast.error('No tiene horas de trabajo registradas');
+      const checkoutTime = new Date();
+      if (horasTrabajo?.length <= 0) {
+        toast.error('No tiene horas de trabajo registradas');
+        return;
+      }
+      const updatedHorasTrabajo: HorasTrabajoToFirestore[] = horasTrabajo.map((h) => {
+        if (h.dia === todayDate) {
+          const workingTime = calcularHorasTrabajo(new Date(h.checkIn), checkoutTime);
+          return {
+            ...h,
+            checkIn: Timestamp.fromDate(new Date(h.checkIn)),
+            checkOut: Timestamp.now(),
+            hasCheckOut: true,
+            isInWorkingTime: false,
+            ...workingTime
+          };
+        }
+        return {
+          ...h,
+          checkIn: Timestamp.fromDate(new Date(h.checkIn)),
+          checkOut: h.checkOut ? Timestamp.fromDate(new Date(h.checkOut)) : null
+        };
+      });
+      const userRef = doc(db, USUARIOS_PATH, user.id);
+      await updateDoc(userRef, {horasTrabajo: updatedHorasTrabajo});
+      dispatch(
+        updateWorkingHoursUser(
+          updatedHorasTrabajo.map((h) => ({
+            ...h,
+            checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
+            checkOut: h.checkOut ? DateUtils.formatDateToString(h.checkOut.toDate()) : null
+          }))
+        )
+      );
+      toast.success('Check-out Hecho');
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
       DebugUtil.logError(error.message, error);
