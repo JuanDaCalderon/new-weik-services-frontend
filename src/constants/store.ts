@@ -3,6 +3,7 @@ export const USERS_NAME = 'users';
 export const ROLES_PERMISOS_NAME = 'roles-permisos';
 export const CLIENTES_NAME = 'clientes';
 export const APPS_NAME = 'apps';
+export const EVENTOS_NAME = 'eventos';
 export const NOTICIAS_NAME = 'noticias';
 
 export const USER_DOMAIN = 'user-domain';

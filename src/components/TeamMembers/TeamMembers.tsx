@@ -21,7 +21,9 @@ const TeamMembers = memo(function TeamMembers() {
   useEffect(() => {
     const unsubscribe = getEmployeesListener();
     return () => {
-      unsubscribe();
+      if (unsubscribe) {
+        unsubscribe();
+      }
     };
   }, [getEmployeesListener]);
 

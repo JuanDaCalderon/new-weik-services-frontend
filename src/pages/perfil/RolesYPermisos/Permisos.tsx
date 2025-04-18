@@ -3,7 +3,7 @@ import type {ColumnDef} from '@tanstack/react-table';
 import {permisosSelector, selectUser} from '@/store/selectores';
 import {Permiso} from '@/types';
 import {memo, useMemo} from 'react';
-import ReactTable from '@/components/table/ReactTable';
+import ReactTable from '@/components/tablev02/ReactTable';
 
 const columns: ColumnDef<Permiso>[] = [
   {

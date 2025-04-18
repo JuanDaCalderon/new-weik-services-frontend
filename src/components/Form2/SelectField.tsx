@@ -1,8 +1,10 @@
 import {InputHTMLAttributes} from 'react';
 import {Col, Form} from 'react-bootstrap';
+import {Option} from '@/types';
 
-interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+interface SelectFieldProps extends InputHTMLAttributes<HTMLSelectElement> {
   label: string;
+  options: Option[];
   error?: string;
   helperText?: string;
   xs?: number;
@@ -12,23 +14,14 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   xl?: number;
   xxl?: number;
   controlSize?: 'sm' | 'lg' | undefined;
-  as?: 'input' | 'textarea' | undefined;
 }
 
 /**
- * InputField component to render a Bootstrap input field with label and error handling.
- * @param {string} label - The label for the input field.
- * @param {string} error - The error message to display if the input is invalid.
- * @param {string} helperText - The helper text to display below the input field.
- * @param {number} xs - Bootstrap grid size for extra small devices.
- * @param {number} sm - Bootstrap grid size for small devices.
- * @param {number} md - Bootstrap grid size for medium devices.
- * @param {number} lg - Bootstrap grid size for large devices.
- * @param {number} xl - Bootstrap grid size for extra large devices.
- * @param {number} xxl - Bootstrap grid size for extra extra large devices.
+ * selectField component to render a Bootstrap input field with label and error handling.
  */
-export function InputField({
+export function SelectField({
   label,
+  options,
   error,
   helperText,
   xs,
@@ -38,16 +31,15 @@ export function InputField({
   xl,
   xxl,
   controlSize = 'sm',
-  as,
   ...props
-}: InputFieldProps) {
+}: SelectFieldProps) {
   return (
     <Col xs={xs} sm={sm} md={md} lg={lg} xl={xl} xxl={xxl}>
       <Form.Group className="mb-2">
         <Form.Label htmlFor={label} className="mb-1">
           <strong>{label}</strong>
         </Form.Label>
-        <Form.Control
+        <Form.Select
           {...{
             ...props,
             id: label,
@@ -55,9 +47,13 @@ export function InputField({
             value: props.value as string | number | string[] | undefined,
             placeholder: props.placeholder ? props.placeholder : label
           }}
-          as={as}
-          isInvalid={!!error}
-        />
+          isInvalid={!!error}>
+          {options.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Form.Select>
         <Form.Text className={error ? 'text-danger' : 'text-muted'}>{error || helperText}</Form.Text>
       </Form.Group>
     </Col>

@@ -671,7 +671,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         children: [
           {
             key: GESTION_OFICINA_HORARIOS_MENU_KEY,
-            label: 'Horarios',
+            label: 'Calendario',
             url: GESTION_OFICINA_HORARIOS_MENU_KEY,
             parentKey: GESTION_OFICINA_MENU_KEY
           },

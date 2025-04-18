@@ -1,7 +1,7 @@
 import {useAppSelector} from '@/store';
 import type {ColumnDef} from '@tanstack/react-table';
 import {rolesSelector, selectUser} from '@/store/selectores';
-import ReactTable from '@/components/table/ReactTable';
+import ReactTable from '@/components/tablev02/ReactTable';
 import {memo, useMemo} from 'react';
 import {Rol} from '@/types';
 

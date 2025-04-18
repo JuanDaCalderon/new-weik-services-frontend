@@ -1,7 +1,7 @@
 import {db} from '@/firebase';
 import {Unsubscribe, collection, getDocs, onSnapshot} from 'firebase/firestore';
 import {useDispatch} from 'react-redux';
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingNoticias, clearNoticias, setNoticias} from '@/store/slices/noticias';
 import {NOTICIAS_PATH} from '@/constants';
@@ -9,7 +9,6 @@ import {Noticia, NoticiaToDb} from '@/types';
 
 export default function useGetNoticias() {
   const dispatch = useDispatch();
-  const [isListening, setIsListening] = useState<boolean>(false);
 
   const getNoticiasSync = useCallback(async (): Promise<void> => {
     dispatch(isLoadingNoticias(true));
@@ -34,9 +33,6 @@ export default function useGetNoticias() {
   }, [dispatch]);
 
   const getNoticiasListener = useCallback((): Unsubscribe => {
-    if (isListening) return {} as Unsubscribe;
-    setIsListening(true);
-
     dispatch(isLoadingNoticias(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
@@ -61,7 +57,7 @@ export default function useGetNoticias() {
       DebugUtil.logError(error.message, error);
     }
     return unsubscribe;
-  }, [dispatch, isListening]);
+  }, [dispatch]);
 
   return {
     getNoticiasListener,

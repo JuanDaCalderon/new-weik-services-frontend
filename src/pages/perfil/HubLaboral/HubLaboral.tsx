@@ -13,7 +13,7 @@ const HubLaboral = () => {
   return (
     <Card>
       <Card.Body>
-        <Tab.Container defaultActiveKey="Horario">
+        <Tab.Container defaultActiveKey="Vacaciones">
           <Nav variant="tabs">
             {tabContents.map((tab, index) => (
               <Nav.Item key={index}>

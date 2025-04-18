@@ -23,7 +23,6 @@ export const UsersColumnList = memo(function UsersColumnList({
   selectedUser
 }: UserColumnProps) {
   const [iconHasLoad, setIconHasLoad] = useState<boolean>(false);
-
   return (
     <>
       <h4 className="header-title text-dark text-opacity-75 m-0">Usuarios</h4>
@@ -69,6 +68,9 @@ export const UsersColumnList = memo(function UsersColumnList({
                         {getUserNameUser(user)}
                       </span>
                       <span className="m-0 lh-sm d-inline">{user.email}</span>
+                      {user.id === selectedUser?.id && (
+                        <i className="position-absolute end-0 mdi mdi-menu-right font-36"></i>
+                      )}
                     </div>
                   </div>
                   <hr className="m-0 p-0" />

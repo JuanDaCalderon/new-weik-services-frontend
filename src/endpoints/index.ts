@@ -28,6 +28,11 @@ import useUpdateNoticia from './db/noticias/useUpdateNoticia';
 import useGetApps from './db/apps/useGetApps';
 import useAddApp from './db/apps/useAddApp';
 import useDeleteApp from './db/apps/useDeleteApp';
+import useAddEventos from './db/eventos/useAddEventos';
+import useGetEventos from './db/eventos/useGetEventos';
+import useDeleteEventos from './db/eventos/useDeleteEventos';
+import useUpdateEventos from './db/eventos/useUpdateEventos';
+import useAddHorario from './db/horarios/useAddHorario';
 
 export {
   useGetClients,
@@ -57,5 +62,10 @@ export {
   useUpdateNoticia,
   useGetApps,
   useAddApp,
-  useDeleteApp
+  useDeleteApp,
+  useAddEventos,
+  useGetEventos,
+  useDeleteEventos,
+  useUpdateEventos,
+  useAddHorario
 };

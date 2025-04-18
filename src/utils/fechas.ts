@@ -1,3 +1,4 @@
+const START_HOUR = 6;
 class DateUtils {
   /**
    * Convierte un Date a formato 'YYYY/MM/DD, HH:MM:SS GMT-Z'
@@ -153,6 +154,41 @@ class DateUtils {
     const adjustedHours = hours % 12 || 12; // Convierte 0 a 12 para el formato de 12 horas
     return `${adjustedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
   }
+
+  /**
+   * Devuelve una fecha con una hora específica, ya sea como objeto Date o como string formateado en formato HH:MM (24 horas).
+   *
+   * @param {boolean} [asDate=true] - Si es `true`, retorna un objeto `Date`. Si es `false`, retorna una cadena formateada como "HH:MM".
+   * @param {Date} [date=new Date()] - Fecha base sobre la que se aplicará la hora deseada. Por defecto se usa la fecha actual.
+   * @param {number} [hour=6] - Hora que se establecerá en la fecha (0 a 23).
+   * @param {number} [minute=0] - Minutos que se establecerán en la fecha (0 a 59).
+   * @returns {Date | string} La fecha con la hora establecida, como objeto Date o string formateado, según `asDate`.
+   *
+   * @example
+   * // Retorna un Date con hora 6:00 AM del día actual
+   * getFormattedTime();
+   *
+   * // Retorna "06:00" como string
+   * getFormattedTime(false);
+   *
+   * // Retorna "15:30" como string para una fecha específica
+   * getFormattedTime(false, new Date('2025-04-17'), 15, 30);
+   */
+  static getFormattedTime = (
+    returnAsDate: boolean = true,
+    date: Date = new Date(),
+    hour: number = START_HOUR,
+    minute: number = 0
+  ): Date | string => {
+    const customDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0, 0);
+    return returnAsDate
+      ? customDate
+      : customDate.toLocaleTimeString('es', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        });
+  };
 }
 
 export {DateUtils};

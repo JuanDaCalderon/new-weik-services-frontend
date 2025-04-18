@@ -2,7 +2,7 @@ import Root from '@/routes/Root';
 import {lazy} from 'react';
 import {Outlet, Route, Routes} from 'react-router-dom';
 
-const Horarios = lazy(() => import('@/pages/gestion/oficina/horarios'));
+const Calendario = lazy(() => import('@/pages/gestion/oficina/calendario'));
 const Vacaciones = lazy(() => import('@/pages/gestion/oficina/vacaciones'));
 const Reportes = lazy(() => import('@/pages/gestion/oficina/reportes'));
 const Solicitudes = lazy(() => import('@/pages/gestion/oficina/solicitudes'));
@@ -13,7 +13,7 @@ export default function Ofina() {
     <Routes>
       <Route path="/*" element={<Outlet />}>
         <Route index element={<Root />} />
-        <Route path="horarios" element={<Horarios />} />
+        <Route path="calendario" element={<Calendario />} />
         <Route path="vacaciones" element={<Vacaciones />} />
         <Route path="reportes" element={<Reportes />} />
         <Route path="solicitudes" element={<Solicitudes />} />

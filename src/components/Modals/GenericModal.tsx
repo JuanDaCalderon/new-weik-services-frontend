@@ -10,11 +10,14 @@ const GenericModal = memo(function GenericModal({
   headerText,
   submitText,
   secondaryText,
+  deleteText,
   body,
   onSend,
+  onDelete,
   isDisabled,
   isLoading,
   showFooter = true,
+  showDeleteButton = false,
   size = undefined
 }: ModalProps) {
   return (
@@ -25,6 +28,11 @@ const GenericModal = memo(function GenericModal({
       <Modal.Body>{body}</Modal.Body>
       {showFooter && (
         <Modal.Footer>
+          {showDeleteButton && (
+            <Button className="shadow-sm me-auto" variant="danger" onClick={onDelete} disabled={isDisabled}>
+              {deleteText || 'Eliminar'}
+            </Button>
+          )}
           <Button className="shadow-sm" variant="light" onClick={onToggle}>
             {secondaryText || 'Cerrar'}
           </Button>
