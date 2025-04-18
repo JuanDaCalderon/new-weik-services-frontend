@@ -5,7 +5,14 @@ import {DateSelectArg, EventClickArg, EventInput} from '@fullcalendar/core';
 import {ToastWrapper} from '@/components/Toast';
 import {useAppSelector} from '@/store';
 import {selectEmployees, selectEventos, selectisLoadingEmployees, selectIsLoadingEventos} from '@/store/selectores';
-import {useGetEmployees, useGetEventos, useAddEventos, useAddHorario, useDeleteEventos} from '@/endpoints';
+import {
+  useGetEmployees,
+  useGetEventos,
+  useAddEventos,
+  useAddHorario,
+  useDeleteEventos,
+  useDeleteHorario
+} from '@/endpoints';
 import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType} from '@/types';
 import {UsersColumnList} from './UsersColumnList';
 import {DateUtils, getNombreCompletoUser} from '@/utils';
@@ -32,6 +39,7 @@ const Calendario = memo(function Calendario() {
     rangoFechas: []
   });
   const [horarioCreated, setHorarioCreated] = useState<HorarioType>({
+    uuid: '',
     horasDeTrabajo: 8,
     horaInicio: DateUtils.getFormattedTime(false) as string,
     break: +BREAKMINUTES.MIN_30,
@@ -46,6 +54,7 @@ const Calendario = memo(function Calendario() {
   const {addEvento, isSavingEvento} = useAddEventos();
   const {addHorario, isLoadingAddHorario} = useAddHorario();
   const {deleteEvento, isDeletingEvento} = useDeleteEventos();
+  const {deleteHorario, isLoadingDeleteHorario} = useDeleteHorario();
   const {isOpen: isOpenAdd, toggle: toggleAdd, hide: hideAdd} = useTogglev2(false);
   const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
 
@@ -326,10 +335,12 @@ const Calendario = memo(function Calendario() {
         rangoFechas: dateRangeFormatted
       };
       await addEvento(evento);
+      hideAdd();
       await getEventosSync();
     }
     if (eventType === EVENTTYPES.horario) {
       const horario: HorarioType = {
+        uuid: '',
         horasDeTrabajo: +horarioCreated.horasDeTrabajo,
         horaInicio: horarioCreated.horaInicio,
         break: horarioCreated.break,
@@ -337,11 +348,11 @@ const Calendario = memo(function Calendario() {
       };
       if (selectedUser) {
         const {id} = selectedUser;
-        await addHorario(id, selectedUser.horario, horario);
+        await addHorario(id, horario);
+        hideAdd();
         await getEmployeesSync();
       }
     }
-    hideAdd();
   }, [
     addEvento,
     addHorario,
@@ -363,15 +374,27 @@ const Calendario = memo(function Calendario() {
   }, [hideEdit]);
 
   const onDeleteEvent = useCallback(async () => {
-    if (eventType === EVENTTYPES.horario) {
-      console.log('🚀 ~ Calendario ~ thisHorarioEvent:', thisHorarioEvent);
+    if (eventType === EVENTTYPES.horario && thisHorarioEvent && selectedUser) {
+      await deleteHorario(selectedUser.id, thisHorarioEvent.horario.uuid);
+      hideEdit();
+      await getEmployeesSync();
     }
     if (eventType === EVENTTYPES.evento && thisEventoEvent) {
       await deleteEvento(thisEventoEvent.id);
+      hideEdit();
       await getEventosSync();
     }
-    hideEdit();
-  }, [deleteEvento, eventType, getEventosSync, hideEdit, thisEventoEvent, thisHorarioEvent]);
+  }, [
+    deleteEvento,
+    deleteHorario,
+    eventType,
+    getEmployeesSync,
+    getEventosSync,
+    hideEdit,
+    selectedUser,
+    thisEventoEvent,
+    thisHorarioEvent
+  ]);
 
   return (
     <ToastWrapper>
@@ -418,8 +441,8 @@ const Calendario = memo(function Calendario() {
         headerText={`${eventType} ${eventType === EVENTTYPES.horario ? `de ${getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}` : ''} `}
         submitText="Editar"
         secondaryText="Cancelar"
-        isDisabled={isDeletingEvento}
-        isLoading={isDeletingEvento}
+        isDisabled={isDeletingEvento || isLoadingDeleteHorario}
+        isLoading={isDeletingEvento || isLoadingDeleteHorario}
         body={<></>}
         onSend={onEditEvent}
         onDelete={onDeleteEvent}

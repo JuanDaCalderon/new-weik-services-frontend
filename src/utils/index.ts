@@ -15,3 +15,4 @@ export * from './utils';
 export * from './checks';
 export * from './tiempo';
 export * from './cookies';
+export * from './uuid';

@@ -38,7 +38,6 @@ export default function useGetEventos() {
     try {
       unsubscribe = onSnapshot(collection(db, EVENTOS_PATH), async (querySnapshotDocs) => {
         const eventos: Eventos[] = [];
-        console.log('🚀 ~ unsubscribe=onSnapshot ~ eventos:', eventos);
         querySnapshotDocs.forEach((doc) => {
           eventos.push({
             ...(doc.data() as Eventos),

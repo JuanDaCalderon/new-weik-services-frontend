@@ -15,6 +15,7 @@ export type UserWorkData = {
 };
 
 export type HorarioType = {
+  uuid: string;
   rangoFechas: string[];
   horaInicio: string;
   horasDeTrabajo: number;
@@ -22,6 +23,7 @@ export type HorarioType = {
 };
 
 export type HorarioTypeToFirestore = {
+  uuid: string;
   rangoFechas: Timestamp[];
   horaInicio: string;
   horasDeTrabajo: number;
@@ -59,11 +61,13 @@ export type HorasTrabajoToFirestore = {
 };
 
 export type VacacionesType = {
+  uuid: string;
   rangoFechas: string[];
   aprobadas: boolean | null;
 };
 
 export type VacacionesTypeToFirestore = {
+  uuid: string;
   rangoFechas: Timestamp[];
   aprobadas: boolean | null;
 };
