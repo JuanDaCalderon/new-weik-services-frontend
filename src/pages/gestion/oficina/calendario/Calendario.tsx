@@ -11,11 +11,13 @@ import {
   useAddEventos,
   useAddHorario,
   useDeleteEventos,
-  useDeleteHorario
+  useDeleteHorario,
+  useUpdateEventos,
+  useUpdateHorario
 } from '@/endpoints';
 import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType} from '@/types';
 import {UsersColumnList} from './UsersColumnList';
-import {DateUtils, getNombreCompletoUser} from '@/utils';
+import {areStringArraysEqual, DateUtils, getNombreCompletoUser} from '@/utils';
 import {CalendarWidget} from '@/components/Calendar';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useDatePicker, useTogglev2} from '@/hooks';
@@ -26,13 +28,13 @@ import toast from 'react-hot-toast';
 
 const Calendario = memo(function Calendario() {
   const [user, setUser] = useState<Employee[]>([]);
-  const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType | null>(null);
-  const [thisEventoEvent, setThisEventoEvent] = useState<calendarEventoEventType | null>(null);
-  const [iconHasLoad, setIconHasLoad] = useState<boolean>(false);
+  const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType>();
+  const [thisEventoEvent, setThisEventoEvent] = useState<calendarEventoEventType>();
   const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
   const [eventType, setEventType] = useState<EVENTTYPES>(EVENTTYPES.horario);
   const {dateRange, onDateChangeRange} = useDatePicker();
   const [startTime, setStartTime] = useState<Date>(DateUtils.getFormattedTime() as Date);
+  const [startTimeEdit, setStartTimeEdit] = useState<Date>(DateUtils.getFormattedTime() as Date);
   const [eventoCreated, setEventoCreated] = useState<Eventos>({
     titulo: '',
     descripcion: '',
@@ -55,6 +57,8 @@ const Calendario = memo(function Calendario() {
   const {addHorario, isLoadingAddHorario} = useAddHorario();
   const {deleteEvento, isDeletingEvento} = useDeleteEventos();
   const {deleteHorario, isLoadingDeleteHorario} = useDeleteHorario();
+  const {updateEvento, isUpdatingTheEvento} = useUpdateEventos();
+  const {updateHorario, isLoadingUpdateHorario} = useUpdateHorario();
   const {isOpen: isOpenAdd, toggle: toggleAdd, hide: hideAdd} = useTogglev2(false);
   const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
 
@@ -147,20 +151,30 @@ const Calendario = memo(function Calendario() {
   const onEventClickSet = useCallback(
     (arg: EventClickArg) => {
       const {event} = arg;
-      const {id, extendedProps} = event;
+      const {id, extendedProps, start, end} = event;
       const eventType = id.split('-')[0];
       const thisId = id.split('-')[1];
       if (eventType === EVENTTYPES.horario) {
         setEventType(EVENTTYPES.horario);
         setThisHorarioEvent({id: thisId, horario: extendedProps as HorarioType});
+        onDateChangeRange([start ?? new Date(), DateUtils.addDays(end ?? new Date(), -1)]);
+        setStartTimeEdit(
+          DateUtils.getFormattedTime(
+            true,
+            new Date(),
+            +(extendedProps as HorarioType).horaInicio.split(':')[0]!,
+            +(extendedProps as HorarioType).horaInicio.split(':')[1]!
+          ) as Date
+        );
       }
       if (eventType === EVENTTYPES.evento) {
         setEventType(EVENTTYPES.evento);
         setThisEventoEvent({id: thisId, evento: extendedProps as Eventos});
+        onDateChangeRange([start ?? new Date(), DateUtils.addDays(end ?? new Date(), -1)]);
       }
       toggleEdit();
     },
-    [toggleEdit]
+    [onDateChangeRange, toggleEdit]
   );
 
   const onDateRangeChange = useCallback((date: Date) => onDateChangeRange(date), [onDateChangeRange]);
@@ -171,6 +185,19 @@ const Calendario = memo(function Calendario() {
       [name]: value
     }));
   }, []);
+  const handleInputChangeEdit = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setThisEventoEvent((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        evento: {
+          ...prev.evento,
+          [name]: value
+        }
+      };
+    });
+  }, []);
   const handleInputChangeHorario = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
     setHorarioCreated((prev) => ({
@@ -178,12 +205,38 @@ const Calendario = memo(function Calendario() {
       [name]: value
     }));
   }, []);
+  const handleInputChangeHorarioEdit = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const {name, value} = e.target;
+    setThisHorarioEvent((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        horario: {
+          ...prev.horario,
+          [name]: value
+        }
+      };
+    });
+  }, []);
   const turnoOnChange = useCallback((date: Date) => {
     setStartTime(date);
     setHorarioCreated((prev) => ({
       ...prev,
       horaInicio: DateUtils.getFormattedTime(false, date, date.getHours(), date.getMinutes()) as string
     }));
+  }, []);
+  const turnoOnChangeEdit = useCallback((date: Date) => {
+    setStartTimeEdit(date);
+    setThisHorarioEvent((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        horario: {
+          ...prev.horario,
+          horaInicio: DateUtils.getFormattedTime(false, date, date.getHours(), date.getMinutes()) as string
+        }
+      };
+    });
   }, []);
 
   const addModalBody: JSX.Element = useMemo(
@@ -196,13 +249,24 @@ const Calendario = memo(function Calendario() {
           defaultValue={eventType}
           onChange={(e) => setEventType(e.target.value as EVENTTYPES)}
         />
+        {eventType === EVENTTYPES.horario && (
+          <SelectField
+            options={user.map((u) => ({value: u.id, label: getNombreCompletoUser(u)}))}
+            xs={12}
+            label="Cambiar de usuario"
+            onChange={(e) => {
+              const userId = e.target.value;
+              const userSelected = users.find((u) => u.id === userId);
+              setSelectedUser(userSelected ? userSelected : null);
+            }}
+          />
+        )}
         <hr />
         {eventType === EVENTTYPES.horario ? (
           <>
             <Col xs={12}>
               <div className="d-flex">
                 <div className="position-relative me-2">
-                  {!iconHasLoad && <SkeletonLoader customClass="position-absolute top-0 p-0 w-100 h-50" />}
                   <Image
                     loading="lazy"
                     alt=""
@@ -211,7 +275,6 @@ const Calendario = memo(function Calendario() {
                     height={190}
                     style={{aspectRatio: '1/1'}}
                     src={selectedUser?.userImage ? selectedUser?.userImage : fallBackLogo}
-                    onLoad={() => setIconHasLoad(true)}
                   />
                 </div>
 
@@ -286,10 +349,9 @@ const Calendario = memo(function Calendario() {
             />
           </>
         )}
-
         <Col xs={12}>
           <Form.Label htmlFor="rangoFechas" className="mb-1">
-            <strong>Rango de fechas en el que va a durar esta noticia</strong>
+            <strong>Rango de fechas de duración</strong>
           </Form.Label>
           <DatepickerRange
             dateFormat="MMMM d, yyyy"
@@ -311,11 +373,133 @@ const Calendario = memo(function Calendario() {
       horarioCreated.break,
       horarioCreated.horaInicio,
       horarioCreated.horasDeTrabajo,
-      iconHasLoad,
       onDateRangeChange,
       selectedUser,
       startTime,
-      turnoOnChange
+      turnoOnChange,
+      user,
+      users
+    ]
+  );
+
+  const editModalBody: JSX.Element = useMemo(
+    () => (
+      <FormWrapper showSubmitButton={false}>
+        {eventType === EVENTTYPES.horario ? (
+          <>
+            <Col xs={12}>
+              <div className="d-flex">
+                <div className="position-relative me-2">
+                  <Image
+                    loading="lazy"
+                    alt=""
+                    className="img-thumbnail rounded-circle object-fit-contain"
+                    width={190}
+                    height={190}
+                    style={{aspectRatio: '1/1'}}
+                    src={selectedUser?.userImage ? selectedUser?.userImage : fallBackLogo}
+                  />
+                </div>
+                {selectedUser && (
+                  <p>
+                    Vas a actualizar un horario al usuario{' '}
+                    <span className="fw-bold">
+                      {getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}
+                    </span>
+                    , a un turno de entrada a las{' '}
+                    <span className="fw-bold">{thisHorarioEvent?.horario.horaInicio}</span>, con una jornada laboral de{' '}
+                    <span className="fw-bold">{thisHorarioEvent?.horario.horasDeTrabajo}</span> horas, un descanso de{' '}
+                    <span className="fw-bold">{thisHorarioEvent?.horario.break}</span> minutos y un rango de fechas del{' '}
+                    <span className="fw-bold">{`${DateUtils.formatShortDate(dateRange[0] ? dateRange[0] : new Date())} - ${DateUtils.formatShortDate(
+                      dateRange[1] ? dateRange[1] : new Date()
+                    )}`}</span>
+                    .
+                  </p>
+                )}
+              </div>
+            </Col>
+            <InputField
+              xs={6}
+              label="Horas de trabajo"
+              name="horasDeTrabajo"
+              type="number"
+              value={thisHorarioEvent?.horario.horasDeTrabajo}
+              onChange={handleInputChangeHorarioEdit}
+            />
+            <SelectField
+              options={BREAKSOPTIONS}
+              xs={6}
+              name="break"
+              label="Break en minutos"
+              defaultValue={thisHorarioEvent?.horario.break.toString()}
+              onChange={handleInputChangeHorarioEdit}
+            />
+            <Col xs={12}>
+              <Form.Group className="mb-2">
+                <Form.Label htmlFor="horaInicio" className="mb-1">
+                  <strong>Turno de inicio</strong>
+                </Form.Label>
+                <CustomDatePicker
+                  value={startTimeEdit}
+                  showTimeSelectOnly={true}
+                  showTimeSelect={true}
+                  timeCaption="Horas"
+                  tI={30}
+                  dateFormat={'hh:mm aa'}
+                  onChange={turnoOnChangeEdit}
+                />
+              </Form.Group>
+            </Col>
+          </>
+        ) : (
+          <>
+            <InputField
+              xs={12}
+              label="Titulo"
+              name="titulo"
+              type="text"
+              value={thisEventoEvent?.evento.titulo}
+              onChange={handleInputChangeEdit}
+            />
+            <InputField
+              xs={12}
+              label="Descripción"
+              name="descripcion"
+              as="textarea"
+              type="text"
+              value={thisEventoEvent?.evento.descripcion}
+              onChange={handleInputChangeEdit}
+            />
+          </>
+        )}
+        <Col xs={12}>
+          <Form.Label htmlFor="rangoFechas" className="mb-1">
+            <strong>Rango de fechas de duración</strong>
+          </Form.Label>
+          <DatepickerRange
+            dateFormat="MMMM d, yyyy"
+            isRange={true}
+            startDate={dateRange[0]}
+            endDate={dateRange[1]}
+            onChange={onDateRangeChange}
+          />
+        </Col>
+      </FormWrapper>
+    ),
+    [
+      dateRange,
+      eventType,
+      handleInputChangeEdit,
+      handleInputChangeHorarioEdit,
+      onDateRangeChange,
+      selectedUser,
+      startTimeEdit,
+      thisEventoEvent?.evento.descripcion,
+      thisEventoEvent?.evento.titulo,
+      thisHorarioEvent?.horario.break,
+      thisHorarioEvent?.horario.horaInicio,
+      thisHorarioEvent?.horario.horasDeTrabajo,
+      turnoOnChangeEdit
     ]
   );
 
@@ -370,8 +554,54 @@ const Calendario = memo(function Calendario() {
   ]);
 
   const onEditEvent = useCallback(async () => {
-    hideEdit();
-  }, [hideEdit]);
+    if (dateRange[0] === null || dateRange[1] === null) {
+      toast.error('Por favor selecciona un rango de fechas');
+      return;
+    }
+    const dateRangeFormatted: [string, string] = [
+      DateUtils.formatDateToString(dateRange[0]!),
+      DateUtils.formatDateToString(dateRange[1]!)
+    ];
+
+    if (eventType === EVENTTYPES.evento && thisEventoEvent) {
+      let newEventUpdated: Partial<Eventos> = {
+        ...thisEventoEvent.evento
+      };
+      if (!areStringArraysEqual(thisEventoEvent.evento.rangoFechas, dateRangeFormatted)) {
+        newEventUpdated.rangoFechas = dateRangeFormatted;
+      } else delete newEventUpdated.rangoFechas;
+      await updateEvento(thisEventoEvent.id, newEventUpdated);
+      hideEdit();
+      await getEventosSync();
+    }
+    if (eventType === EVENTTYPES.horario && thisHorarioEvent) {
+      let newHorarioUpdated: Partial<HorarioType> = {
+        ...thisHorarioEvent.horario
+      };
+      if (!areStringArraysEqual(thisHorarioEvent.horario.rangoFechas, dateRangeFormatted)) {
+        newHorarioUpdated.rangoFechas = dateRangeFormatted;
+      } else delete newHorarioUpdated.rangoFechas;
+      delete newHorarioUpdated.uuid;
+      if (selectedUser) {
+        const {id} = selectedUser;
+        await updateHorario(id, thisHorarioEvent.horario.uuid, newHorarioUpdated);
+        hideEdit();
+        await getEmployeesSync();
+      }
+      hideEdit();
+    }
+  }, [
+    dateRange,
+    eventType,
+    getEmployeesSync,
+    getEventosSync,
+    hideEdit,
+    selectedUser,
+    thisEventoEvent,
+    thisHorarioEvent,
+    updateEvento,
+    updateHorario
+  ]);
 
   const onDeleteEvent = useCallback(async () => {
     if (eventType === EVENTTYPES.horario && thisHorarioEvent && selectedUser) {
@@ -441,9 +671,9 @@ const Calendario = memo(function Calendario() {
         headerText={`${eventType} ${eventType === EVENTTYPES.horario ? `de ${getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}` : ''} `}
         submitText="Editar"
         secondaryText="Cancelar"
-        isDisabled={isDeletingEvento || isLoadingDeleteHorario}
-        isLoading={isDeletingEvento || isLoadingDeleteHorario}
-        body={<></>}
+        isDisabled={isDeletingEvento || isLoadingDeleteHorario || isUpdatingTheEvento || isLoadingUpdateHorario}
+        isLoading={isDeletingEvento || isLoadingDeleteHorario || isUpdatingTheEvento || isLoadingUpdateHorario}
+        body={editModalBody}
         onSend={onEditEvent}
         onDelete={onDeleteEvent}
       />

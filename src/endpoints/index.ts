@@ -34,6 +34,7 @@ import useDeleteEventos from './db/eventos/useDeleteEventos';
 import useUpdateEventos from './db/eventos/useUpdateEventos';
 import useAddHorario from './db/horarios/useAddHorario';
 import useDeleteHorario from './db/horarios/useDeleteHorario';
+import useUpdateHorario from './db/horarios/useUpdateHorario';
 
 export {
   useGetClients,
@@ -69,5 +70,6 @@ export {
   useDeleteEventos,
   useUpdateEventos,
   useAddHorario,
-  useDeleteHorario
+  useDeleteHorario,
+  useUpdateHorario
 };

@@ -31,4 +31,20 @@ const eliminarPorUuid = <T extends {uuid: string}>(items: T[], uuidAEliminar: st
   return items.filter((item) => item.uuid !== uuidAEliminar);
 };
 
-export {filtrarElementosVigentes, eliminarPorUuid};
+/**
+ * Compara dos arreglos de strings para determinar si son exactamente iguales.
+ *
+ * La comparación considera tanto el contenido como el orden de los elementos.
+ * Si ambos arreglos tienen la misma longitud y cada elemento en la misma posición es idéntico, devuelve `true`.
+ *
+ * @param arr1 - Primer arreglo de strings a comparar.
+ * @param arr2 - Segundo arreglo de strings a comparar.
+ * @returns `true` si ambos arreglos son idénticos en contenido y orden, `false` en caso contrario.
+ */
+const areStringArraysEqual = (arr1: string[], arr2: string[]): boolean => {
+  if (arr1.length !== arr2.length) return false;
+
+  return arr1.every((value, index) => value === arr2[index]);
+};
+
+export {filtrarElementosVigentes, eliminarPorUuid, areStringArraysEqual};
