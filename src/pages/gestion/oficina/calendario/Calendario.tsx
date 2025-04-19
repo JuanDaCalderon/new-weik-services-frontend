@@ -1,5 +1,5 @@
 import {memo, useState, useEffect, useCallback, useMemo, JSX, ChangeEvent} from 'react';
-import {Card, Col, Form, Image, Row} from 'react-bootstrap';
+import {Card, Col, Row} from 'react-bootstrap';
 import {CustomDatePicker, DatepickerRange, GenericModal, PageBreadcrumb} from '@/components';
 import {DateSelectArg, EventClickArg, EventInput} from '@fullcalendar/core';
 import {ToastWrapper} from '@/components/Toast';
@@ -21,10 +21,11 @@ import {areStringArraysEqual, DateUtils, filterUsers, getNombreCompletoUser} fro
 import {CalendarWidget} from '@/components/Calendar';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useDatePicker, useTogglev2} from '@/hooks';
-import {FormWrapper, InputField, SelectField} from '@/components/Form2';
-import {BREAKMINUTES, BREAKSOPTIONS, EVENTTYPES, EVENTTYPESOPTIONS} from '@/constants';
-import fallBackLogo from '@/assets/images/logo-fallback.png';
+import {FormWrapper, InputField, OnlyLabel, SelectField} from '@/components/Form2';
+import {BREAKSOPTIONS, EVENTTYPES, EVENTTYPESOPTIONS} from '@/constants';
 import toast from 'react-hot-toast';
+import {HeaderCalendarModals} from './HeaderCalendarModals';
+import {EVENTOSINITIALVALUES, HORARIOCREATEDVALUES} from './initialValues';
 
 const Calendario = memo(function Calendario() {
   const [user, setUser] = useState<Employee[]>([]);
@@ -35,18 +36,8 @@ const Calendario = memo(function Calendario() {
   const {dateRange, onDateChangeRange} = useDatePicker();
   const [startTime, setStartTime] = useState<Date>(DateUtils.getFormattedTime() as Date);
   const [startTimeEdit, setStartTimeEdit] = useState<Date>(DateUtils.getFormattedTime() as Date);
-  const [eventoCreated, setEventoCreated] = useState<Eventos>({
-    titulo: '',
-    descripcion: '',
-    rangoFechas: []
-  });
-  const [horarioCreated, setHorarioCreated] = useState<HorarioType>({
-    uuid: '',
-    horasDeTrabajo: 8,
-    horaInicio: DateUtils.getFormattedTime(false) as string,
-    break: +BREAKMINUTES.MIN_30,
-    rangoFechas: []
-  });
+  const [eventoCreated, setEventoCreated] = useState<Eventos>(EVENTOSINITIALVALUES);
+  const [horarioCreated, setHorarioCreated] = useState<HorarioType>(HORARIOCREATEDVALUES);
   const users = useAppSelector(selectEmployees);
   const eventos = useAppSelector(selectEventos);
   const isLoadingEventos = useAppSelector(selectIsLoadingEventos);
@@ -252,36 +243,7 @@ const Calendario = memo(function Calendario() {
         <hr />
         {eventType === EVENTTYPES.horario ? (
           <>
-            <Col xs={12}>
-              <div className="d-flex">
-                <div className="position-relative me-2">
-                  <Image
-                    loading="lazy"
-                    alt=""
-                    className="img-thumbnail rounded-circle object-fit-contain"
-                    width={190}
-                    height={190}
-                    style={{aspectRatio: '1/1'}}
-                    src={selectedUser?.userImage ? selectedUser?.userImage : fallBackLogo}
-                  />
-                </div>
-                {selectedUser && (
-                  <p>
-                    Vas a asignar un horario al usuario{' '}
-                    <span className="fw-bold">
-                      {getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}
-                    </span>
-                    , cuyo turno de entrada es a las <span className="fw-bold">{horarioCreated.horaInicio}</span>, con
-                    una jornada laboral de <span className="fw-bold">{horarioCreated.horasDeTrabajo}</span> horas, un
-                    descanso de <span className="fw-bold">{horarioCreated.break}</span> minutos y un rango de fechas del{' '}
-                    <span className="fw-bold">{`${DateUtils.formatShortDate(dateRange[0] ? dateRange[0] : new Date())} - ${DateUtils.formatShortDate(
-                      dateRange[1] ? dateRange[1] : new Date()
-                    )}`}</span>
-                    .
-                  </p>
-                )}
-              </div>
-            </Col>
+            <HeaderCalendarModals selectedUser={selectedUser} dateRange={dateRange} horarioEvent={horarioCreated} />
             <InputField
               xs={6}
               label="Horas de trabajo"
@@ -298,22 +260,17 @@ const Calendario = memo(function Calendario() {
               defaultValue={horarioCreated.break.toString()}
               onChange={handleInputChangeHorario}
             />
-            <Col xs={12}>
-              <Form.Group className="mb-2">
-                <Form.Label htmlFor="horaInicio" className="mb-1">
-                  <strong>Turno de inicio</strong>
-                </Form.Label>
-                <CustomDatePicker
-                  value={startTime}
-                  showTimeSelectOnly={true}
-                  showTimeSelect={true}
-                  timeCaption="Horas"
-                  tI={30}
-                  dateFormat={'hh:mm aa'}
-                  onChange={turnoOnChange}
-                />
-              </Form.Group>
-            </Col>
+            <OnlyLabel label="Turno de inicio" xs={12}>
+              <CustomDatePicker
+                value={startTime}
+                showTimeSelectOnly={true}
+                showTimeSelect={true}
+                timeCaption="Horas"
+                tI={30}
+                dateFormat={'hh:mm aa'}
+                onChange={turnoOnChange}
+              />
+            </OnlyLabel>
           </>
         ) : (
           <>
@@ -336,10 +293,7 @@ const Calendario = memo(function Calendario() {
             />
           </>
         )}
-        <Col xs={12}>
-          <Form.Label htmlFor="rangoFechas" className="mb-1">
-            <strong>Rango de fechas de duración</strong>
-          </Form.Label>
+        <OnlyLabel label="Rango de fechas de duración" xs={12}>
           <DatepickerRange
             dateFormat="MMMM d, yyyy"
             isRange={true}
@@ -347,7 +301,7 @@ const Calendario = memo(function Calendario() {
             endDate={dateRange[1]}
             onChange={onDateRangeChange}
           />
-        </Col>
+        </OnlyLabel>
       </FormWrapper>
     ),
     [
@@ -357,9 +311,7 @@ const Calendario = memo(function Calendario() {
       eventoCreated.titulo,
       handleInputChange,
       handleInputChangeHorario,
-      horarioCreated.break,
-      horarioCreated.horaInicio,
-      horarioCreated.horasDeTrabajo,
+      horarioCreated,
       onDateRangeChange,
       selectedUser,
       startTime,
@@ -374,37 +326,11 @@ const Calendario = memo(function Calendario() {
       <FormWrapper showSubmitButton={false}>
         {eventType === EVENTTYPES.horario ? (
           <>
-            <Col xs={12}>
-              <div className="d-flex">
-                <div className="position-relative me-2">
-                  <Image
-                    loading="lazy"
-                    alt=""
-                    className="img-thumbnail rounded-circle object-fit-contain"
-                    width={190}
-                    height={190}
-                    style={{aspectRatio: '1/1'}}
-                    src={selectedUser?.userImage ? selectedUser?.userImage : fallBackLogo}
-                  />
-                </div>
-                {selectedUser && (
-                  <p>
-                    Vas a actualizar un horario al usuario{' '}
-                    <span className="fw-bold">
-                      {getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}
-                    </span>
-                    , a un turno de entrada a las{' '}
-                    <span className="fw-bold">{thisHorarioEvent?.horario.horaInicio}</span>, con una jornada laboral de{' '}
-                    <span className="fw-bold">{thisHorarioEvent?.horario.horasDeTrabajo}</span> horas, un descanso de{' '}
-                    <span className="fw-bold">{thisHorarioEvent?.horario.break}</span> minutos y un rango de fechas del{' '}
-                    <span className="fw-bold">{`${DateUtils.formatShortDate(dateRange[0] ? dateRange[0] : new Date())} - ${DateUtils.formatShortDate(
-                      dateRange[1] ? dateRange[1] : new Date()
-                    )}`}</span>
-                    .
-                  </p>
-                )}
-              </div>
-            </Col>
+            <HeaderCalendarModals
+              selectedUser={selectedUser}
+              dateRange={dateRange}
+              horarioEvent={thisHorarioEvent?.horario}
+            />
             <InputField
               xs={6}
               label="Horas de trabajo"
@@ -421,22 +347,17 @@ const Calendario = memo(function Calendario() {
               defaultValue={thisHorarioEvent?.horario.break.toString()}
               onChange={handleInputChangeHorarioEdit}
             />
-            <Col xs={12}>
-              <Form.Group className="mb-2">
-                <Form.Label htmlFor="horaInicio" className="mb-1">
-                  <strong>Turno de inicio</strong>
-                </Form.Label>
-                <CustomDatePicker
-                  value={startTimeEdit}
-                  showTimeSelectOnly={true}
-                  showTimeSelect={true}
-                  timeCaption="Horas"
-                  tI={30}
-                  dateFormat={'hh:mm aa'}
-                  onChange={turnoOnChangeEdit}
-                />
-              </Form.Group>
-            </Col>
+            <OnlyLabel label="Turno de inicio" xs={12}>
+              <CustomDatePicker
+                value={startTimeEdit}
+                showTimeSelectOnly={true}
+                showTimeSelect={true}
+                timeCaption="Horas"
+                tI={30}
+                dateFormat={'hh:mm aa'}
+                onChange={turnoOnChangeEdit}
+              />
+            </OnlyLabel>
           </>
         ) : (
           <>
@@ -459,10 +380,7 @@ const Calendario = memo(function Calendario() {
             />
           </>
         )}
-        <Col xs={12}>
-          <Form.Label htmlFor="rangoFechas" className="mb-1">
-            <strong>Rango de fechas de duración</strong>
-          </Form.Label>
+        <OnlyLabel label="Rango de fechas de duración" xs={12}>
           <DatepickerRange
             dateFormat="MMMM d, yyyy"
             isRange={true}
@@ -470,7 +388,7 @@ const Calendario = memo(function Calendario() {
             endDate={dateRange[1]}
             onChange={onDateRangeChange}
           />
-        </Col>
+        </OnlyLabel>
       </FormWrapper>
     ),
     [
@@ -483,9 +401,7 @@ const Calendario = memo(function Calendario() {
       startTimeEdit,
       thisEventoEvent?.evento.descripcion,
       thisEventoEvent?.evento.titulo,
-      thisHorarioEvent?.horario.break,
-      thisHorarioEvent?.horario.horaInicio,
-      thisHorarioEvent?.horario.horasDeTrabajo,
+      thisHorarioEvent,
       turnoOnChangeEdit
     ]
   );

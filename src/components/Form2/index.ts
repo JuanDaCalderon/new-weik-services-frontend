@@ -1,3 +1,4 @@
 export {FormWrapper} from './FormWrapper';
 export {InputField} from './InputField';
-export {SelectField} from './selectField';
+export {SelectField} from './SelectField';
+export {OnlyLabel} from './OnlyLabel';
