@@ -45,6 +45,17 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
     }
   }, [permisosIniciales, row.original.id, thisPermisos, updatePermisosDeRol]);
 
+  const groupedPermisos = useMemo(() => {
+    const grouped: Record<string, PermisoByRoles[]> = {};
+    thisPermisos.forEach((permiso) => {
+      const [categoria] = permiso.permiso.split('-');
+      if (!grouped[categoria]) grouped[categoria] = [];
+      grouped[categoria].push(permiso);
+    });
+    const sortedEntries = Object.entries(grouped).sort(([, a], [, b]) => b.length - a.length);
+    return Object.fromEntries(sortedEntries);
+  }, [thisPermisos]);
+
   return (
     <Row className="m-0 py-2 column-gap-1 bg-light-subtle">
       <span>
@@ -56,24 +67,34 @@ const PermisosEnRoles = memo(function PermisosEnRoles({row}: {row: RowTable<this
         según sea necesario y luego guarda los cambios.
       </p>
       <Col className="p-0 m-0" xs={12}>
-        <Row className="p-0 m-0">
-          {thisPermisos.map(({id, permiso, labelName, activo}) => (
-            <Col key={id} className="d-flex justify-content-between align-items-center mt-2" xs={2}>
-              <span className="me-1">{labelName}</span>
-              <div className="d-flex justify-content-end align-content-center align-items-center gap-1">
-                <i className="mdi mdi-arrow-right font-12" />
-                <input
-                  type="checkbox"
-                  id={`${htmlForSwitchRole}_${id}_${permiso}`}
-                  checked={activo}
-                  onChange={() => handleToggleChange(id)}
-                  data-switch="success"
-                />
-                <label htmlFor={`${htmlForSwitchRole}_${id}_${permiso}`} data-on-label="Si" data-off-label="No" />
-              </div>
+        {Object.entries(groupedPermisos).map(([categoria, permisos]) => (
+          <Row key={categoria} className="p-0 pt-1 m-0">
+            <Col xs={12} className="d-flex justify-content-start align-items-center">
+              <h5 className="text-uppercase m-0 py-0">{categoria}</h5>
+              <i className="mdi mdi-menu-down font-16" />
             </Col>
-          ))}
-        </Row>
+            <Col xs={12} className="d-flex justify-content-start align-items-center">
+              <Row className="p-0 m-0 w-100 row-gap-1">
+                {permisos.map(({id, permiso, labelName, activo}) => (
+                  <Col key={id} className="d-flex justify-content-between align-items-center" xs={2}>
+                    <span className="me-1 text-capitalize">{labelName}</span>
+                    <div className="d-flex justify-content-end align-content-center align-items-center gap-1">
+                      <i className="mdi mdi-arrow-right font-14" />
+                      <input
+                        type="checkbox"
+                        id={`${htmlForSwitchRole}_${id}_${permiso}`}
+                        checked={activo}
+                        onChange={() => handleToggleChange(id)}
+                        data-switch="success"
+                      />
+                      <label htmlFor={`${htmlForSwitchRole}_${id}_${permiso}`} data-on-label="Si" data-off-label="No" />
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        ))}
       </Col>
       <Col xs="auto" md={12} className="ms-auto mt-2 pt-1">
         <Button className="shadow-sm" variant="info" onClick={enviarPermisos} disabled={!hasTouched}>

@@ -3,7 +3,7 @@ import {
   GESTION_CLIENTES_MENU_KEY,
   GESTION_MENU_KEY,
   GESTION_NOTICIAS_MENU_KEY,
-  GESTION_OFICINA_HORARIOS_MENU_KEY,
+  GESTION_OFICINA_CALENDARIO_MENU_KEY,
   GESTION_OFICINA_MENU_KEY,
   GESTION_OFICINA_REPORTES_MENU_KEY,
   GESTION_OFICINA_SOLICITUDES_MENU_KEY,
@@ -14,7 +14,7 @@ import {
 import {MenuItemType} from '@/types';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
-  {
+  /* {
     key: 'dashboards',
     icon: 'uil-dashboard',
     label: 'Dashboards',
@@ -629,7 +629,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ]
       }
     ]
-  },
+  }, */
   {
     key: CLIENTES_MENU_KEY,
     icon: 'uil-user-square',
@@ -648,21 +648,21 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         label: 'Clientes',
         url: GESTION_CLIENTES_MENU_KEY,
         parentKey: GESTION_MENU_KEY,
-        permisoId: PERMISOS_MAP_IDS.accesoGestionClientes
+        permisoId: PERMISOS_MAP_IDS.accesoClientes
       },
       {
         key: GESTION_USUARIOS_MENU_KEY,
         label: 'Usuarios',
         url: GESTION_USUARIOS_MENU_KEY,
         parentKey: GESTION_MENU_KEY,
-        permisoId: PERMISOS_MAP_IDS.accesoGestionUsuarios
+        permisoId: PERMISOS_MAP_IDS.accesoUsuarios
       },
       {
         key: GESTION_NOTICIAS_MENU_KEY,
         label: 'Noticias',
         url: GESTION_NOTICIAS_MENU_KEY,
         parentKey: GESTION_MENU_KEY,
-        permisoId: PERMISOS_MAP_IDS.accesoGestionNoticias
+        permisoId: PERMISOS_MAP_IDS.accesoNoticias
       },
       {
         key: GESTION_OFICINA_MENU_KEY,
@@ -670,9 +670,9 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         parentKey: GESTION_MENU_KEY,
         children: [
           {
-            key: GESTION_OFICINA_HORARIOS_MENU_KEY,
+            key: GESTION_OFICINA_CALENDARIO_MENU_KEY,
             label: 'Calendario',
-            url: GESTION_OFICINA_HORARIOS_MENU_KEY,
+            url: GESTION_OFICINA_CALENDARIO_MENU_KEY,
             parentKey: GESTION_OFICINA_MENU_KEY
           },
           {

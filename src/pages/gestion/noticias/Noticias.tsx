@@ -124,9 +124,7 @@ const Noticias = memo(function Noticias() {
 
   const canCrearNoticia = useMemo(() => getPermission(PERMISOS_MAP_IDS.crearNoticias), [getPermission]);
 
-  if (
-    !hasPermission(PERMISOS_MAP_IDS.accesoGestionNoticias, user.roles, user.permisosOtorgados, user.permisosDenegados)
-  ) {
+  if (!hasPermission(PERMISOS_MAP_IDS.accesoNoticias, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
   }
 

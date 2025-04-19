@@ -1,27 +1,60 @@
-export enum PERMISOS_MAP_IDS {
-  /* DE LECTURA */
-  accesoRolesPermisos = 'acceso-roles-permisos',
-  accesoGestionClientes = 'acceso-gestion-clientes',
-  accesoGestionUsuarios = 'acceso-gestion-usuarios',
-  accesoGestionNoticias = 'acceso-gestion-noticias',
-  accesoGestionOficina = 'acceso-gestion-oficina',
-  accesoApps = 'acceso-apps',
-  /* DE ESCRITURA */
-  crearUsuario = 'crear-usuario',
-  crearCliente = 'crear-cliente',
-  crearRoles = 'crear-roles',
-  crearNoticias = 'crear-noticias',
-  crearApps = 'crear-apps',
+/* CRUD CATEGORIES */
+export const ACCESO_CATEGORY_KEY = 'acceso';
+export const CREAR_CATEGORY_KEY = 'crear';
+export const EDITAR_CATEGORY_KEY = 'editar';
+export const ELIMINAR_CATEGORY_KEY = 'eliminar';
+export const INACTIVAR_CATEGORY_KEY = 'inactivar';
+export const APROBAR_CATEGORY_KEY = 'aprobar';
+/* FUNCTIONS SUBCATEGORIES */
+export const USUARIOS_SUBCATEGORY_KEY = 'usuarios';
+export const CLIENTES_SUBCATEGORY_KEY = 'clientes';
+export const NOTICIAS_SUBCATEGORY_KEY = 'noticias';
+export const APPS_SUBCATEGORY_KEY = 'apps';
+export const ROLES_SUBCATEGORY_KEY = 'roles';
+export const CALENDARIO_SUBCATEGORY_KEY = 'calendario';
+export const VACACIONES_SUBCATEGORY_KEY = 'vacaciones';
+export const REPORTES_SUBCATEGORY_KEY = 'reportes';
+export const SOLICITUDES_SUBCATEGORY_KEY = 'solicitudes';
+export const HORARIOS_SUBCATEGORY_GROUP_KEY = 'horarios';
+export const EVENTOS_SUBCATEGORY_GROUP_KEY = 'eventos';
+
+export const PERMISOS_MAP_IDS = {
+  /* DE ACCESO */
+  accesoRoles: `${ACCESO_CATEGORY_KEY}-${ROLES_SUBCATEGORY_KEY}`,
+  accesoClientes: `${ACCESO_CATEGORY_KEY}-${CLIENTES_SUBCATEGORY_KEY}`,
+  accesoUsuarios: `${ACCESO_CATEGORY_KEY}-${USUARIOS_SUBCATEGORY_KEY}`,
+  accesoNoticias: `${ACCESO_CATEGORY_KEY}-${NOTICIAS_SUBCATEGORY_KEY}`,
+  accesoApps: `${ACCESO_CATEGORY_KEY}-${APPS_SUBCATEGORY_KEY}`,
+  accesoCalendario: `${ACCESO_CATEGORY_KEY}-${CALENDARIO_SUBCATEGORY_KEY}`,
+  accesoVacaciones: `${ACCESO_CATEGORY_KEY}-${VACACIONES_SUBCATEGORY_KEY}`,
+  accesoReportes: `${ACCESO_CATEGORY_KEY}-${REPORTES_SUBCATEGORY_KEY}`,
+  accesoSolicitudes: `${ACCESO_CATEGORY_KEY}-${SOLICITUDES_SUBCATEGORY_KEY}`,
+  accesoHorarios: `${ACCESO_CATEGORY_KEY}-${HORARIOS_SUBCATEGORY_GROUP_KEY}`,
+  /* DE CREAR */
+  crearUsuarios: `${CREAR_CATEGORY_KEY}-${USUARIOS_SUBCATEGORY_KEY}`,
+  crearClientes: `${CREAR_CATEGORY_KEY}-${CLIENTES_SUBCATEGORY_KEY}`,
+  crearRoles: `${CREAR_CATEGORY_KEY}-${ROLES_SUBCATEGORY_KEY}`,
+  crearNoticias: `${CREAR_CATEGORY_KEY}-${NOTICIAS_SUBCATEGORY_KEY}`,
+  crearApps: `${CREAR_CATEGORY_KEY}-${APPS_SUBCATEGORY_KEY}`,
+  crearHorarios: `${CREAR_CATEGORY_KEY}-${HORARIOS_SUBCATEGORY_GROUP_KEY}`,
+  crearEventos: `${CREAR_CATEGORY_KEY}-${EVENTOS_SUBCATEGORY_GROUP_KEY}`,
   /* DE EDICION */
-  editarRoles = 'editar-roles',
-  editarUsuarios = 'editar-usuarios',
-  editarClientes = 'editar-clientes',
-  editarNoticias = 'editar-noticias',
+  editarRoles: `${EDITAR_CATEGORY_KEY}-${ROLES_SUBCATEGORY_KEY}`,
+  editarUsuarios: `${EDITAR_CATEGORY_KEY}-${USUARIOS_SUBCATEGORY_KEY}`,
+  editarClientes: `${EDITAR_CATEGORY_KEY}-${CLIENTES_SUBCATEGORY_KEY}`,
+  editarNoticias: `${EDITAR_CATEGORY_KEY}-${NOTICIAS_SUBCATEGORY_KEY}`,
+  editarHorarios: `${EDITAR_CATEGORY_KEY}-${HORARIOS_SUBCATEGORY_GROUP_KEY}`,
+  editarEventos: `${EDITAR_CATEGORY_KEY}-${EVENTOS_SUBCATEGORY_GROUP_KEY}`,
   /* DE ELIMINACION */
-  eliminarRoles = 'eliminar-roles',
-  eliminarClientes = 'eliminar-clientes',
-  eliminarUsuarios = 'eliminar-usuarios',
-  eliminarNoticias = 'eliminar-noticias',
-  eliminarApps = 'eliminar-apps',
-  inactivarUsuarios = 'inactivar-usuarios'
-}
+  eliminarRoles: `${ELIMINAR_CATEGORY_KEY}-${ROLES_SUBCATEGORY_KEY}`,
+  eliminarClientes: `${ELIMINAR_CATEGORY_KEY}-${CLIENTES_SUBCATEGORY_KEY}`,
+  eliminarUsuarios: `${ELIMINAR_CATEGORY_KEY}-${USUARIOS_SUBCATEGORY_KEY}`,
+  eliminarNoticias: `${ELIMINAR_CATEGORY_KEY}-${NOTICIAS_SUBCATEGORY_KEY}`,
+  eliminarApps: `${ELIMINAR_CATEGORY_KEY}-${APPS_SUBCATEGORY_KEY}`,
+  eliminarHorarios: `${ELIMINAR_CATEGORY_KEY}-${HORARIOS_SUBCATEGORY_GROUP_KEY}`,
+  eliminarEventos: `${ELIMINAR_CATEGORY_KEY}-${EVENTOS_SUBCATEGORY_GROUP_KEY}`,
+  /* DE INACTIVACIÓN */
+  inactivarUsuarios: `${INACTIVAR_CATEGORY_KEY}-${USUARIOS_SUBCATEGORY_KEY}`,
+  /* DE APROBACIÓN */
+  aprobarVacaciones: `${APROBAR_CATEGORY_KEY}-${VACACIONES_SUBCATEGORY_KEY}`
+} as const;

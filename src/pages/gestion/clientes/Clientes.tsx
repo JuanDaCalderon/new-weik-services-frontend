@@ -24,7 +24,7 @@ const Clientes = memo(function Clientes() {
   const user = useAppSelector(selectUser);
 
   const canCrearClientes = useMemo(() => {
-    return hasPermission(PERMISOS_MAP_IDS.crearCliente, user.roles, user.permisosOtorgados, user.permisosDenegados);
+    return hasPermission(PERMISOS_MAP_IDS.crearClientes, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const listContentOptions: TabContentItem[] = useMemo(() => {
@@ -32,9 +32,7 @@ const Clientes = memo(function Clientes() {
     else return tabContents;
   }, [canCrearClientes]);
 
-  if (
-    !hasPermission(PERMISOS_MAP_IDS.accesoGestionClientes, user.roles, user.permisosOtorgados, user.permisosDenegados)
-  ) {
+  if (!hasPermission(PERMISOS_MAP_IDS.accesoClientes, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
   }
 

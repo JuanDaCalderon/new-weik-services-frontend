@@ -23,7 +23,7 @@ const Usuarios = memo(function Usuarios() {
   const user = useAppSelector(selectUser);
 
   const canCrearUsuarios = useMemo(() => {
-    return hasPermission(PERMISOS_MAP_IDS.crearUsuario, user.roles, user.permisosOtorgados, user.permisosDenegados);
+    return hasPermission(PERMISOS_MAP_IDS.crearUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const listContentOptions: TabContentItem[] = useMemo(() => {
@@ -31,9 +31,7 @@ const Usuarios = memo(function Usuarios() {
     else return tabContents;
   }, [canCrearUsuarios]);
 
-  if (
-    !hasPermission(PERMISOS_MAP_IDS.accesoGestionUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados)
-  ) {
+  if (!hasPermission(PERMISOS_MAP_IDS.accesoUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
   }
 

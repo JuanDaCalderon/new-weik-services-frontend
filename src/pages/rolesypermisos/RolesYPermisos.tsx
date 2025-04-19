@@ -37,9 +37,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
     };
   }, [getEmployeesListener, getPermisosListener, getRolesListener]);
 
-  if (
-    !hasPermission(PERMISOS_MAP_IDS.accesoRolesPermisos, user.roles, user.permisosOtorgados, user.permisosDenegados)
-  ) {
+  if (!hasPermission(PERMISOS_MAP_IDS.accesoRoles, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
   }
 

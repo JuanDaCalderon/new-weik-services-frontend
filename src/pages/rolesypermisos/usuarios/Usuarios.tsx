@@ -16,7 +16,7 @@ const Usuarios = memo(function Usuarios() {
   const navigate = useNavigate();
   const {usuarios} = useUsuarios();
   const canCrearUsuario = useMemo(() => {
-    return hasPermission(PERMISOS_MAP_IDS.crearUsuario, user.roles, user.permisosOtorgados, user.permisosDenegados);
+    return hasPermission(PERMISOS_MAP_IDS.crearUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
   const canEditUsuarios = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.editarUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);

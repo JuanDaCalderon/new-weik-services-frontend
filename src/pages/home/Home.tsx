@@ -6,7 +6,7 @@ import {
   CLIENTES_MENU_KEY,
   GESTION_CLIENTES_MENU_KEY,
   GESTION_NOTICIAS_MENU_KEY,
-  GESTION_OFICINA_HORARIOS_MENU_KEY,
+  GESTION_OFICINA_CALENDARIO_MENU_KEY,
   GESTION_OFICINA_REPORTES_MENU_KEY,
   GESTION_OFICINA_SOLICITUDES_MENU_KEY,
   GESTION_OFICINA_VACACIONES_MENU_KEY,
@@ -97,7 +97,7 @@ const Home = memo(function Home() {
                     <i className="mdi mdi-newspaper" /> Noticias
                   </Link>
                   <Link
-                    to={GESTION_OFICINA_HORARIOS_MENU_KEY}
+                    to={GESTION_OFICINA_CALENDARIO_MENU_KEY}
                     type="button"
                     className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                     <i className="mdi mdi-hours-24" /> Horarios

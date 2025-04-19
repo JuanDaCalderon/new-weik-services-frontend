@@ -11,7 +11,7 @@ export const profileMenus: ProfileOption[] = [
     label: 'Roles y Permisos',
     icon: 'mdi mdi-account-edit',
     redirectTo: PAGE_ROLES_PERMISOS,
-    permisoId: PERMISOS_MAP_IDS.accesoRolesPermisos
+    permisoId: PERMISOS_MAP_IDS.accesoRoles
   },
   {
     label: 'Cerrar sesión',
