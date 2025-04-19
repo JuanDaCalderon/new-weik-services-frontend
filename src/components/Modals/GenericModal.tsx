@@ -23,18 +23,20 @@ const GenericModal = memo(function GenericModal({
   return (
     <Modal show={show} onHide={onToggle} size={size}>
       <Modal.Header onHide={onToggle} closeButton className={`${variant ? 'modal-colored-header bg-' + variant : ''}`}>
-        <Modal.Title className={`${variant ? 'text-light' : ''}`}>{headerText || 'Header'}</Modal.Title>
+        <Modal.Title className={`${variant !== undefined ? 'text-light' : ''}`}>{headerText || 'Header'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>
       {showFooter && (
         <Modal.Footer>
           {showDeleteButton && (
             <Button className="shadow-sm me-auto" variant="danger" onClick={onDelete} disabled={isDisabled}>
-              {deleteText || 'Eliminar'}
+              {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
+              {!isLoading && (deleteText || 'Eliminar')}
             </Button>
           )}
-          <Button className="shadow-sm" variant="light" onClick={onToggle}>
-            {secondaryText || 'Cerrar'}
+          <Button className="shadow-sm" variant="light" onClick={onToggle} disabled={isDisabled}>
+            {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
+            {!isLoading && (secondaryText || 'Cerrar')}
           </Button>
           <Button className="shadow-sm" variant={variant || 'primary'} onClick={onSend} disabled={isDisabled}>
             {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}

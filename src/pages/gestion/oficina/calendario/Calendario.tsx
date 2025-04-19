@@ -17,7 +17,7 @@ import {
 } from '@/endpoints';
 import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType} from '@/types';
 import {UsersColumnList} from './UsersColumnList';
-import {areStringArraysEqual, DateUtils, getNombreCompletoUser} from '@/utils';
+import {areStringArraysEqual, DateUtils, filterUsers, getNombreCompletoUser} from '@/utils';
 import {CalendarWidget} from '@/components/Calendar';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useDatePicker, useTogglev2} from '@/hooks';
@@ -77,67 +77,55 @@ const Calendario = memo(function Calendario() {
     }
   }, [users, users.length]);
 
-  const search = useCallback(
-    (text: string) => {
-      setUser(
-        text
-          ? [...users].filter((u) =>
-              ['nombres', 'email', 'apellidos', 'userName'].some((key) =>
-                (u[key as keyof Employee] || '').toString().toLowerCase().includes(text.toLowerCase())
-              )
-            )
-          : [...users]
-      );
-    },
-    [users]
-  );
+  const search = useCallback((text: string) => setUser(filterUsers(users, text)), [users]);
 
   const handleUserSelection = (user: Employee) => setSelectedUser(user);
 
-  const userHorarioEvents = useMemo(() => {
-    if (!selectedUser) return [];
-    if (selectedUser.horario.length <= 0) return [];
-    const {horario, id} = selectedUser;
-    const eventosHorarios: EventInput[] = [];
-    horario.forEach((thisHorario, index) => {
-      const {horaInicio, horasDeTrabajo, rangoFechas, break: horarioBreak} = thisHorario;
-      eventosHorarios.push({
-        id: `${EVENTTYPES.horario}-${id}-${index}`,
-        title: `Hora entrada ${DateUtils.convertTo12HourFormat(horaInicio)} - ${horasDeTrabajo} Horas - ${horarioBreak} Minutos de break`,
-        className: 'bg-primary',
-        start: DateUtils.parseStringToDate(rangoFechas[0]),
-        end: DateUtils.addDays(DateUtils.parseStringToDate(rangoFechas[1]), 1),
-        allDay: true,
-        durationEditable: false,
-        editable: false,
-        interactive: false,
-        startEditable: false,
-        extendedProps: {...thisHorario}
-      });
-    });
-    return eventosHorarios;
-  }, [selectedUser]);
-
   const events: EventInput[] = useMemo(() => {
-    const events: EventInput[] = [...userHorarioEvents];
-    eventos.forEach((event, index) => {
-      const {titulo, rangoFechas, id, descripcion} = event;
-      events.push({
-        id: `${EVENTTYPES.evento}-${id}-${index}`,
-        title: `${titulo} - ${descripcion}`,
-        className: 'bg-secondary',
-        start: DateUtils.parseStringToDate(rangoFechas[0]),
-        end: DateUtils.addDays(DateUtils.parseStringToDate(rangoFechas[1]), 1),
-        allDay: true,
-        durationEditable: false,
-        editable: false,
-        interactive: false,
-        startEditable: false,
-        extendedProps: {...event}
-      });
+    const createEventInput = (
+      id: string,
+      title: string,
+      start: Date,
+      end: Date,
+      className: string,
+      extendedProps: any
+    ): EventInput => ({
+      id,
+      title,
+      className,
+      start,
+      end,
+      allDay: true,
+      durationEditable: false,
+      editable: false,
+      interactive: false,
+      startEditable: false,
+      extendedProps
     });
-    return events;
-  }, [eventos, userHorarioEvents]);
+    const horarioEvents: EventInput[] =
+      selectedUser && selectedUser.horario.length > 0
+        ? selectedUser.horario.map((h, index) => {
+            const start = DateUtils.parseStringToDate(h.rangoFechas[0]);
+            const end = DateUtils.addDays(DateUtils.parseStringToDate(h.rangoFechas[1]), 1);
+            const title = `Hora entrada ${DateUtils.convertTo12HourFormat(h.horaInicio)} - ${h.horasDeTrabajo} Horas - ${h.break} Minutos de break`;
+            return createEventInput(
+              `${EVENTTYPES.horario}-${selectedUser.id}-${index}`,
+              title,
+              start,
+              end,
+              'bg-primary',
+              h
+            );
+          })
+        : [];
+    const eventoEvents: EventInput[] = eventos.map((e, index) => {
+      const start = DateUtils.parseStringToDate(e.rangoFechas[0]);
+      const end = DateUtils.addDays(DateUtils.parseStringToDate(e.rangoFechas[1]), 1);
+      const title = `${e.titulo} - ${e.descripcion}`;
+      return createEventInput(`${EVENTTYPES.evento}-${e.id}-${index}`, title, start, end, 'bg-secondary', e);
+    });
+    return [...horarioEvents, ...eventoEvents];
+  }, [eventos, selectedUser]);
 
   const onSelectSet = useCallback(
     (arg: DateSelectArg) => {
@@ -277,7 +265,6 @@ const Calendario = memo(function Calendario() {
                     src={selectedUser?.userImage ? selectedUser?.userImage : fallBackLogo}
                   />
                 </div>
-
                 {selectedUser && (
                   <p>
                     Vas a asignar un horario al usuario{' '}
@@ -562,7 +549,6 @@ const Calendario = memo(function Calendario() {
       DateUtils.formatDateToString(dateRange[0]!),
       DateUtils.formatDateToString(dateRange[1]!)
     ];
-
     if (eventType === EVENTTYPES.evento && thisEventoEvent) {
       let newEventUpdated: Partial<Eventos> = {
         ...thisEventoEvent.evento
@@ -633,6 +619,18 @@ const Calendario = memo(function Calendario() {
         <Card.Body>
           <Row>
             <Col xl={2}>
+              <div>
+                <h5 className="text-center">¿Cómo funciona?</h5>
+                <ul className="ps-3">
+                  <li className="text-muted mb-1 font-14">
+                    Selecciona las fechas en el calendario y ajusta el rango arrastrando y soltando según sea necesario.
+                  </li>
+                  <li className="text-muted mb-1 font-14">
+                    Podrás crear eventos generales visibles para todos, o asignar horarios específicos a los usuarios.
+                    Recuerda que debes tener un usuario seleccionado en la lista de abajo para asignar horarios.
+                  </li>
+                </ul>
+              </div>
               <UsersColumnList
                 users={user}
                 isLoadingUsers={isLoadingUsers}
@@ -654,7 +652,7 @@ const Calendario = memo(function Calendario() {
       <GenericModal
         show={isOpenAdd}
         onToggle={toggleAdd}
-        variant={`${eventType === EVENTTYPES.horario ? 'info' : 'dark'}`}
+        variant={eventType === EVENTTYPES.horario ? 'info' : undefined}
         headerText={`Crear nuevo ${eventType} ${eventType === EVENTTYPES.horario ? `a ${getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}` : ''} `}
         submitText="Crear"
         secondaryText="Cancelar"
@@ -667,7 +665,7 @@ const Calendario = memo(function Calendario() {
         show={isOpenEdit}
         onToggle={toggleEdit}
         showDeleteButton
-        variant={`${eventType === EVENTTYPES.horario ? 'info' : 'dark'}`}
+        variant={eventType === EVENTTYPES.horario ? 'info' : undefined}
         headerText={`${eventType} ${eventType === EVENTTYPES.horario ? `de ${getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}` : ''} `}
         submitText="Editar"
         secondaryText="Cancelar"

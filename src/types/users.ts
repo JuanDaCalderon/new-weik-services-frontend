@@ -62,12 +62,14 @@ export type HorasTrabajoToFirestore = {
 
 export type VacacionesType = {
   uuid: string;
+  approver: string; // id del usuario que aprueba la solicitud de vacaciones
   rangoFechas: string[];
   aprobadas: boolean | null;
 };
 
 export type VacacionesTypeToFirestore = {
   uuid: string;
+  approver: string; // id del usuario que aprueba la solicitud de vacaciones
   rangoFechas: Timestamp[];
   aprobadas: boolean | null;
 };

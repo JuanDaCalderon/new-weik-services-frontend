@@ -26,7 +26,7 @@ export const UsersColumnList = memo(function UsersColumnList({
   return (
     <>
       <h4 className="header-title text-dark text-opacity-75 m-0">Usuarios</h4>
-      <div className="tab-pane show active card-body pb-0 px-0 h-100">
+      <div className="tab-pane show active card-body pb-0 px-0 h-75">
         <div className="app-search">
           <Form>
             <Form.Group className="mb-2 w-100 position-relative">

@@ -11,7 +11,8 @@ export const THIS_CLIENT_INFO = {DOMAIN: 'weikstudio', LABEL: 'Weik Motion Studi
 
 export enum EVENTTYPES {
   horario = 'horario',
-  evento = 'evento'
+  evento = 'evento',
+  vacaciones = 'vacaciones'
 }
 
 export const EVENTTYPESOPTIONS: Option[] = [
