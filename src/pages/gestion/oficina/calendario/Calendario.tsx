@@ -4,7 +4,13 @@ import {CustomDatePicker, DatepickerRange, GenericModal, PageBreadcrumb} from '@
 import {DateSelectArg, EventClickArg, EventInput} from '@fullcalendar/core';
 import {ToastWrapper} from '@/components/Toast';
 import {useAppSelector} from '@/store';
-import {selectEmployees, selectEventos, selectisLoadingEmployees, selectIsLoadingEventos} from '@/store/selectores';
+import {
+  selectEmployees,
+  selectEventos,
+  selectisLoadingEmployees,
+  selectIsLoadingEventos,
+  selectUser
+} from '@/store/selectores';
 import {
   useGetEmployees,
   useGetEventos,
@@ -17,17 +23,18 @@ import {
 } from '@/endpoints';
 import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType} from '@/types';
 import {UsersColumnList} from './UsersColumnList';
-import {areStringArraysEqual, DateUtils, filterUsers, getNombreCompletoUser} from '@/utils';
+import {areStringArraysEqual, DateUtils, filterUsers, getNombreCompletoUser, hasPermission} from '@/utils';
 import {CalendarWidget} from '@/components/Calendar';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useDatePicker, useTogglev2} from '@/hooks';
 import {FormWrapper, InputField, OnlyLabel, SelectField} from '@/components/Form2';
-import {BREAKSOPTIONS, EVENTTYPES, EVENTTYPESOPTIONS} from '@/constants';
+import {BREAKSOPTIONS, EVENTTYPES, EVENTTYPESOPTIONS, PERMISOS_MAP_IDS} from '@/constants';
 import toast from 'react-hot-toast';
 import {HeaderCalendarModals} from './HeaderCalendarModals';
 import {EVENTOSINITIALVALUES, HORARIOCREATEDVALUES} from './initialValues';
 
 const Calendario = memo(function Calendario() {
+  const thisUserActive = useAppSelector(selectUser);
   const [user, setUser] = useState<Employee[]>([]);
   const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType>();
   const [thisEventoEvent, setThisEventoEvent] = useState<calendarEventoEventType>();
@@ -53,9 +60,27 @@ const Calendario = memo(function Calendario() {
   const {isOpen: isOpenAdd, toggle: toggleAdd, hide: hideAdd} = useTogglev2(false);
   const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
 
+  const canCrearHorarios = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.crearHorarios,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    );
+  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
+
+  const canAccesoHorarios = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.accesoHorarios,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    );
+  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
+
   useEffect(() => {
-    if (users.length <= 0) getEmployeesSync();
-  }, [getEmployeesSync, users.length]);
+    if (users.length <= 0 && canAccesoHorarios) getEmployeesSync();
+  }, [canAccesoHorarios, getEmployeesSync, users.length]);
 
   useEffect(() => {
     if (eventos.length <= 0) getEventosSync();
@@ -122,9 +147,10 @@ const Calendario = memo(function Calendario() {
     (arg: DateSelectArg) => {
       const {end, start} = arg;
       onDateChangeRange([start, DateUtils.addDays(end, -1)]);
+      if (!canCrearHorarios) setEventType(EVENTTYPES.evento);
       toggleAdd();
     },
-    [onDateChangeRange, toggleAdd]
+    [canCrearHorarios, onDateChangeRange, toggleAdd]
   );
 
   const onEventClickSet = useCallback(
@@ -222,7 +248,9 @@ const Calendario = memo(function Calendario() {
     () => (
       <FormWrapper showSubmitButton={false}>
         <SelectField
-          options={EVENTTYPESOPTIONS}
+          options={
+            canCrearHorarios ? EVENTTYPESOPTIONS : EVENTTYPESOPTIONS.filter((e) => e.value !== EVENTTYPES.horario)
+          }
           xs={12}
           label="Tipo de evento"
           defaultValue={eventType}
@@ -305,6 +333,7 @@ const Calendario = memo(function Calendario() {
       </FormWrapper>
     ),
     [
+      canCrearHorarios,
       dateRange,
       eventType,
       eventoCreated.descripcion,
@@ -528,6 +557,14 @@ const Calendario = memo(function Calendario() {
     thisHorarioEvent
   ]);
 
+  useEffect(() => {
+    if (!canAccesoHorarios) setSelectedUser(null);
+  }, [canAccesoHorarios]);
+
+  useEffect(() => {
+    if (!canCrearHorarios) setEventType(EVENTTYPES.evento);
+  }, [canCrearHorarios]);
+
   return (
     <ToastWrapper>
       <PageBreadcrumb title="Calendario" />
@@ -547,13 +584,15 @@ const Calendario = memo(function Calendario() {
                   </li>
                 </ul>
               </div>
-              <UsersColumnList
-                users={user}
-                isLoadingUsers={isLoadingUsers}
-                onUserSelect={handleUserSelection}
-                search={search}
-                selectedUser={selectedUser}
-              />
+              {canAccesoHorarios && (
+                <UsersColumnList
+                  users={user}
+                  isLoadingUsers={isLoadingUsers}
+                  onUserSelect={handleUserSelection}
+                  search={search}
+                  selectedUser={selectedUser}
+                />
+              )}
             </Col>
             <Col xl={10}>
               {isLoadingEventos || isLoadingUsers ? (

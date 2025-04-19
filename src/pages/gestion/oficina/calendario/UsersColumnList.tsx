@@ -54,7 +54,6 @@ export const UsersColumnList = memo(function UsersColumnList({
                       {!iconHasLoad && <SkeletonLoader customClass="position-absolute p-0 w-75" />}
                       <Image
                         src={user.userImage ? user.userImage : fallBackLogo}
-                        fluid
                         loading="lazy"
                         alt=""
                         className="me-2 rounded-circle object-fit-contain"
