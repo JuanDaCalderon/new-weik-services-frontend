@@ -308,6 +308,18 @@ const Vacaciones = memo(function Vacaciones() {
                     Los administradores pueden ver un resumen de todas las solicitudes de vacaciones en la vista de
                     vacaciones.
                   </li>
+                  {canAprobarVacaciones && (
+                    <>
+                      <li className="text-muted mb-1 font-14">
+                        🟢 Significa que puedes aprobar estas solicitudes de vacaciones, ya que el usuario te ha
+                        asignado como su aprobador.
+                      </li>
+                      <li className="text-muted mb-1 font-14">
+                        ⚫ Significa que no puedes aprobar estas solicitudes de vacaciones, ya que el usuario no te ha
+                        asignado como su aprobador.
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </Col>
