@@ -21,17 +21,18 @@ import {
   useUpdateEventos,
   useUpdateHorario
 } from '@/endpoints';
-import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType} from '@/types';
+import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType, Option} from '@/types';
 import {UsersColumnList} from './UsersColumnList';
 import {areStringArraysEqual, DateUtils, filterUsers, getNombreCompletoUser, hasPermission} from '@/utils';
 import {CalendarWidget} from '@/components/Calendar';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useDatePicker, useTogglev2} from '@/hooks';
 import {FormWrapper, InputField, OnlyLabel, SelectField} from '@/components/Form2';
-import {BREAKSOPTIONS, EVENTTYPES, EVENTTYPESOPTIONS, PERMISOS_MAP_IDS} from '@/constants';
+import {BREAKSOPTIONS, DEFAULT_HOME_ROUTER_PATH, EVENTTYPES, EVENTTYPESOPTIONS, PERMISOS_MAP_IDS} from '@/constants';
 import toast from 'react-hot-toast';
 import {HeaderCalendarModals} from './HeaderCalendarModals';
 import {EVENTOSINITIALVALUES, HORARIOCREATEDVALUES} from './initialValues';
+import {Navigate} from 'react-router-dom';
 
 const Calendario = memo(function Calendario() {
   const thisUserActive = useAppSelector(selectUser);
@@ -39,7 +40,7 @@ const Calendario = memo(function Calendario() {
   const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType>();
   const [thisEventoEvent, setThisEventoEvent] = useState<calendarEventoEventType>();
   const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
-  const [eventType, setEventType] = useState<EVENTTYPES>(EVENTTYPES.horario);
+  const [eventType, setEventType] = useState<EVENTTYPES | null>(EVENTTYPES.horario);
   const {dateRange, onDateChangeRange} = useDatePicker();
   const [startTime, setStartTime] = useState<Date>(DateUtils.getFormattedTime() as Date);
   const [startTimeEdit, setStartTimeEdit] = useState<Date>(DateUtils.getFormattedTime() as Date);
@@ -63,6 +64,51 @@ const Calendario = memo(function Calendario() {
   const canCrearHorarios = useMemo(() => {
     return hasPermission(
       PERMISOS_MAP_IDS.crearHorarios,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    );
+  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
+
+  const canCrearEventos = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.crearEventos,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    );
+  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
+
+  const canEditarHorarios = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.editarHorarios,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    );
+  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
+
+  const canEditarEventos = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.editarEventos,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    );
+  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
+
+  const canEliminarHorarios = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.eliminarHorarios,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    );
+  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
+
+  const canEliminarEventos = useMemo(() => {
+    return hasPermission(
+      PERMISOS_MAP_IDS.eliminarEventos,
       thisUserActive.roles,
       thisUserActive.permisosOtorgados,
       thisUserActive.permisosDenegados
@@ -148,9 +194,11 @@ const Calendario = memo(function Calendario() {
       const {end, start} = arg;
       onDateChangeRange([start, DateUtils.addDays(end, -1)]);
       if (!canCrearHorarios) setEventType(EVENTTYPES.evento);
-      toggleAdd();
+      if (!canCrearEventos) setEventType(EVENTTYPES.horario);
+      if (!canCrearHorarios && !canCrearEventos) setEventType(null);
+      if (canCrearHorarios || canCrearEventos) toggleAdd();
     },
-    [canCrearHorarios, onDateChangeRange, toggleAdd]
+    [canCrearEventos, canCrearHorarios, onDateChangeRange, toggleAdd]
   );
 
   const onEventClickSet = useCallback(
@@ -177,9 +225,9 @@ const Calendario = memo(function Calendario() {
         setThisEventoEvent({id: thisId, evento: extendedProps as Eventos});
         onDateChangeRange([start ?? new Date(), DateUtils.addDays(end ?? new Date(), -1)]);
       }
-      toggleEdit();
+      if (canEditarHorarios || canEditarEventos || canEliminarHorarios || canEliminarEventos) toggleEdit();
     },
-    [onDateChangeRange, toggleEdit]
+    [canEditarEventos, canEditarHorarios, canEliminarEventos, canEliminarHorarios, onDateChangeRange, toggleEdit]
   );
 
   const onDateRangeChange = useCallback((date: Date) => onDateChangeRange(date), [onDateChangeRange]);
@@ -244,16 +292,25 @@ const Calendario = memo(function Calendario() {
     });
   }, []);
 
+  const eventTypeOptions: Option[] = useMemo(() => {
+    if (canCrearHorarios && canCrearEventos) return EVENTTYPESOPTIONS;
+    if (canCrearHorarios) return EVENTTYPESOPTIONS.filter((e) => e.value === EVENTTYPES.horario);
+    if (canCrearEventos) return EVENTTYPESOPTIONS.filter((e) => e.value === EVENTTYPES.evento);
+    return [];
+  }, [canCrearEventos, canCrearHorarios]);
+
+  const canCreateHorarioButCannotAccess: boolean = useMemo(() => {
+    return eventType === EVENTTYPES.horario && canCrearHorarios && !canAccesoHorarios;
+  }, [canAccesoHorarios, canCrearHorarios, eventType]);
+
   const addModalBody: JSX.Element = useMemo(
     () => (
       <FormWrapper showSubmitButton={false}>
         <SelectField
-          options={
-            canCrearHorarios ? EVENTTYPESOPTIONS : EVENTTYPESOPTIONS.filter((e) => e.value !== EVENTTYPES.horario)
-          }
+          options={eventTypeOptions}
           xs={12}
           label="Tipo de evento"
-          defaultValue={eventType}
+          defaultValue={eventType ? eventType : undefined}
           onChange={(e) => setEventType(e.target.value as EVENTTYPES)}
         />
         {eventType === EVENTTYPES.horario && (
@@ -269,7 +326,7 @@ const Calendario = memo(function Calendario() {
           />
         )}
         <hr />
-        {eventType === EVENTTYPES.horario ? (
+        {eventType === EVENTTYPES.horario && (
           <>
             <HeaderCalendarModals selectedUser={selectedUser} dateRange={dateRange} horarioEvent={horarioCreated} />
             <InputField
@@ -300,7 +357,8 @@ const Calendario = memo(function Calendario() {
               />
             </OnlyLabel>
           </>
-        ) : (
+        )}
+        {eventType === EVENTTYPES.evento && (
           <>
             <InputField
               xs={12}
@@ -330,12 +388,19 @@ const Calendario = memo(function Calendario() {
             onChange={onDateRangeChange}
           />
         </OnlyLabel>
+        {canCreateHorarioButCannotAccess && (
+          <p className="text-danger m-0">
+            Tienes el permiso para crear horarios, pero no tienes acceso a los horarios de los usuarios. Por lo tanto,
+            no podrás asignar horarios a los usuarios.
+          </p>
+        )}
       </FormWrapper>
     ),
     [
-      canCrearHorarios,
+      canCreateHorarioButCannotAccess,
       dateRange,
       eventType,
+      eventTypeOptions,
       eventoCreated.descripcion,
       eventoCreated.titulo,
       handleInputChange,
@@ -353,7 +418,7 @@ const Calendario = memo(function Calendario() {
   const editModalBody: JSX.Element = useMemo(
     () => (
       <FormWrapper showSubmitButton={false}>
-        {eventType === EVENTTYPES.horario ? (
+        {eventType === EVENTTYPES.horario && (
           <>
             <HeaderCalendarModals
               selectedUser={selectedUser}
@@ -388,7 +453,8 @@ const Calendario = memo(function Calendario() {
               />
             </OnlyLabel>
           </>
-        ) : (
+        )}
+        {eventType === EVENTTYPES.evento && (
           <>
             <InputField
               xs={12}
@@ -563,7 +629,32 @@ const Calendario = memo(function Calendario() {
 
   useEffect(() => {
     if (!canCrearHorarios) setEventType(EVENTTYPES.evento);
-  }, [canCrearHorarios]);
+    if (!canCrearEventos) setEventType(EVENTTYPES.horario);
+    if (!canCrearHorarios && !canCrearEventos) setEventType(null);
+  }, [canCrearEventos, canCrearHorarios]);
+
+  const showDeleteButton: boolean = useMemo((): boolean => {
+    if (canEliminarHorarios && eventType === EVENTTYPES.horario) return true;
+    if (canEliminarEventos && eventType === EVENTTYPES.evento) return true;
+    return false;
+  }, [canEliminarEventos, canEliminarHorarios, eventType]);
+
+  const disabledEditPermiso: boolean = useMemo(() => {
+    if (eventType === EVENTTYPES.horario) return !canEditarHorarios;
+    if (eventType === EVENTTYPES.evento) return !canEditarEventos;
+    return true;
+  }, [canEditarEventos, canEditarHorarios, eventType]);
+
+  if (
+    !hasPermission(
+      PERMISOS_MAP_IDS.accesoCalendario,
+      thisUserActive.roles,
+      thisUserActive.permisosOtorgados,
+      thisUserActive.permisosDenegados
+    )
+  ) {
+    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
+  }
 
   return (
     <ToastWrapper>
@@ -612,19 +703,25 @@ const Calendario = memo(function Calendario() {
         submitText="Crear"
         secondaryText="Cancelar"
         body={addModalBody}
-        isDisabled={isSavingEvento || isLoadingAddHorario}
+        isDisabled={canCreateHorarioButCannotAccess || isSavingEvento || isLoadingAddHorario}
         isLoading={isSavingEvento || isLoadingAddHorario}
         onSend={onCreateEvent}
       />
       <GenericModal
         show={isOpenEdit}
         onToggle={toggleEdit}
-        showDeleteButton
+        showDeleteButton={showDeleteButton}
         variant={eventType === EVENTTYPES.horario ? 'info' : undefined}
         headerText={`${eventType} ${eventType === EVENTTYPES.horario ? `de ${getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}` : ''} `}
         submitText="Editar"
         secondaryText="Cancelar"
-        isDisabled={isDeletingEvento || isLoadingDeleteHorario || isUpdatingTheEvento || isLoadingUpdateHorario}
+        isDisabled={
+          disabledEditPermiso ||
+          isDeletingEvento ||
+          isLoadingDeleteHorario ||
+          isUpdatingTheEvento ||
+          isLoadingUpdateHorario
+        }
         isLoading={isDeletingEvento || isLoadingDeleteHorario || isUpdatingTheEvento || isLoadingUpdateHorario}
         body={editModalBody}
         onSend={onEditEvent}

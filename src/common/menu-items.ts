@@ -673,25 +673,29 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             key: GESTION_OFICINA_CALENDARIO_MENU_KEY,
             label: 'Calendario',
             url: GESTION_OFICINA_CALENDARIO_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY
+            parentKey: GESTION_OFICINA_MENU_KEY,
+            permisoId: PERMISOS_MAP_IDS.accesoCalendario
           },
           {
             key: GESTION_OFICINA_VACACIONES_MENU_KEY,
             label: 'Vacaciones',
             url: GESTION_OFICINA_VACACIONES_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY
+            parentKey: GESTION_OFICINA_MENU_KEY,
+            permisoId: PERMISOS_MAP_IDS.accesoVacaciones
           },
           {
             key: GESTION_OFICINA_REPORTES_MENU_KEY,
             label: 'Reportes',
             url: GESTION_OFICINA_REPORTES_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY
+            parentKey: GESTION_OFICINA_MENU_KEY,
+            permisoId: PERMISOS_MAP_IDS.accesoReportes
           },
           {
             key: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
             label: 'Solicitudes',
             url: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY
+            parentKey: GESTION_OFICINA_MENU_KEY,
+            permisoId: PERMISOS_MAP_IDS.accesoSolicitudes
           }
         ]
       }
