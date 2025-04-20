@@ -1,4 +1,5 @@
 import {Employee, thisUsuarios, User} from '@/types';
+import {DebugUtil} from './debug';
 
 /**
  * Obtiene el nombre completo del usuario. Si no tiene nombres o apellidos, retorna el nombre de usuario;
@@ -8,10 +9,15 @@ import {Employee, thisUsuarios, User} from '@/types';
  * @returns {string} El nombre completo, nombre de usuario o correo electrónico del usuario.
  */
 const getNombreCompletoUser = (user: User | Employee | thisUsuarios): string => {
-  const {apellidos, email, nombres, userName} = user;
-  if (nombres !== '' || apellidos !== '') return `${nombres} ${apellidos}`;
-  else if (userName !== '') return userName;
-  else return email;
+  try {
+    const {apellidos, email, nombres, userName} = user;
+    if (nombres !== '' || apellidos !== '') return `${nombres} ${apellidos}`;
+    else if (userName !== '') return userName;
+    else return email;
+  } catch (error: any) {
+    DebugUtil.logError('Error al obtener el nombre completo del usuario', error);
+    return 'Sin Nombre';
+  }
 };
 
 /**
@@ -22,10 +28,15 @@ const getNombreCompletoUser = (user: User | Employee | thisUsuarios): string => 
  * @returns {string} El nombre de usuario, nombre completo o correo electrónico del usuario.
  */
 const getUserNameUser = (user: User | Employee | thisUsuarios): string => {
-  const {apellidos, email, nombres, userName} = user;
-  if (userName !== '') return userName;
-  else if (nombres !== '' || apellidos !== '') return `${nombres} ${apellidos}`;
-  else return email;
+  try {
+    const {apellidos, email, nombres, userName} = user;
+    if (userName !== '') return userName;
+    else if (nombres !== '' || apellidos !== '') return `${nombres} ${apellidos}`;
+    else return email;
+  } catch (error: any) {
+    DebugUtil.logError('Error al obtener el nombre de usuario', error);
+    return 'Sin Nombre';
+  }
 };
 
 /**
@@ -36,10 +47,15 @@ const getUserNameUser = (user: User | Employee | thisUsuarios): string => {
  * @returns {string} Los roles o cargo del usuario, o "Sin Rol" si no se encuentra información.
  */
 const getRolesUser = (user: User | Employee | thisUsuarios): string => {
-  const {roles, cargo} = user;
-  if (roles && roles.length > 0) return roles.map((rol) => rol.rol).join(' - ');
-  else if (cargo !== '') return cargo;
-  else return 'Sin Rol';
+  try {
+    const {roles, cargo} = user;
+    if (roles && roles.length > 0) return roles.map((rol) => rol.rol).join(' - ');
+    else if (cargo !== '') return cargo;
+    else return 'Sin Rol';
+  } catch (error: any) {
+    DebugUtil.logError('Error al obtener los roles del usuario', error);
+    return 'Sin Rol';
+  }
 };
 
 /**
@@ -50,10 +66,15 @@ const getRolesUser = (user: User | Employee | thisUsuarios): string => {
  * @returns {string} El cargo o roles del usuario, o "Sin Cargo" si no se encuentra información.
  */
 const getCargoUser = (user: User | Employee | thisUsuarios): string => {
-  const {cargo, roles} = user;
-  if (cargo !== '') return cargo;
-  else if (roles && roles.length > 0) return roles.map((rol) => rol.rol).join(' - ');
-  else return 'Sin Cargo';
+  try {
+    const {cargo, roles} = user;
+    if (cargo !== '') return cargo;
+    else if (roles && roles.length > 0) return roles.map((rol) => rol.rol).join(' - ');
+    else return 'Sin Cargo';
+  } catch (error: any) {
+    DebugUtil.logError('Error al obtener el cargo del usuario', error);
+    return 'Sin Cargo';
+  }
 };
 
 /**

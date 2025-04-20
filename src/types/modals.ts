@@ -8,8 +8,10 @@ export type ModalProps = {
   secondaryText?: string;
   deleteText?: string;
   body: ReactNode;
+  showSendButton?: boolean;
   onSend?: <T>(data: T) => void;
   onDelete?: <T>(data: T) => void;
+  onClose?: () => void;
   isDisabled?: boolean;
   isLoading?: boolean;
   variant?: string;

@@ -36,6 +36,8 @@ import useAddHorario from './db/horarios/useAddHorario';
 import useDeleteHorario from './db/horarios/useDeleteHorario';
 import useUpdateHorario from './db/horarios/useUpdateHorario';
 import useAddVacaciones from './db/vacaciones/useAddVacaciones';
+import useApproveVacaciones from './db/vacaciones/useApproveVacaciones';
+import useUpdateVacaciones from './db/vacaciones/useUpdateVacaciones';
 
 export {
   useGetClients,
@@ -73,5 +75,7 @@ export {
   useAddHorario,
   useDeleteHorario,
   useUpdateHorario,
-  useAddVacaciones
+  useAddVacaciones,
+  useApproveVacaciones,
+  useUpdateVacaciones
 };

@@ -6,3 +6,8 @@ export const VACACIONESCREATEDVALUES: VacacionesType = {
   rangoFechas: [],
   aprobadas: null
 };
+
+export const VACACIONESEDITVALUES: Partial<VacacionesType> = {
+  approver: '',
+  rangoFechas: []
+};

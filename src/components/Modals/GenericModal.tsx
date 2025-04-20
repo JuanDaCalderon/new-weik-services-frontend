@@ -14,15 +14,29 @@ const GenericModal = memo(function GenericModal({
   body,
   onSend,
   onDelete,
+  onClose = () => {},
   isDisabled,
   isLoading,
   showFooter = true,
   showDeleteButton = false,
+  showSendButton = true,
   size = undefined
 }: ModalProps) {
   return (
-    <Modal show={show} onHide={onToggle} size={size}>
-      <Modal.Header onHide={onToggle} closeButton className={`${variant ? 'modal-colored-header bg-' + variant : ''}`}>
+    <Modal
+      show={show}
+      onHide={() => {
+        onClose();
+        onToggle();
+      }}
+      size={size}>
+      <Modal.Header
+        onHide={() => {
+          onClose();
+          onToggle();
+        }}
+        closeButton
+        className={`${variant ? 'modal-colored-header bg-' + variant : ''}`}>
         <Modal.Title className={`${variant !== undefined ? 'text-light' : ''}`}>{headerText || 'Header'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>
@@ -34,14 +48,22 @@ const GenericModal = memo(function GenericModal({
               {!isLoading && (deleteText || 'Eliminar')}
             </Button>
           )}
-          <Button className="shadow-sm" variant="light" onClick={onToggle} disabled={isDisabled}>
+          <Button
+            className="shadow-sm"
+            variant="light"
+            onClick={() => {
+              onClose();
+              onToggle();
+            }}>
             {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
             {!isLoading && (secondaryText || 'Cerrar')}
           </Button>
-          <Button className="shadow-sm" variant={variant || 'primary'} onClick={onSend} disabled={isDisabled}>
-            {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
-            {!isLoading && (submitText || 'Guardar cambios')}
-          </Button>
+          {showSendButton && (
+            <Button className="shadow-sm" variant={variant || 'primary'} onClick={onSend} disabled={isDisabled}>
+              {isLoading && <Spinner className="spinner-border-sm" tag="span" color="white" />}
+              {!isLoading && (submitText || 'Guardar cambios')}
+            </Button>
+          )}
         </Modal.Footer>
       )}
     </Modal>
