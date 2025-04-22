@@ -136,7 +136,7 @@ const AppMenu = ({menuItems}: AppMenuProps) => {
         const mid = matchingMenuItem.getAttribute('data-menu-key');
         const activeMt = findMenuItem(menuItems, mid!);
         if (activeMt) setActiveMenuItems([...new Set([activeMt['key'], ...findAllParent(menuItems, activeMt)])]);
-      }
+      } else setActiveMenuItems([]);
     }
   }, [location.pathname, menuItems]);
 

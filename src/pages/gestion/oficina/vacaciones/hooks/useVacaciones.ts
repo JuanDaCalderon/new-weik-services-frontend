@@ -17,6 +17,13 @@ export default function useVacaciones() {
     if (users.length <= 0) getEmployeesSync();
   }, [getEmployeesSync, users.length]);
 
+  const getApprovalIndicator = (canIApproveIt: boolean, aprobadas: boolean | null, isMyVacations: boolean): string => {
+    if (canIApproveIt) return '🟢';
+    if (aprobadas !== null) return '';
+    if (isMyVacations) return '';
+    return '⚫';
+  };
+
   const events: EventInput[] = useMemo(() => {
     if (users!.length <= 0) return [];
     const createEvent = (id: string, email: string, index: number, thisVacaciones: VacacionesType) => {
@@ -24,9 +31,10 @@ export default function useVacaciones() {
       const {rangoFechas, aprobadas, approver} = thisVacaciones;
       const {status, statusCopy} = getStatus(aprobadas, isMyVacations);
       const canIApproveIt = approver === user.id && aprobadas === null;
+      const approvalIndicator = getApprovalIndicator(canIApproveIt, aprobadas, isMyVacations);
       return {
         id: `${EVENTTYPES.vacaciones}-${id}-${index}`,
-        title: `${isMyVacations ? 'Mis vacaciones' : 'Vacaciones de'} ${email} - ${statusCopy} ${canIApproveIt ? '🟢' : '⚫'}`,
+        title: `${isMyVacations ? 'Mis vacaciones' : 'Vacaciones de'} ${email} - ${statusCopy} ${approvalIndicator}`,
         className: status,
         start: DateUtils.parseStringToDate(rangoFechas[0]),
         end: DateUtils.addDays(DateUtils.parseStringToDate(rangoFechas[1]), 1),

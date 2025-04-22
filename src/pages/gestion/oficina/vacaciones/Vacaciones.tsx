@@ -293,23 +293,12 @@ const Vacaciones = memo(function Vacaciones() {
                     Recuerda que puedes editar tus propias solicitudes de vacaciones si estas aún están pendientes
                     haciendo click en el evento del calendario.
                   </li>
-                  <li className="text-muted mb-1 font-14">
-                    Podrás aprobar o denegar solicitudes de vacaciones de otros usuarios haciendo click en el evento del
-                    calendario según tengas el permiso correspondiente.
-                  </li>
-                  <li className="text-muted mb-1 font-14">
-                    Si necesitas cancelar una solicitud de vacaciones, selecciona el evento en el calendario y utiliza
-                    la opción de cancelación disponible.
-                  </li>
-                  <li className="text-muted mb-1 font-14">
-                    Asegúrate de que las fechas seleccionadas no se solapen con otras solicitudes ya aprobadas.
-                  </li>
-                  <li className="text-muted mb-1 font-14">
-                    Los administradores pueden ver un resumen de todas las solicitudes de vacaciones en la vista de
-                    vacaciones.
-                  </li>
                   {canAprobarVacaciones && (
                     <>
+                      <li className="text-muted mb-1 font-14">
+                        Podrás aprobar o denegar solicitudes de vacaciones de otros usuarios haciendo click en el evento
+                        del calendario.
+                      </li>
                       <li className="text-muted mb-1 font-14">
                         🟢 Significa que puedes aprobar estas solicitudes de vacaciones, ya que el usuario te ha
                         asignado como su aprobador.

@@ -14,13 +14,8 @@ const ProfilePage = () => {
       <PageBreadcrumb title="Mi Cuenta" />
 
       <Row>
-        <Col sm={12}>
-          <UserPortadaBox />
-        </Col>
-      </Row>
-
-      <Row>
         <Col xs={12} xl={4} xxl={3}>
+          <UserPortadaBox />
           <InfoUserBox />
           <PasswordBox />
           <UserRolesYPermisos />
