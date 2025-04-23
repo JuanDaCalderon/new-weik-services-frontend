@@ -38,3 +38,5 @@ export const BREAKSOPTIONS: Option[] = [
     value: BREAKMINUTES.MIN_60
   }
 ];
+
+export const SESSIONSTORAGE_CALENDAR_USER_SELECTED_KEY = 'userCalendarHorarioSelected';

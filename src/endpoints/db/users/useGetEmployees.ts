@@ -57,6 +57,7 @@ const useGetEmployees = () => {
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
       unsubscribe = onSnapshot(query(collection(db, USUARIOS_PATH)), async (querySnapshotDocs) => {
+        dispatch(setIsloadingUsers(true));
         const employees: Employee[] = [];
         for (const doc of querySnapshotDocs.docs) {
           const {
@@ -125,7 +126,11 @@ const useGetEmployees = () => {
         dispatch(clearUsers());
         dispatch(setUsers(employees));
         dispatch(setIsloadingUsers(false));
-        DebugUtil.logSuccess('Se cargaron exitosamente los usuarios en la store');
+        DebugUtil.logSuccess(
+          `Se cargaron exitosamente los usuarios en la store  ${
+            querySnapshotDocs.metadata.fromCache ? 'desde el cache' : 'desde la db'
+          }`
+        );
       });
     } catch (error: any) {
       DebugUtil.logError(error.message, error);

@@ -27,7 +27,7 @@ const Vacaciones = memo(function Vacaciones() {
   const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
   const {isOpen: isOpenApprover, toggle: toggleApprover, hide: hideApprover} = useTogglev2(false);
   const {dateRange, onDateChangeRange} = useDatePicker();
-  const {events, isLoadingUsers, users, user, getEmployeesSync} = useVacaciones();
+  const {events, isLoadingUsers, users, user, canAprobarVacaciones} = useVacaciones();
   const {addVacaciones, isLoadingAddVacaciones} = useAddVacaciones();
   const {updateVacaciones, isLoadingUpdateVacaciones} = useUpdateVacaciones();
   const {approveVacaciones, isLoadingApproveVacaciones} = useApproveVacaciones();
@@ -46,15 +46,6 @@ const Vacaciones = memo(function Vacaciones() {
       }, [])
       .map((u: Employee) => ({value: u.id, label: getNombreCompletoUser(u)}));
   }, [users]);
-
-  const canAprobarVacaciones = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.aprobarVacaciones,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
-  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   useEffect(() => {
     if (approversOptions.length > 0) setVacacionesCreated((prev) => ({...prev, approver: approversOptions[0].value}));
@@ -105,8 +96,7 @@ const Vacaciones = memo(function Vacaciones() {
     };
     await addVacaciones(newVacaciones);
     hideAdd();
-    await getEmployeesSync();
-  }, [addVacaciones, dateRange, getEmployeesSync, hideAdd, vacacionesCreated]);
+  }, [addVacaciones, dateRange, hideAdd, vacacionesCreated]);
 
   const addModalBody: JSX.Element = useMemo(
     () => (
@@ -248,25 +238,22 @@ const Vacaciones = memo(function Vacaciones() {
     delete newVacacionesUpdated.aprobadas;
     await updateVacaciones(user.id, vacacionesEdited.uuid!, newVacacionesUpdated);
     hideEdit();
-    await getEmployeesSync();
     setEditHasChanged(false);
-  }, [dateRange, getEmployeesSync, hideEdit, updateVacaciones, user.id, vacacionesEdited]);
+  }, [dateRange, hideEdit, updateVacaciones, user.id, vacacionesEdited]);
 
   const onApproveVacations = useCallback(async () => {
     if (whoIsThisVacactions && whoIsThisVacactions.id && vacacionesEdited && vacacionesEdited.uuid) {
       await approveVacaciones(whoIsThisVacactions.id, vacacionesEdited.uuid, true);
       hideApprover();
-      await getEmployeesSync();
     }
-  }, [approveVacaciones, getEmployeesSync, hideApprover, vacacionesEdited, whoIsThisVacactions]);
+  }, [approveVacaciones, hideApprover, vacacionesEdited, whoIsThisVacactions]);
 
   const onDenegarVacations = useCallback(async () => {
     if (whoIsThisVacactions && whoIsThisVacactions.id && vacacionesEdited && vacacionesEdited.uuid) {
       await approveVacaciones(whoIsThisVacactions.id, vacacionesEdited.uuid, false);
       hideApprover();
-      await getEmployeesSync();
     }
-  }, [approveVacaciones, getEmployeesSync, hideApprover, vacacionesEdited, whoIsThisVacactions]);
+  }, [approveVacaciones, hideApprover, vacacionesEdited, whoIsThisVacactions]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoVacaciones, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;

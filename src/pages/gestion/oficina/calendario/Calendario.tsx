@@ -23,12 +23,26 @@ import {
 } from '@/endpoints';
 import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType, Option} from '@/types';
 import {UsersColumnList} from './UsersColumnList';
-import {areStringArraysEqual, DateUtils, filterUsers, getNombreCompletoUser, hasPermission} from '@/utils';
+import {
+  areStringArraysEqual,
+  DateUtils,
+  filterUsers,
+  getNombreCompletoUser,
+  hasPermission,
+  SessionStorageUtil
+} from '@/utils';
 import {CalendarWidget} from '@/components/Calendar';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useDatePicker, useTogglev2} from '@/hooks';
 import {FormWrapper, InputField, OnlyLabel, SelectField} from '@/components/Form2';
-import {BREAKSOPTIONS, DEFAULT_HOME_ROUTER_PATH, EVENTTYPES, EVENTTYPESOPTIONS, PERMISOS_MAP_IDS} from '@/constants';
+import {
+  BREAKSOPTIONS,
+  DEFAULT_HOME_ROUTER_PATH,
+  EVENTTYPES,
+  EVENTTYPESOPTIONS,
+  PERMISOS_MAP_IDS,
+  SESSIONSTORAGE_CALENDAR_USER_SELECTED_KEY
+} from '@/constants';
 import toast from 'react-hot-toast';
 import {HeaderCalendarModals} from './HeaderCalendarModals';
 import {EVENTOSINITIALVALUES, HORARIOCREATEDVALUES} from './initialValues';
@@ -36,6 +50,7 @@ import {Navigate} from 'react-router-dom';
 
 const Calendario = memo(function Calendario() {
   const thisUserActive = useAppSelector(selectUser);
+  const users = useAppSelector(selectEmployees);
   const [user, setUser] = useState<Employee[]>([]);
   const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType>();
   const [thisEventoEvent, setThisEventoEvent] = useState<calendarEventoEventType>();
@@ -46,11 +61,10 @@ const Calendario = memo(function Calendario() {
   const [startTimeEdit, setStartTimeEdit] = useState<Date>(DateUtils.getFormattedTime() as Date);
   const [eventoCreated, setEventoCreated] = useState<Eventos>(EVENTOSINITIALVALUES);
   const [horarioCreated, setHorarioCreated] = useState<HorarioType>(HORARIOCREATEDVALUES);
-  const users = useAppSelector(selectEmployees);
   const eventos = useAppSelector(selectEventos);
   const isLoadingEventos = useAppSelector(selectIsLoadingEventos);
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
-  const {getEmployeesSync} = useGetEmployees();
+  const {getEmployeesListener} = useGetEmployees();
   const {getEventosSync} = useGetEventos();
   const {addEvento, isSavingEvento} = useAddEventos();
   const {addHorario, isLoadingAddHorario} = useAddHorario();
@@ -125,23 +139,37 @@ const Calendario = memo(function Calendario() {
   }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
 
   useEffect(() => {
-    if (users.length <= 0 && canAccesoHorarios) getEmployeesSync();
-  }, [canAccesoHorarios, getEmployeesSync, users.length]);
+    const unsubscribe = getEmployeesListener();
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [getEmployeesListener]);
 
   useEffect(() => {
     if (eventos.length <= 0) getEventosSync();
   }, [eventos.length, getEventosSync]);
 
   useEffect(() => {
-    if (users.length > 0) {
-      setUser(users);
-      setSelectedUser(users[0]);
+    if (users.length > 0) setUser(users);
+  }, [users]);
+
+  useEffect(() => {
+    const hasLoadUsers = users.length > 0;
+    if (hasLoadUsers) {
+      const selectedUserId = SessionStorageUtil.getItem<string>(SESSIONSTORAGE_CALENDAR_USER_SELECTED_KEY);
+      const userFound = users.find((u) => u.id === selectedUserId);
+      setSelectedUser(userFound ? userFound : users[0]);
     }
-  }, [users, users.length]);
+  }, [users]);
 
   const search = useCallback((text: string) => setUser(filterUsers(users, text)), [users]);
 
-  const handleUserSelection = (user: Employee) => setSelectedUser(user);
+  const handleUserSelection = (u: Employee) => {
+    setSelectedUser(u);
+    SessionStorageUtil.setItem(SESSIONSTORAGE_CALENDAR_USER_SELECTED_KEY, u.id);
+  };
 
   const events: EventInput[] = useMemo(() => {
     const createEventInput = (
@@ -318,6 +346,7 @@ const Calendario = memo(function Calendario() {
             options={user.map((u) => ({value: u.id, label: getNombreCompletoUser(u)}))}
             xs={12}
             label="Cambiar de usuario"
+            defaultValue={selectedUser ? selectedUser.id : undefined}
             onChange={(e) => {
               const userId = e.target.value;
               const userSelected = users.find((u) => u.id === userId);
@@ -532,7 +561,6 @@ const Calendario = memo(function Calendario() {
         const {id} = selectedUser;
         await addHorario(id, horario);
         hideAdd();
-        await getEmployeesSync();
       }
     }
   }, [
@@ -542,7 +570,6 @@ const Calendario = memo(function Calendario() {
     eventType,
     eventoCreated.descripcion,
     eventoCreated.titulo,
-    getEmployeesSync,
     getEventosSync,
     hideAdd,
     horarioCreated.break,
@@ -583,14 +610,12 @@ const Calendario = memo(function Calendario() {
         const {id} = selectedUser;
         await updateHorario(id, thisHorarioEvent.horario.uuid, newHorarioUpdated);
         hideEdit();
-        await getEmployeesSync();
       }
       hideEdit();
     }
   }, [
     dateRange,
     eventType,
-    getEmployeesSync,
     getEventosSync,
     hideEdit,
     selectedUser,
@@ -604,7 +629,6 @@ const Calendario = memo(function Calendario() {
     if (eventType === EVENTTYPES.horario && thisHorarioEvent && selectedUser) {
       await deleteHorario(selectedUser.id, thisHorarioEvent.horario.uuid);
       hideEdit();
-      await getEmployeesSync();
     }
     if (eventType === EVENTTYPES.evento && thisEventoEvent) {
       await deleteEvento(thisEventoEvent.id);
@@ -615,7 +639,6 @@ const Calendario = memo(function Calendario() {
     deleteEvento,
     deleteHorario,
     eventType,
-    getEmployeesSync,
     getEventosSync,
     hideEdit,
     selectedUser,
@@ -624,8 +647,8 @@ const Calendario = memo(function Calendario() {
   ]);
 
   useEffect(() => {
-    if (!canAccesoHorarios) setSelectedUser(null);
-  }, [canAccesoHorarios]);
+    if (!canAccesoHorarios) setSelectedUser(users.find((u) => u.id === thisUserActive.id) ?? null);
+  }, [canAccesoHorarios, thisUserActive.id, users]);
 
   useEffect(() => {
     if (!canCrearHorarios) setEventType(EVENTTYPES.evento);
@@ -677,7 +700,7 @@ const Calendario = memo(function Calendario() {
               </div>
               {canAccesoHorarios && (
                 <UsersColumnList
-                  users={user}
+                  users={users}
                   isLoadingUsers={isLoadingUsers}
                   onUserSelect={handleUserSelection}
                   search={search}
