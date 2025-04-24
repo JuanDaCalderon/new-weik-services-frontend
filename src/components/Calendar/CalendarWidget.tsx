@@ -62,6 +62,8 @@ const CalendarWidget = memo(function CalendarWidget({
         eventDrop={onEventDrop}
         drop={onDrop}
         select={onSelect}
+        displayEventEnd
+        displayEventTime
       />
     </div>
   );

@@ -254,11 +254,9 @@ const EstadosColumn = memo(function EstadosColumn({row}: {row: Row<Employee>}) {
   }, [row.original.estado]);
 
   return (
-    <div className="ribbon-box no-user-text-selectable">
-      <Badge bg="" pill className={`me-1 badge-outline-${ribbonType} font-14`}>
-        {row.original.estado}
-      </Badge>
-    </div>
+    <Badge bg="" pill className={`no-user-text-selectable me-1 badge-outline-${ribbonType} font-14`}>
+      {row.original.estado}
+    </Badge>
   );
 });
 

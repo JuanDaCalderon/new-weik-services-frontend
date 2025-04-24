@@ -16,3 +16,4 @@ export * from './menu';
 export * from './alerts';
 export * from './clientes';
 export * from './usuarios';
+export * from './reportes';

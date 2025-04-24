@@ -7,6 +7,7 @@ import {
   USER_NAME,
   USERS_NAME
 } from '@/constants';
+import {dedupeUsersMiddleware} from '@/store/middlewares/dedupeUsersMiddleware';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import userReducer from '@/store/slices/user';
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
 });
 
 export const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(dedupeUsersMiddleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

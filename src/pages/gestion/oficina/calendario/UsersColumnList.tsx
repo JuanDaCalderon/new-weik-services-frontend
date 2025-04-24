@@ -69,16 +69,16 @@ export const UsersColumnList = memo(function UsersColumnList({
                           loading="lazy"
                           alt=""
                           className="me-2 rounded-circle object-fit-contain"
-                          width={30}
-                          height={30}
+                          width={22}
+                          height={22}
                           onLoad={() => setIconHasLoad(true)}
                         />
                       </div>
                       <div className="d-flex flex-column justify-content-center">
-                        <span className="m-0 lh-sm fw-bold text-uppercase text-dark text-opacity-75 d-inline">
+                        <span className="m-0 lh-xs fw-bold text-uppercase text-dark text-opacity-75 d-inline font-14">
                           {getUserNameUser(user)}
                         </span>
-                        <span className="m-0 lh-sm d-inline">{user.email}</span>
+                        <span className="m-0 lh-xs d-inline font-14">{user.email}</span>
                         {user.id === selectedUser?.id && (
                           <i className="position-absolute end-0 mdi mdi-menu-right font-36" />
                         )}

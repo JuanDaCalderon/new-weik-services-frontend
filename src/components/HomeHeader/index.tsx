@@ -6,6 +6,7 @@ import {getNombreCompletoUser} from '@/utils';
 import {SkeletonLoader} from '../SkeletonLoader';
 import {Link} from 'react-router-dom';
 import {PERFIL_MENU_KEY} from '@/constants';
+import fallBackLogo from '@/assets/images/logo-fallback.png';
 
 const HomeHeader = () => {
   const user = useAppSelector(selectUser);
@@ -17,7 +18,7 @@ const HomeHeader = () => {
       <div className="position-relative">
         {!iconHasLoad && <SkeletonLoader customClass="position-absolute p-0" />}
         <img
-          src={user.userImage}
+          src={user.userImage ? user.userImage : fallBackLogo}
           alt={userDomain ?? ''}
           className="img-thumbnail avatar-xl rounded-circle object-fit-cover"
           loading="lazy"

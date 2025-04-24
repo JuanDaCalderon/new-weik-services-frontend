@@ -57,7 +57,6 @@ const useGetEmployees = () => {
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
       unsubscribe = onSnapshot(query(collection(db, USUARIOS_PATH)), async (querySnapshotDocs) => {
-        dispatch(setIsloadingUsers(true));
         const employees: Employee[] = [];
         for (const doc of querySnapshotDocs.docs) {
           const {

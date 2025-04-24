@@ -3,17 +3,7 @@ import {Card, Col, Row} from 'react-bootstrap';
 import {CustomDatePicker, DatepickerRange, GenericModal, PageBreadcrumb} from '@/components';
 import {DateSelectArg, EventClickArg, EventInput} from '@fullcalendar/core';
 import {ToastWrapper} from '@/components/Toast';
-import {useAppSelector} from '@/store';
 import {
-  selectEmployees,
-  selectEventos,
-  selectisLoadingEmployees,
-  selectIsLoadingEventos,
-  selectUser
-} from '@/store/selectores';
-import {
-  useGetEmployees,
-  useGetEventos,
   useAddEventos,
   useAddHorario,
   useDeleteEventos,
@@ -47,10 +37,9 @@ import toast from 'react-hot-toast';
 import {HeaderCalendarModals} from './HeaderCalendarModals';
 import {EVENTOSINITIALVALUES, HORARIOCREATEDVALUES} from './initialValues';
 import {Navigate} from 'react-router-dom';
+import useCalendario from './hooks/useCalendario';
 
 const Calendario = memo(function Calendario() {
-  const thisUserActive = useAppSelector(selectUser);
-  const users = useAppSelector(selectEmployees);
   const [user, setUser] = useState<Employee[]>([]);
   const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType>();
   const [thisEventoEvent, setThisEventoEvent] = useState<calendarEventoEventType>();
@@ -61,95 +50,30 @@ const Calendario = memo(function Calendario() {
   const [startTimeEdit, setStartTimeEdit] = useState<Date>(DateUtils.getFormattedTime() as Date);
   const [eventoCreated, setEventoCreated] = useState<Eventos>(EVENTOSINITIALVALUES);
   const [horarioCreated, setHorarioCreated] = useState<HorarioType>(HORARIOCREATEDVALUES);
-  const eventos = useAppSelector(selectEventos);
-  const isLoadingEventos = useAppSelector(selectIsLoadingEventos);
-  const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
-  const {getEmployeesListener} = useGetEmployees();
-  const {getEventosSync} = useGetEventos();
   const {addEvento, isSavingEvento} = useAddEventos();
   const {addHorario, isLoadingAddHorario} = useAddHorario();
   const {deleteEvento, isDeletingEvento} = useDeleteEventos();
   const {deleteHorario, isLoadingDeleteHorario} = useDeleteHorario();
   const {updateEvento, isUpdatingTheEvento} = useUpdateEventos();
   const {updateHorario, isLoadingUpdateHorario} = useUpdateHorario();
+  const {
+    thisUserActive,
+    users,
+    eventos,
+    isLoadingEventos,
+    isLoadingUsers,
+    getEmployeesSync,
+    getEventosSync,
+    canAccesoHorarios,
+    canCrearEventos,
+    canCrearHorarios,
+    canEditarEventos,
+    canEditarHorarios,
+    canEliminarEventos,
+    canEliminarHorarios
+  } = useCalendario();
   const {isOpen: isOpenAdd, toggle: toggleAdd, hide: hideAdd} = useTogglev2(false);
   const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
-
-  const canCrearHorarios = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.crearHorarios,
-      thisUserActive.roles,
-      thisUserActive.permisosOtorgados,
-      thisUserActive.permisosDenegados
-    );
-  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
-
-  const canCrearEventos = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.crearEventos,
-      thisUserActive.roles,
-      thisUserActive.permisosOtorgados,
-      thisUserActive.permisosDenegados
-    );
-  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
-
-  const canEditarHorarios = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.editarHorarios,
-      thisUserActive.roles,
-      thisUserActive.permisosOtorgados,
-      thisUserActive.permisosDenegados
-    );
-  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
-
-  const canEditarEventos = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.editarEventos,
-      thisUserActive.roles,
-      thisUserActive.permisosOtorgados,
-      thisUserActive.permisosDenegados
-    );
-  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
-
-  const canEliminarHorarios = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.eliminarHorarios,
-      thisUserActive.roles,
-      thisUserActive.permisosOtorgados,
-      thisUserActive.permisosDenegados
-    );
-  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
-
-  const canEliminarEventos = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.eliminarEventos,
-      thisUserActive.roles,
-      thisUserActive.permisosOtorgados,
-      thisUserActive.permisosDenegados
-    );
-  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
-
-  const canAccesoHorarios = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.accesoHorarios,
-      thisUserActive.roles,
-      thisUserActive.permisosOtorgados,
-      thisUserActive.permisosDenegados
-    );
-  }, [thisUserActive.permisosDenegados, thisUserActive.permisosOtorgados, thisUserActive.roles]);
-
-  useEffect(() => {
-    const unsubscribe = getEmployeesListener();
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, [getEmployeesListener]);
-
-  useEffect(() => {
-    if (eventos.length <= 0) getEventosSync();
-  }, [eventos.length, getEventosSync]);
 
   useEffect(() => {
     if (users.length > 0) setUser(users);
@@ -561,6 +485,7 @@ const Calendario = memo(function Calendario() {
         const {id} = selectedUser;
         await addHorario(id, horario);
         hideAdd();
+        await getEmployeesSync();
       }
     }
   }, [
@@ -570,6 +495,7 @@ const Calendario = memo(function Calendario() {
     eventType,
     eventoCreated.descripcion,
     eventoCreated.titulo,
+    getEmployeesSync,
     getEventosSync,
     hideAdd,
     horarioCreated.break,
@@ -609,13 +535,14 @@ const Calendario = memo(function Calendario() {
       if (selectedUser) {
         const {id} = selectedUser;
         await updateHorario(id, thisHorarioEvent.horario.uuid, newHorarioUpdated);
-        hideEdit();
       }
       hideEdit();
+      await getEmployeesSync();
     }
   }, [
     dateRange,
     eventType,
+    getEmployeesSync,
     getEventosSync,
     hideEdit,
     selectedUser,
@@ -629,6 +556,7 @@ const Calendario = memo(function Calendario() {
     if (eventType === EVENTTYPES.horario && thisHorarioEvent && selectedUser) {
       await deleteHorario(selectedUser.id, thisHorarioEvent.horario.uuid);
       hideEdit();
+      await getEmployeesSync();
     }
     if (eventType === EVENTTYPES.evento && thisEventoEvent) {
       await deleteEvento(thisEventoEvent.id);
@@ -639,6 +567,7 @@ const Calendario = memo(function Calendario() {
     deleteEvento,
     deleteHorario,
     eventType,
+    getEmployeesSync,
     getEventosSync,
     hideEdit,
     selectedUser,

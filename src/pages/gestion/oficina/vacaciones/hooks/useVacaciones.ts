@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState, ChangeEvent} from 'react';
 import {EventInput} from '@fullcalendar/core';
 import {useAppSelector} from '@/store';
 import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
@@ -11,7 +11,18 @@ export default function useVacaciones() {
   const user = useAppSelector(selectUser);
   const users = useAppSelector(selectEmployees);
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
-  const {getEmployeesListener} = useGetEmployees();
+  const {getEmployeesSync} = useGetEmployees();
+  const [isCheckedOnlyMyVacations, setIsCheckedOnlyMyVacations] = useState<boolean>(false);
+  const [isCheckedPendingVacations, setisCheckedPendingVacations] = useState<boolean>(false);
+
+  const handleSwitchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedOnlyMyVacations(e.target.checked);
+  }, []);
+
+  const handleSwitchChangePendingVacations = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setisCheckedPendingVacations(e.target.checked);
+    setIsCheckedOnlyMyVacations(false);
+  }, []);
 
   const canAprobarVacaciones = useMemo(() => {
     return hasPermission(
@@ -23,13 +34,8 @@ export default function useVacaciones() {
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   useEffect(() => {
-    const unsubscribe = getEmployeesListener();
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, [getEmployeesListener]);
+    if (users.length <= 0) getEmployeesSync();
+  }, [getEmployeesSync, users.length]);
 
   const getApprovalIndicator = (canIApproveIt: boolean, aprobadas: boolean | null, isMyVacations: boolean): string => {
     if (canIApproveIt) return '🟢';
@@ -39,7 +45,7 @@ export default function useVacaciones() {
   };
 
   const createEvent = useCallback(
-    (id: string, email: string, index: number, thisVacaciones: VacacionesType) => {
+    (id: string, email: string, index: number, thisVacaciones: VacacionesType): EventInput => {
       const isMyVacations = id === user.id;
       const {rangoFechas, aprobadas, approver} = thisVacaciones;
       const {status, statusCopy} = getStatus(aprobadas, isMyVacations);
@@ -78,15 +84,34 @@ export default function useVacaciones() {
   }, [createEvent, user.email, user.id, users]);
 
   const events: EventInput[] = useMemo(() => {
-    if (canAprobarVacaciones) return allVacationsEvents;
-    return myVacationsOnlyEvents;
-  }, [allVacationsEvents, myVacationsOnlyEvents, canAprobarVacaciones]);
+    if (!canAprobarVacaciones || isCheckedOnlyMyVacations) {
+      return myVacationsOnlyEvents;
+    }
+    if (isCheckedPendingVacations) {
+      return allVacationsEvents.filter((event) => {
+        const {aprobadas} = event.extendedProps as VacacionesType;
+        return aprobadas === null;
+      });
+    }
+    return allVacationsEvents;
+  }, [
+    allVacationsEvents,
+    canAprobarVacaciones,
+    isCheckedOnlyMyVacations,
+    isCheckedPendingVacations,
+    myVacationsOnlyEvents
+  ]);
 
   return {
     events,
     users,
     user,
     isLoadingUsers,
-    canAprobarVacaciones
+    canAprobarVacaciones,
+    handleSwitchChange,
+    handleSwitchChangePendingVacations,
+    getEmployeesSync,
+    isCheckedOnlyMyVacations,
+    isCheckedPendingVacations
   };
 }

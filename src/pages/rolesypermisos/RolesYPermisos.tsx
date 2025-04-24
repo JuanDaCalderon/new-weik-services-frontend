@@ -26,7 +26,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
   const user = useAppSelector(selectUser);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const employeesUnsubscribe = getEmployeesListener();
     const rolesUnsubscribe = getRolesListener();
     const permisosUnsubscribe = getPermisosListener();
@@ -35,7 +35,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
       rolesUnsubscribe();
       permisosUnsubscribe();
     };
-  }, [getEmployeesListener, getPermisosListener, getRolesListener]); */
+  }, [getEmployeesListener, getPermisosListener, getRolesListener]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoRoles, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
