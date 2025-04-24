@@ -12,7 +12,7 @@ const UserRolesYPermisos = () => {
 
   return (
     <Card>
-      <Card.Body>
+      <Card.Body id="user-roles-permisos">
         <Tab.Container defaultActiveKey="Roles">
           <Nav variant="tabs">
             {tabContents.map((tab, index) => (

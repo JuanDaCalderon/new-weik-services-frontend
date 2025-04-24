@@ -10,7 +10,7 @@ const PasswordBox = memo(function PasswordBox() {
   return (
     <Card>
       <Card.Body>
-        <div className="text-start position-relative">
+        <div className="text-start position-relative" id="user-password-box">
           <Form.Label className="text-dark cursor-pointer mb-0 mt-1" htmlFor="password">
             <strong>Nueva contraseña:</strong>
           </Form.Label>

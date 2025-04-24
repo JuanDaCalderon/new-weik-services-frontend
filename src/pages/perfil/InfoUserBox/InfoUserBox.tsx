@@ -90,7 +90,7 @@ const InfoUserBox = () => {
             reverse
             className="cursor-pointer position-absolute top-0 end-0"
             type="switch"
-            id="custom-switch"
+            id="user-info-switch"
             label={<i className={`mdi mdi-wrench cursor-pointer ${isChecked && 'text-primary'}`}></i>}
             checked={isChecked}
             onChange={handleSwitchChange}
