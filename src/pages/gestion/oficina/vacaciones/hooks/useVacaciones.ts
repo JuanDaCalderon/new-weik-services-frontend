@@ -84,7 +84,7 @@ export default function useVacaciones() {
   }, [createEvent, user.email, user.id, users]);
 
   const events: EventInput[] = useMemo(() => {
-    if (!canAprobarVacaciones || isCheckedOnlyMyVacations) {
+    if (isCheckedOnlyMyVacations) {
       return myVacationsOnlyEvents;
     }
     if (isCheckedPendingVacations) {
@@ -94,13 +94,7 @@ export default function useVacaciones() {
       });
     }
     return allVacationsEvents;
-  }, [
-    allVacationsEvents,
-    canAprobarVacaciones,
-    isCheckedOnlyMyVacations,
-    isCheckedPendingVacations,
-    myVacationsOnlyEvents
-  ]);
+  }, [allVacationsEvents, isCheckedOnlyMyVacations, isCheckedPendingVacations, myVacationsOnlyEvents]);
 
   return {
     events,

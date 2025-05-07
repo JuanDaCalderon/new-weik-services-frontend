@@ -13,7 +13,7 @@ import {updateWorkingHoursUser} from '@/store/slices/user';
 export default function useCheckOut() {
   const [isSavingCheckOut, setIsSavingCheckOut] = useState(false);
   const user = useAppSelector(selectUser);
-  const todayDate = new Date().toLocaleDateString();
+  const todayDate = new Date().toLocaleDateString('es-ES');
   const dispatch = useDispatch();
 
   const checkOut = useCallback(async (): Promise<void> => {

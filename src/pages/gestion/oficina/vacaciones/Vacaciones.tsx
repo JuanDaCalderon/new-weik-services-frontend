@@ -314,27 +314,25 @@ const Vacaciones = memo(function Vacaciones() {
                 </ul>
               </div>
               <hr />
+              <Form.Check
+                reverse
+                className="cursor-pointer"
+                type="switch"
+                id="mis vacaciones"
+                label="Mostrar solo mis vacaciones"
+                checked={isCheckedOnlyMyVacations}
+                onChange={handleSwitchChange}
+              />
               {canAprobarVacaciones && (
-                <>
-                  <Form.Check
-                    reverse
-                    className="cursor-pointer"
-                    type="switch"
-                    id="mis vacaciones"
-                    label="Mostrar solo mis vacaciones"
-                    checked={isCheckedOnlyMyVacations}
-                    onChange={handleSwitchChange}
-                  />
-                  <Form.Check
-                    reverse
-                    className="cursor-pointer mt-1"
-                    type="switch"
-                    id="vacaciones pendientes"
-                    label="Mostrar las vacaciones pendientes"
-                    checked={isCheckedPendingVacations}
-                    onChange={handleSwitchChangePendingVacations}
-                  />
-                </>
+                <Form.Check
+                  reverse
+                  className="cursor-pointer mt-1"
+                  type="switch"
+                  id="vacaciones pendientes"
+                  label="Mostrar las vacaciones pendientes"
+                  checked={isCheckedPendingVacations}
+                  onChange={handleSwitchChangePendingVacations}
+                />
               )}
             </Col>
             <Col xl={10}>

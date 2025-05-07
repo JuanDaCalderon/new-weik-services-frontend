@@ -189,6 +189,56 @@ class DateUtils {
           hour12: false
         });
   };
+
+  /**
+   * Devuelve la fecha actual en formato Date o como string formateado.
+   *
+   * @param {boolean} [returnAsDate=true] - Si es `true`, retorna un objeto `Date`. Si es `false`, retorna una cadena formateada.
+   * @param {boolean} [longFormatDate=true] - Si es `true`, retorna la fecha en formato largo. Si es `false`, retorna en formato corto.
+   * @param {boolean} [includeTime=true] - Si es `true`, incluye la hora en el formato. Si es `false`, solo la fecha.
+   * @returns {Date | string} La fecha actual, como objeto Date o string formateado, según los parámetros.
+   */
+  static getCurrentDate = (
+    returnAsDate: boolean = true,
+    longFormatDate: boolean = true,
+    includeTime: boolean = true
+  ): Date | string => {
+    const currentDate = new Date();
+    return returnAsDate
+      ? currentDate
+      : longFormatDate
+        ? DateUtils.formatLongDate(currentDate, includeTime)
+        : DateUtils.formatShortDate(currentDate, includeTime);
+  };
+
+  /**
+   * Verifica si una fecha está dentro del rango especificado.
+   * @param rangoFechas - Array con dos strings de fechas: [inicio, fin]
+   * @param fecha - Fecha a verificar (por defecto es hoy)
+   * @returns true si la fecha está dentro del rango (inclusive), false en caso contrario
+   */
+  static isDateInRange(rangoFechas: [string, string], fecha: Date = new Date()): boolean {
+    const [startStr, endStr] = rangoFechas;
+    const start = new Date(startStr);
+    const end = new Date(endStr);
+    const fechaNormalizada = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
+    return fechaNormalizada >= start && fechaNormalizada <= end;
+  }
+
+  /**
+   * Convierte un string de fecha en formato 'dd/mm/yyyy' (locale 'es') a un objeto Date.
+   * @param dateStr - Cadena con formato 'día/mes/año', como '6/5/2025'
+   * @returns Objeto Date correspondiente o `Invalid Date` si el formato es incorrecto
+   */
+  static parseLocaleDateString(dateStr: string): Date {
+    const parts = dateStr.split('/');
+    if (parts.length !== 3) return new Date(NaN);
+    const [day, month, year] = parts.map(Number);
+    if (isNaN(day) || isNaN(month) || isNaN(year) || day < 1 || day > 31 || month < 1 || month > 12) {
+      return new Date(NaN);
+    }
+    return new Date(year, month - 1, day); // El mes es 0-indexado
+  }
 }
 
 export {DateUtils};

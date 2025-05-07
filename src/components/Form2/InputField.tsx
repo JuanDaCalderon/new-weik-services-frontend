@@ -1,8 +1,8 @@
 import {InputHTMLAttributes} from 'react';
-import {Col, Form} from 'react-bootstrap';
+import {Col, Form, Row} from 'react-bootstrap';
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   error?: string;
   helperText?: string;
   xs?: number;
@@ -13,6 +13,8 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   xxl?: number;
   controlSize?: 'sm' | 'lg' | undefined;
   as?: 'input' | 'textarea' | undefined;
+  bottomMargin?: 0 | 1 | 2 | 3 | 4 | 5;
+  labelPosition?: 'top' | 'left' | 'right';
 }
 
 /**
@@ -39,25 +41,46 @@ export function InputField({
   xxl,
   controlSize = 'sm',
   as,
+  bottomMargin = 2,
+  labelPosition = 'top',
   ...props
 }: InputFieldProps) {
+  const renderInput = () => (
+    <Form.Control
+      {...{
+        ...props,
+        id: label,
+        size: controlSize,
+        value: props.value as string | number | string[] | undefined,
+        placeholder: props.placeholder ?? label
+      }}
+      as={as}
+      isInvalid={!!error}
+    />
+  );
+
+  const renderLabel = (labelMargin: 0 | 1 | 2 | 3 | 4 | 5 = 1) =>
+    label && (
+      <Form.Label htmlFor={label} className={`mb-${labelMargin}`}>
+        <strong>{label}</strong>
+      </Form.Label>
+    );
+
   return (
     <Col xs={xs} sm={sm} md={md} lg={lg} xl={xl} xxl={xxl}>
-      <Form.Group className="mb-2">
-        <Form.Label htmlFor={label} className="mb-1">
-          <strong>{label}</strong>
-        </Form.Label>
-        <Form.Control
-          {...{
-            ...props,
-            id: label,
-            size: controlSize,
-            value: props.value as string | number | string[] | undefined,
-            placeholder: props.placeholder ? props.placeholder : label
-          }}
-          as={as}
-          isInvalid={!!error}
-        />
+      <Form.Group className={`mb-${bottomMargin}`}>
+        {labelPosition === 'top' ? (
+          <>
+            {renderLabel()}
+            {renderInput()}
+          </>
+        ) : (
+          <Row className="align-items-center justify-content-end">
+            {labelPosition === 'left' && <Col xs="auto">{renderLabel(0)}</Col>}
+            <Col xs="auto">{renderInput()}</Col>
+            {labelPosition === 'right' && <Col xs="auto">{renderLabel(0)}</Col>}
+          </Row>
+        )}
         <Form.Text className={error ? 'text-danger' : 'text-muted'}>{error || helperText}</Form.Text>
       </Form.Group>
     </Col>

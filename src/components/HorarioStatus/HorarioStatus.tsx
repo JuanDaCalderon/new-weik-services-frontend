@@ -8,7 +8,7 @@ import {Toaster} from 'react-hot-toast';
 import {TOAST_DURATION} from '@/constants';
 
 const HorarioStatus = memo(function HorarioStatus() {
-  const todayDate = new Date().toLocaleDateString();
+  const todayDate = new Date().toLocaleDateString('es-ES');
   const user = useAppSelector(selectUser);
   const {checkIn, isSavingCheckIn} = useCheckIn();
   const {checkOut, isSavingCheckOut} = useCheckOut();

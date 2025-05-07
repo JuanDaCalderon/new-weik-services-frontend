@@ -108,6 +108,10 @@ export interface User extends Employee {
   token: string;
 }
 
+export interface EmployeeWithFilterDate extends Employee {
+  filterDate: string;
+}
+
 export type PayLoadUserType = {
   user: User;
   domain: string;
