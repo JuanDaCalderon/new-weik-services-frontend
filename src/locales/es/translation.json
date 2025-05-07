@@ -1,0 +1,15 @@
+{
+    "language.english": "Inglés",
+    "language.spanish": "Español",
+    "login.subheader": "Ingresa tu dirección de correo y contraseña para poder acceder.",
+    "home.title": "Inicio",
+    "home.clients": "Clientes",
+    "home.crear_clients": "Crear cliente",
+    "home.crear_user": "Crear usuario",
+    "home.crear_roles_permisos": "Roles y permisos",
+    "home.news": "Noticias",
+    "home.calendar": "Calendario",
+    "home.vacations": "Vacaciones",
+    "home.reports": "Reportes",
+    "home.requests": "Solicitudes"
+}

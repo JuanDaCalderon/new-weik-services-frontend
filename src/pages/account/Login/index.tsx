@@ -8,8 +8,10 @@ import toast, {Toaster} from 'react-hot-toast';
 import {useEffect} from 'react';
 import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores';
+import {useTranslation} from 'react-i18next';
 
 export default function Login() {
+  const {t} = useTranslation();
   const {loading, login} = useLogin();
   const isLoggedIn = useAppSelector(isUserLoggedInSelector);
   useEffect(() => {
@@ -20,9 +22,7 @@ export default function Login() {
     <AccountWrapper>
       <div className="text-center w-75 m-auto">
         <h4 className="text-dark text-center fw-bold">Ingresar</h4>
-        <p className="text-dark text-opacity-75">
-          Ingresa tu dirección de correo y contraseña del portal WEIK para poder acceder.
-        </p>
+        <p className="text-dark text-opacity-75">{t('login.subheader')}</p>
       </div>
       <Form<LoginFormFields>
         onSubmit={login}

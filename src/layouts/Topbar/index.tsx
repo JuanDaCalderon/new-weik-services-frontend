@@ -11,6 +11,7 @@ import {TopbarProps} from '@/types';
 import {hasPermission, LocalStorageUtil} from '@/utils';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
+import {LanguageDropdown} from '@/components';
 
 const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
   const user = useAppSelector(selectUser);
@@ -63,6 +64,9 @@ const Topbar = ({toggleMenu, navOpen}: TopbarProps) => {
           </button>
         </div>
         <ul className="topbar-menu d-flex align-items-center gap-3">
+          <li className="dropdown">
+            <LanguageDropdown />
+          </li>
           {canSeeApps && (
             <li className="dropdown d-none d-sm-inline-block">
               <AppsDropdown />

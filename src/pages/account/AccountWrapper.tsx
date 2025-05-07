@@ -1,7 +1,7 @@
 import {ReactNode, memo} from 'react';
 import {Card, Col, Container, Row, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {BGCircles} from '@/components';
+import {BGCircles, LanguageDropdown} from '@/components';
 import Logo from '@/assets/images/logo.png';
 import {DEFAULT_ROUTER_PATH, year} from '@/constants';
 
@@ -30,6 +30,9 @@ function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
             </Col>
           </Row>
         </Container>
+        <div className="position-absolute top-0 end-0 mt-2 me-2">
+          <LanguageDropdown />
+        </div>
       </div>
       <footer className="footer footer-alt">{year} © Weik Motion Studio - weikstudio.com</footer>
     </>

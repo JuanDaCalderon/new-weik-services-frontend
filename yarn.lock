@@ -827,6 +827,11 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.23.2", "@babel/runtime@^7.25.0", "@babel/runtime@^7.26.10":
+  version "7.27.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.1.tgz#9fce313d12c9a77507f264de74626e87fd0dc541"
+  integrity sha512-1x3D2xEk2fRo3PAhwQwu5UubzgiVWSXTBfWpVd2Mx2AzRqJuDJCsgaDVZ7HB5iGzDW1Hl1sWN2mFyKjmR9uAog==
+
 "@babel/template@^7.25.9":
   version "7.25.9"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.25.9.tgz#ecb62d81a8a6f5dc5fe8abfc3901fc52ddf15016"
@@ -4597,6 +4602,13 @@ html-entities@^2.5.2:
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.6.0.tgz#7c64f1ea3b36818ccae3d3fb48b6974208e984f8"
   integrity sha512-kig+rMn/QOVRvr7c86gQ8lWXq+Hkv6CbAH1hLu+RG338StTpE8Z0b44SDVaqVu7HGKf27frdmUYEs9hTUX/cLQ==
 
+html-parse-stringify@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz#dfc1017347ce9f77c8141a507f233040c59c55d2"
+  integrity sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==
+  dependencies:
+    void-elements "3.1.0"
+
 http-parser-js@>=0.5.1:
   version "0.5.8"
   resolved "https://registry.yarnpkg.com/http-parser-js/-/http-parser-js-0.5.8.tgz#af23090d9ac4e24573de6f6aecc9d84a48bf20e3"
@@ -4626,6 +4638,20 @@ https-proxy-agent@^7.0.1:
   dependencies:
     agent-base "^7.1.2"
     debug "4"
+
+i18next-browser-languagedetector@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/i18next-browser-languagedetector/-/i18next-browser-languagedetector-8.1.0.tgz#e7fcc1084e9ca8fece329c8c05b000a6e25bd82e"
+  integrity sha512-mHZxNx1Lq09xt5kCauZ/4bsXOEA2pfpwSoU11/QTJB+pD94iONFwp+ohqi///PwiFvjFOxe1akYCdHyFo1ng5Q==
+  dependencies:
+    "@babel/runtime" "^7.23.2"
+
+i18next@^25.1.1:
+  version "25.1.1"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-25.1.1.tgz#113e7773697d300e7e824185f766362eceb8dc61"
+  integrity sha512-FZcp3vk3PXc8onasbsWYahfeDIWX4LkKr4vd01xeXrmqyNXlVNtVecEIw2K1o8z3xYrHMcd1bwYQub+3g7zqCw==
+  dependencies:
+    "@babel/runtime" "^7.26.10"
 
 idb@7.1.1, idb@^7.0.1:
   version "7.1.1"
@@ -6002,6 +6028,14 @@ react-hot-toast@^2.4.1:
   dependencies:
     goober "^2.1.10"
 
+react-i18next@^15.5.1:
+  version "15.5.1"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.5.1.tgz#ceada755a0b6691432b6b6dc5dad454fd3d158e3"
+  integrity sha512-C8RZ7N7H0L+flitiX6ASjq9p5puVJU1Z8VyL3OgM/QOMRf40BMZX+5TkpxzZVcTmOLPX5zlti4InEX5pFyiVeA==
+  dependencies:
+    "@babel/runtime" "^7.25.0"
+    html-parse-stringify "^3.0.1"
+
 react-innertext@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/react-innertext/-/react-innertext-1.1.5.tgz#8147ac54db3f7067d95f49e2d2c05a720d27d8d0"
@@ -7369,6 +7403,11 @@ vite@^6.0.2:
     rollup "^4.23.0"
   optionalDependencies:
     fsevents "~2.3.3"
+
+void-elements@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
+  integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
 
 warning@^4.0.0, warning@^4.0.1, warning@^4.0.2, warning@^4.0.3:
   version "4.0.3"

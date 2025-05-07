@@ -22,6 +22,7 @@ import {permisosSelector, rolesSelector, selectClientes, selectUser} from '@/sto
 import {hasPermission} from '@/utils';
 import {memo, useEffect, useMemo} from 'react';
 import {Card, Col, Dropdown, Row} from 'react-bootstrap';
+import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
 const Home = memo(function Home() {
@@ -31,6 +32,7 @@ const Home = memo(function Home() {
   const roles = useAppSelector(rolesSelector);
   const permisos = useAppSelector(permisosSelector);
   const user = useAppSelector(selectUser);
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (clientes.length <= 0) getClientesSync();
@@ -83,7 +85,7 @@ const Home = memo(function Home() {
 
   return (
     <ToastWrapper>
-      <PageBreadcrumb title="Home" />
+      <PageBreadcrumb title={t('home.title')} />
 
       <Row>
         <TableroNoticias />
@@ -91,7 +93,7 @@ const Home = memo(function Home() {
         <Col className="px-0 px-lg-2">
           <Card>
             <Card.Header className="pb-0">
-              <h4 className="header-title text-dark text-opacity-75 m-0">Home</h4>
+              <h4 className="header-title text-dark text-opacity-75 m-0">{t('home.title')}</h4>
             </Card.Header>
             <Card.Body>
               <HomeHeader />
@@ -100,7 +102,7 @@ const Home = memo(function Home() {
                   <Dropdown>
                     <Dropdown.Toggle as={Link} to="#" className="btn btn-sm btn-primary w-100">
                       <i className="mdi mdi-account-supervisor" />
-                      Clientes
+                      {t('home.clients')}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       {clientes.map((cliente, index) => {
@@ -117,7 +119,7 @@ const Home = memo(function Home() {
                       to={`${GESTION_CLIENTES_MENU_KEY}?option=${TABS_CLIENTES_CREAR}`}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-account-multiple-plus" /> Crear cliente
+                      <i className="mdi mdi-account-multiple-plus" /> {t('home.crear_clients')}
                     </Link>
                   )}
                   {canCrearUsuarios && (
@@ -125,7 +127,7 @@ const Home = memo(function Home() {
                       to={`${GESTION_USUARIOS_MENU_KEY}?option=${TABS_USUARIOS_CREAR}`}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-account-box-multiple-outline" /> Crear usuario
+                      <i className="mdi mdi-account-box-multiple-outline" /> {t('home.crear_user')}
                     </Link>
                   )}
                   {canAccesoRoles && (
@@ -133,7 +135,7 @@ const Home = memo(function Home() {
                       to={ROLESYPERMISOS_MENU_KEY}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-cog" /> Roles y permisos
+                      <i className="mdi mdi-cog" /> {t('home.crear_roles_permisos')}
                     </Link>
                   )}
                   {canAccesoNoticias && (
@@ -141,7 +143,7 @@ const Home = memo(function Home() {
                       to={GESTION_NOTICIAS_MENU_KEY}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-newspaper" /> Noticias
+                      <i className="mdi mdi-newspaper" /> {t('home.news')}
                     </Link>
                   )}
                   {canAccesoCalendario && (
@@ -149,7 +151,7 @@ const Home = memo(function Home() {
                       to={GESTION_OFICINA_CALENDARIO_MENU_KEY}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-hours-24" /> Calendario
+                      <i className="mdi mdi-hours-24" /> {t('home.calendar')}
                     </Link>
                   )}
                   {canAccesoVacaciones && (
@@ -157,7 +159,7 @@ const Home = memo(function Home() {
                       to={GESTION_OFICINA_VACACIONES_MENU_KEY}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-beach" /> Vacaciones
+                      <i className="mdi mdi-beach" /> {t('home.vacations')}
                     </Link>
                   )}
                   {canAccesoReportes && (
@@ -165,7 +167,7 @@ const Home = memo(function Home() {
                       to={GESTION_OFICINA_REPORTES_MENU_KEY}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-chart-bar-stacked" /> Reportes
+                      <i className="mdi mdi-chart-bar-stacked" /> {t('home.reports')}
                     </Link>
                   )}
                   {canAccesoSolicitudes && (
@@ -173,7 +175,7 @@ const Home = memo(function Home() {
                       to={GESTION_OFICINA_SOLICITUDES_MENU_KEY}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-file-document-edit-outline" /> Solicitudes
+                      <i className="mdi mdi-file-document-edit-outline" /> {t('home.requests')}
                     </Link>
                   )}
                 </Col>

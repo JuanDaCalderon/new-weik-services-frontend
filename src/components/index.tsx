@@ -22,3 +22,4 @@ export {default as Spinner} from './Spinner';
 export {default as Rating} from './Rating';
 export {default as Timeline} from './Timeline';
 export {default as TimelineItem} from './TimelineItem';
+export {default as LanguageDropdown} from './LanguageDropdown';
