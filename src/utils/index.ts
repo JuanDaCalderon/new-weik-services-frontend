@@ -18,3 +18,4 @@ export * from './cookies';
 export * from './uuid';
 export * from './filters';
 export * from './status';
+export * from './horario';

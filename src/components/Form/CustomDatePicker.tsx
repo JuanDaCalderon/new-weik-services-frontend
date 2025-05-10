@@ -70,6 +70,7 @@ type HyperDatepickerProps = {
   showTimeSelectOnly?: boolean;
   monthsShown?: number;
   inline?: boolean;
+  showMonthYearPicker?: boolean;
 };
 
 const CustomDatePicker = (props: HyperDatepickerProps) => {
@@ -100,6 +101,7 @@ const CustomDatePicker = (props: HyperDatepickerProps) => {
         showTimeSelectOnly={props.showTimeSelectOnly}
         inline={props.inline}
         autoComplete="off"
+        showMonthYearPicker={props.showMonthYearPicker}
       />
     </>
   );

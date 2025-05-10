@@ -1,4 +1,18 @@
 const START_HOUR = 6;
+const monthNames = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre'
+];
 class DateUtils {
   /**
    * Convierte un Date a formato 'YYYY/MM/DD, HH:MM:SS GMT-Z'
@@ -66,25 +80,21 @@ class DateUtils {
   /** Devuelve la fecha en formato largo (en español), con o sin la hora incluida */
   static formatLongDate(date: Date, includeTime: boolean = false): string {
     const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    const monthNames = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre'
-    ];
     const dayName = dayNames[date.getDay()];
     const monthName = monthNames[date.getMonth()];
     const formattedDate: string = `${dayName}, ${date.getDate()} de ${monthName} de ${date.getFullYear()}`;
     if (includeTime) return `${formattedDate}, ${DateUtils.getTimeOnly(date)}`;
     return formattedDate;
+  }
+
+  /**
+   * Devuelve el nombre del mes en español a partir de una fecha.
+   *
+   * @param {Date} fecha - Fecha desde la cual se quiere obtener el mes.
+   * @returns {string} - Nombre del mes en español (ej. "Enero").
+   */
+  static getMonth(fecha: Date): string {
+    return monthNames[fecha.getMonth()];
   }
 
   /** Devuelve la fecha en formato corto (en español), con o sin la hora incluida */

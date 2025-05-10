@@ -4,9 +4,10 @@
 
 // Pagination rounded (Custom)
 .pagination-rounded {
-    .page-link {
-        border-radius: 30px !important;
-        margin: 0 3px !important;
-        border: none;
-    }
+  .page-link {
+    border-radius: 30px !important;
+    margin: 0 3px !important;
+    border: none;
+    z-index: 0;
+  }
 }

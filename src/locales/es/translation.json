@@ -11,5 +11,6 @@
     "home.calendar": "Calendario",
     "home.vacations": "Vacaciones",
     "home.reports": "Reportes",
-    "home.requests": "Solicitudes"
+    "home.requests": "Solicitudes",
+    "reportes.asistencia.dates": "Fechas"
 }

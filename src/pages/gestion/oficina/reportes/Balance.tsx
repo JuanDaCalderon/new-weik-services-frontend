@@ -36,7 +36,7 @@ const Balance = memo(function Balance() {
           <h4 className="header-title text-dark text-opacity-75">Balance</h4>
         </Col>
         <Col className="d-flex justify-content-end align-items-center m-0 p-0">
-          <label className="p-0 my-0 ms-0 me-1"> Fecha</label>
+          <label className="p-0 my-0 ms-0 me-1">Fecha</label>
           <CustomDatePicker hideAddon={false} value={filterDate} onChange={(date) => setFilterDate(date)} />
         </Col>
       </Row>

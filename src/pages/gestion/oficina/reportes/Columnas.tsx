@@ -9,6 +9,8 @@ import {DateUtils, getNombreCompletoUser} from '@/utils';
 import {ESTADOS, RIBBONTYPES} from '@/constants';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
+import {Asistencia} from './Asistencia';
+import {Retroalimentacion} from './Retroalimentacion';
 
 function getHorasTrabajoDelDia(filterDate?: string, horasTrabajo: HorasTrabajoType[] = []): HorasTrabajoType | null {
   const thisFilterDate = filterDate || new Date().toLocaleDateString('es-ES');
@@ -142,7 +144,6 @@ const TotalTrabajadoExtraColumn = memo(function BreakColumn({row}: {row: Row<Emp
 const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<EmployeeWithFilterDate>}) {
   const {show: showReporte, isOpen: isOpenReporte, toggle: toggleReporte} = useTogglev2();
   const {show: showFeedback, isOpen: isOpenFeedback, toggle: toggleFeedback} = useTogglev2();
-
   return (
     <>
       <div className="d-flex gap-1">
@@ -165,7 +166,7 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
         headerText={`Reporte de asistencia de ${row.original.email}`}
         showSendButton={false}
         secondaryText="Cancelar"
-        body={<></>}
+        body={<Asistencia employee={row.original}></Asistencia>}
       />
       <GenericModal
         show={isOpenFeedback}
@@ -174,7 +175,7 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
         headerText={`Evaluar a ${row.original.email}`}
         submitText="Enviar"
         secondaryText="Cancelar"
-        body={<></>}
+        body={<Retroalimentacion employee={row.original}></Retroalimentacion>}
       />
     </>
   );
