@@ -13,3 +13,4 @@ export * from './clock';
 export * from './noticias';
 export * from './apps';
 export * from './eventos';
+export * from './pdfAndExcel';

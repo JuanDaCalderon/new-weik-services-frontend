@@ -89,17 +89,14 @@ export function calcularHorasExtras(
 }
 
 /**
- * Obtiene los días de vacaciones aprobadas que caen dentro de un mes específico.
+ * Obtiene los días de vacaciones aprobadas que caen dentro de un mes o rango específico.
  *
  * @param {VacacionesType[]} vacaciones - Arreglo de vacaciones, cada una con un rango de fechas y estado.
- * @param {Date} fechaMes - Fecha del mes objetivo (por ejemplo: new Date('2025-05-01')).
- * @returns {string[]} - Arreglo de días en formato "d/m/yyyy" que son vacaciones aprobadas y están dentro del mes.
+ * @param {Date | [Date, Date]} filtro - Fecha del mes objetivo o un rango de fechas [desde, hasta].
+ * @returns {string[]} - Arreglo de días en formato "d/m/yyyy" que son vacaciones aprobadas y están dentro del filtro.
  */
-export function obtenerDiasVacacionesDelMes(vacaciones: VacacionesType[], fechaMes: Date): string[] {
-  const year = fechaMes.getFullYear();
-  const month = fechaMes.getMonth();
-  const primerDiaDelMes = new Date(year, month, 1);
-  const ultimoDiaDelMes = new Date(year, month + 1, 0);
+export function obtenerDiasVacaciones(vacaciones: VacacionesType[], filtro: Date | [Date, Date]): string[] {
+  const [desde, hasta] = obtenerRangoDesdeFiltro(filtro);
   const diasDeVacaciones: string[] = [];
   vacaciones
     .filter((v) => v.aprobadas === true && Array.isArray(v.rangoFechas) && v.rangoFechas.length === 2)
@@ -108,8 +105,7 @@ export function obtenerDiasVacacionesDelMes(vacaciones: VacacionesType[], fechaM
       const fin = new Date(v.rangoFechas[1]);
       let actual = new Date(inicio);
       while (actual <= fin) {
-        const dentroDelMes = actual >= primerDiaDelMes && actual <= ultimoDiaDelMes;
-        if (dentroDelMes) {
+        if (actual >= desde && actual <= hasta) {
           const dia = actual.getDate();
           const mes = actual.getMonth() + 1;
           const anio = actual.getFullYear();
