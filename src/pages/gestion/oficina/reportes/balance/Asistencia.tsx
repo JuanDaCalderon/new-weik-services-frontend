@@ -3,7 +3,6 @@ import ReactTable from '@/components/table/ReactTable';
 import {ExportColumn, EmployeeWithFilterDate, HorasTrabajoType} from '@/types';
 import {memo, useCallback, useMemo, useState} from 'react';
 import type {ColumnDef} from '@tanstack/react-table';
-import type {Row as RowType} from '@tanstack/react-table';
 import {
   calcularHorasExtras,
   calcularHorasTrabajadas,
@@ -19,7 +18,7 @@ import {useTranslation} from 'react-i18next';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {PDFViewer} from '@react-pdf/renderer';
 
-type asistenciDataType = {
+type AsistenciaDataType = {
   fecha: string;
   checkIn: string;
   checkOut: string;
@@ -27,117 +26,67 @@ type asistenciDataType = {
   horasDeTrabajoExtra: string;
 };
 
-export const asistenciaColumnsPdf: ExportColumn<asistenciDataType>[] = [
-  {
-    field: 'fecha',
-    header: 'Fecha'
-  },
-  {
-    field: 'checkIn',
-    header: 'Entrada'
-  },
-  {
-    field: 'checkOut',
-    header: 'Salida'
-  },
-  {
-    field: 'horasDeTrabajo',
-    header: 'Total trabajado'
-  },
-  {
-    field: 'horasDeTrabajoExtra',
-    header: 'Total extras'
-  }
+export const asistenciaColumnsPdf: ExportColumn<AsistenciaDataType>[] = [
+  {field: 'fecha', header: 'Fecha'},
+  {field: 'checkIn', header: 'Entrada'},
+  {field: 'checkOut', header: 'Salida'},
+  {field: 'horasDeTrabajo', header: 'Total trabajado'},
+  {field: 'horasDeTrabajoExtra', header: 'Total extras'}
 ];
 
-const HoraColumn = memo(function HoraColumn({
-  horasTrabajo,
-  type
+const HoraColumn = memo(function HoraColumn({hora}: {hora: string | undefined | null}) {
+  return <span>{hora ? DateUtils.getTimeOnly(new Date(hora), false) : '-'}</span>;
+});
+
+const DuracionColumn = memo(function DuracionColumn({
+  horas,
+  minutos,
+  visible
 }: {
-  horasTrabajo: HorasTrabajoType;
-  type: 'checkIn' | 'checkOut';
+  horas: string | number;
+  minutos: string | number;
+  visible: boolean;
 }) {
-  const hora = horasTrabajo?.[type];
-  return (
-    <div className="d-flex">
-      <span className="m-0 lh-sm d-inline">
-        {hora ? <span>{DateUtils.getTimeOnly(new Date(hora), false)}</span> : <span>-</span>}
-      </span>
-    </div>
-  );
-});
-
-const EntradaColumn = memo(function EntradaColumn({row}: {row: RowType<HorasTrabajoType>}) {
-  return <HoraColumn horasTrabajo={row.original} type="checkIn" />;
-});
-
-const SalidaColumn = memo(function SalidaColumn({row}: {row: RowType<HorasTrabajoType>}) {
-  return <HoraColumn horasTrabajo={row.original} type="checkOut" />;
-});
-
-const TotalTrabajadoColumn = memo(function BreakColumn({row}: {row: RowType<HorasTrabajoType>}) {
-  return (
-    <div className="d-flex">
-      <span className="m-0 lh-sm d-inline">
-        {row.original.checkOut ? (
-          <span>
-            {row.original.horasDeTrabajo} Hs : {row.original.minutosDeTrabajo} Min
-          </span>
-        ) : (
-          <span>-</span>
-        )}
-      </span>
-    </div>
-  );
-});
-
-const TotalTrabajadoExtraColumn = memo(function BreakColumn({row}: {row: RowType<HorasTrabajoType>}) {
-  return (
-    <div className="d-flex">
-      <span className="m-0 lh-sm d-inline">
-        {row.original.checkOut ? (
-          <span>
-            {row.original.horasDeTrabajoExtra} Hs : {row.original.minutosDeTrabajoExtra} Min
-          </span>
-        ) : (
-          <span>-</span>
-        )}
-      </span>
-    </div>
-  );
+  return <span>{visible ? `${horas} Hs : ${minutos} Min` : '-'}</span>;
 });
 
 const columns: ColumnDef<HorasTrabajoType>[] = [
   {
     header: 'Fecha',
     accessorKey: 'dia',
-    cell: ({row}) => (
-      <div className="d-flex">
-        <span className="m-0 lh-sm d-inline">
-          {DateUtils.formatShortDate(new Date(row.original.dia.split('/').reverse().join('/')))}
-        </span>
-      </div>
-    )
+    cell: ({row}) => DateUtils.formatShortDate(new Date(row.original.dia.split('/').reverse().join('/')))
   },
   {
     header: 'Entrada',
     accessorKey: 'checkIn',
-    cell: EntradaColumn
+    cell: ({row}) => <HoraColumn hora={row.original.checkIn} />
   },
   {
     header: 'Salida',
     accessorKey: 'checkOut',
-    cell: SalidaColumn
+    cell: ({row}) => <HoraColumn hora={row.original.checkOut} />
   },
   {
     header: 'Total trabajado',
     accessorKey: 'horasDeTrabajo',
-    cell: TotalTrabajadoColumn
+    cell: ({row}) => (
+      <DuracionColumn
+        horas={row.original.horasDeTrabajo}
+        minutos={row.original.minutosDeTrabajo}
+        visible={!!row.original.checkOut}
+      />
+    )
   },
   {
     header: 'Total extras',
     accessorKey: 'horasDeTrabajoExtra',
-    cell: TotalTrabajadoExtraColumn
+    cell: ({row}) => (
+      <DuracionColumn
+        horas={row.original.horasDeTrabajoExtra}
+        minutos={row.original.minutosDeTrabajoExtra}
+        visible={!!row.original.checkOut}
+      />
+    )
   }
 ];
 
@@ -148,7 +97,7 @@ const Asistencia = memo(function Asistencia({employee}: {employee: EmployeeWithF
   const [pdf, setPdf] = useState<boolean>(false);
   const [filterMonth, setFilterMonth] = useState<Date>(new Date());
   const {dateRange, onDateChangeRange} = useDatePicker();
-  const {exportToExcel} = useExportToExcel<asistenciDataType>();
+  const {exportToExcel} = useExportToExcel<AsistenciaDataType>();
 
   const horasTrabajo = useMemo(() => {
     switch (filtroActivo) {
@@ -211,7 +160,7 @@ const Asistencia = memo(function Asistencia({employee}: {employee: EmployeeWithF
     }
   }, [dateRange, filterMonth, filtroActivo]);
 
-  const exportData: asistenciDataType[] = useMemo(() => {
+  const exportData: AsistenciaDataType[] = useMemo(() => {
     return horariosFiltered.map((horario) => ({
       fecha: DateUtils.formatShortDate(new Date(horario.dia.split('/').reverse().join('/'))),
       checkIn: horario.checkIn ? DateUtils.getTimeOnly(new Date(horario.checkIn), false) : '-',
@@ -351,12 +300,11 @@ const Asistencia = memo(function Asistencia({employee}: {employee: EmployeeWithF
           isSearchable
         />
       )}
-
       {horariosFiltered.length > 0 && exportData.length > 0 && pdf && (
         <Row className="mt-2">
           <Col>
             <PDFViewer style={{width: '100%', height: '40vh'}}>
-              <TablePdf<asistenciDataType>
+              <TablePdf<AsistenciaDataType>
                 columns={asistenciaColumnsPdf}
                 data={exportData}
                 title={`Asistencia de ${getNombreCompletoUser(employee)}`}
