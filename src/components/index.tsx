@@ -10,6 +10,7 @@ export * from './StatsWidgets';
 export * from './Messages';
 export * from './Buttons';
 export * from './Modals/GenericModal';
+export * from './UserColumnList';
 
 export {default as BGCircles} from './BGCircles';
 export {default as CardTitle} from './CardTitle';

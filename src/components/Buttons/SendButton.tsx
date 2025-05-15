@@ -1,8 +1,8 @@
-import {SendButtonProps} from '@/types';
 import {memo} from 'react';
 import {Button} from 'react-bootstrap';
 import {Spinner} from '@/components';
 
+type SendButtonProps = {loading: boolean; text: string};
 const SendButton = memo(function SendButton({loading, text}: SendButtonProps) {
   return (
     <div className="text-center">

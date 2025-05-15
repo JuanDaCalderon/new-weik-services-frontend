@@ -17,7 +17,7 @@ interface UserColumnProps {
   selectedUser: Employee | null;
 }
 
-export const UsersColumnList = memo(function UsersColumnList({
+const UsersColumnList = memo(function UsersColumnList({
   users,
   isLoadingUsers,
   onUserSelect,
@@ -116,3 +116,5 @@ export const UsersColumnList = memo(function UsersColumnList({
     </>
   );
 });
+
+export default UsersColumnList;

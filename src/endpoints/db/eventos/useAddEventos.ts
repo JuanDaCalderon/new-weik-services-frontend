@@ -4,7 +4,7 @@ import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
 import {EVENTOS_PATH} from '@/constants';
-import {Eventos, EventosToFirestore} from '@/types';
+import {Eventos, EventosToDb} from '@/types';
 
 export default function useAddEventos() {
   const [isSavingEvento, setIsSavingEvento] = useState<boolean>(false);
@@ -12,7 +12,7 @@ export default function useAddEventos() {
   const addEvento = useCallback(async (evento: Eventos): Promise<void> => {
     setIsSavingEvento(true);
     try {
-      const eventoToBd: EventosToFirestore = {
+      const eventoToBd: EventosToDb = {
         ...evento,
         rangoFechas: evento.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))
       };

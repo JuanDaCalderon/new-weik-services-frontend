@@ -5,7 +5,7 @@ import {useCallback} from 'react';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingEventos, clearEventos, setEventos} from '@/store/slices/eventos';
 import {EVENTOS_PATH} from '@/constants';
-import {Eventos, EventosToFirestore} from '@/types';
+import {Eventos, EventosToDb} from '@/types';
 
 export default function useGetEventos() {
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ export default function useGetEventos() {
         ...(doc.data() as Eventos),
         id: doc.id,
         rangoFechas: [
-          DateUtils.formatDateToString((doc.data() as EventosToFirestore).rangoFechas[0].toDate()),
-          DateUtils.formatDateToString((doc.data() as EventosToFirestore).rangoFechas[1].toDate())
+          DateUtils.formatDateToString((doc.data() as EventosToDb).rangoFechas[0].toDate()),
+          DateUtils.formatDateToString((doc.data() as EventosToDb).rangoFechas[1].toDate())
         ]
       }));
       dispatch(clearEventos());
@@ -43,8 +43,8 @@ export default function useGetEventos() {
             ...(doc.data() as Eventos),
             id: doc.id,
             rangoFechas: [
-              DateUtils.formatDateToString((doc.data() as EventosToFirestore).rangoFechas[0].toDate()),
-              DateUtils.formatDateToString((doc.data() as EventosToFirestore).rangoFechas[1].toDate())
+              DateUtils.formatDateToString((doc.data() as EventosToDb).rangoFechas[0].toDate()),
+              DateUtils.formatDateToString((doc.data() as EventosToDb).rangoFechas[1].toDate())
             ]
           });
         });

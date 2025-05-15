@@ -12,7 +12,7 @@ import {
   useUpdateHorario
 } from '@/endpoints';
 import {calendarEventoEventType, calendarHorarioEventType, Employee, Eventos, HorarioType, Option} from '@/types';
-import {UsersColumnList} from './UsersColumnList';
+import {UsersColumnList} from '@/components';
 import {
   areStringArraysEqual,
   DateUtils,
@@ -40,10 +40,10 @@ import {Navigate} from 'react-router-dom';
 import useCalendario from './hooks/useCalendario';
 
 const Calendario = memo(function Calendario() {
-  const [user, setUser] = useState<Employee[]>([]);
+  const [usersFiltered, setusersFiltered] = useState<Employee[]>([]);
+  const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
   const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType>();
   const [thisEventoEvent, setThisEventoEvent] = useState<calendarEventoEventType>();
-  const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
   const [eventType, setEventType] = useState<EVENTTYPES | null>(EVENTTYPES.horario);
   const {dateRange, onDateChangeRange} = useDatePicker();
   const [startTime, setStartTime] = useState<Date>(DateUtils.getFormattedTime() as Date);
@@ -76,7 +76,7 @@ const Calendario = memo(function Calendario() {
   const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
 
   useEffect(() => {
-    if (users.length > 0) setUser(users);
+    if (users.length > 0) setusersFiltered(users);
   }, [users]);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const Calendario = memo(function Calendario() {
     }
   }, [users]);
 
-  const search = useCallback((text: string) => setUser(filterUsers(users, text)), [users]);
+  const search = useCallback((text: string) => setusersFiltered(filterUsers(users, text)), [users]);
 
   const handleUserSelection = (u: Employee) => {
     setSelectedUser(u);
@@ -267,7 +267,7 @@ const Calendario = memo(function Calendario() {
         />
         {eventType === EVENTTYPES.horario && (
           <SelectField
-            options={user.map((u) => ({value: u.id, label: getNombreCompletoUser(u)}))}
+            options={usersFiltered.map((u) => ({value: u.id, label: getNombreCompletoUser(u)}))}
             xs={12}
             label="Cambiar de usuario"
             defaultValue={selectedUser ? selectedUser.id : undefined}
@@ -363,7 +363,7 @@ const Calendario = memo(function Calendario() {
       selectedUser,
       startTime,
       turnoOnChange,
-      user,
+      usersFiltered,
       users
     ]
   );
@@ -464,12 +464,12 @@ const Calendario = memo(function Calendario() {
       DateUtils.formatDateToString(dateRange[1]!)
     ];
     if (eventType === EVENTTYPES.evento) {
-      const evento: Eventos = {
+      const evento: Partial<Eventos> = {
         descripcion: eventoCreated.descripcion ?? '',
         titulo: eventoCreated.titulo ?? '',
         rangoFechas: dateRangeFormatted
       };
-      await addEvento(evento);
+      await addEvento(evento as Eventos);
       hideAdd();
       await getEventosSync();
     }
@@ -517,6 +517,7 @@ const Calendario = memo(function Calendario() {
       let newEventUpdated: Partial<Eventos> = {
         ...thisEventoEvent.evento
       };
+      delete newEventUpdated.id;
       if (!areStringArraysEqual(thisEventoEvent.evento.rangoFechas, dateRangeFormatted)) {
         newEventUpdated.rangoFechas = dateRangeFormatted;
       } else delete newEventUpdated.rangoFechas;
@@ -629,7 +630,7 @@ const Calendario = memo(function Calendario() {
               </div>
               {canAccesoHorarios && (
                 <UsersColumnList
-                  users={users}
+                  users={usersFiltered}
                   isLoadingUsers={isLoadingUsers}
                   onUserSelect={handleUserSelection}
                   search={search}

@@ -5,6 +5,7 @@ export const CLIENTES_NAME = 'clientes';
 export const APPS_NAME = 'apps';
 export const EVENTOS_NAME = 'eventos';
 export const NOTICIAS_NAME = 'noticias';
+export const OBJETIVOS_NAME = 'objetivos';
 
 export const USER_DOMAIN = 'user-domain';
 export const SESSION_CLIENTES_KEY = 'clientes';

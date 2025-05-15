@@ -3,6 +3,7 @@ import {
   CLIENTES_NAME,
   EVENTOS_NAME,
   NOTICIAS_NAME,
+  OBJETIVOS_NAME,
   ROLES_PERMISOS_NAME,
   USER_NAME,
   USERS_NAME
@@ -17,6 +18,7 @@ import usersSlice from '@/store/slices/users';
 import noticiasSlice from '@/store/slices/noticias';
 import appsSlice from '@/store/slices/apps';
 import eventosSlice from '@/store/slices/eventos';
+import objetivosSlice from '@/store/slices/objetivos';
 
 const rootReducer = combineReducers({
   [USER_NAME]: userReducer,
@@ -25,7 +27,8 @@ const rootReducer = combineReducers({
   [CLIENTES_NAME]: clientesSlice,
   [NOTICIAS_NAME]: noticiasSlice,
   [APPS_NAME]: appsSlice,
-  [EVENTOS_NAME]: eventosSlice
+  [EVENTOS_NAME]: eventosSlice,
+  [OBJETIVOS_NAME]: objetivosSlice
 });
 
 export const store = configureStore({

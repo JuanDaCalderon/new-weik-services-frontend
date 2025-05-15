@@ -27,6 +27,6 @@ export type MenuItems = {
 };
 
 export type MenuItem = {
-  permisoId?: string; // Propiedad mínima necesaria
-  [key: string]: any; // Otras propiedades del menú son opcionales
+  permisoId?: string;
+  [key: string]: any;
 };

@@ -5,9 +5,9 @@ export type Apps = {
   redirectTo: string;
 };
 
+export type AppsToDb = Omit<Apps, 'id'>;
+
 export type PayLoadAppsType = {
   apps: Apps[];
   isLoading: boolean;
 };
-
-export type AppsToDb = Omit<Apps, 'id'>;

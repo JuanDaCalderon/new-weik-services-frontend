@@ -6,6 +6,7 @@ import {TabContentItem} from '@/types';
 import {TABS_REPORTES_ASISTENCIA, TABS_REPORTES_DESEMPEÑO, TABS_REPORTES_OBJETIVOS} from '@/constants';
 import {Link} from 'react-router-dom';
 import Balance from './balance';
+import Objetivos from './objetivos';
 
 const tabContents: TabContentItem[] = [
   {id: TABS_REPORTES_ASISTENCIA, title: TABS_REPORTES_ASISTENCIA},
@@ -39,7 +40,7 @@ const Reportes = memo(function Reportes() {
                       <Row>
                         <Col sm={12}>
                           {tab.id === TABS_REPORTES_ASISTENCIA && <Balance />}
-                          {tab.id === TABS_REPORTES_OBJETIVOS && <></>}
+                          {tab.id === TABS_REPORTES_OBJETIVOS && <Objetivos />}
                           {tab.id === TABS_REPORTES_DESEMPEÑO && <></>}
                         </Col>
                       </Row>

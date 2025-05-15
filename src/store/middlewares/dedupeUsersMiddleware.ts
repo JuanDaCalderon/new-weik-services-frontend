@@ -1,6 +1,6 @@
 import {isPlainObject, Middleware, UnknownAction} from '@reduxjs/toolkit';
-import {clearUsers, setIsloadingUsers} from '../slices/users';
-import {RootState} from '..';
+import {clearUsers, setIsloadingUsers} from '@/store/slices/users';
+import {RootState} from '@/store';
 
 export const dedupeUsersMiddleware: Middleware = (store) => (next) => (action) => {
   if (!isPlainObject(action)) {

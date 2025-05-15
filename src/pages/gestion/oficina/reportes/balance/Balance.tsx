@@ -32,8 +32,8 @@ const Balance = memo(function Balance() {
   return (
     <>
       <Row className="m-0 p-0">
-        <Col className="m-0 p-0">
-          <h4 className="header-title text-dark text-opacity-75">Balance</h4>
+        <Col className="m-0 p-0 d-flex align-items-center">
+          <h4 className="header-title text-dark text-opacity-75 mb-0 ms-1">Balance</h4>
         </Col>
         <Col className="d-flex justify-content-end align-items-center m-0 p-0">
           <label className="p-0 my-0 ms-0 me-1">Fecha</label>

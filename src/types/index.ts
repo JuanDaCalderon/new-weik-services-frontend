@@ -1,6 +1,5 @@
 export * from './users';
 export * from './forms';
-export * from './buttons';
 export * from './roles-permisos';
 export * from './clientes';
 export * from './themeContext';
@@ -9,8 +8,8 @@ export * from './top-bar';
 export * from './menu';
 export * from './modals';
 export * from './rolesUsuariosContext';
-export * from './clock';
 export * from './noticias';
 export * from './apps';
 export * from './eventos';
 export * from './pdfAndExcel';
+export * from './objetivos';

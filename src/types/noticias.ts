@@ -23,12 +23,12 @@ export interface NoticiaToDb extends BaseNoticia {
   rangoFechas: Timestamp[];
 }
 
-export type PayLoadNoticiasType = {
-  noticias: Noticia[];
-  isLoading: boolean;
-};
-
 export type noticiaCreationType = {
   titulo: string;
   link: string;
+};
+
+export type PayLoadNoticiasType = {
+  noticias: Noticia[];
+  isLoading: boolean;
 };

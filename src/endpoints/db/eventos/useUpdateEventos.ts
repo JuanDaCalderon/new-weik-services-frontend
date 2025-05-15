@@ -4,7 +4,7 @@ import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
 import {EVENTOS_PATH} from '@/constants';
-import {Eventos, EventosToFirestore} from '@/types';
+import {Eventos, EventosToDb} from '@/types';
 
 export default function useUpdateEventos() {
   const [isUpdatingTheEvento, setIsUpdatingTheEvento] = useState<boolean>(false);
@@ -12,12 +12,12 @@ export default function useUpdateEventos() {
   const updateEvento = useCallback(async (eventoId: string, evento: Partial<Omit<Eventos, 'id'>>): Promise<void> => {
     setIsUpdatingTheEvento(true);
     try {
-      const eventoToBd: Partial<EventosToFirestore> = {
+      const eventoToBd: Partial<EventosToDb> = {
         ...evento,
         ...(evento.rangoFechas
           ? {rangoFechas: evento.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))}
           : {})
-      } as Partial<EventosToFirestore>;
+      } as Partial<EventosToDb>;
       const eventoRef = doc(db, EVENTOS_PATH, eventoId);
       await updateDoc(eventoRef, eventoToBd);
       toast.success(`Se ha actualizado el evento correctamente`);
