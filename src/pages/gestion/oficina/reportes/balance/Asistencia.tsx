@@ -1,5 +1,5 @@
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-import ReactTable from '@/components/table/ReactTable';
+import ReactTable from '@/components/tablev02/ReactTable';
 import {ExportColumn, EmployeeWithFilterDate, HorasTrabajoType} from '@/types';
 import {memo, useCallback, useMemo, useState} from 'react';
 import type {ColumnDef} from '@tanstack/react-table';

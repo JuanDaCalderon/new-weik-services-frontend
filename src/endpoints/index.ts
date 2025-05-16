@@ -38,6 +38,10 @@ import useUpdateHorario from './db/horarios/useUpdateHorario';
 import useAddVacaciones from './db/vacaciones/useAddVacaciones';
 import useApproveVacaciones from './db/vacaciones/useApproveVacaciones';
 import useUpdateVacaciones from './db/vacaciones/useUpdateVacaciones';
+import useAddObjetivos from './db/objetivos/useAddObjetivos';
+import useGetObjetivos from './db/objetivos/useGetObjetivos';
+import useDeleteObjetivos from './db/objetivos/useDeleteObjetivos';
+import useUpdateObjetivos from './db/objetivos/useUpdateObjetivos';
 
 export {
   useGetClients,
@@ -77,5 +81,9 @@ export {
   useUpdateHorario,
   useAddVacaciones,
   useApproveVacaciones,
-  useUpdateVacaciones
+  useUpdateVacaciones,
+  useAddObjetivos,
+  useGetObjetivos,
+  useDeleteObjetivos,
+  useUpdateObjetivos
 };

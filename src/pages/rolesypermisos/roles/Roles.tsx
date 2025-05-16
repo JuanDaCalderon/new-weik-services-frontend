@@ -91,7 +91,7 @@ const Roles = memo(function Roles() {
         <Col xs={12}>
           <ReactTable<thisRol>
             theadClass="table-light"
-            searchBoxClass="my-2"
+            searchBoxClass="mt-2"
             columns={rolesColumns}
             data={roles}
             showPagination

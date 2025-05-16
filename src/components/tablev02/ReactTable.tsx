@@ -12,7 +12,7 @@ import {
 } from '@tanstack/react-table';
 import classNames from 'classnames';
 import {Fragment, useEffect, useRef, useState, type HTMLProps} from 'react';
-import {Table} from 'react-bootstrap';
+import {Form, Table} from 'react-bootstrap';
 import Pagination from './Pagination';
 
 const IndeterminateCheckbox = ({indeterminate, ...rest}: {indeterminate?: boolean} & HTMLProps<HTMLInputElement>) => {
@@ -77,16 +77,17 @@ const ReactTable = <RowType,>({
   return (
     <>
       {isSearchable && (
-        <div className={classNames(searchBoxClass)}>
-          <div className="d-flex align-items-center">
-            <span>Buscar:</span>
-            <input
-              value={globalFilter ?? ''}
-              onChange={(e) => table.setGlobalFilter(e.target.value)}
-              placeholder={`${table.getRowCount()} registros...`}
-              className="form-control w-100 ms-1 p-1 py-min"
-            />
-          </div>
+        <div className={classNames('app-search', searchBoxClass)}>
+          <Form>
+            <Form.Group className="mb-2 w-100 position-relative">
+              <Form.Control
+                type="text"
+                placeholder={`${table.getRowCount()} registros...`}
+                onChange={(e) => table.setGlobalFilter(e.target.value)}
+              />
+              <span className="mdi mdi-magnify search-icon"></span>
+            </Form.Group>
+          </Form>
         </div>
       )}
       <Table

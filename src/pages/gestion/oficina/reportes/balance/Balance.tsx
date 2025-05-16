@@ -1,23 +1,16 @@
-import {memo, useEffect, useMemo, useState} from 'react';
+import {memo, useMemo, useState} from 'react';
 import ReactTable from '@/components/table/ReactTable';
 import {columns} from './Columnas';
 import {useAppSelector} from '@/store';
-import {selectEmployees, selectisLoadingEmployees} from '@/store/selectores';
-import {useGetEmployees} from '@/endpoints';
+import {selectisLoadingEmployees} from '@/store/selectores';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-import {EmployeeWithFilterDate} from '@/types';
+import {Employee, EmployeeWithFilterDate} from '@/types';
 import {Col, Row} from 'react-bootstrap';
 import {CustomDatePicker} from '@/components';
 
-const Balance = memo(function Balance() {
+const Balance = memo(function Balance({users = []}: {users: Employee[]}) {
   const [filterDate, setFilterDate] = useState<Date>(new Date());
-  const users = useAppSelector(selectEmployees);
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
-  const {getEmployeesSync} = useGetEmployees();
-
-  useEffect(() => {
-    if (users.length <= 0) getEmployeesSync();
-  }, [getEmployeesSync, users.length]);
 
   const usersWithFilterDate: EmployeeWithFilterDate[] = useMemo(() => {
     return users.map((user) => {

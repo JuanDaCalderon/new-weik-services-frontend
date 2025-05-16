@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {PageBreadcrumb} from '@/components';
 import {ToastWrapper} from '@/components/Toast';
@@ -7,6 +7,9 @@ import {TABS_REPORTES_ASISTENCIA, TABS_REPORTES_DESEMPEÑO, TABS_REPORTES_OBJETI
 import {Link} from 'react-router-dom';
 import Balance from './balance';
 import Objetivos from './objetivos';
+import {useAppSelector} from '@/store';
+import {selectEmployees} from '@/store/selectores';
+import {useGetEmployees} from '@/endpoints';
 
 const tabContents: TabContentItem[] = [
   {id: TABS_REPORTES_ASISTENCIA, title: TABS_REPORTES_ASISTENCIA},
@@ -15,6 +18,12 @@ const tabContents: TabContentItem[] = [
 ];
 
 const Reportes = memo(function Reportes() {
+  const users = useAppSelector(selectEmployees);
+  const {getEmployeesSync} = useGetEmployees();
+  useEffect(() => {
+    if (users.length <= 0) getEmployeesSync();
+  }, [getEmployeesSync, users.length]);
+
   return (
     <ToastWrapper>
       <PageBreadcrumb title="Reportes" />
@@ -39,8 +48,8 @@ const Reportes = memo(function Reportes() {
                     <Tab.Pane eventKey={tab.id} key={index}>
                       <Row>
                         <Col sm={12}>
-                          {tab.id === TABS_REPORTES_ASISTENCIA && <Balance />}
-                          {tab.id === TABS_REPORTES_OBJETIVOS && <Objetivos />}
+                          {tab.id === TABS_REPORTES_ASISTENCIA && <Balance users={users} />}
+                          {tab.id === TABS_REPORTES_OBJETIVOS && <Objetivos users={users} />}
                           {tab.id === TABS_REPORTES_DESEMPEÑO && <></>}
                         </Col>
                       </Row>

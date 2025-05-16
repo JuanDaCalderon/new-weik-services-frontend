@@ -53,7 +53,7 @@ const Usuarios = memo(function Usuarios() {
         <Col xs={12}>
           <ReactTable<thisUsuarios>
             theadClass="table-light"
-            searchBoxClass="my-2"
+            searchBoxClass="mt-2"
             columns={usuariosColumns}
             data={usuarios}
             showPagination

@@ -5,3 +5,4 @@ export * from './users';
 export * from './noticias';
 export * from './apps';
 export * from './eventos';
+export * from './objetivos';

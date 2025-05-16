@@ -15,14 +15,14 @@ export const objetivosSlice = createSlice({
       if (state.objetivos.length === 0) {
         return {
           ...state,
-          noticias: action.payload
+          objetivos: action.payload
         };
       }
     },
     clearObjetivos: (state: PayLoadObjetivosType) => {
       return {
         ...state,
-        noticias: []
+        objetivos: []
       };
     },
     isLoadingObjetivos: (state: PayLoadObjetivosType, action: PayloadAction<boolean>) => {

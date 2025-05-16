@@ -40,7 +40,6 @@ const UsersColumnList = memo(function UsersColumnList({
             <Form.Group className="mb-2 w-100 position-relative">
               <Form.Control
                 type="text"
-                size="sm"
                 placeholder="Usuarios..."
                 disabled={isLoadingUsers}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {

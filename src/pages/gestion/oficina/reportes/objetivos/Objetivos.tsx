@@ -1,22 +1,25 @@
 import {UsersColumnList} from '@/components';
-import {useGetEmployees} from '@/endpoints';
+import {SkeletonLoader} from '@/components/SkeletonLoader';
+import ReactTable from '@/components/tablev02/ReactTable';
+import {useGetObjetivos} from '@/endpoints';
 import {useAppSelector} from '@/store';
-import {selectEmployees, selectisLoadingEmployees} from '@/store/selectores';
+import {selectisLoadingEmployees, selectIsLoadingObjetivos, selectObjetivos} from '@/store/selectores';
 import {Employee} from '@/types';
 import {filterUsers} from '@/utils';
 import {memo, useCallback, useEffect, useState} from 'react';
 import {Card, Col, Row} from 'react-bootstrap';
 
-const Objetivos = memo(function Objetivos() {
+const Objetivos = memo(function Objetivos({users = []}: {users: Employee[]}) {
   const [usersFiltered, setusersFiltered] = useState<Employee[]>([]);
   const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
-  const users = useAppSelector(selectEmployees);
+  const objetivos = useAppSelector(selectObjetivos);
+  const isLoadingObjetivos = useAppSelector(selectIsLoadingObjetivos);
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
-  const {getEmployeesSync} = useGetEmployees();
+  const {getObjetivosSync} = useGetObjetivos();
 
   useEffect(() => {
-    if (users.length <= 0) getEmployeesSync();
-  }, [getEmployeesSync, users.length]);
+    if (objetivos.length <= 0) getObjetivosSync();
+  }, [getObjetivosSync, objetivos.length]);
 
   useEffect(() => {
     if (users.length > 0) {
@@ -41,7 +44,25 @@ const Objetivos = memo(function Objetivos() {
               selectedUser={selectedUser}
             />
           </Col>
-          <Col xl={10}>objetivos</Col>
+          <Col xl={10}>
+            {isLoadingUsers || isLoadingObjetivos ? (
+              <SkeletonLoader height="500px" customClass="p-0 mt-2" />
+            ) : (
+              <>
+                <h4 className="header-title text-dark text-opacity-75 m-0">Objetivos</h4>
+                <div className="pt-2 mt-1">
+                  <ReactTable<any>
+                    columns={[]}
+                    data={[]}
+                    pageSize={10}
+                    tableClass="table-striped"
+                    showPagination
+                    isSearchable
+                  />
+                </div>
+              </>
+            )}
+          </Col>
         </Row>
       </Card.Body>
     </Card>

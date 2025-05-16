@@ -1,6 +1,6 @@
 import {Timestamp} from 'firebase/firestore';
 
-enum OBJETIVO_STATUS {
+export enum OBJETIVO_STATUS {
   PENDIENTE = 'PENDIENTE',
   EN_PROGRESO = 'EN_PROGRESO',
   COMPLETADO = 'COMPLETADO'
@@ -8,6 +8,7 @@ enum OBJETIVO_STATUS {
 
 interface BaseEvaluation {
   stars: 0 | 1 | 2 | 3 | 4 | 5;
+  wasReviewed: boolean;
   feedback?: string;
   selfAssessment?: {
     stars: 0 | 1 | 2 | 3 | 4 | 5;
@@ -33,13 +34,13 @@ interface BaseObjetivos {
 
 export interface Objetivos extends BaseObjetivos {
   id: string;
-  rangoFechas: [string, string];
+  rangoFechas: string[];
   evaluation?: Evaluation;
   createdAt: string;
 }
 
 export interface ObjetivosToDb extends BaseObjetivos {
-  rangoFechas: [Timestamp, Timestamp];
+  rangoFechas: Timestamp[];
   evaluation?: EvaluationToDb;
   createdAt: Timestamp;
 }

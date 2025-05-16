@@ -9,5 +9,6 @@ export const PERMISOS_PATH: string = 'permisos';
 export const NOTICIAS_PATH: string = 'noticias';
 export const APPS_PATH: string = 'apps';
 export const EVENTOS_PATH: string = 'eventos';
+export const OBJETIVOS_PATH: string = 'objetivos';
 
 export const MAIN_DOMAIN: string = 'weikstudio';
