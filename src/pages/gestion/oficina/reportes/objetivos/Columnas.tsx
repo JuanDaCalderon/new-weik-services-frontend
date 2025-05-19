@@ -11,6 +11,7 @@ import {EvaluarObjetivo} from './EvaluarObjetivo';
 import {useAppSelector} from '@/store';
 import {selectEmployees} from '@/store/selectores';
 import {useEvaluateObjetivos, useGetObjetivos} from '@/endpoints';
+import {StarRating} from '@/components/Form2';
 
 const TituloColumn = memo(function TituloColumn({row}: {row: Row<Objetivos>}) {
   return (
@@ -32,6 +33,10 @@ const FechasColumn = memo(function FechasColumn({row}: {row: Row<Objetivos>}) {
     [row.original.rangoFechas]
   );
 
+  const wasAlreadyEvaluated = useMemo(() => {
+    return row.original.evaluation !== undefined;
+  }, [row.original.evaluation]);
+
   const {expirado, progreso} = useMemo(() => {
     const hoy = new Date();
     const total = fechaFin.getTime() - fechaInicio.getTime();
@@ -49,9 +54,9 @@ const FechasColumn = memo(function FechasColumn({row}: {row: Row<Objetivos>}) {
         <span className="font-12 lh-1 mx-1"> - </span>
         <span className="font-12 lh-1">{DateUtils.formatShortDate(fechaFin)}</span>
       </div>
-      {progreso === 0 ? (
-        <ProgressBar now={100} label={`Sin iniciar`} variant="secondary" />
-      ) : (
+      {wasAlreadyEvaluated && <ProgressBar now={100} label={`Evaluada`} variant="success" />}
+      {!wasAlreadyEvaluated && progreso === 0 && <ProgressBar now={100} label={`Sin iniciar`} variant="secondary" />}
+      {!wasAlreadyEvaluated && progreso !== 0 && (
         <ProgressBar
           now={progreso}
           label={expirado ? `Expirado` : `${Math.floor(progreso)}%`}
@@ -90,11 +95,11 @@ const ObjetivosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Objeti
   }, [evaluacion.feedback, evaluateObjetivo, getObjetivosSync, rating, row.original.id, toggleEvaluar]);
 
   const wasAlreadyEvaluated = useMemo(() => {
-    return row.original.evaluation === undefined;
+    return row.original.evaluation !== undefined;
   }, [row.original.evaluation]);
 
   useEffect(() => {
-    if (!wasAlreadyEvaluated) {
+    if (wasAlreadyEvaluated) {
       setEvaluacion({
         feedback: row.original.evaluation?.feedback,
         stars: row.original.evaluation?.stars
@@ -109,7 +114,7 @@ const ObjetivosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Objeti
   return (
     <>
       <OverlayTrigger
-        overlay={<Tooltip id="evaluar">{!wasAlreadyEvaluated ? 'Ver evaluación previa' : 'Evaluar'}</Tooltip>}>
+        overlay={<Tooltip id="evaluar">{wasAlreadyEvaluated ? 'Ver evaluación previa' : 'Evaluar'}</Tooltip>}>
         <Button id="evaluar" variant="outline-info py-0 px-1" onClick={showEvaluar}>
           <i className="uil-star" />
         </Button>
@@ -118,11 +123,11 @@ const ObjetivosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Objeti
         show={isOpenEvaluar}
         onToggle={toggleEvaluar}
         variant="primary"
-        headerText={`${wasAlreadyEvaluated ? 'Evaluar' : ''} Objetivo de ${userSelected ? getNombreCompletoUser(userSelected) : ''}`}
+        headerText={`${!wasAlreadyEvaluated ? 'Evaluar' : ''} Objetivo de ${userSelected ? getNombreCompletoUser(userSelected) : ''}`}
         secondaryText="Cancelar"
         isDisabled={!hasTouched || isEvaluateTheObjetivo}
         isLoading={isEvaluateTheObjetivo}
-        showSendButton={wasAlreadyEvaluated}
+        showSendButton={!wasAlreadyEvaluated}
         onSend={onSendEvaluation}
         submitText="Evaluar"
         body={
@@ -132,7 +137,7 @@ const ObjetivosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Objeti
             setHasTouched={setHasTouched}
             rating={rating}
             setRating={setRating}
-            isDisabledInput={!wasAlreadyEvaluated}
+            isDisabledInput={wasAlreadyEvaluated}
           />
         }
       />
@@ -141,6 +146,10 @@ const ObjetivosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Objeti
 });
 
 const EstadosColumn = memo(function EstadosColumn({row}: {row: Row<Objetivos>}) {
+  const wasAlreadyEvaluated = useMemo(() => {
+    return row.original.evaluation !== undefined;
+  }, [row.original.evaluation]);
+
   const ribbonType = useMemo(() => {
     const estado = row.original.status;
     const fechaExpiracion = row.original.rangoFechas[1];
@@ -153,9 +162,12 @@ const EstadosColumn = memo(function EstadosColumn({row}: {row: Row<Objetivos>}) 
     return estadoMap[estado] || RIBBONTYPES.info;
   }, [row.original.rangoFechas, row.original.status]);
   return (
-    <Badge bg="" pill className={`no-user-text-selectable badge-outline-${ribbonType} font-14`}>
-      {row.original.status}
-    </Badge>
+    <div className="position-relative d-flex align-items-center flex-wrap column-gap-1">
+      <Badge bg="" pill className={`no-user-text-selectable badge-outline-${ribbonType} font-14`}>
+        {row.original.status}
+      </Badge>
+      {wasAlreadyEvaluated && <StarRating onChange={() => {}} disabled value={row.original.evaluation?.stars || 0} />}
+    </div>
   );
 });
 
