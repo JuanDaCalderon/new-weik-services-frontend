@@ -43,6 +43,8 @@ import useGetObjetivos from './db/objetivos/useGetObjetivos';
 import useDeleteObjetivos from './db/objetivos/useDeleteObjetivos';
 import useUpdateObjetivos from './db/objetivos/useUpdateObjetivos';
 import useEvaluateObjetivos from './db/objetivos/useEvaluateObjetivos';
+import useRequiredSelfAssessment from './db/objetivos/useRequiredSelfAssessment';
+import useSelfEvaluate from './db/objetivos/useSelfEvaluate';
 
 export {
   useGetClients,
@@ -87,5 +89,7 @@ export {
   useGetObjetivos,
   useDeleteObjetivos,
   useUpdateObjetivos,
-  useEvaluateObjetivos
+  useEvaluateObjetivos,
+  useRequiredSelfAssessment,
+  useSelfEvaluate
 };

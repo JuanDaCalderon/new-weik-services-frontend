@@ -12,7 +12,6 @@ import {columns} from './Columnas';
 import {useDatePicker, useTogglev2} from '@/hooks';
 import {CrearObjetivo} from './CrearObjetivo';
 import toast from 'react-hot-toast';
-import './table.scss';
 import {SESSIONSTORAGE_OBJETIVOS_USER_SELECTED_KEY} from '@/constants';
 
 const Objetivos = memo(function Objetivos({users = []}: {users: Employee[]}) {

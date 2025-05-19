@@ -3,10 +3,10 @@ import {Form} from 'react-bootstrap';
 
 type StarRatingProps = {
   value: 0 | 1 | 2 | 3 | 4 | 5;
-  onChange: (star: 0 | 1 | 2 | 3 | 4 | 5) => void;
+  onChange?: (star: 0 | 1 | 2 | 3 | 4 | 5) => void;
   disabled?: boolean;
 };
-export const StarRating = ({value, onChange, disabled = false}: StarRatingProps) => {
+export const StarRating = ({value, onChange = () => {}, disabled = false}: StarRatingProps) => {
   const [hover, setHover] = useState<0 | 1 | 2 | 3 | 4 | 5>(0);
   const activeValue = !disabled && hover > 0 ? hover : value;
   return (
