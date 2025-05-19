@@ -1,4 +1,4 @@
-import {Apps, Cliente, Employee, Noticia, Rol} from '@/types';
+import {Apps, Cliente, Employee, Noticia, Objetivos, Rol} from '@/types';
 
 /**
  * Verifica si un acceso directo ya existe en la lista de accesos
@@ -27,6 +27,21 @@ export const checkIfNoticiaExists = (noticia: Noticia, noticias: Noticia[]): boo
     (n) =>
       n.titulo.trim().toLowerCase() === noticia.titulo.trim().toLowerCase() ||
       n.link.trim().toLowerCase() === noticia.link.trim().toLowerCase()
+  );
+};
+
+/**
+ * Verifica si un objetivo ya existe en la lista de objetivos
+ *
+ * @param {Objetivos} objetivo
+ * @param {Objetivos[]} objetivos
+ * @returns {boolean} true si el objetivo ya existe, false si no
+ */
+export const checkIfObjetivoExists = (objetivo: Objetivos, objetivos: Objetivos[]): boolean => {
+  return objetivos.some(
+    (o) =>
+      o.titulo.trim().toLowerCase() === objetivo.titulo.trim().toLowerCase() ||
+      o.descripcion.trim().toLowerCase() === objetivo.descripcion.trim().toLowerCase()
   );
 };
 

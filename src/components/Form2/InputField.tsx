@@ -15,6 +15,7 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   as?: 'input' | 'textarea' | undefined;
   bottomMargin?: 0 | 1 | 2 | 3 | 4 | 5;
   labelPosition?: 'top' | 'left' | 'right';
+  rows?: number;
 }
 
 /**
@@ -43,6 +44,7 @@ export function InputField({
   as,
   bottomMargin = 2,
   labelPosition = 'top',
+  rows,
   ...props
 }: InputFieldProps) {
   const renderInput = () => (
@@ -52,7 +54,8 @@ export function InputField({
         id: label,
         size: controlSize,
         value: props.value as string | number | string[] | undefined,
-        placeholder: props.placeholder ?? label
+        placeholder: props.placeholder ?? label,
+        rows: rows
       }}
       as={as}
       isInvalid={!!error}

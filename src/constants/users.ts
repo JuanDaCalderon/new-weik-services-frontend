@@ -40,3 +40,4 @@ export const BREAKSOPTIONS: Option[] = [
 ];
 
 export const SESSIONSTORAGE_CALENDAR_USER_SELECTED_KEY = 'userCalendarHorarioSelected';
+export const SESSIONSTORAGE_OBJETIVOS_USER_SELECTED_KEY = 'userObjetivosHorarioSelected';

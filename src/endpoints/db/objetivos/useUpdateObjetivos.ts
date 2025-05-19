@@ -18,15 +18,7 @@ export default function useUpdateObjetivos() {
           ...(objetivo.rangoFechas
             ? {rangoFechas: (objetivo.rangoFechas || []).map((date) => Timestamp.fromDate(new Date(date)))}
             : {}),
-          ...(objetivo.createdAt ? {createdAt: Timestamp.fromDate(new Date(objetivo.createdAt))} : {}),
-          ...(objetivo.evaluation
-            ? {
-                evaluation: {
-                  ...objetivo.evaluation,
-                  evaluatedAt: Timestamp.fromDate(new Date(objetivo.evaluation.evaluatedAt))
-                }
-              }
-            : {})
+          ...(objetivo.createdAt ? {createdAt: Timestamp.fromDate(new Date(objetivo.createdAt))} : {})
         };
         const objetivoRef = doc(db, OBJETIVOS_PATH, objetivoId);
         await updateDoc(objetivoRef, objetivoToBd);

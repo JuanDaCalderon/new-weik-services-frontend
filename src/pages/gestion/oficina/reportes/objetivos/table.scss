@@ -1,0 +1,12 @@
+.table.objetivos-table {
+  thead {
+    th {
+      &:nth-child(1) {
+        width: 18vw;
+      }
+      &:nth-child(2) {
+        width: 30vw;
+      }
+    }
+  }
+}

@@ -6,14 +6,16 @@ export enum OBJETIVO_STATUS {
   COMPLETADO = 'COMPLETADO'
 }
 
+export interface SelfAssessment {
+  stars: 0 | 1 | 2 | 3 | 4 | 5;
+  wasReviewed: boolean;
+  comment?: string;
+}
+
 interface BaseEvaluation {
   stars: 0 | 1 | 2 | 3 | 4 | 5;
   wasReviewed: boolean;
   feedback?: string;
-  selfAssessment?: {
-    stars: 0 | 1 | 2 | 3 | 4 | 5;
-    comment?: string;
-  };
 }
 
 export interface Evaluation extends BaseEvaluation {
@@ -28,8 +30,9 @@ interface BaseObjetivos {
   titulo: string;
   descripcion: string;
   userId: string;
-  evaluatorId: string;
   status: OBJETIVO_STATUS;
+  requiredSelfAssessment: boolean;
+  selfAssessment?: SelfAssessment;
 }
 
 export interface Objetivos extends BaseObjetivos {

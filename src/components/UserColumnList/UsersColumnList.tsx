@@ -33,7 +33,7 @@ const UsersColumnList = memo(function UsersColumnList({
   };
   return (
     <>
-      <h4 className="header-title text-dark text-opacity-75 m-0">Usuarios</h4>
+      <h4 className="header-title text-dark text-opacity-75 m-0 ms-1">Usuarios</h4>
       <div className="tab-pane show active card-body pb-0 px-0 h-75">
         <div className="app-search">
           <Form>
@@ -52,7 +52,7 @@ const UsersColumnList = memo(function UsersColumnList({
           </Form>
         </div>
         {isLoadingUsers ? (
-          <SkeletonLoader customClass="p-0 h-50" />
+          <SkeletonLoader customClass="p-0" height="250px" />
         ) : (
           <>
             <SimpleBar style={{maxHeight: '100%', width: '100%'}}>

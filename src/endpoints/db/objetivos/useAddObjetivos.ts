@@ -16,7 +16,8 @@ export default function useAddObjetivos() {
         ...objetivo,
         rangoFechas: (objetivo.rangoFechas || []).map((date) => Timestamp.fromDate(new Date(date))),
         createdAt: Timestamp.fromDate(new Date()),
-        status: OBJETIVO_STATUS.PENDIENTE
+        status: OBJETIVO_STATUS.PENDIENTE,
+        requiredSelfAssessment: objetivo.requiredSelfAssessment || false
       } as ObjetivosToDb;
       await addDoc(collection(db, OBJETIVOS_PATH), objetivoToBd);
       toast.success(`Has agregado un objetivo correctamente`);
