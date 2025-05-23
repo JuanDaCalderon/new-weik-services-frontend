@@ -6,7 +6,6 @@ import {
   GESTION_OFICINA_CALENDARIO_MENU_KEY,
   GESTION_OFICINA_MENU_KEY,
   GESTION_OFICINA_REPORTES_MENU_KEY,
-  GESTION_OFICINA_SOLICITUDES_MENU_KEY,
   GESTION_OFICINA_VACACIONES_MENU_KEY,
   GESTION_USUARIOS_MENU_KEY,
   PERMISOS_MAP_IDS
@@ -14,7 +13,7 @@ import {
 import {MenuItemType} from '@/types';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
-  {
+  /* {
     key: 'dashboards',
     icon: 'uil-dashboard',
     label: 'Dashboards',
@@ -629,7 +628,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ]
       }
     ]
-  },
+  }, */
   {
     key: CLIENTES_MENU_KEY,
     icon: 'uil-user-square',
@@ -689,14 +688,14 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
             url: GESTION_OFICINA_REPORTES_MENU_KEY,
             parentKey: GESTION_OFICINA_MENU_KEY,
             permisoId: PERMISOS_MAP_IDS.accesoReportes
-          },
-          {
+          }
+          /* {
             key: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
             label: 'Solicitudes',
             url: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
             parentKey: GESTION_OFICINA_MENU_KEY,
             permisoId: PERMISOS_MAP_IDS.accesoSolicitudes
-          }
+          } */
         ]
       }
     ]

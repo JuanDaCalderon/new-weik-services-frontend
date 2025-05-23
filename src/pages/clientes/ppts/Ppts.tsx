@@ -1,18 +1,9 @@
 import {memo} from 'react';
-import {Col, Row} from 'react-bootstrap';
-import ReactTable from '@/components/table/ReactTable';
-import {columns} from './Columnas';
+import {TabRegisterContainer} from '@/pages/clientes/TabRegisterContainer';
+import {Registros} from './Registros';
 
 const Ppts = memo(function Ppts() {
-  return (
-    <>
-      <Row>
-        <Col>
-          <ReactTable<any> columns={columns} data={[]} pageSize={10} tableClass="table-striped" showPagination />
-        </Col>
-      </Row>
-    </>
-  );
+  return <TabRegisterContainer registerComponent={<Registros />} reportComponent={<p>hola reporte</p>} />;
 });
 
 export {Ppts};

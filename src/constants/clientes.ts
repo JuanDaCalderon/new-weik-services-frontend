@@ -3,4 +3,5 @@ export const TABS_CLIENTES_LISTA = 'Clientes';
 
 export const TABS_CLIENTES_PPTS = 'Ppts';
 export const TABS_CLIENTES_MOTIONS = 'Motions';
+export const TABS_CLIENTES_REGISTROS = 'Registros';
 export const TABS_CLIENTES_REPORTES = 'Reportes';
