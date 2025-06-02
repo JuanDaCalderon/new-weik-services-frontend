@@ -4,6 +4,7 @@ import {
   EVENTOS_NAME,
   NOTICIAS_NAME,
   OBJETIVOS_NAME,
+  REGISTROS_NAME,
   ROLES_PERMISOS_NAME,
   USER_NAME,
   USERS_NAME
@@ -19,6 +20,8 @@ import noticiasSlice from '@/store/slices/noticias';
 import appsSlice from '@/store/slices/apps';
 import eventosSlice from '@/store/slices/eventos';
 import objetivosSlice from '@/store/slices/objetivos';
+import registrosSlice from '@/store/slices/registros';
+import {dedupeRegistrosMiddleware} from './middlewares';
 
 const rootReducer = combineReducers({
   [USER_NAME]: userReducer,
@@ -28,12 +31,14 @@ const rootReducer = combineReducers({
   [NOTICIAS_NAME]: noticiasSlice,
   [APPS_NAME]: appsSlice,
   [EVENTOS_NAME]: eventosSlice,
-  [OBJETIVOS_NAME]: objetivosSlice
+  [OBJETIVOS_NAME]: objetivosSlice,
+  [REGISTROS_NAME]: registrosSlice
 });
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(dedupeUsersMiddleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(dedupeUsersMiddleware).concat(dedupeRegistrosMiddleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

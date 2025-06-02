@@ -58,4 +58,4 @@ const TabRegisterContainer = memo(function TabRegisterContainer({
   );
 });
 
-export {TabRegisterContainer};
+export default TabRegisterContainer;

@@ -15,23 +15,14 @@ export const appsSlice = createSlice({
   reducers: {
     setApps: (state: PayLoadAppsType, action: PayloadAction<Apps[]>) => {
       if (action.payload.length > 0) SessionStorageUtil.setItem<Apps[]>(SESSION_APPS_KEY, action.payload);
-      return {
-        ...state,
-        apps: action.payload
-      };
+      state.apps = action.payload;
     },
     clearApps: (state: PayLoadAppsType) => {
       SessionStorageUtil.removeItem(SESSION_APPS_KEY);
-      return {
-        ...state,
-        apps: []
-      };
+      state.apps = [];
     },
     isLoadingApps: (state: PayLoadAppsType, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+      state.isLoading = action.payload;
     }
   }
 });

@@ -14,25 +14,14 @@ export const noticiasSlice = createSlice({
   reducers: {
     setNoticias: (state: PayLoadNoticiasType, action: PayloadAction<Noticia[]>) => {
       if (action.payload.length > 0) SessionStorageUtil.setItem<Noticia[]>(SESSION_NOTICIAS_KEY, action.payload);
-      if (state.noticias.length === 0) {
-        return {
-          ...state,
-          noticias: action.payload
-        };
-      }
+      state.noticias = action.payload;
     },
     clearNoticias: (state: PayLoadNoticiasType) => {
       SessionStorageUtil.removeItem(SESSION_NOTICIAS_KEY);
-      return {
-        ...state,
-        noticias: []
-      };
+      state.noticias = [];
     },
     isLoadingNoticias: (state: PayLoadNoticiasType, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+      state.isLoading = action.payload;
     }
   }
 });

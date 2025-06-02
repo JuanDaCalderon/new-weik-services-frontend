@@ -37,7 +37,7 @@ const UsersColumnList = memo(function UsersColumnList({
       <div className="tab-pane show active card-body pb-0 px-0 h-75">
         <div className="app-search">
           <Form>
-            <Form.Group className="mb-2 w-100 position-relative">
+            <Form.Group className="mb-1 w-100 position-relative">
               <Form.Control
                 type="text"
                 placeholder="Usuarios..."

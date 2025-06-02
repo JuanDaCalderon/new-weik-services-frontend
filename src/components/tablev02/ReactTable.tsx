@@ -79,7 +79,7 @@ const ReactTable = <RowType,>({
       {isSearchable && (
         <div className={classNames('app-search', searchBoxClass)}>
           <Form>
-            <Form.Group className="mb-2 w-100 position-relative">
+            <Form.Group className="mb-1 w-100 position-relative">
               <Form.Control
                 type="text"
                 placeholder={`${table.getRowCount()} registros...`}

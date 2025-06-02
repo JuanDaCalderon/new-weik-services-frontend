@@ -13,22 +13,13 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     setUsers: (state: PayLoadUsers, action: PayloadAction<Employee[]>) => {
-      return {
-        ...state,
-        users: [...action.payload]
-      };
+      state.users = action.payload;
     },
     setIsloadingUsers: (state: PayLoadUsers, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+      state.isLoading = action.payload;
     },
     clearUsers: (state: PayLoadUsers) => {
-      return {
-        ...state,
-        users: []
-      };
+      state.users = [];
     }
   }
 });

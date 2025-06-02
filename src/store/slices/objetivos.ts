@@ -1,9 +1,10 @@
-import {OBJETIVOS_NAME} from '@/constants';
+import {OBJETIVOS_NAME, SESSION_OBJETIVOS_KEY} from '@/constants';
 import {Objetivos, PayLoadObjetivosType} from '@/types';
+import {SessionStorageUtil} from '@/utils';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: PayLoadObjetivosType = {
-  objetivos: [],
+  objetivos: SessionStorageUtil.getItem<Objetivos[]>(SESSION_OBJETIVOS_KEY) ?? ([] as Objetivos[]),
   isLoading: false
 };
 
@@ -12,24 +13,15 @@ export const objetivosSlice = createSlice({
   initialState,
   reducers: {
     setObjetivos: (state: PayLoadObjetivosType, action: PayloadAction<Objetivos[]>) => {
-      if (state.objetivos.length === 0) {
-        return {
-          ...state,
-          objetivos: action.payload
-        };
-      }
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Objetivos[]>(SESSION_OBJETIVOS_KEY, action.payload);
+      state.objetivos = action.payload;
     },
     clearObjetivos: (state: PayLoadObjetivosType) => {
-      return {
-        ...state,
-        objetivos: []
-      };
+      SessionStorageUtil.removeItem(SESSION_OBJETIVOS_KEY);
+      state.objetivos = [];
     },
     isLoadingObjetivos: (state: PayLoadObjetivosType, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+      state.isLoading = action.payload;
     }
   }
 });

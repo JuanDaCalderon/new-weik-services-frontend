@@ -1,6 +1,9 @@
 import {
   SESSION_APPS_KEY,
   SESSION_CLIENTES_KEY,
+  SESSION_EVENTOS_KEY,
+  SESSION_NOTICIAS_KEY,
+  SESSION_OBJETIVOS_KEY,
   SESSION_PERMISOS_KEY,
   SESSION_ROLES_KEY,
   USER_DOMAIN,
@@ -33,34 +36,23 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state: PayLoadUserType, action: PayloadAction<PayLoadUserType>) => {
-      const {rememberme} = action.payload;
+      const {rememberme, user, domain, isLoggedIn} = action.payload;
       if (rememberme) {
-        LocalStorageUtil.setItem<User>(USER_NAME, action.payload.user);
-        LocalStorageUtil.setItem<string>(USER_DOMAIN, action.payload.domain);
+        LocalStorageUtil.setItem<User>(USER_NAME, user);
+        LocalStorageUtil.setItem<string>(USER_DOMAIN, domain);
       } else {
-        SessionStorageUtil.setItem<User>(USER_NAME, action.payload.user);
-        SessionStorageUtil.setItem<string>(USER_DOMAIN, action.payload.domain);
+        SessionStorageUtil.setItem<User>(USER_NAME, user);
+        SessionStorageUtil.setItem<string>(USER_DOMAIN, domain);
       }
-      return {
-        ...state,
-        user: {...action.payload.user},
-        domain: action.payload.domain,
-        isLoggedIn: action.payload.isLoggedIn,
-        rememberme: !!rememberme
-      } as PayLoadUserType;
+      state.user = user;
+      state.domain = domain;
+      state.isLoggedIn = isLoggedIn;
+      state.rememberme = !!rememberme;
     },
     updateUserImage: (state: PayLoadUserType, action: PayloadAction<string>) => {
-      const userImage = action.payload;
-      const user: User = {
-        ...state.user,
-        userImage
-      };
-      if (state.rememberme) LocalStorageUtil.updateItem<User>(USER_NAME, user);
-      else SessionStorageUtil.updateItem<User>(USER_NAME, user);
-      return {
-        ...state,
-        user
-      };
+      state.user.userImage = action.payload;
+      if (state.rememberme) LocalStorageUtil.updateItem<User>(USER_NAME, state.user);
+      else SessionStorageUtil.updateItem<User>(USER_NAME, state.user);
     },
     updateDataUser: (state: PayLoadUserType, action: PayloadAction<PartialEmployee>) => {
       const partialUser = action.payload;
@@ -70,40 +62,29 @@ export const userSlice = createSlice({
       };
       if (state.rememberme) LocalStorageUtil.updateItem<User>(USER_NAME, user);
       else SessionStorageUtil.updateItem<User>(USER_NAME, user);
-      return {
-        ...state,
-        user
-      };
+      state.user = user;
     },
     updateWorkingHoursUser: (state: PayLoadUserType, action: PayloadAction<HorasTrabajoType[]>) => {
-      const horasTrabajo = action.payload;
-      const user: User = {
-        ...state.user,
-        horasTrabajo
-      };
-      if (state.rememberme) LocalStorageUtil.updateItem<User>(USER_NAME, user);
-      else SessionStorageUtil.updateItem<User>(USER_NAME, user);
-      return {
-        ...state,
-        user
-      };
+      state.user.horasTrabajo = action.payload;
+      if (state.rememberme) LocalStorageUtil.updateItem<User>(USER_NAME, state.user);
+      else SessionStorageUtil.updateItem<User>(USER_NAME, state.user);
     },
     logOutUser: (state: PayLoadUserType) => {
       LocalStorageUtil.removeItem(USER_NAME);
       LocalStorageUtil.removeItem(USER_DOMAIN);
-      SessionStorageUtil.removeItem(USER_NAME);
-      SessionStorageUtil.removeItem(USER_DOMAIN);
+      SessionStorageUtil.removeItem(SESSION_APPS_KEY);
       SessionStorageUtil.removeItem(SESSION_CLIENTES_KEY);
+      SessionStorageUtil.removeItem(SESSION_EVENTOS_KEY);
+      SessionStorageUtil.removeItem(SESSION_NOTICIAS_KEY);
+      SessionStorageUtil.removeItem(SESSION_OBJETIVOS_KEY);
       SessionStorageUtil.removeItem(SESSION_PERMISOS_KEY);
       SessionStorageUtil.removeItem(SESSION_ROLES_KEY);
-      SessionStorageUtil.removeItem(SESSION_APPS_KEY);
-      return {
-        ...state,
-        user: {} as User,
-        domain: '',
-        isLoggedIn: false,
-        rememberme: false
-      } as PayLoadUserType;
+      SessionStorageUtil.removeItem(USER_NAME);
+      SessionStorageUtil.removeItem(USER_DOMAIN);
+      state.user = {} as User;
+      state.domain = '';
+      state.isLoggedIn = false;
+      state.rememberme = false;
     }
   }
 });

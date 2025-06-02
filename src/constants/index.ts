@@ -18,3 +18,4 @@ export * from './clientes';
 export * from './usuarios';
 export * from './reportes';
 export * from './tours';
+export * from './registros';

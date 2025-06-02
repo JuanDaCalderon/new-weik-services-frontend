@@ -13,3 +13,5 @@ export * from './apps';
 export * from './eventos';
 export * from './pdfAndExcel';
 export * from './objetivos';
+export * from './registros';
+export * from './registrosProps';

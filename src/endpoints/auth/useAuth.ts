@@ -13,6 +13,9 @@ import {clearClientes} from '@/store/slices/clientes';
 import {useGetUsers, useSetEstadoUser} from '@/endpoints';
 import {clearNoticias} from '@/store/slices/noticias';
 import {clearApps} from '@/store/slices/apps';
+import {clearEventos} from '@/store/slices/eventos';
+import {clearObjetivos} from '@/store/slices/objetivos';
+import {clearRegistros} from '@/store/slices/registros';
 
 const useAuth = () => {
   const [isLoadingLogOut, setIsLoadingLogOut] = useState<boolean>(true);
@@ -68,11 +71,14 @@ const useAuth = () => {
       if (id) await setOfflineUser(id);
       if (isLoggedIn) {
         dispatch(logOutUser());
+        dispatch(clearApps());
+        dispatch(clearClientes());
+        dispatch(clearEventos());
+        dispatch(clearNoticias());
+        dispatch(clearObjetivos());
+        dispatch(clearRegistros());
         dispatch(clearRoles());
         dispatch(clearPermisos());
-        dispatch(clearClientes());
-        dispatch(clearNoticias());
-        dispatch(clearApps());
         toast.success('¡Sesión cerrada exitosamente!');
         DebugUtil.logSuccess('¡Sesión cerrada exitosamente!');
       }

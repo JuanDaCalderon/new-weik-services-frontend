@@ -1,10 +1,11 @@
-import {EVENTOS_NAME} from '@/constants';
+import {EVENTOS_NAME, SESSION_EVENTOS_KEY} from '@/constants';
 import {Eventos, PayLoadEventosType} from '@/types';
+import {SessionStorageUtil} from '@/utils';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: PayLoadEventosType = {
-  eventos: [],
+  eventos: SessionStorageUtil.getItem<Eventos[]>(SESSION_EVENTOS_KEY) ?? ([] as Eventos[]),
   isLoading: false
 };
 
@@ -13,22 +14,15 @@ export const eventosSlice = createSlice({
   initialState,
   reducers: {
     setEventos: (state: PayLoadEventosType, action: PayloadAction<Eventos[]>) => {
-      return {
-        ...state,
-        eventos: action.payload
-      };
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Eventos[]>(SESSION_EVENTOS_KEY, action.payload);
+      state.eventos = action.payload;
     },
     clearEventos: (state: PayLoadEventosType) => {
-      return {
-        ...state,
-        eventos: []
-      };
+      SessionStorageUtil.removeItem(SESSION_EVENTOS_KEY);
+      state.eventos = [];
     },
     isLoadingEventos: (state: PayLoadEventosType, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+      state.isLoading = action.payload;
     }
   }
 });

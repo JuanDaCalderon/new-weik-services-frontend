@@ -249,6 +249,58 @@ class DateUtils {
     }
     return new Date(year, month - 1, day); // El mes es 0-indexado
   }
+
+  /**
+   * Formatea un objeto Date al formato `yyyy-MM-dd`, compatible con <input type="date" />.
+   *
+   * @param {Date} date - La fecha que se desea formatear.
+   * @returns {string} - La fecha formateada como cadena en el formato `yyyy-MM-dd`.
+   *
+   * @example
+   * formatDateToInput(new Date()); // "2025-06-02"
+   */
+  static formatDateToInput(date: Date): string {
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`; // yyyy-MM-dd
+  }
+
+  /**
+   * Formatea un objeto Date al formato `yyyy-MM-ddTHH:mm`,
+   * compatible con <input type="datetime-local" />.
+   *
+   * Se ajusta a la zona horaria local del navegador para evitar desfases con `toISOString()`.
+   *
+   * @param {Date} date - La fecha que se desea formatear.
+   * @returns {string} - La fecha y hora formateadas como cadena en formato `yyyy-MM-ddTHH:mm`.
+   *
+   * @example
+   * formatDateToDatetimeLocal(new Date()); // "2025-06-02T14:35"
+   */
+  static formatDateToDatetimeLocal(date: Date): string {
+    const offset = date.getTimezoneOffset();
+    const localDate = new Date(date.getTime() - offset * 60000);
+    return localDate.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+  }
+
+  /**
+   * Convierte una cadena en formato 'YYYY-MM-DD' a un objeto Date de JavaScript.
+   * @param dateStr - Fecha en formato 'YYYY-MM-DD'.
+   * @returns Objeto Date correspondiente.
+   */
+  static parseDate(dateStr: string): Date {
+    return new Date(`${dateStr}T00:00`);
+  }
+
+  /**
+   * Convierte una cadena en formato 'YYYY-MM-DDTHH:mm' a un objeto Date de JavaScript.
+   * @param datetimeStr - Fecha y hora en formato 'YYYY-MM-DDTHH:mm'.
+   * @returns Objeto Date correspondiente.
+   */
+  static parseDatetimeLocal(datetimeStr: string): Date {
+    return new Date(datetimeStr);
+  }
 }
 
 export {DateUtils};

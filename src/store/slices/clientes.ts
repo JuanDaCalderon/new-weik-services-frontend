@@ -15,23 +15,14 @@ export const clientesSlice = createSlice({
   reducers: {
     setClientes: (state: PayLoadClientType, action: PayloadAction<Cliente[]>) => {
       if (action.payload.length > 0) SessionStorageUtil.setItem<Cliente[]>(SESSION_CLIENTES_KEY, action.payload);
-      return {
-        ...state,
-        clientes: action.payload
-      };
+      state.clientes = action.payload;
     },
     clearClientes: (state: PayLoadClientType) => {
       SessionStorageUtil.removeItem(SESSION_CLIENTES_KEY);
-      return {
-        ...state,
-        clientes: []
-      };
+      state.clientes = [];
     },
     isLoadingClientes: (state: PayLoadClientType, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+      state.isLoading = action.payload;
     }
   }
 });

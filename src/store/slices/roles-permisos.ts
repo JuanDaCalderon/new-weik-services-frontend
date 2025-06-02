@@ -15,31 +15,19 @@ export const rolesPermisosSlice = createSlice({
   reducers: {
     setPermisos: (state: PayLoadRolesPermisosType, action: PayloadAction<Permiso[]>) => {
       if (action.payload.length > 0) SessionStorageUtil.setItem<Permiso[]>(SESSION_PERMISOS_KEY, action.payload);
-      return {
-        ...state,
-        permisos: [...action.payload]
-      };
+      state.permisos = action.payload;
     },
     setRoles: (state: PayLoadRolesPermisosType, action: PayloadAction<Rol[]>) => {
       if (action.payload.length > 0) SessionStorageUtil.setItem<Rol[]>(SESSION_ROLES_KEY, action.payload);
-      return {
-        ...state,
-        roles: [...action.payload]
-      };
+      state.roles = action.payload;
     },
     clearPermisos: (state: PayLoadRolesPermisosType) => {
       SessionStorageUtil.removeItem(SESSION_PERMISOS_KEY);
-      return {
-        ...state,
-        permisos: []
-      };
+      state.permisos = [];
     },
     clearRoles: (state: PayLoadRolesPermisosType) => {
       SessionStorageUtil.removeItem(SESSION_ROLES_KEY);
-      return {
-        ...state,
-        roles: []
-      };
+      state.roles = [];
     }
   }
 });

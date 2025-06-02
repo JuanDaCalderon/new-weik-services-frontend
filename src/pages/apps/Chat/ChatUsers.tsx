@@ -32,7 +32,7 @@ const ChatUsers = () => {
           <div className="tab-pane show active card-body pb-0">
             <div className="app-search">
               <form>
-                <div className="mb-2 w-100 position-relative form-group">
+                <div className="mb-1 w-100 position-relative form-group">
                   <input
                     type="text"
                     className="form-control"

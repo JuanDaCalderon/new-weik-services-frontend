@@ -1,7 +1,7 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Form as BSForm} from 'react-bootstrap';
-import {useForm, FormProvider, DefaultValues, FieldValues, SubmitHandler, type UseFormReturn} from 'react-hook-form';
-import {CSSProperties, ReactNode, useEffect} from 'react';
+import {useForm, FormProvider, DefaultValues, FieldValues, SubmitHandler} from 'react-hook-form';
+import {CSSProperties, ReactNode} from 'react';
 import {ObjectSchema} from 'yup';
 
 type FormProps<TFormValues extends FieldValues> = {
@@ -12,7 +12,6 @@ type FormProps<TFormValues extends FieldValues> = {
   children: ReactNode;
   defaultValues?: DefaultValues<TFormValues>;
   className?: string;
-  initCallback?: (methods: UseFormReturn<TFormValues>) => void;
   styles?: CSSProperties;
 };
 
@@ -21,22 +20,13 @@ const Form = <TFormValues extends Record<string, any> = Record<string, any>>({
   onSubmit,
   children,
   defaultValues,
-  initCallback,
   ...props
 }: FormProps<TFormValues>) => {
   const methods = useForm<TFormValues>({
-    // @ts-ignore
-    resolver: schema != null ? yupResolver<TFormValues>(schema) : undefined,
+    resolver: schema ? (yupResolver(schema) as any) : undefined,
     defaultValues,
     mode: 'onChange'
   });
-
-  useEffect(() => {
-    if (initCallback) {
-      initCallback(methods);
-    }
-  }, []);
-
   return (
     <FormProvider {...methods}>
       <BSForm onSubmit={methods.handleSubmit(onSubmit)} {...props}>
