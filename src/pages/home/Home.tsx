@@ -90,7 +90,7 @@ const Home = memo(function Home() {
       <Row>
         <TableroNoticias />
 
-        <Col className="px-0 px-lg-2">
+        <Col className="px-0 px-xl-2">
           <Card>
             <Card.Header className="pb-0">
               <h4 className="header-title text-dark text-opacity-75 m-0">{t('home.title')}</h4>

@@ -1,49 +1,38 @@
+import {Registros} from '@/types';
 import type {ColumnDef} from '@tanstack/react-table';
 
-const columns: ColumnDef<any>[] = [
+const columns: ColumnDef<Registros>[] = [
   {
-    header: 'Fecha solicitud',
-    accessorKey: 'FechaSolicitud'
+    header: 'Fecha de solicitud',
+    accessorKey: 'requestAt'
   },
   {
-    header: 'Fecha Entrega',
-    accessorKey: 'FechaEntrega'
+    header: 'Fecha de entrega',
+    accessorKey: 'deliverAt'
+  },
+  {
+    header: 'Nombre del proyecto',
+    accessorKey: 'nombre'
   },
   {
     header: 'Cliente',
     accessorKey: 'cliente'
   },
   {
-    header: 'Proyecto',
-    accessorKey: 'proyecto'
-  },
-  {
     header: 'Solicitante',
     accessorKey: 'solicitante'
   },
   {
-    header: 'Región',
-    accessorKey: 'region'
+    header: 'Número de orden',
+    accessorKey: 'numeroOrden'
   },
   {
-    header: 'Pilares',
-    accessorKey: 'pilares'
+    header: 'Prioridad',
+    accessorKey: 'prioridad'
   },
   {
-    header: 'Slides',
-    accessorKey: 'slides'
-  },
-  {
-    header: 'Diseñador',
-    accessorKey: 'diseñador'
-  },
-  {
-    header: 'Observaciones',
-    accessorKey: 'observaciones'
-  },
-  {
-    header: 'Factura',
-    accessorKey: 'factura'
+    header: 'Encargado',
+    accessorKey: 'encargado'
   },
   {
     header: 'Estado',

@@ -10,20 +10,20 @@ export const useLoadRegistros = (cliente: string | undefined, registerType: stri
     checkPendingRecords: SessionStorageUtil.getItem<boolean>(SESSIONSTORAGE_LOAD_PENDING_RECORDS) ?? true,
     checkDeliveredRecords: SessionStorageUtil.getItem<boolean>(SESSIONSTORAGE_LOAD_DELIVERED_RECORDS) ?? false
   });
-  const {getRegistroPerClienteType} = useGetRegistros();
+  const {getRegistroPerClienteTypeListener, unsubscribeClienteTipo} = useGetRegistros();
   const {clearRegistros} = useClearRegistros();
 
   useEffect(() => {
     if (!cliente) return;
     if (checkRecords.checkPendingRecords && !checkRecords.checkDeliveredRecords) {
       if (registrosLength <= 0) {
-        getRegistroPerClienteType(cliente, registerType, false);
+        getRegistroPerClienteTypeListener(cliente, registerType, false);
         return;
       }
     }
     if (checkRecords.checkDeliveredRecords && !checkRecords.checkPendingRecords) {
       if (registrosLength <= 0) {
-        getRegistroPerClienteType(cliente, registerType, true);
+        getRegistroPerClienteTypeListener(cliente, registerType, true);
         return;
       }
     }
@@ -31,20 +31,21 @@ export const useLoadRegistros = (cliente: string | undefined, registerType: stri
     checkRecords.checkDeliveredRecords,
     checkRecords.checkPendingRecords,
     cliente,
-    getRegistroPerClienteType,
+    getRegistroPerClienteTypeListener,
     registerType,
     registrosLength
   ]);
 
   const refreashRegistros = useCallback(async () => {
     if (!cliente) return;
+    unsubscribeClienteTipo(cliente, registerType);
     clearRegistros(cliente, registerType);
     if (checkRecords.checkPendingRecords && !checkRecords.checkDeliveredRecords) {
-      await getRegistroPerClienteType(cliente, registerType, false);
+      getRegistroPerClienteTypeListener(cliente, registerType, false);
       return;
     }
     if (checkRecords.checkDeliveredRecords && !checkRecords.checkPendingRecords) {
-      await getRegistroPerClienteType(cliente, registerType, true);
+      getRegistroPerClienteTypeListener(cliente, registerType, true);
       return;
     }
   }, [
@@ -52,8 +53,9 @@ export const useLoadRegistros = (cliente: string | undefined, registerType: stri
     checkRecords.checkPendingRecords,
     clearRegistros,
     cliente,
-    getRegistroPerClienteType,
-    registerType
+    getRegistroPerClienteTypeListener,
+    registerType,
+    unsubscribeClienteTipo
   ]);
 
   const toggleCheck = (type: 'pending' | 'delivered', checked: boolean) => {

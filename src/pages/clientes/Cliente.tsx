@@ -41,7 +41,7 @@ const Cliente = memo(function Cliente() {
       <PageBreadcrumb title={cliente ?? 'Cliente'} />
       <Row>
         <TableroNoticias />
-        <Col className="px-0 px-lg-2">
+        <Col className="px-0 px-xl-2">
           <Card>
             <Card.Body>
               <Tab.Container defaultActiveKey={REGISTROS_PPTS}>

@@ -16,22 +16,24 @@ class DebugUtil {
    * Log para información general.
    * @param message Mensaje descriptivo.
    * @param data Datos opcionales adicionales.
+   * @param showTrace Indica si se debe mostrar el stack trace.
    */
-  static logInfo<T>(message: string, data?: T): void {
-    console.info(`🚀 [INFO]: ${message}`);
-    if (data) console.info('📋 Data:', data);
-    console.info('📍 Stack Trace:\n', this.getStackTrace());
+  static logInfo<T>(message: string, data?: T, showTrace: boolean = false): void {
+    if (data) console.info(`🚀 [INFO]: ${message}`, '📋 Data:', data);
+    else console.info(`🚀 [INFO]: ${message}`);
+    if (showTrace) console.info('📍 Stack Trace:\n', this.getStackTrace());
   }
 
   /**
    * Log para advertencias.
    * @param message Mensaje descriptivo.
    * @param data Datos opcionales adicionales.
+   * @param showTrace Indica si se debe mostrar el stack trace.
    */
-  static logWarning<T>(message: string, data?: T): void {
-    console.warn(`⚠️ [WARNING]: ${message}`);
-    if (data) console.warn('📋 Data:', data);
-    console.warn('📍 Stack Trace:\n', this.getStackTrace());
+  static logWarning<T>(message: string, data?: T, showTrace: boolean = false): void {
+    if (data) console.warn(`⚠️ [WARNING]: ${message}`, '📋 Data:', data);
+    else console.warn(`⚠️ [WARNING]: ${message}`);
+    if (showTrace) console.warn('📍 Stack Trace:\n', this.getStackTrace());
   }
 
   /**
@@ -54,11 +56,12 @@ class DebugUtil {
    * Log para mensajes de éxito.
    * @param message Mensaje descriptivo.
    * @param data Datos opcionales adicionales.
+   * @param showTrace Indica si se debe mostrar el stack trace.
    */
-  static logSuccess<T>(message: string, data?: T): void {
-    console.log(`✅ [SUCCESS]: ${message}`);
-    if (data) console.log('📋 Data:', data);
-    console.log('📍 Stack Trace:\n', this.getStackTrace());
+  static logSuccess<T>(message: string, data?: T, showTrace: boolean = false): void {
+    if (data) console.log(`✅ [SUCCESS]: ${message}`, '📋 Data:', data);
+    else console.log(`✅ [SUCCESS]: ${message}`);
+    if (showTrace) console.log('📍 Stack Trace:\n', this.getStackTrace());
   }
 
   /**
@@ -79,11 +82,12 @@ class DebugUtil {
    * Log para depuración.
    * @param message Mensaje descriptivo.
    * @param data Datos opcionales adicionales.
+   * @param showTrace Indica si se debe mostrar el stack trace.
    */
-  static logDebug<T>(message: string, data?: T): void {
-    console.debug(`🐞 [DEBUG]: ${message}`);
-    if (data) console.debug('📋 Data:', data);
-    console.debug('📍 Stack Trace:\n', this.getStackTrace());
+  static logDebug<T>(message: string, data?: T, showTrace: boolean = false): void {
+    if (data) console.log(`🐞 [DEBUG]: ${message}`, '📋 Data:', data);
+    else console.log(`🐞 [DEBUG]: ${message}`);
+    if (showTrace) console.log('📍 Stack Trace:\n', this.getStackTrace());
   }
 }
 

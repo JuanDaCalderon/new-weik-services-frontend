@@ -32,7 +32,7 @@ export function HookSelectField({
   lg,
   xl,
   xxl,
-  controlSize = 'sm',
+  controlSize,
   bottomMargin = 2,
   ...props
 }: SelectFieldProps) {

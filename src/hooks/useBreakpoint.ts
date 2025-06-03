@@ -23,7 +23,9 @@ const useBreakpoint = () => {
   }, []);
 
   const isHugeScreen = breakpoint === BREAKPOINTS.xxl;
+  const isWideDesktop = [BREAKPOINTS.xxl, BREAKPOINTS.xl].includes(breakpoint);
   const isDesktop = [BREAKPOINTS.xxl, BREAKPOINTS.xl, BREAKPOINTS.lg].includes(breakpoint);
+  const isSmallDesktop = [BREAKPOINTS.lg].includes(breakpoint);
   const isTablet = [BREAKPOINTS.lg, BREAKPOINTS.md].includes(breakpoint);
   const isMobile = [BREAKPOINTS.sm, BREAKPOINTS.xs].includes(breakpoint);
 
@@ -36,7 +38,9 @@ const useBreakpoint = () => {
     isXL: breakpoint === BREAKPOINTS.xl,
     isXXL: breakpoint === BREAKPOINTS.xxl,
     isHugeScreen,
+    isWideDesktop,
     isDesktop,
+    isSmallDesktop,
     isTablet,
     isMobile,
     isNotDesktop: !isDesktop,

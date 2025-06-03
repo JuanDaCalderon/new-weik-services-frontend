@@ -33,7 +33,7 @@ export function HookInputField({
   lg,
   xl,
   xxl,
-  controlSize = 'sm',
+  controlSize,
   as = 'input',
   bottomMargin = 2,
   labelPosition = 'top',

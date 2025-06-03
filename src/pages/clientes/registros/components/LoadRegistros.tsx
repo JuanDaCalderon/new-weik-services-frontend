@@ -15,6 +15,13 @@ const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, 
     if (!isLoading && checkRecords.checkDeliveredRecords) copy = 'Registros entregados';
     return copy;
   }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading]);
+
+  const titleCopyMobile: string = useMemo(() => {
+    let copy = 'Cargando...';
+    if (!isLoading && checkRecords.checkPendingRecords) copy = 'Pendientes';
+    if (!isLoading && checkRecords.checkDeliveredRecords) copy = 'Entregados';
+    return copy;
+  }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading]);
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -22,7 +29,8 @@ const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, 
         to=""
         className="arrow-none card-drop d-flex align-items-center justify-content-between">
         <i className="mdi mdi-dots-vertical m-0 p-0" />
-        <span className="fw-bold font-14 lh-1 m-0 p-0">{titleCopy}</span>
+        <span className="d-none d-md-inline fw-bold font-14 lh-1 m-0 p-0">{titleCopy}</span>
+        <span className="d-none d-sm-inline d-md-none fw-bold font-14 lh-1 m-0 p-0">{titleCopyMobile}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu style={{minWidth: 'max-content', width: 'max-content'}}>
         <Row className="mx-0 my-1 p-0">
