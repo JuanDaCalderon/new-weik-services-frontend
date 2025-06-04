@@ -295,7 +295,7 @@ const Asistencia = memo(function Asistencia({employee}: {employee: EmployeeWithF
           columns={columns}
           data={horariosFiltered}
           pageSize={10}
-          tableClass="table-striped"
+          theadClass="table-light"
           showPagination
           isSearchable
         />

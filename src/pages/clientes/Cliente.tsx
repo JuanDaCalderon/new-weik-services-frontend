@@ -6,6 +6,8 @@ import {REGISTROS_MOTIONS, REGISTROS_PPTS} from '@/constants';
 import {TabContentItem} from '@/types';
 import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
+import {useAppSelector} from '@/store';
+import {selectNoticiasIsExpanded} from '@/store/selectores';
 const TabRegisters = lazy(() => import('@/pages/clientes/registros/TabRegisters'));
 
 const tabContents: TabContentItem[] = [
@@ -21,6 +23,7 @@ const tabContents: TabContentItem[] = [
 
 const Cliente = memo(function Cliente() {
   const {cliente} = useParams<{cliente: string}>();
+  const tableroNoticiasIsExpanded = useAppSelector(selectNoticiasIsExpanded);
 
   const tabComponentsMap: Record<string, JSX.Element> = useMemo(() => {
     return tabContents.reduce(
@@ -41,7 +44,11 @@ const Cliente = memo(function Cliente() {
       <PageBreadcrumb title={cliente ?? 'Cliente'} />
       <Row>
         <TableroNoticias />
-        <Col className="px-0 px-xl-2">
+        <Col
+          xs={12}
+          xl={tableroNoticiasIsExpanded ? 9 : 10}
+          xxl={tableroNoticiasIsExpanded ? 10 : 11}
+          className="px-0 px-xl-2">
           <Card>
             <Card.Body>
               <Tab.Container defaultActiveKey={REGISTROS_PPTS}>

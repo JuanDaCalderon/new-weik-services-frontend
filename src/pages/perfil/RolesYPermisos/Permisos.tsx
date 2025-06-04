@@ -8,7 +8,8 @@ import ReactTable from '@/components/tablev02/ReactTable';
 const columns: ColumnDef<Permiso>[] = [
   {
     header: 'Permisos asociados',
-    accessorKey: 'labelName'
+    accessorKey: 'labelName',
+    enableResizing: false
   }
 ];
 

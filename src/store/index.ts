@@ -7,7 +7,8 @@ import {
   REGISTROS_NAME,
   ROLES_PERMISOS_NAME,
   USER_NAME,
-  USERS_NAME
+  USERS_NAME,
+  UTILITIES_NAME
 } from '@/constants';
 import {dedupeUsersMiddleware} from '@/store/middlewares/dedupeUsersMiddleware';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
@@ -21,6 +22,7 @@ import appsSlice from '@/store/slices/apps';
 import eventosSlice from '@/store/slices/eventos';
 import objetivosSlice from '@/store/slices/objetivos';
 import registrosSlice from '@/store/slices/registros';
+import utilitiesSlice from '@/store/slices/utilities';
 import {dedupeRegistrosMiddleware} from './middlewares';
 
 const rootReducer = combineReducers({
@@ -32,7 +34,8 @@ const rootReducer = combineReducers({
   [APPS_NAME]: appsSlice,
   [EVENTOS_NAME]: eventosSlice,
   [OBJETIVOS_NAME]: objetivosSlice,
-  [REGISTROS_NAME]: registrosSlice
+  [REGISTROS_NAME]: registrosSlice,
+  [UTILITIES_NAME]: utilitiesSlice
 });
 
 export const store = configureStore({

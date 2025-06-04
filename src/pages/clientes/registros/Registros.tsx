@@ -1,7 +1,8 @@
-import {memo, useMemo} from 'react';
+import {memo, useMemo, useState} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import ReactTable from '@/components/tablev02/ReactTable';
 import {useParams} from 'react-router-dom';
+import type {ColumnDef} from '@tanstack/react-table';
 import {columns} from './Columnas';
 import {Registros as RegistrosType, RegistrosProps} from '@/types';
 import {selectRegistrosByClienteYTipo} from '@/store/selectores';
@@ -12,6 +13,7 @@ import {AgregarRegistros} from '@/pages/clientes/registros/components/AgregarReg
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 
 const Registros = memo(function Registros({registerType}: RegistrosProps) {
+  const [thisColumns] = useState<ColumnDef<RegistrosType>[]>(() => [...columns]);
   const {cliente} = useParams<{cliente: string}>();
   const selectRegistros = useMemo(() => {
     if (!cliente) return null;
@@ -61,10 +63,10 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
           <SkeletonLoader customClass="p-0" height="50vh" />
         ) : (
           <ReactTable<RegistrosType>
-            columns={columns}
+            columns={thisColumns}
             data={registros}
             pageSize={50}
-            tableClass="table-striped"
+            theadClass="table-light"
             showPagination
             isSearchable
             isSelectable

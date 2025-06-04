@@ -13,6 +13,8 @@ import {LOCALSTORAGE_EXPAND_NOTICIAS_BOARD} from '@/constants';
 import {useBreakpoint} from '@/hooks';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import {useDispatch} from 'react-redux';
+import {setNoticiasExpanded} from '@/store/slices/utilities';
 
 /**
  * Componente que contiene el tablero de noticias en vertical.
@@ -28,28 +30,35 @@ const TableroNoticias = memo(function TableroNoticias() {
   const noticiasFromStore = useAppSelector(selectNoticias);
   const {getNoticiasSync} = useGetNoticias();
   const {isDesktop, isMobile, isHugeScreen, isWideDesktop} = useBreakpoint();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (noticiasFromStore.length <= 0) getNoticiasSync();
   }, [getNoticiasSync, noticiasFromStore.length]);
 
-  const onClickExpandNoticias = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsExpanded((prev) => {
-      LocalStorageUtil.setItem<boolean>(LOCALSTORAGE_EXPAND_NOTICIAS_BOARD, !prev);
-      return !prev;
-    });
-  }, []);
+  const onClickExpandNoticias = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setIsExpanded((prev) => {
+        dispatch(setNoticiasExpanded(!prev));
+        LocalStorageUtil.setItem<boolean>(LOCALSTORAGE_EXPAND_NOTICIAS_BOARD, !prev);
+        return !prev;
+      });
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (!isWideDesktop) {
       setIsExpanded(true);
+      dispatch(setNoticiasExpanded(true));
       LocalStorageUtil.setItem<boolean>(LOCALSTORAGE_EXPAND_NOTICIAS_BOARD, true);
     } else {
       setIsExpanded(false);
+      dispatch(setNoticiasExpanded(false));
       LocalStorageUtil.setItem<boolean>(LOCALSTORAGE_EXPAND_NOTICIAS_BOARD, false);
     }
-  }, [isWideDesktop]);
+  }, [dispatch, isWideDesktop]);
 
   const syncNoticias = useCallback(() => {
     getNoticiasSync();

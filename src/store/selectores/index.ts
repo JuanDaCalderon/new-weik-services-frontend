@@ -7,3 +7,4 @@ export * from './apps';
 export * from './eventos';
 export * from './objetivos';
 export * from './registros';
+export * from './utilities';

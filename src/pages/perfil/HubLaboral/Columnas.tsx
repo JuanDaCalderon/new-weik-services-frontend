@@ -199,12 +199,16 @@ const columns: ColumnDef<Objetivos>[] = [
   {
     header: 'Estado',
     accessorKey: 'status',
-    cell: EstadosColumn
+    cell: EstadosColumn,
+    size: 80,
+    enableResizing: false
   },
   {
     header: 'Autoevaluación',
     accessorKey: 'selfAssessment',
-    cell: AutoevaluacionColumn
+    cell: AutoevaluacionColumn,
+    size: 50,
+    enableResizing: false
   }
 ];
 

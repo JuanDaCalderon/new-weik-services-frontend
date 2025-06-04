@@ -10,3 +10,30 @@
     }
   }
 }
+
+.resizer {
+  position: absolute;
+  top: 1px;
+  height: 99%;
+  right: 0;
+  width: 4px;
+  border-radius: 100px;
+  background: $gray-600;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+.resizer.isResizing {
+  background: $primary;
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .resizer {
+    opacity: 0;
+  }
+  *:hover > .resizer {
+    opacity: 1;
+  }
+}

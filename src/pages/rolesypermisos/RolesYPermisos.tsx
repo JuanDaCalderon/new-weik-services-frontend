@@ -67,7 +67,13 @@ const RolesYPermisos = memo(function RolesYPermisos() {
                         <Col sm="12">
                           {tab.id === 'Roles' && <Roles />}
                           {tab.id === 'Usuarios' && (
-                            <>{!isLoadingUsers ? <Usuarios /> : <SkeletonLoader height="125px"></SkeletonLoader>}</>
+                            <>
+                              {!isLoadingUsers ? (
+                                <Usuarios />
+                              ) : (
+                                <SkeletonLoader customClass="p-0" height="125px"></SkeletonLoader>
+                              )}
+                            </>
                           )}
                         </Col>
                       </Row>

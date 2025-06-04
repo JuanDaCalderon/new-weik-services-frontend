@@ -44,6 +44,7 @@ const MisObjetivos = memo(function MisObjetivos() {
               columns={columns}
               data={misObjetivo}
               pageSize={10}
+              theadClass="table-light"
               tableClass="objetivos-table"
               showPagination
               isSearchable

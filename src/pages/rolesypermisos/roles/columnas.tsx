@@ -227,7 +227,8 @@ const rolesColumns: ColumnDef<thisRol>[] = [
   {
     header: 'Rol',
     accessorKey: 'rolName',
-    cell: RolNameColumn
+    cell: RolNameColumn,
+    size: 240
   },
   {
     header: 'Creado por',
@@ -235,7 +236,11 @@ const rolesColumns: ColumnDef<thisRol>[] = [
   },
   {
     header: 'Creado en',
-    accessorKey: 'createdDate'
+    accessorKey: 'createdDate',
+    enableResizing: false,
+    minSize: 60,
+    size: 60,
+    maxSize: 60
   },
   {
     header: 'Actualizado por',
@@ -248,17 +253,23 @@ const rolesColumns: ColumnDef<thisRol>[] = [
   {
     header: 'Permisos del rol',
     accessorKey: 'RolePermisos',
-    cell: RolePermisosColumn
+    cell: RolePermisosColumn,
+    enableResizing: false,
+    size: 100
   },
   {
     header: 'Usuarios del rol',
     accessorKey: 'RoleUsuarios',
-    cell: RoleUsuariosColumn
+    cell: RoleUsuariosColumn,
+    enableResizing: false,
+    size: 100
   },
   {
     header: 'Eliminar',
     accessorKey: 'eliminar',
-    cell: EliminarRol
+    cell: EliminarRol,
+    enableResizing: false,
+    size: 60
   }
 ];
 

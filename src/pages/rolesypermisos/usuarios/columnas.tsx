@@ -148,7 +148,8 @@ const usuariosColumns: ColumnDef<thisUsuarios>[] = [
   {
     header: 'Usuario',
     accessorKey: 'usuario',
-    cell: UsuariosColumn
+    cell: UsuariosColumn,
+    size: 200
   },
   {
     header: 'Cargo',
@@ -157,17 +158,23 @@ const usuariosColumns: ColumnDef<thisUsuarios>[] = [
   {
     header: 'Roles',
     accessorKey: 'roles',
-    cell: RolesColumn
+    cell: RolesColumn,
+    size: 60,
+    enableResizing: false
   },
   {
     header: 'Permisos Otorgados',
     accessorKey: 'permisosOtorgados',
-    cell: PermisosOtorgadosColumn
+    cell: PermisosOtorgadosColumn,
+    size: 80,
+    enableResizing: false
   },
   {
     header: 'Permisos Denegados',
     accessorKey: 'permisosDenegados',
-    cell: PermisosDenegadosColumn
+    cell: PermisosDenegadosColumn,
+    size: 80,
+    enableResizing: false
   }
 ];
 

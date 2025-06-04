@@ -108,6 +108,7 @@ const Objetivos = memo(function Objetivos({users = []}: {users: Employee[]}) {
                     columns={columns}
                     data={objetivosPerUser}
                     pageSize={10}
+                    theadClass="table-light"
                     tableClass="objetivos-table"
                     showPagination
                     isSearchable
