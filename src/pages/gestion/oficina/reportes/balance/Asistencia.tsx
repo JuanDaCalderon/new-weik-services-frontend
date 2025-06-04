@@ -26,7 +26,7 @@ type AsistenciaDataType = {
   horasDeTrabajoExtra: string;
 };
 
-export const asistenciaColumnsPdf: ExportColumn<AsistenciaDataType>[] = [
+const asistenciaColumnsPdf: ExportColumn<AsistenciaDataType>[] = [
   {field: 'fecha', header: 'Fecha'},
   {field: 'checkIn', header: 'Entrada'},
   {field: 'checkOut', header: 'Salida'},
