@@ -16,6 +16,9 @@ import classNames from 'classnames';
 import {Fragment, memo, ReactElement, useEffect, useMemo, useRef, useState, type HTMLProps} from 'react';
 import {Form, Table} from 'react-bootstrap';
 import Pagination from './Pagination';
+import {useDispatch} from 'react-redux';
+import {setSelectedRows} from '@/store/slices/selected-row';
+import {SelectedRowType} from '@/types';
 
 const IndeterminateCheckbox = memo(function IndeterminateCheckbox({
   indeterminate,
@@ -46,6 +49,7 @@ const ReactTable = <RowType,>({
   renderSubComponent,
   getRowCanExpand
 }: ReactTableProps<RowType>) => {
+  const dispatch = useDispatch();
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: pageSize ?? 10
@@ -64,6 +68,7 @@ const ReactTable = <RowType,>({
       minSize: 34,
       maxSize: 600
     },
+    getRowId: (row, i) => (row as any)?.id ?? i,
     columnResizeMode: 'onChange',
     onPaginationChange: setPagination,
     state: {pagination, globalFilter, rowSelection, expanded},
@@ -91,6 +96,15 @@ const ReactTable = <RowType,>({
     return colSizes;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [table.getState().columnSizingInfo, table.getState().columnSizing]);
+
+  useEffect(() => {
+    if (!isSelectable) return;
+    if (table.getSelectedRowModel().rows) {
+      const selectedRows: RowType[] = table.getSelectedRowModel().rows.map((row) => row.original);
+      dispatch(setSelectedRows(selectedRows as SelectedRowType[]));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, isSelectable, table.getSelectedRowModel().rows.length]);
 
   return (
     <>

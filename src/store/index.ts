@@ -6,6 +6,7 @@ import {
   OBJETIVOS_NAME,
   REGISTROS_NAME,
   ROLES_PERMISOS_NAME,
+  SELECTED_ROW_NAME,
   USER_NAME,
   USERS_NAME,
   UTILITIES_NAME
@@ -23,6 +24,7 @@ import eventosSlice from '@/store/slices/eventos';
 import objetivosSlice from '@/store/slices/objetivos';
 import registrosSlice from '@/store/slices/registros';
 import utilitiesSlice from '@/store/slices/utilities';
+import SelectedRowType from '@/store/slices/selected-row';
 import {dedupeRegistrosMiddleware} from './middlewares';
 
 const rootReducer = combineReducers({
@@ -35,6 +37,7 @@ const rootReducer = combineReducers({
   [EVENTOS_NAME]: eventosSlice,
   [OBJETIVOS_NAME]: objetivosSlice,
   [REGISTROS_NAME]: registrosSlice,
+  [SELECTED_ROW_NAME]: SelectedRowType,
   [UTILITIES_NAME]: utilitiesSlice
 });
 

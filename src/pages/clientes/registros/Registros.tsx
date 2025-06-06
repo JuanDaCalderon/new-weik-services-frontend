@@ -14,6 +14,7 @@ import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useExportToExcel} from '@/hooks';
 import {PDFViewer} from '@react-pdf/renderer';
 import {TablePdf} from '@/components';
+import {DeleteRegistros} from './components/DeleteRegistros';
 
 const registrosColumnsPdf: ExportColumn<RegistrosType>[] = [
   {field: 'requestAt', header: 'Fecha de solicitud'},
@@ -64,13 +65,7 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
         <LoadRegistros checkRecords={checkRecords} onToggleCheck={toggleCheck} isLoading={isLoading} />
         <div className="d-flex align-items-center flex-wrap justify-content-end gap-1">
           <AgregarRegistros cliente={cliente} registerType={registerType} />
-          <Button
-            className="font-14 px-2"
-            variant="outline-danger"
-            onClick={() => console.log('Eliminar registros seleccionados')}>
-            <span className="d-none d-md-inline">Eliminar</span>
-            <i className="d-inline d-md-none mdi mdi-delete-outline" />
-          </Button>
+          <DeleteRegistros cliente={cliente} registerType={registerType} />
           <Button className="font-14 px-2" variant="outline-dark" onClick={pdfToggle}>
             <span className="d-none d-md-inline">PDF</span>
             <i className="d-inline d-md-none mdi mdi-file-pdf-box" />

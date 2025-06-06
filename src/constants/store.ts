@@ -7,6 +7,7 @@ export const EVENTOS_NAME = 'eventos';
 export const NOTICIAS_NAME = 'noticias';
 export const OBJETIVOS_NAME = 'objetivos';
 export const REGISTROS_NAME = 'registros';
+export const SELECTED_ROW_NAME = 'selectedRow';
 
 export const UTILITIES_NAME = 'utilities';
 
