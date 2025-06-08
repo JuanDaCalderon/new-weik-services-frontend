@@ -1,37 +1,5 @@
+import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/constants';
 import {Timestamp} from 'firebase/firestore';
-
-export enum REGISTRO_ASSIGNMENT {
-  SINASIGNAR = 'SINASIGNAR',
-  ASIGNADO = 'ASIGNADO'
-}
-
-export enum REGISTRO_STATUS {
-  PAUSA = 'PAUSA',
-  ENPROGRESO = 'ENPROGRESO',
-  COMPLETADO = 'COMPLETADO',
-  ENTREGADO = 'ENTREGADO'
-}
-
-export enum REGISTRO_PRIORIDAD {
-  ALTA = 'ALTA',
-  MEDIA = 'MEDIA',
-  BAJA = 'BAJA',
-  SINPRIORIDAD = 'SINPRIORIDAD'
-}
-
-export enum CUSTOM_FIELD_TYPE {
-  STRING = 'string',
-  NUMBER = 'number',
-  BOOLEAN = 'boolean',
-  SELECT = 'select'
-}
-
-export type CustomFieldDefinition = {
-  key: string;
-  label: string;
-  type: CUSTOM_FIELD_TYPE;
-  options?: string[];
-};
 
 interface BaseComentarios {
   comentario: string;

@@ -3,7 +3,7 @@ import {Button} from 'react-bootstrap';
 import {GenericModal} from '@/components';
 import {HookForm, HookInputField, HookSelectField} from '@/components/Form2';
 import {useTogglev2} from '@/hooks';
-import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/types';
+import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/constants';
 import {registrosCrearSchema, RegistrosCrearFormFields} from '@/pages/clientes/registros/schemas/createRegistro';
 import {useAgregarRegistros} from '../hooks/useAgregarRegistros';
 

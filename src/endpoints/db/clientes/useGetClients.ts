@@ -31,7 +31,8 @@ const useGetClients = () => {
               idNitCliente,
               nombrePersonaContacto,
               telefonoCliente,
-              telefonoPersonaContacto
+              telefonoPersonaContacto,
+              tiposRegistros
             } = doc.data() as Cliente;
             clientes.push({
               id: doc.id,
@@ -48,7 +49,8 @@ const useGetClients = () => {
               telefonoPersonaContacto: telefonoPersonaContacto || '',
               fechaCreacion: fechaCreacion
                 ? DateUtils.formatDateToString((fechaCreacion as unknown as Timestamp).toDate())
-                : DateUtils.formatDateToString(new Date())
+                : DateUtils.formatDateToString(new Date()),
+              tiposRegistros: tiposRegistros ?? []
             });
           }
           dispatch(clearClientes());
@@ -81,7 +83,8 @@ const useGetClients = () => {
           idNitCliente,
           nombrePersonaContacto,
           telefonoCliente,
-          telefonoPersonaContacto
+          telefonoPersonaContacto,
+          tiposRegistros
         } = doc.data() as Cliente;
         clientes.push({
           id: doc.id,
@@ -98,7 +101,8 @@ const useGetClients = () => {
           telefonoPersonaContacto: telefonoPersonaContacto || '',
           fechaCreacion: fechaCreacion
             ? DateUtils.formatDateToString((fechaCreacion as unknown as Timestamp).toDate())
-            : DateUtils.formatDateToString(new Date())
+            : DateUtils.formatDateToString(new Date()),
+          tiposRegistros: tiposRegistros ?? []
         });
       }
       dispatch(clearClientes());

@@ -31,7 +31,8 @@ const clienteDatosIniciales: Cliente = {
   telefonoPersonaContacto: '',
   idNitCliente: '',
   direccionFisicaCliente: '',
-  telefonoCliente: ''
+  telefonoCliente: '',
+  tiposRegistros: []
 };
 
 const CrearCliente = memo(function CrearCliente() {
@@ -140,6 +141,13 @@ const CrearCliente = memo(function CrearCliente() {
               @<b>dominio</b>.com, donde se asociarán los correos de los usuarios al cliente. No debe contener espacios.
             </p>
           </div>
+        </Col>
+        <Col xs={12}>
+          <span className="font-14">
+            Los tipos de registros, junto con sus campos personalizables (custom fields), pueden ser añadidos al cliente
+            desde la pestaña de "Clientes", mediante la opción "Gestionar tipos de registros" disponible en el menú de
+            acciones una vez que el cliente ha sido creado.
+          </span>
         </Col>
         <Col xs={12}>
           <hr></hr>

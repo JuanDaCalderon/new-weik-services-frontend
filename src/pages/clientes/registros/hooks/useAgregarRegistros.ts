@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {DateUtils} from '@/utils';
 import useAddRegistros from '@/endpoints/db/registros/useAddRegistros';
-import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/types';
+import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/constants';
 import {RegistrosCrearFormFields} from '@/pages/clientes/registros/schemas/createRegistro';
 
 export const useAgregarRegistros = (cliente: string | undefined, registerType: string) => {

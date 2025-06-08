@@ -6,6 +6,9 @@
   padding-left: 0.2rem !important;
   padding-right: 0.2rem !important;
 }
+.mb-min {
+  margin-bottom: 0.155rem !important;
+}
 .cursor-pointer {
   cursor: pointer !important;
   * {
@@ -63,4 +66,13 @@ img.loading {
 
 .lh-xs {
   line-height: 1 !important;
+}
+
+.modal-backdrop {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--#{$prefix}emphasis-color-rgb), 1) 0%,
+    rgba(var(--#{$prefix}emphasis-color-rgb), 1) 60%,
+    rgba(var(--#{$prefix}emphasis-color-rgb), 0.2) 100%
+  );
 }

@@ -10,6 +10,10 @@ export default function useUpdateClient() {
   const [isUpdateClient, setIsUpdateClient] = useState<boolean>(false);
 
   const updateClient = useCallback(async (id: string, newClienteData: Partial<Cliente>): Promise<void> => {
+    if (Object.keys(newClienteData).length === 0) {
+      toast.error('No se proporcionaron datos para actualizar.');
+      return;
+    }
     setIsUpdateClient(true);
     try {
       await setDoc(doc(db, CLIENTES_PATH, id), {...newClienteData}, {merge: true});

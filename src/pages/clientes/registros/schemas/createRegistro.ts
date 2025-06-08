@@ -1,4 +1,4 @@
-import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/types';
+import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/constants';
 import {DateUtils} from '@/utils';
 import {object, string, InferType, array} from 'yup';
 

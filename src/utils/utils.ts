@@ -39,6 +39,22 @@ export const isValidName = (nameToBeValidated: string): boolean => {
 export const formatText = (text: string) => text.toLowerCase().replace(/\s+/g, '');
 
 /**
+ * This function normalizes a text by trimming and converting it to lowercase
+ * @param texto
+ * @returns
+ */
+export const normalizarTexto = (texto: string) => texto.trim().toLowerCase();
+
+/**
+ * This function removes undefined properties from an object
+ * @param obj
+ * @returns
+ */
+export function removeUndefined<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+/**
  * This function formats a domain
  * @param domain
  * @returns

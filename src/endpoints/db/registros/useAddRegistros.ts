@@ -2,9 +2,9 @@ import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {DebugUtil} from '@/utils';
 import {addDoc, collection, Timestamp} from 'firebase/firestore';
-import {CLIENTES_PATH} from '@/constants';
+import {CLIENTES_PATH, REGISTRO_ASSIGNMENT} from '@/constants';
 import toast from 'react-hot-toast';
-import {RegistrosToDb, REGISTRO_ASSIGNMENT, RegistrosToBecreated} from '@/types';
+import {RegistrosToDb, RegistrosToBecreated} from '@/types';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 

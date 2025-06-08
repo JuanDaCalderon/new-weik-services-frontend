@@ -4,8 +4,8 @@ import {useDispatch} from 'react-redux';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingRegistrosPerCliente, setRegistrosPerCliente} from '@/store/slices/registros';
 import {collection, getDocs, onSnapshot, orderBy, query, QueryDocumentSnapshot, Unsubscribe} from 'firebase/firestore';
-import {CLIENTES_PATH} from '@/constants';
-import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS, Registros, RegistrosToDb} from '@/types';
+import {CLIENTES_PATH, REGISTRO_ASSIGNMENT, REGISTRO_STATUS, REGISTRO_PRIORIDAD} from '@/constants';
+import {Registros, RegistrosToDb} from '@/types';
 
 const useGetRegistros = () => {
   const dispatch = useDispatch();
