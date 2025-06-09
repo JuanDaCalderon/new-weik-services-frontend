@@ -77,10 +77,10 @@ type HyperDatepickerProps = {
 
 const DatepickerRange = (props: HyperDatepickerProps) => {
   const input = useMemo(() => {
-    if ((props.hideAddon || false) === true) {
+    if (props.hideAddon) {
       return <DatepickerInput name={props.name} inputClass={props.inputClass ?? ''} />;
     } else {
-      <DatepickerInputWithAddon name={props.name} inputClass={props.inputClass ?? ''} />;
+      return <DatepickerInputWithAddon name={props.name} inputClass={props.inputClass ?? ''} />;
     }
   }, [props.hideAddon, props.inputClass, props.name]);
 

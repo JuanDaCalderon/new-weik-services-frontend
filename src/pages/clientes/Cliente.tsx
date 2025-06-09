@@ -10,8 +10,8 @@ import {selectClientes, selectNoticiasIsExpanded} from '@/store/selectores';
 const TabRegisters = lazy(() => import('@/pages/clientes/registros/TabRegisters'));
 
 const Cliente = memo(function Cliente() {
-  const {cliente} = useParams<{cliente: string}>();
   const tableroNoticiasIsExpanded = useAppSelector(selectNoticiasIsExpanded);
+  const {cliente} = useParams<{cliente: string}>();
   const clientes = useAppSelector(selectClientes);
   const {tiposRegistros} = useMemo(() => {
     return clientes.find((c) => c.domain === cliente) || ({tiposRegistros: []} as unknown as ClienteType);
