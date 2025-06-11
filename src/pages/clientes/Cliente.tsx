@@ -1,4 +1,4 @@
-import {memo, JSX, useMemo, lazy, Suspense, useState} from 'react';
+import {memo, JSX, useMemo, lazy, Suspense, useState, useEffect} from 'react';
 import {PageBreadcrumb} from '@/components';
 import {TableroNoticias} from '@/components/Noticias';
 import {ToastWrapper} from '@/components/Toast';
@@ -16,14 +16,21 @@ const Cliente = memo(function Cliente() {
   const {tiposRegistros} = useMemo(() => {
     return clientes.find((c) => c.domain === cliente) || ({tiposRegistros: []} as unknown as ClienteType);
   }, [cliente, clientes]);
-  const [tabContents] = useState<TabContentItem[]>(
-    tiposRegistros.map((tipoRegistro) => {
-      return {
-        id: tipoRegistro.tipo.toUpperCase(),
-        title: tipoRegistro.tipo.toUpperCase()
-      };
-    })
+  const [tabContents, setTabContents] = useState<TabContentItem[]>(
+    tiposRegistros.map((tipoRegistro) => ({
+      id: tipoRegistro.tipo.toUpperCase(),
+      title: tipoRegistro.tipo.toUpperCase()
+    }))
   );
+  const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const newTabs = tiposRegistros.map((tipoRegistro) => ({
+      id: tipoRegistro.tipo.toUpperCase(),
+      title: tipoRegistro.tipo.toUpperCase()
+    }));
+    setTabContents(newTabs);
+    setActiveTab(newTabs[0]?.id);
+  }, [tiposRegistros]);
   const tabComponentsMap: Record<string, JSX.Element> = useMemo(() => {
     return tabContents.reduce(
       (acc, tab) => {
@@ -37,7 +44,6 @@ const Cliente = memo(function Cliente() {
       {} as Record<string, JSX.Element>
     );
   }, [tabContents]);
-
   return (
     <ToastWrapper>
       <PageBreadcrumb title={cliente ?? 'Cliente'} />
@@ -50,21 +56,19 @@ const Cliente = memo(function Cliente() {
           className="px-0 px-xl-2">
           <Card>
             <Card.Body>
-              <Tab.Container defaultActiveKey={tabContents[0].id}>
+              <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k ?? undefined)}>
                 <Nav variant="pills" justify className="bg-nav-pills">
-                  {tabContents.map((tab, index) => {
-                    return (
-                      <Nav.Item key={index.toString()}>
-                        <Nav.Link className="d-flex justify-content-center gap-1" as={Link} to="" eventKey={tab.title}>
-                          <span className="d-block">{tab.title}</span>
-                        </Nav.Link>
-                      </Nav.Item>
-                    );
-                  })}
+                  {tabContents.map((tab, index) => (
+                    <Nav.Item key={index.toString()}>
+                      <Nav.Link className="d-flex justify-content-center gap-1" as={Link} to="" eventKey={tab.id}>
+                        <span className="d-block">{tab.title}</span>
+                      </Nav.Link>
+                    </Nav.Item>
+                  ))}
                 </Nav>
                 <Tab.Content>
                   {tabContents.map((tab, index) => (
-                    <Tab.Pane eventKey={tab.title} id={tab.id} key={index.toString()}>
+                    <Tab.Pane eventKey={tab.id} id={tab.id} key={index.toString()}>
                       <Row>
                         <Col xs={12}>{tabComponentsMap[tab.id]}</Col>
                       </Row>

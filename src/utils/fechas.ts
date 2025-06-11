@@ -104,6 +104,7 @@ class DateUtils {
     if (includeTime) return `${formattedDate}, ${DateUtils.getTimeOnly(date)}`;
     return formattedDate;
   }
+
   /** Devuelve true si la fecha es de hoy */
   static isToday(date: Date): boolean {
     const today = new Date();
@@ -113,6 +114,7 @@ class DateUtils {
       date.getFullYear() === today.getFullYear()
     );
   }
+
   /**
    * Suma ó Resta un número específico de días a una fecha dada.
    *
@@ -300,6 +302,29 @@ class DateUtils {
    */
   static parseDatetimeLocal(datetimeStr: string): Date {
     return new Date(datetimeStr);
+  }
+
+  /**
+   * Compara dos fechas y determina si son iguales en cuanto a día, mes y año.
+   * Ignora completamente las horas, minutos, segundos y zona horaria.
+   *
+   * @param date1 - Primera fecha a comparar.
+   * @param date2 - Segunda fecha a comparar.
+   * @returns `true` si ambas fechas tienen el mismo día, mes y año; de lo contrario, `false`.
+   *
+   * @example
+   * ```ts
+   * const a = new Date(2025, 5, 10); // 10 de junio de 2025
+   * const b = new Date('2025-06-10T22:00:00'); // aún 10 de junio en local
+   * areDatesEqual(a, b); // true
+   * ```
+   */
+  static areDatesEqual(date1: Date, date2: Date): boolean {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   }
 }
 

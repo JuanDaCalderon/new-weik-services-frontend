@@ -1,6 +1,14 @@
 import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/constants';
 import {Timestamp} from 'firebase/firestore';
 
+export interface RegistrosFilterMode {
+  isInRangeDates: boolean;
+  isInRequestDate: boolean;
+  isInDeliveryDate: boolean;
+  isInEstado: boolean;
+  isInPrioridad: boolean;
+}
+
 interface BaseComentarios {
   comentario: string;
   createdBy?: string;
