@@ -2,6 +2,7 @@ import {memo, useMemo} from 'react';
 import {Dropdown, Form, Row, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {CheckRecordsState} from '@/pages/clientes/registros/types/registros';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   checkRecords: CheckRecordsState;
@@ -9,19 +10,21 @@ type Props = {
   isLoading: boolean;
 };
 const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, isLoading}: Props) {
+  const {t} = useTranslation();
+
   const titleCopy: string = useMemo(() => {
-    let copy = 'Cargando registros...';
-    if (!isLoading && checkRecords.checkPendingRecords) copy = 'Registros pendientes';
-    if (!isLoading && checkRecords.checkDeliveredRecords) copy = 'Registros entregados';
+    let copy = t('clientes.registros.loading');
+    if (!isLoading && checkRecords.checkPendingRecords) copy = t('clientes.registros.pending');
+    if (!isLoading && checkRecords.checkDeliveredRecords) copy = t('clientes.registros.delivered');
     return copy;
-  }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading]);
+  }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading, t]);
 
   const titleCopyMobile: string = useMemo(() => {
-    let copy = 'Cargando...';
-    if (!isLoading && checkRecords.checkPendingRecords) copy = 'Pendientes';
-    if (!isLoading && checkRecords.checkDeliveredRecords) copy = 'Entregados';
+    let copy = t('loading.default');
+    if (!isLoading && checkRecords.checkPendingRecords) copy = t('clientes.registros.mobile.pending');
+    if (!isLoading && checkRecords.checkDeliveredRecords) copy = t('clientes.registros.mobile.delivered');
     return copy;
-  }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading]);
+  }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading, t]);
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -39,7 +42,7 @@ const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, 
               className="cursor-pointer"
               type="switch"
               id="loadPendingRecords"
-              label="Cargar registros sin entregar"
+              label={t('clientes.registros.load.pending')}
               disabled={isLoading}
               checked={checkRecords.checkPendingRecords}
               onChange={(e) => onToggleCheck('pending', e.target.checked)}
@@ -48,7 +51,7 @@ const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, 
               className="cursor-pointer"
               type="switch"
               id="loadDeliveredRecords"
-              label="Cargar registros entregados"
+              label={t('clientes.registros.load.delivered')}
               disabled={isLoading}
               checked={checkRecords.checkDeliveredRecords}
               onChange={(e) => onToggleCheck('delivered', e.target.checked)}

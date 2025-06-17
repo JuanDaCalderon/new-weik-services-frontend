@@ -24,7 +24,6 @@ const useGetRegistros = () => {
       asignacion: data.asignacion || REGISTRO_ASSIGNMENT.SINASIGNAR,
       estado: data.estado || REGISTRO_STATUS.PAUSA,
       prioridad: data.prioridad || REGISTRO_PRIORIDAD.MEDIA,
-      tags: data.tags || [],
       numeroOrden: data.numeroOrden || '',
       createdBy: data.createdBy || '',
       updatedBy: data.updatedBy || '',

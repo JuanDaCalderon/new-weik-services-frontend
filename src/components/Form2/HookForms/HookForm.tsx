@@ -40,7 +40,10 @@ export const HookForm = <T extends Record<string, any> = Record<string, any>>({
 }: FormProps<T>) => {
   const methods = useForm<T>({
     resolver: schema ? (yupResolver(schema) as any) : undefined,
-    defaultValues: schema ? schema.getDefault() : defaultValues,
+    defaultValues: {
+      ...(schema?.getDefault?.() ?? {}),
+      ...(defaultValues ?? {})
+    },
     mode: 'onChange'
   });
   return (

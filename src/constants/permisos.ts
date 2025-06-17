@@ -5,6 +5,7 @@ export const EDITAR_CATEGORY_KEY = 'editar';
 export const ELIMINAR_CATEGORY_KEY = 'eliminar';
 export const INACTIVAR_CATEGORY_KEY = 'inactivar';
 export const APROBAR_CATEGORY_KEY = 'aprobar';
+export const ASIGNAR_CATEGORY_KEY = 'asignar';
 /* FUNCTIONS SUBCATEGORIES */
 export const USUARIOS_SUBCATEGORY_KEY = 'usuarios';
 export const CLIENTES_SUBCATEGORY_KEY = 'clientes';
@@ -17,6 +18,7 @@ export const REPORTES_SUBCATEGORY_KEY = 'reportes';
 export const SOLICITUDES_SUBCATEGORY_KEY = 'solicitudes';
 export const HORARIOS_SUBCATEGORY_GROUP_KEY = 'horarios';
 export const EVENTOS_SUBCATEGORY_GROUP_KEY = 'eventos';
+export const REGISTROS_SUBCATEGORY_GROUP_KEY = 'registros';
 
 export const PERMISOS_MAP_IDS = {
   /* DE ACCESO */
@@ -56,5 +58,7 @@ export const PERMISOS_MAP_IDS = {
   /* DE INACTIVACIÓN */
   inactivarUsuarios: `${INACTIVAR_CATEGORY_KEY}-${USUARIOS_SUBCATEGORY_KEY}`,
   /* DE APROBACIÓN */
-  aprobarVacaciones: `${APROBAR_CATEGORY_KEY}-${VACACIONES_SUBCATEGORY_KEY}`
+  aprobarVacaciones: `${APROBAR_CATEGORY_KEY}-${VACACIONES_SUBCATEGORY_KEY}`,
+  /* PARA ASIGNACION DE REGISTROS */
+  asignarRegistros: `${ASIGNAR_CATEGORY_KEY}-${REGISTROS_SUBCATEGORY_GROUP_KEY}`
 } as const;

@@ -2,44 +2,38 @@ import {InputHTMLAttributes} from 'react';
 import {Col, Form, Row} from 'react-bootstrap';
 import {useFormContext, Controller} from 'react-hook-form';
 
-interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+interface HookSwitchFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   name: string;
   label?: string;
-  helperText?: string;
   xs?: number;
   sm?: number;
   md?: number;
   lg?: number;
   xl?: number;
   xxl?: number;
-  controlSize?: 'sm' | 'lg';
-  as?: 'input' | 'textarea';
   bottomMargin?: 0 | 1 | 2 | 3 | 4 | 5;
   labelPosition?: 'top' | 'left' | 'right';
-  rows?: number;
+  customClass?: string;
 }
 
 /**
- * HookInputField component to render a Bootstrap input field with label and
- * error handling with support for react-hook-form and yup
+ * HookSwitchField component to render a Bootstrap switch (checkbox) with label,
+ * error handling and support for react-hook-form and yup
  */
-export function HookInputField({
+export function HookSwitchField({
   name,
   label,
-  helperText,
   xs,
   sm,
   md,
   lg,
   xl,
   xxl,
-  controlSize,
-  as = 'input',
+  customClass,
   bottomMargin = 2,
   labelPosition = 'top',
-  rows,
   ...props
-}: InputFieldProps) {
+}: HookSwitchFieldProps) {
   const {
     control,
     formState: {errors}
@@ -55,24 +49,21 @@ export function HookInputField({
       </Form.Label>
     );
 
-  const renderInput = () => (
+  const renderSwitch = () => (
     <Controller
       name={name}
       control={control}
-      render={({field, fieldState}) => (
-        <Form.Control
+      render={({field: {value, onChange, ...field}, fieldState}) => (
+        <Form.Check
           {...field}
-          {...{
-            ...props,
-            id: name,
-            size: controlSize,
-            value: field.value ?? '',
-            placeholder: props.placeholder ?? label,
-            rows: rows
-          }}
+          {...props}
+          id={name}
+          className={customClass}
+          type="switch"
+          label={labelPosition === 'top' ? `${value ? 'Si' : 'No'}` : undefined}
+          checked={!!value}
           isInvalid={!!fieldState.error}
-          as={as}
-          onChange={(e) => field.onChange(e.target.value)}
+          onChange={(e) => onChange(e.target.checked)}
         />
       )}
     />
@@ -84,16 +75,16 @@ export function HookInputField({
         {labelPosition === 'top' ? (
           <>
             {renderLabel()}
-            {renderInput()}
+            {renderSwitch()}
           </>
         ) : (
           <Row className="align-items-center justify-content-end">
             {labelPosition === 'left' && <Col xs="auto">{renderLabel(0)}</Col>}
-            <Col xs="auto">{renderInput()}</Col>
+            <Col xs="auto">{renderSwitch()}</Col>
             {labelPosition === 'right' && <Col xs="auto">{renderLabel(0)}</Col>}
           </Row>
         )}
-        <Form.Text className={errorMessage ? 'text-danger' : 'text-muted'}>{errorMessage || helperText}</Form.Text>
+        <Form.Text className={errorMessage ? 'text-danger' : 'text-muted'}>{errorMessage}</Form.Text>
       </Form.Group>
     </Col>
   );

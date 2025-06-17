@@ -7,6 +7,7 @@ import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
 import {useAppSelector} from '@/store';
 import {selectClientes, selectNoticiasIsExpanded} from '@/store/selectores';
+import {useTranslation} from 'react-i18next';
 const TabRegisters = lazy(() => import('@/pages/clientes/registros/TabRegisters'));
 
 const Cliente = memo(function Cliente() {
@@ -23,6 +24,7 @@ const Cliente = memo(function Cliente() {
     }))
   );
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
+  const {t} = useTranslation();
   useEffect(() => {
     const newTabs = tiposRegistros.map((tipoRegistro) => ({
       id: tipoRegistro.tipo.toUpperCase(),
@@ -35,18 +37,25 @@ const Cliente = memo(function Cliente() {
     return tabContents.reduce(
       (acc, tab) => {
         acc[tab.id] = (
-          <Suspense fallback={<div>Loading...</div>}>
-            <TabRegisters registerType={tab.id} />
+          <Suspense fallback={<div>{t('loading.default')}</div>}>
+            <TabRegisters
+              registerType={tab.id}
+              customFields={
+                tiposRegistros.find((tr) => tr.tipo.toLowerCase().trim() === tab.id.toLowerCase().trim())
+                  ?.customFields || []
+              }
+            />
           </Suspense>
         );
         return acc;
       },
       {} as Record<string, JSX.Element>
     );
-  }, [tabContents]);
+  }, [t, tabContents, tiposRegistros]);
+
   return (
     <ToastWrapper>
-      <PageBreadcrumb title={cliente ?? 'Cliente'} />
+      <PageBreadcrumb title={cliente ?? t('clientes.cliente.default')} />
       <Row>
         <TableroNoticias />
         <Col

@@ -6,3 +6,4 @@ export {StarRating} from './StartRating';
 export {HookForm} from './HookForms/HookForm';
 export {HookInputField} from './HookForms/HookInputField';
 export {HookSelectField} from './HookForms/HookSelectField';
+export {HookSwitchField} from './HookForms/HookSwitchField';

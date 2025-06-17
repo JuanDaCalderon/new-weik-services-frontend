@@ -7,12 +7,14 @@ import {useAppSelector} from '@/store';
 import {selectSelectedRows} from '@/store/selectores/selected-row';
 import ReactTable from '@/components/tablev02/ReactTable';
 import {SelectedRowType} from '@/types';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   cliente: string | undefined;
   registerType: string;
 };
 const DeleteRegistros = memo(function DeleteRegistros({cliente, registerType}: Props) {
+  const {t} = useTranslation();
   const selectedRegistros = useAppSelector(selectSelectedRows);
   const {isOpen, toggle} = useTogglev2();
   const {onDeleteRegistro, isDeletingRegistro} = useDeleteRegistros(cliente, registerType);
@@ -23,7 +25,7 @@ const DeleteRegistros = memo(function DeleteRegistros({cliente, registerType}: P
         variant="outline-danger"
         onClick={toggle}
         disabled={selectedRegistros.length === 0}>
-        <span className="d-none d-md-inline">Eliminar</span>
+        <span className="d-none d-md-inline">{t('clientes.registros.delete')}</span>
         <i className="d-inline d-md-none mdi mdi-delete-outline" />
       </Button>
       <GenericModal

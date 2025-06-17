@@ -19,3 +19,4 @@ export * from './uuid';
 export * from './filters';
 export * from './status';
 export * from './horario';
+export * from './registros';

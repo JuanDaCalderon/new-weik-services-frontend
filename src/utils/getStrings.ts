@@ -85,4 +85,16 @@ const truncateString = (str: string, maxLength: number): string => {
   return str;
 };
 
-export {getNombreCompletoUser, getUserNameUser, getRolesUser, getCargoUser, truncateString};
+/**
+ * Capitalizes the first letter of a string.
+ * If the string is empty, returns an empty string.
+ *
+ * @param {string} string - The input string to capitalize.
+ * @returns {string} The input string with the first letter capitalized.
+ */
+const capitalizeFirstLetter = (string: string): string => {
+  if (!string) return '';
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export {getNombreCompletoUser, getUserNameUser, getRolesUser, getCargoUser, truncateString, capitalizeFirstLetter};

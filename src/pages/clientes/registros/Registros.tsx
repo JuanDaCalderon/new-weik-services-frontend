@@ -11,15 +11,16 @@ import {AgregarRegistros} from '@/pages/clientes/registros/components/AgregarReg
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {useExpertExcel} from '@/pages/clientes/registros/hooks/useExpertExcel';
 import {useGetColumns} from '@/pages/clientes/registros/hooks/useGetColumns';
+import {DeleteRegistros} from '@/pages/clientes/registros/components/DeleteRegistros';
+import {useRegistrosFilters} from '@/pages/clientes/registros/hooks/useRegistrosFilters';
 import {PDFViewer} from '@react-pdf/renderer';
 import {DatepickerRange, TablePdf, CustomDatePicker} from '@/components';
-import {DeleteRegistros} from './components/DeleteRegistros';
 import {useAppSelector} from '@/store';
-import {useDatePicker} from '@/hooks';
-import {REGISTRO_PRIORIDAD, REGISTRO_STATUS_SIN_ENTREGADO} from '@/constants';
-import {DateUtils} from '@/utils';
+import {REGISTRO_FILTER_MODE_DEFAULT, REGISTRO_PRIORIDAD, REGISTRO_STATUS_SIN_ENTREGADO} from '@/constants';
+import {useTranslation} from 'react-i18next';
 
-const Registros = memo(function Registros({registerType}: RegistrosProps) {
+const Registros = memo(function Registros({registerType, customFields}: RegistrosProps) {
+  /* Configuración del cliente */
   const {cliente} = useParams<{cliente: string}>();
   const clientes = useAppSelector(selectClientes);
   const {tiposRegistros} = useMemo(() => {
@@ -29,99 +30,58 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
     if (!cliente) return null;
     return selectRegistrosByClienteYTipo(cliente, registerType);
   }, [cliente, registerType]);
-  const [pdf, setPdf] = useState<boolean>(false);
   const {registros, isLoading} = useSelector(selectRegistros || (() => ({registros: [], isLoading: false})));
-  const {checkRecords, toggleCheck, refreashRegistros} = useLoadRegistros(cliente, registerType, registros.length);
-  const pdfToggle = useCallback(() => setPdf((prev) => !prev), []);
-  const {exportData, handleExportExcel} = useExpertExcel(registros, tiposRegistros, registerType);
-  const {registrosColumns, registrosColumnsPdf} = useGetColumns(tiposRegistros, registerType);
-  const [filterMode, setFilterMode] = useState<RegistrosFilterMode>({
-    isInEstado: false,
-    isInDeliveryDate: false,
-    isInRequestDate: false,
-    isInRangeDates: false,
-    isInPrioridad: false
-  });
-  const {dateRange, onDateChangeRange} = useDatePicker();
-  const [requestFilterDate, setRequestFilterDate] = useState<Date>(new Date());
-  const [deliveryFilterDate, setDeliveryFilterDate] = useState<Date>(new Date());
-  const [filterStados, setFilterStados] = useState<REGISTRO_STATUS_SIN_ENTREGADO>(REGISTRO_STATUS_SIN_ENTREGADO.ALL);
-  const [filterPrioridad, setFilterPrioridad] = useState<REGISTRO_PRIORIDAD>(REGISTRO_PRIORIDAD.SINPRIORIDAD);
-  const estadoLabels = {
-    [REGISTRO_STATUS_SIN_ENTREGADO.ALL]: 'Todos',
-    [REGISTRO_STATUS_SIN_ENTREGADO.ENPROGRESO]: 'En Progreso',
-    [REGISTRO_STATUS_SIN_ENTREGADO.PAUSA]: 'En Pausa',
-    [REGISTRO_STATUS_SIN_ENTREGADO.COMPLETADO]: 'Completado'
-  };
-  const prioridadLabels = {
-    [REGISTRO_PRIORIDAD.SINPRIORIDAD]: 'Sin Prioridad',
-    [REGISTRO_PRIORIDAD.ALTA]: 'Alta',
-    [REGISTRO_PRIORIDAD.MEDIA]: 'Media',
-    [REGISTRO_PRIORIDAD.BAJA]: 'Baja'
-  };
-  const filterRegisters: RegistrosType[] = useMemo(() => {
-    if (filterMode.isInEstado) {
-      if (filterStados === REGISTRO_STATUS_SIN_ENTREGADO.ALL) return registros;
-      else return registros.filter((r) => r.estado === (filterStados as unknown as typeof r.estado));
-    }
-    if (filterMode.isInDeliveryDate) {
-      return registros.filter((r) => {
-        const deliveryDate = DateUtils.parseStringToDate(r.deliverAt);
-        return DateUtils.areDatesEqual(deliveryDate, deliveryFilterDate);
-      });
-    }
-    if (filterMode.isInRequestDate) {
-      return registros.filter((r) => {
-        const requestDate = DateUtils.parseStringToDate(r.requestAt);
-        return DateUtils.areDatesEqual(requestDate, requestFilterDate);
-      });
-    }
-    if (filterMode.isInRangeDates) {
-      return registros.filter((r) => {
-        const requestDate = DateUtils.parseStringToDate(r.requestAt);
-        return DateUtils.isDateInRange(
-          dateRange.map((date) => DateUtils.formatDateToString(date ?? new Date())) as [string, string],
-          requestDate
-        );
-      });
-    }
-    if (filterMode.isInPrioridad) return registros.filter((r) => r.prioridad === filterPrioridad);
-    return registros;
-  }, [
+  /* States */
+  const [pdf, setPdf] = useState<boolean>(false);
+  /* Hooks */
+  const {t} = useTranslation();
+  const {
+    hasAnyFilterApply,
+    filterRegisters,
     dateRange,
     deliveryFilterDate,
-    filterMode.isInDeliveryDate,
-    filterMode.isInEstado,
-    filterMode.isInPrioridad,
-    filterMode.isInRangeDates,
-    filterMode.isInRequestDate,
+    requestFilterDate,
     filterPrioridad,
     filterStados,
-    registros,
-    requestFilterDate
-  ]);
-  const hasAnyFilterApply = useMemo(() => {
-    return (
-      filterMode.isInEstado ||
-      filterMode.isInDeliveryDate ||
-      filterMode.isInRequestDate ||
-      filterMode.isInRangeDates ||
-      filterMode.isInPrioridad
-    );
-  }, [
-    filterMode.isInDeliveryDate,
-    filterMode.isInEstado,
-    filterMode.isInPrioridad,
-    filterMode.isInRangeDates,
-    filterMode.isInRequestDate
-  ]);
+    setFilterMode,
+    onDateChangeRange,
+    setDeliveryFilterDate,
+    setFilterPrioridad,
+    setFilterStados,
+    setRequestFilterDate
+  } = useRegistrosFilters(registros);
+  const {checkRecords, toggleCheck, refreashRegistros} = useLoadRegistros(cliente, registerType, registros.length);
+  const {exportData, handleExportExcel} = useExpertExcel(registros, tiposRegistros, registerType);
+  const {registrosColumns, registrosColumnsPdf} = useGetColumns(tiposRegistros, registerType);
+
+  /* Labels */
+  const estadoLabels = {
+    [REGISTRO_STATUS_SIN_ENTREGADO.ALL]: t('clientes.registros.filter.status.all'),
+    [REGISTRO_STATUS_SIN_ENTREGADO.ENPROGRESO]: t('clientes.registros.filter.status.in_progress'),
+    [REGISTRO_STATUS_SIN_ENTREGADO.PAUSA]: t('clientes.registros.filter.status.on_hold'),
+    [REGISTRO_STATUS_SIN_ENTREGADO.COMPLETADO]: t('clientes.registros.filter.status.completed')
+  };
+  const prioridadLabels = {
+    [REGISTRO_PRIORIDAD.SINPRIORIDAD]: t('clientes.registros.filter.priority.no_priority'),
+    [REGISTRO_PRIORIDAD.ALTA]: t('clientes.registros.filter.priority.high'),
+    [REGISTRO_PRIORIDAD.MEDIA]: t('clientes.registros.filter.priority.medium'),
+    [REGISTRO_PRIORIDAD.BAJA]: t('clientes.registros.filter.priority.low')
+  };
+
+  /* Callbacks */
+  const pdfToggle = useCallback(() => setPdf((prev) => !prev), []);
+  const applyFilterMode = useCallback(
+    (mode?: keyof RegistrosFilterMode) =>
+      setFilterMode({...REGISTRO_FILTER_MODE_DEFAULT, ...(mode ? {[mode]: true} : {})}),
+    [setFilterMode]
+  );
 
   return (
     <Row>
       <Col className="d-flex align-content-center align-items-center justify-content-between py-1" xs={12}>
         <LoadRegistros checkRecords={checkRecords} onToggleCheck={toggleCheck} isLoading={isLoading} />
         <div className="d-flex align-items-center flex-wrap justify-content-end gap-1">
-          <AgregarRegistros cliente={cliente} registerType={registerType} />
+          <AgregarRegistros cliente={cliente} registerType={registerType} customFields={customFields} />
           <DeleteRegistros cliente={cliente} registerType={registerType} />
           <Button className="font-14 px-2" variant="outline-dark" onClick={pdfToggle}>
             <span className="d-none d-md-inline">PDF</span>
@@ -151,13 +111,7 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
                 startDate={dateRange[0]}
                 endDate={dateRange[1]}
                 onChange={(dates) => {
-                  setFilterMode({
-                    isInEstado: false,
-                    isInDeliveryDate: false,
-                    isInRequestDate: false,
-                    isInRangeDates: true,
-                    isInPrioridad: false
-                  });
+                  applyFilterMode('isInRangeDates');
                   onDateChangeRange(dates);
                 }}
               />
@@ -170,13 +124,7 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
               hideAddon={false}
               value={requestFilterDate}
               onChange={(date) => {
-                setFilterMode({
-                  isInEstado: false,
-                  isInDeliveryDate: false,
-                  isInRequestDate: true,
-                  isInRangeDates: false,
-                  isInPrioridad: false
-                });
+                applyFilterMode('isInRequestDate');
                 setRequestFilterDate(date);
               }}
             />
@@ -188,13 +136,7 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
               hideAddon={false}
               value={deliveryFilterDate}
               onChange={(date) => {
-                setFilterMode({
-                  isInEstado: false,
-                  isInDeliveryDate: true,
-                  isInRequestDate: false,
-                  isInRangeDates: false,
-                  isInPrioridad: false
-                });
+                applyFilterMode('isInDeliveryDate');
                 setDeliveryFilterDate(date);
               }}
             />
@@ -204,13 +146,7 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
             <Form.Select
               value={filterPrioridad}
               onChange={(e) => {
-                setFilterMode({
-                  isInEstado: false,
-                  isInDeliveryDate: false,
-                  isInRequestDate: false,
-                  isInRangeDates: false,
-                  isInPrioridad: true
-                });
+                applyFilterMode('isInPrioridad');
                 setFilterPrioridad(e.target.value as REGISTRO_PRIORIDAD);
               }}>
               {Object.values(REGISTRO_PRIORIDAD)
@@ -228,13 +164,7 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
               <Form.Select
                 value={filterStados}
                 onChange={(e) => {
-                  setFilterMode({
-                    isInEstado: true,
-                    isInDeliveryDate: false,
-                    isInRequestDate: false,
-                    isInRangeDates: false,
-                    isInPrioridad: false
-                  });
+                  applyFilterMode('isInEstado');
                   setFilterStados(e.target.value as REGISTRO_STATUS_SIN_ENTREGADO);
                 }}>
                 {Object.values(REGISTRO_STATUS_SIN_ENTREGADO)
@@ -253,13 +183,7 @@ const Registros = memo(function Registros({registerType}: RegistrosProps) {
               className="font-14 px-2 w-100"
               disabled={!hasAnyFilterApply}
               onClick={() => {
-                setFilterMode({
-                  isInEstado: false,
-                  isInDeliveryDate: false,
-                  isInRequestDate: false,
-                  isInRangeDates: false,
-                  isInPrioridad: false
-                });
+                applyFilterMode();
                 setRequestFilterDate(new Date());
                 setDeliveryFilterDate(new Date());
                 onDateChangeRange([new Date(), null]);

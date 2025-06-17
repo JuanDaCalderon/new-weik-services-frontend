@@ -15,6 +15,8 @@ import {VacacionesType, Option, Employee} from '@/types';
 import {VACACIONESCREATEDVALUES, VACACIONESEDITVALUES} from './initialValues';
 import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS} from '@/constants';
 import {Navigate} from 'react-router-dom';
+import {useAppSelector} from '@/store';
+import {selectUser} from '@/store/selectores';
 
 const Vacaciones = memo(function Vacaciones() {
   const [vacacionesCreated, setVacacionesCreated] = useState<VacacionesType>(VACACIONESCREATEDVALUES);
@@ -42,21 +44,22 @@ const Vacaciones = memo(function Vacaciones() {
   const {addVacaciones, isLoadingAddVacaciones} = useAddVacaciones();
   const {updateVacaciones, isLoadingUpdateVacaciones} = useUpdateVacaciones();
   const {approveVacaciones, isLoadingApproveVacaciones} = useApproveVacaciones();
+  const {id} = useAppSelector(selectUser);
+
   const approversOptions: Option[] = useMemo(() => {
     if (users.length === 0) return [];
     return users
-      .reduce((acc: Employee[], u: Employee) => {
+      .filter((u: Employee) => {
         const canApprove = hasPermission(
           PERMISOS_MAP_IDS.aprobarVacaciones,
           u.roles,
           u.permisosOtorgados,
           u.permisosDenegados
         );
-        if (canApprove) acc.push(u);
-        return acc;
-      }, [])
+        return canApprove && u.id !== id;
+      })
       .map((u: Employee) => ({value: u.id, label: getNombreCompletoUser(u)}));
-  }, [users]);
+  }, [id, users]);
 
   useEffect(() => {
     if (approversOptions.length > 0) setVacacionesCreated((prev) => ({...prev, approver: approversOptions[0].value}));
