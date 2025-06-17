@@ -36,6 +36,7 @@ export const filterByPermissions = (
       return !permisosDenegados.some((permiso) => permiso.permiso === menu.permisoId);
     });
   }
+  console.log('🚀 ~ filteredMenus:', filteredMenus);
   return filteredMenus;
 };
 
