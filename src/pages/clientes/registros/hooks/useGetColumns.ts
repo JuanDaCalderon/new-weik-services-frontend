@@ -1,6 +1,7 @@
 import type {ColumnDef} from '@tanstack/react-table';
 import {CustomFieldDefinition, ExportColumn, Registros, TipoRegistro} from '@/types';
 import {useMemo} from 'react';
+import NombreColumn from '../components/columns/NombreColumn';
 
 export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType: string) => {
   const customFields: CustomFieldDefinition[] = useMemo(() => {
@@ -47,7 +48,8 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
         accessorKey: 'nombre',
         minSize: 100,
         size: 240,
-        enableResizing: true
+        enableResizing: true,
+        cell: NombreColumn
       },
       {
         header: 'Cliente',

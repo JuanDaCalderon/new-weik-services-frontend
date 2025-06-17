@@ -2,7 +2,7 @@ import {memo, useCallback, useMemo, useState} from 'react';
 import {Button, Col, Form, Row} from 'react-bootstrap';
 import ReactTable from '@/components/tablev02/ReactTable';
 import {useParams} from 'react-router-dom';
-import {Registros as RegistrosType, RegistrosProps, Cliente, RegistrosFilterMode} from '@/types';
+import {Registros as RegistrosType, RegistrosProps, Cliente} from '@/types';
 import {selectClientes, selectRegistrosByClienteYTipo} from '@/store/selectores';
 import {useSelector} from 'react-redux';
 import {useLoadRegistros} from '@/pages/clientes/registros/hooks/useLoadRegistros';
@@ -16,7 +16,7 @@ import {useRegistrosFilters} from '@/pages/clientes/registros/hooks/useRegistros
 import {PDFViewer} from '@react-pdf/renderer';
 import {DatepickerRange, TablePdf, CustomDatePicker} from '@/components';
 import {useAppSelector} from '@/store';
-import {REGISTRO_FILTER_MODE_DEFAULT, REGISTRO_PRIORIDAD, REGISTRO_STATUS_SIN_ENTREGADO} from '@/constants';
+import {REGISTRO_PRIORIDAD, REGISTRO_STATUS_SIN_ENTREGADO} from '@/constants';
 import {useTranslation} from 'react-i18next';
 
 const Registros = memo(function Registros({registerType, customFields}: RegistrosProps) {
@@ -43,7 +43,7 @@ const Registros = memo(function Registros({registerType, customFields}: Registro
     requestFilterDate,
     filterPrioridad,
     filterStados,
-    setFilterMode,
+    applyFilterMode,
     onDateChangeRange,
     setDeliveryFilterDate,
     setFilterPrioridad,
@@ -70,11 +70,6 @@ const Registros = memo(function Registros({registerType, customFields}: Registro
 
   /* Callbacks */
   const pdfToggle = useCallback(() => setPdf((prev) => !prev), []);
-  const applyFilterMode = useCallback(
-    (mode?: keyof RegistrosFilterMode) =>
-      setFilterMode({...REGISTRO_FILTER_MODE_DEFAULT, ...(mode ? {[mode]: true} : {})}),
-    [setFilterMode]
-  );
 
   return (
     <Row>

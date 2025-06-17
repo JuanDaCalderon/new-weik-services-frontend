@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {Registros, RegistrosFilterMode} from '@/types';
 import {DateUtils} from '@/utils';
 import {REGISTRO_FILTER_MODE_DEFAULT, REGISTRO_PRIORIDAD, REGISTRO_STATUS_SIN_ENTREGADO} from '@/constants';
@@ -71,15 +71,21 @@ export const useRegistrosFilters = (registros: Registros[]) => {
     filterMode.isInRequestDate
   ]);
 
+  const applyFilterMode = useCallback(
+    (mode?: keyof RegistrosFilterMode) =>
+      setFilterMode({...REGISTRO_FILTER_MODE_DEFAULT, ...(mode ? {[mode]: true} : {})}),
+    [setFilterMode]
+  );
+
   return {
     filterRegisters,
     hasAnyFilterApply,
-    setFilterMode,
     setRequestFilterDate,
     setDeliveryFilterDate,
     setFilterStados,
     setFilterPrioridad,
     onDateChangeRange,
+    applyFilterMode,
     dateRange,
     requestFilterDate,
     deliveryFilterDate,

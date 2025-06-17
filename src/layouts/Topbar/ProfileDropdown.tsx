@@ -23,6 +23,7 @@ const ProfileDropdown = () => {
   }, [user.userImage]);
 
   const profileMenuOptions = useMemo(() => {
+    console.log('profileMenus', profileMenus);
     return filterByPermissions(profileMenus, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
