@@ -15,28 +15,16 @@ export const filterByPermissions = (
   permisosOtorgados: Permiso[],
   permisosDenegados: Permiso[]
 ): MenuItem[] => {
-  let filteredMenus: MenuItem[];
-  // Filtrar según los roles del usuario
-  filteredMenus = menus.filter((menu) => {
+  const permisosDesdeRoles = roles.flatMap((rol) => rol.permisos || []).map((p) => p.permiso);
+  const permisosOtorgadosIds = permisosOtorgados.map((p) => p.permiso);
+  const permisosDenegadosIds = permisosDenegados.map((p) => p.permiso);
+  const permisosEfectivos = new Set([...permisosDesdeRoles, ...permisosOtorgadosIds]);
+  const filteredMenus = menus.filter((menu) => {
     if (!menu.permisoId) return true;
-    return roles.some((rol) => rol.permisos?.some((permiso) => permiso.permiso === menu.permisoId));
+    const tienePermiso = permisosEfectivos.has(menu.permisoId);
+    const estaDenegado = permisosDenegadosIds.includes(menu.permisoId);
+    return tienePermiso && !estaDenegado;
   });
-  // Incluir permisos otorgados directamente
-  if (permisosOtorgados.length > 0) {
-    if (filteredMenus.length !== menus.length) filteredMenus = menus;
-    filteredMenus = filteredMenus.filter((menu) => {
-      if (!menu.permisoId) return true;
-      return permisosOtorgados.some((permiso) => permiso.permiso === menu.permisoId);
-    });
-  }
-  // Excluir permisos denegados
-  if (permisosDenegados.length > 0) {
-    filteredMenus = filteredMenus.filter((menu) => {
-      if (!menu.permisoId) return true;
-      return !permisosDenegados.some((permiso) => permiso.permiso === menu.permisoId);
-    });
-  }
-  console.log('🚀 ~ filteredMenus:', filteredMenus);
   return filteredMenus;
 };
 
