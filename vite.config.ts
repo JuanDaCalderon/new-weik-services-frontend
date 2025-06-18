@@ -9,8 +9,10 @@ export default defineConfig({
     react(),
     VitePWA({
       workbox: {
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024 // 5 MB
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MB
+        cleanupOutdatedCaches: true
       },
+      injectRegister: 'auto',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       devOptions: {
@@ -87,6 +89,9 @@ export default defineConfig({
       }
     })
   ],
+  define: {
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(process.env.npm_package_version)
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

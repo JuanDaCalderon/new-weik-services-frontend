@@ -3,6 +3,7 @@ import {Row, Col, Card, Container, Image} from 'react-bootstrap';
 import {BGCircles} from '@/components';
 import Logo from '@/assets/images/logo.png';
 import {DEFAULT_ROUTER_PATH, year} from '@/constants';
+import config from '@/config';
 
 const ErrorPageNotFound = () => {
   return (
@@ -38,7 +39,9 @@ const ErrorPageNotFound = () => {
           </Row>
         </Container>
       </div>
-      <footer className="footer footer-alt">{year} © Weik Motion Studio - weikstudio.com</footer>
+      <footer className="footer footer-alt">
+        {year} © DevikGo - devikgo.com - {config.APP_VERSION}
+      </footer>
     </>
   );
 };

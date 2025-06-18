@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Logo from '@/assets/images/logo.png';
 import {BGCircles} from '@/components';
 import {DEFAULT_ROUTER_PATH, year} from '@/constants';
+import config from '@/config';
 
 const InternalError = () => {
   return (
@@ -32,7 +33,9 @@ const InternalError = () => {
           </Row>
         </Container>
       </div>
-      <footer className="footer footer-alt">{year} © Weik Motion Studio - weikstudio.com</footer>
+      <footer className="footer footer-alt">
+        {year} © DevikGo - devikgo.com - {config.APP_VERSION}
+      </footer>
     </>
   );
 };

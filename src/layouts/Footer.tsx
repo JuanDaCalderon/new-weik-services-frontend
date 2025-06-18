@@ -1,4 +1,4 @@
-import packageJson from '../../package.json';
+import config from '@/config';
 import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {year} from '@/constants';
@@ -10,7 +10,7 @@ export default memo(function Footer() {
       <div className="container-fluid">
         <Row>
           <Col md={6}>
-            {year} © Weik Motion Studio - weikstudio.com - {packageJson.version}
+            {year} © DevikGo - devikgo.com - {config.APP_VERSION}
           </Col>
           <Col md={6}>
             <div className="text-md-end footer-links d-none d-md-block">

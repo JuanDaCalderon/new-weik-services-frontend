@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {BGCircles, LanguageDropdown} from '@/components';
 import Logo from '@/assets/images/logo.png';
 import {DEFAULT_ROUTER_PATH, year} from '@/constants';
+import config from '@/config';
 
 type AccountWrapperProps = {
   children?: ReactNode;
@@ -34,7 +35,9 @@ function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
           <LanguageDropdown />
         </div>
       </div>
-      <footer className="footer footer-alt">{year} © Weik Motion Studio - weikstudio.com</footer>
+      <footer className="footer footer-alt">
+        {year} © DevikGo - devikgo.com - {config.APP_VERSION}
+      </footer>
     </>
   );
 }

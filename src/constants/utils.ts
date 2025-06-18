@@ -25,3 +25,5 @@ export const EVENTTYPESOPTIONS: Option[] = [
     value: EVENTTYPES.evento
   }
 ];
+
+export const VERSION_KEY = 'app_version';

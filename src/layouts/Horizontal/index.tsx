@@ -5,7 +5,6 @@ import {useToggle, useTogglev2} from '@/hooks';
 import {useThemeContext} from '@/common/context';
 import {changeHTMLAttribute, getBoolean} from '@/utils';
 import config from '@/config';
-import packageJson from '../../../package.json';
 import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores';
 import {LocalStorageUtil} from '@/utils';
@@ -89,7 +88,7 @@ const HorizontalLayout = () => {
     () =>
       getBoolean(config.IS_TESTING ?? 'false') ? (
         <div className="alert alert-info position-fixed bottom-0" role="alert" style={{zIndex: '9999'}}>
-          <span className="text-primary">TEST ENV - {packageJson.version}</span>
+          <span className="text-primary">TEST ENV - {config.APP_VERSION}</span>
         </div>
       ) : (
         <></>
