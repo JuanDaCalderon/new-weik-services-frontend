@@ -2,7 +2,7 @@ import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {DebugUtil} from '@/utils';
 import {addDoc, collection, Timestamp} from 'firebase/firestore';
-import {CLIENTES_PATH, REGISTRO_ASSIGNMENT} from '@/constants';
+import {CLIENTES_PATH} from '@/constants';
 import toast from 'react-hot-toast';
 import {RegistrosToDb, RegistrosToBecreated} from '@/types';
 import {useAppSelector} from '@/store';
@@ -20,10 +20,6 @@ const useAddRegistros = () => {
           ...registro,
           createdBy: id,
           updatedBy: id,
-          asignacion:
-            registro.encargado === REGISTRO_ASSIGNMENT.SINASIGNAR
-              ? REGISTRO_ASSIGNMENT.SINASIGNAR
-              : REGISTRO_ASSIGNMENT.ASIGNADO,
           createdAt: Timestamp.now(),
           updatedAt: Timestamp.now(),
           requestAt: Timestamp.fromDate(registro.requestAt || new Date()),

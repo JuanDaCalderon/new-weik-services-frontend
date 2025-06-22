@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingRegistrosPerCliente, setRegistrosPerCliente} from '@/store/slices/registros';
 import {collection, getDocs, onSnapshot, orderBy, query, QueryDocumentSnapshot, Unsubscribe} from 'firebase/firestore';
-import {CLIENTES_PATH, REGISTRO_ASSIGNMENT, REGISTRO_STATUS, REGISTRO_PRIORIDAD} from '@/constants';
+import {CLIENTES_PATH, REGISTRO_STATUS, REGISTRO_PRIORIDAD} from '@/constants';
 import {Registros, RegistrosToDb} from '@/types';
 
 const useGetRegistros = () => {
@@ -21,7 +21,6 @@ const useGetRegistros = () => {
       cliente: data.cliente || '',
       solicitante: data.solicitante || '',
       encargado: data.encargado || '',
-      asignacion: data.asignacion || REGISTRO_ASSIGNMENT.SINASIGNAR,
       estado: data.estado || REGISTRO_STATUS.PAUSA,
       prioridad: data.prioridad || REGISTRO_PRIORIDAD.MEDIA,
       numeroOrden: data.numeroOrden || '',

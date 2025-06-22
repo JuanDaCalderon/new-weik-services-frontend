@@ -6,7 +6,7 @@ import {Cliente as ClienteType, TabContentItem} from '@/types';
 import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
 import {useAppSelector} from '@/store';
-import {selectClientes, selectNoticiasIsExpanded} from '@/store/selectores';
+import {selectActiveNoticias, selectClientes, selectNoticiasIsExpanded} from '@/store/selectores';
 import {useTranslation} from 'react-i18next';
 const TabRegisters = lazy(() => import('@/pages/clientes/registros/TabRegisters'));
 
@@ -14,6 +14,7 @@ const Cliente = memo(function Cliente() {
   const tableroNoticiasIsExpanded = useAppSelector(selectNoticiasIsExpanded);
   const {cliente} = useParams<{cliente: string}>();
   const clientes = useAppSelector(selectClientes);
+  const hasNoticias = useAppSelector(selectActiveNoticias);
   const {tiposRegistros} = useMemo(() => {
     return clientes.find((c) => c.domain === cliente) || ({tiposRegistros: []} as unknown as ClienteType);
   }, [cliente, clientes]);
@@ -53,16 +54,22 @@ const Cliente = memo(function Cliente() {
     );
   }, [t, tabContents, tiposRegistros]);
 
+  const xl = useMemo(() => {
+    if (hasNoticias) return tableroNoticiasIsExpanded ? 9 : 10;
+    else return 12;
+  }, [hasNoticias, tableroNoticiasIsExpanded]);
+
+  const xxl = useMemo(() => {
+    if (hasNoticias) return tableroNoticiasIsExpanded ? 10 : 11;
+    else return 12;
+  }, [hasNoticias, tableroNoticiasIsExpanded]);
+
   return (
     <ToastWrapper>
       <PageBreadcrumb title={cliente ?? t('clientes.cliente.default')} />
       <Row>
         <TableroNoticias />
-        <Col
-          xs={12}
-          xl={tableroNoticiasIsExpanded ? 9 : 10}
-          xxl={tableroNoticiasIsExpanded ? 10 : 11}
-          className="px-0 px-xl-2">
+        <Col xs={12} xl={xl} xxl={xxl} className="px-0 px-xl-2">
           <Card>
             <Card.Body>
               <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k ?? undefined)}>

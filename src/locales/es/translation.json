@@ -1,6 +1,8 @@
 {
     "language.english": "Inglés",
     "language.spanish": "Español",
+    "yes": "Si",
+    "no": "No",
     "loading.default": "Cargando...",
     "clientes.registros": "Registros",
     "clientes.reportes": "Reportes",
@@ -23,6 +25,7 @@
     "clientes.registros.filter.priority.high": "Alta",
     "clientes.registros.filter.priority.medium": "Media",
     "clientes.registros.filter.priority.low": "Baja",
+    "clientes.registros.filter.unassigned": "Sin Asignar",
     "login.subheader": "Ingresa tu dirección de correo y contraseña para poder acceder.",
     "home.title": "Inicio",
     "home.clients": "Clientes",

@@ -185,7 +185,7 @@ const Registros = memo(function Registros({registerType, customFields}: Registro
                 setFilterStados(REGISTRO_STATUS_SIN_ENTREGADO.ALL);
                 setFilterPrioridad(REGISTRO_PRIORIDAD.SINPRIORIDAD);
               }}>
-              {hasAnyFilterApply ? 'Limpiar filtros' : 'Todos los registros'}
+              {hasAnyFilterApply ? 'Limpiar filtros' : 'Sin filtros'}
             </Button>
           </Col>
         </Row>

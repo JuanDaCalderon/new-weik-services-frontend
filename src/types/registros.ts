@@ -32,7 +32,6 @@ interface BaseRegistros {
   cliente: string;
   solicitante: string;
   encargado: string | REGISTRO_ASSIGNMENT.SINASIGNAR;
-  asignacion: REGISTRO_ASSIGNMENT;
   estado: REGISTRO_STATUS;
   prioridad: REGISTRO_PRIORIDAD;
   numeroOrden: string;
