@@ -1,6 +1,6 @@
 import {doc, Timestamp, arrayUnion, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {HorarioType, HorarioTypeToFirestore} from '@/types';
 import {DebugUtil, generateUuid} from '@/utils';
 import {db} from '@/firebase';
@@ -16,7 +16,7 @@ export default function useAddHorario() {
         uuid: generateUuid(),
         rangoFechas: newHorario.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))
       };
-      await updateDoc(doc(db, USUARIOS_PATH, userId), {
+      await updateDoc(doc(db, FIRESTORE_USUARIOS_PATH, userId), {
         horario: arrayUnion(newItem)
       });
       toast.success('¡Horario agregado correctamente!');

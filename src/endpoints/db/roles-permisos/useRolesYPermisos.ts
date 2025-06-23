@@ -15,7 +15,7 @@ import {
   setDoc
 } from 'firebase/firestore';
 import {db} from '@/firebase';
-import {PERMISOS_PATH, ROLES_PATH, USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_PERMISOS_PATH, FIRESTORE_ROLES_PATH, FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {Rol, Permiso, Employee, PermisoByRoles, RolCreationBasics} from '@/types';
 import {useDispatch} from 'react-redux';
 import {clearPermisos, clearRoles, setPermisos, setRoles} from '@/store/slices/roles-permisos';
@@ -46,7 +46,7 @@ const useRolesYPermisos = () => {
   const getRolesListener = useCallback((): Unsubscribe => {
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
-      unsubscribe = onSnapshot(query(collection(db, ROLES_PATH)), async (querySnapshotDocs) => {
+      unsubscribe = onSnapshot(query(collection(db, FIRESTORE_ROLES_PATH)), async (querySnapshotDocs) => {
         const roles: Rol[] = [];
         for (const doc of querySnapshotDocs.docs) {
           const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion, usuarioUpdated} =
@@ -96,7 +96,7 @@ const useRolesYPermisos = () => {
   const getRolesSync = useCallback(async (): Promise<void> => {
     try {
       const roles: Rol[] = [];
-      const queryDocs = await getDocs(query(collection(db, ROLES_PATH)));
+      const queryDocs = await getDocs(query(collection(db, FIRESTORE_ROLES_PATH)));
       for (const doc of queryDocs.docs) {
         const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion, usuarioUpdated} =
           doc.data();
@@ -142,7 +142,7 @@ const useRolesYPermisos = () => {
   const getPermisosListener = useCallback((): Unsubscribe => {
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
-      unsubscribe = onSnapshot(collection(db, PERMISOS_PATH), async (querySnapshotDocs) => {
+      unsubscribe = onSnapshot(collection(db, FIRESTORE_PERMISOS_PATH), async (querySnapshotDocs) => {
         const permisos: Permiso[] = [];
         for (const doc of querySnapshotDocs.docs) {
           const {permiso, labelName} = doc.data();
@@ -165,7 +165,7 @@ const useRolesYPermisos = () => {
   const getPermisosSync = useCallback(async (): Promise<void> => {
     try {
       const permisos: Permiso[] = [];
-      const queryDocs = await getDocs(collection(db, PERMISOS_PATH));
+      const queryDocs = await getDocs(collection(db, FIRESTORE_PERMISOS_PATH));
       for (const doc of queryDocs.docs) {
         const {permiso, labelName} = doc.data();
         permisos.push({
@@ -183,7 +183,7 @@ const useRolesYPermisos = () => {
 
   const agregarPermisoARol = useCallback(async (rolId: string, permisoRef: DocumentReference) => {
     try {
-      const rolDocRef = doc(db, ROLES_PATH, rolId);
+      const rolDocRef = doc(db, FIRESTORE_ROLES_PATH, rolId);
       await updateDoc(rolDocRef, {
         permisos: arrayUnion(permisoRef)
       });
@@ -195,7 +195,7 @@ const useRolesYPermisos = () => {
 
   const quitarPermisoDeRol = useCallback(async (rolId: string, permisoRef: DocumentReference) => {
     try {
-      const rolDocRef = doc(db, ROLES_PATH, rolId);
+      const rolDocRef = doc(db, FIRESTORE_ROLES_PATH, rolId);
       await updateDoc(rolDocRef, {
         permisos: arrayRemove(permisoRef)
       });
@@ -208,8 +208,8 @@ const useRolesYPermisos = () => {
   const updateActualizadoUserAndDate = useCallback(
     async (rolId: string) => {
       try {
-        const rolDocRef = doc(db, ROLES_PATH, rolId);
-        const userDocRef = doc(db, USUARIOS_PATH, id);
+        const rolDocRef = doc(db, FIRESTORE_ROLES_PATH, rolId);
+        const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, id);
         await updateDoc(rolDocRef, {
           usuarioUpdated: userDocRef,
           fechaActualizacion: Timestamp.now()
@@ -228,7 +228,7 @@ const useRolesYPermisos = () => {
       setIsLoadingUpdatingPermisos(true);
       try {
         for (const permiso of permisosCambiados) {
-          const permisoRef = doc(db, PERMISOS_PATH, permiso.id);
+          const permisoRef = doc(db, FIRESTORE_PERMISOS_PATH, permiso.id);
           if (permiso.activo) await agregarPermisoARol(rolId, permisoRef);
           else await quitarPermisoDeRol(rolId, permisoRef);
           await updateActualizadoUserAndDate(rolId);
@@ -248,8 +248,8 @@ const useRolesYPermisos = () => {
     async (rolCreationBasics: RolCreationBasics, newRoleIndex: string) => {
       setIsLoadingCreatinRol(true);
       try {
-        const userDocRef = doc(db, USUARIOS_PATH, id);
-        await setDoc(doc(db, ROLES_PATH, newRoleIndex), {
+        const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, id);
+        await setDoc(doc(db, FIRESTORE_ROLES_PATH, newRoleIndex), {
           rol: rolCreationBasics.rol?.toLowerCase(),
           descripcion: rolCreationBasics.descripcion?.toLowerCase(),
           permisos: [],
@@ -275,9 +275,9 @@ const useRolesYPermisos = () => {
     try {
       if (addUsers.length > 0) {
         let userDocRef: DocumentReference;
-        const rolDocRef = doc(db, ROLES_PATH, roleId);
+        const rolDocRef = doc(db, FIRESTORE_ROLES_PATH, roleId);
         for (const userId of addUsers) {
-          userDocRef = doc(db, USUARIOS_PATH, userId);
+          userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
           await updateDoc(userDocRef, {
             roles: arrayUnion(rolDocRef)
           });
@@ -298,9 +298,9 @@ const useRolesYPermisos = () => {
     try {
       if (removeUsers.length > 0) {
         let userDocRef: DocumentReference;
-        const rolDocRef = doc(db, ROLES_PATH, roleId);
+        const rolDocRef = doc(db, FIRESTORE_ROLES_PATH, roleId);
         for (const userId of removeUsers) {
-          userDocRef = doc(db, USUARIOS_PATH, userId);
+          userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
           await updateDoc(userDocRef, {
             roles: arrayRemove(rolDocRef)
           });
@@ -320,7 +320,7 @@ const useRolesYPermisos = () => {
     async (roleId: string, rolBasicsUpdated: RolCreationBasics) => {
       setIsLoadingUpdatingBasics(true);
       try {
-        const rolDocRef = doc(db, ROLES_PATH, roleId);
+        const rolDocRef = doc(db, FIRESTORE_ROLES_PATH, roleId);
         await updateDoc(rolDocRef, {
           ...rolBasicsUpdated
         });

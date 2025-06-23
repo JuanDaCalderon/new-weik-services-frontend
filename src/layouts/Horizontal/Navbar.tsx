@@ -6,7 +6,7 @@ import {useAppSelector} from '@/store';
 import {selectClientes, selectUser} from '@/store/selectores';
 import {navBarFilterByPermissions} from '@/utils';
 import {HORIZONTAL_MENU_ITEMS} from '@/common';
-import {CLIENTES_MENU_KEY} from '@/constants';
+import {CLIENTES_ROUTER_PATH} from '@/constants';
 
 const Navbar = ({isMenuOpened}: NavbarProps) => {
   const user = useAppSelector(selectUser);
@@ -14,15 +14,15 @@ const Navbar = ({isMenuOpened}: NavbarProps) => {
 
   const menuItems: MenuItemType[] = useMemo(() => {
     return HORIZONTAL_MENU_ITEMS.map((menuItem) => {
-      return menuItem.key === CLIENTES_MENU_KEY
+      return menuItem.key === CLIENTES_ROUTER_PATH
         ? {
             ...menuItem,
             children: clientes.map<MenuItemType>((cliente) => {
               return {
-                key: `${CLIENTES_MENU_KEY}/${cliente.domain}`,
+                key: `${CLIENTES_ROUTER_PATH}/${cliente.domain}`,
                 label: cliente.nombre.toLowerCase(),
-                parentKey: CLIENTES_MENU_KEY,
-                url: `${CLIENTES_MENU_KEY}/${cliente.domain}`
+                parentKey: CLIENTES_ROUTER_PATH,
+                url: `${CLIENTES_ROUTER_PATH}/${cliente.domain}`
               };
             })
           }

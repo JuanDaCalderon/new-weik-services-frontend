@@ -1,6 +1,6 @@
 import {doc, getDoc, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {VacacionesTypeToFirestore} from '@/types';
 import {DebugUtil} from '@/utils';
 import {db} from '@/firebase';
@@ -13,7 +13,7 @@ export default function useApproveVacaciones() {
     async (userId: string, vacacionesUuid: string, aprobadas: boolean): Promise<void> => {
       setIsLoadingApproveVacaciones(true);
       try {
-        const userRef = doc(db, USUARIOS_PATH, userId);
+        const userRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
         const snapshot = await getDoc(userRef);
         if (!snapshot.exists()) {
           toast.error('Usuario no encontrado');

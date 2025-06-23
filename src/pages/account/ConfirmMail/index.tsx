@@ -1,7 +1,7 @@
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import {Link} from 'react-router-dom';
 import mailSent from '@/assets/images/svg/mail_sent.svg';
-import {DEFAULT_ROUTER_PATH} from '@/constants';
+import {LOGIN_ROUTER_PATH} from '@/constants';
 import {useEffect} from 'react';
 import toast from 'react-hot-toast';
 import {useParams} from 'react-router-dom';
@@ -23,7 +23,7 @@ const ConfirmMail = () => {
           haga clic en el enlace incluido para restablecer su contraseña.
         </p>
         <p className="mb-0 text-center">
-          <Link className="btn btn-primary" to={DEFAULT_ROUTER_PATH}>
+          <Link className="btn btn-primary" to={LOGIN_ROUTER_PATH}>
             <i className="mdi mdi-home me-1"></i> Volver al inicio de sesión
           </Link>
         </p>

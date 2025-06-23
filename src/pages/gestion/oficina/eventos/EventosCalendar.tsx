@@ -27,7 +27,7 @@ import {useDatePicker, useTogglev2} from '@/hooks';
 import {FormWrapper, InputField, OnlyLabel, SelectField} from '@/components/Form2';
 import {
   BREAKSOPTIONS,
-  DEFAULT_HOME_ROUTER_PATH,
+  HOME_ROUTER_PATH,
   EVENTTYPES,
   EVENTTYPESOPTIONS,
   PERMISOS_MAP_IDS,
@@ -39,7 +39,7 @@ import {EVENTOSINITIALVALUES, HORARIOCREATEDVALUES} from './initialValues';
 import {Navigate} from 'react-router-dom';
 import useCalendario from './hooks/useCalendario';
 
-const Calendario = memo(function Calendario() {
+const EventosCalendar = memo(function EventosCalendar() {
   const [usersFiltered, setusersFiltered] = useState<Employee[]>([]);
   const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
   const [thisHorarioEvent, setThisHorarioEvent] = useState<calendarHorarioEventType>();
@@ -600,13 +600,13 @@ const Calendario = memo(function Calendario() {
 
   if (
     !hasPermission(
-      PERMISOS_MAP_IDS.accesoCalendario,
+      PERMISOS_MAP_IDS.accesoEventos,
       thisUserActive.roles,
       thisUserActive.permisosOtorgados,
       thisUserActive.permisosDenegados
     )
   ) {
-    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
+    return <Navigate to={HOME_ROUTER_PATH} replace />;
   }
 
   return (
@@ -684,4 +684,4 @@ const Calendario = memo(function Calendario() {
   );
 });
 
-export {Calendario};
+export {EventosCalendar};

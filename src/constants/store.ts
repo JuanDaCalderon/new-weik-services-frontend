@@ -8,9 +8,7 @@ export const NOTICIAS_NAME = 'noticias';
 export const OBJETIVOS_NAME = 'objetivos';
 export const REGISTROS_NAME = 'registros';
 export const SELECTED_ROW_NAME = 'selectedRow';
-
 export const UTILITIES_NAME = 'utilities';
-
 export const USER_DOMAIN = 'user-domain';
 export const SESSION_CLIENTES_KEY = 'clientes';
 export const SESSION_APPS_KEY = 'apps';

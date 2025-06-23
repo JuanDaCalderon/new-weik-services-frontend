@@ -1,16 +1,27 @@
 import {
-  CLIENTES_MENU_KEY,
-  GESTION_CLIENTES_MENU_KEY,
-  GESTION_MENU_KEY,
-  GESTION_NOTICIAS_MENU_KEY,
-  GESTION_OFICINA_CALENDARIO_MENU_KEY,
-  GESTION_OFICINA_MENU_KEY,
-  GESTION_OFICINA_REPORTES_MENU_KEY,
-  GESTION_OFICINA_VACACIONES_MENU_KEY,
-  GESTION_USUARIOS_MENU_KEY,
-  PERMISOS_MAP_IDS
+  PERMISOS_MAP_IDS,
+  CLIENTES_ROUTER_PATH,
+  CLIENTES_PATH,
+  GESTION_ROUTER_PATH,
+  GESTION_PATH,
+  GESTION_CLIENTES_ROUTER_PATH,
+  GESTION_USUARIOS_ROUTER_PATH,
+  USUARIOS_PATH,
+  NOTICIAS_PATH,
+  GESTION_NOTICIAS_ROUTER_PATH,
+  OFICINA_PATH,
+  GESTION_OFICINA_ROUTER_PATH,
+  HORARIOS_PATH,
+  GESTION_OFICINA_HORARIOS_ROUTER_PATH,
+  EVENTOS_PATH,
+  VACACIONES_PATH,
+  REPORTES_PATH,
+  GESTION_OFICINA_EVENTOS_ROUTER_PATH,
+  GESTION_OFICINA_VACACIONES_ROUTER_PATH,
+  GESTION_OFICINA_REPORTES_ROUTER_PATH
 } from '@/constants';
 import {MenuItemType} from '@/types';
+import {capitalizeFirstLetter} from '@/utils';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
   /* {
@@ -630,72 +641,72 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
     ]
   }, */
   {
-    key: CLIENTES_MENU_KEY,
+    key: CLIENTES_ROUTER_PATH,
     icon: 'uil-user-square',
-    label: 'Clientes',
+    label: capitalizeFirstLetter(CLIENTES_PATH),
     isTitle: true,
     children: []
   },
   {
-    key: GESTION_MENU_KEY,
+    key: GESTION_ROUTER_PATH,
     icon: 'uil-cog',
-    label: 'Gestion',
+    label: capitalizeFirstLetter(GESTION_PATH),
     isTitle: true,
     children: [
       {
-        key: GESTION_CLIENTES_MENU_KEY,
-        label: 'Clientes',
-        url: GESTION_CLIENTES_MENU_KEY,
-        parentKey: GESTION_MENU_KEY,
+        key: GESTION_CLIENTES_ROUTER_PATH,
+        label: capitalizeFirstLetter(CLIENTES_PATH),
+        url: GESTION_CLIENTES_ROUTER_PATH,
+        parentKey: GESTION_ROUTER_PATH,
         permisoId: PERMISOS_MAP_IDS.accesoClientes
       },
       {
-        key: GESTION_USUARIOS_MENU_KEY,
-        label: 'Usuarios',
-        url: GESTION_USUARIOS_MENU_KEY,
-        parentKey: GESTION_MENU_KEY,
+        key: GESTION_USUARIOS_ROUTER_PATH,
+        label: capitalizeFirstLetter(USUARIOS_PATH),
+        url: GESTION_USUARIOS_ROUTER_PATH,
+        parentKey: GESTION_ROUTER_PATH,
         permisoId: PERMISOS_MAP_IDS.accesoUsuarios
       },
       {
-        key: GESTION_NOTICIAS_MENU_KEY,
-        label: 'Noticias',
-        url: GESTION_NOTICIAS_MENU_KEY,
-        parentKey: GESTION_MENU_KEY,
+        key: GESTION_NOTICIAS_ROUTER_PATH,
+        label: capitalizeFirstLetter(NOTICIAS_PATH),
+        url: GESTION_NOTICIAS_ROUTER_PATH,
+        parentKey: GESTION_ROUTER_PATH,
         permisoId: PERMISOS_MAP_IDS.accesoNoticias
       },
       {
-        key: GESTION_OFICINA_MENU_KEY,
-        label: 'Oficina',
-        parentKey: GESTION_MENU_KEY,
+        key: GESTION_OFICINA_ROUTER_PATH,
+        label: capitalizeFirstLetter(OFICINA_PATH),
+        parentKey: GESTION_ROUTER_PATH,
         children: [
           {
-            key: GESTION_OFICINA_CALENDARIO_MENU_KEY,
-            label: 'Calendario',
-            url: GESTION_OFICINA_CALENDARIO_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY,
-            permisoId: PERMISOS_MAP_IDS.accesoCalendario
+            key: GESTION_OFICINA_HORARIOS_ROUTER_PATH,
+            label: capitalizeFirstLetter(HORARIOS_PATH),
+            url: GESTION_OFICINA_HORARIOS_ROUTER_PATH,
+            parentKey: GESTION_OFICINA_ROUTER_PATH,
+            permisoId: PERMISOS_MAP_IDS.accesoHorarios
           },
           {
-            key: GESTION_OFICINA_VACACIONES_MENU_KEY,
-            label: 'Vacaciones',
-            url: GESTION_OFICINA_VACACIONES_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY,
+            key: GESTION_OFICINA_EVENTOS_ROUTER_PATH,
+            label: capitalizeFirstLetter(EVENTOS_PATH),
+            url: GESTION_OFICINA_EVENTOS_ROUTER_PATH,
+            parentKey: GESTION_OFICINA_ROUTER_PATH,
+            permisoId: PERMISOS_MAP_IDS.accesoEventos
+          },
+          {
+            key: GESTION_OFICINA_VACACIONES_ROUTER_PATH,
+            label: capitalizeFirstLetter(VACACIONES_PATH),
+            url: GESTION_OFICINA_VACACIONES_ROUTER_PATH,
+            parentKey: GESTION_OFICINA_ROUTER_PATH,
             permisoId: PERMISOS_MAP_IDS.accesoVacaciones
           },
           {
-            key: GESTION_OFICINA_REPORTES_MENU_KEY,
-            label: 'Reportes',
-            url: GESTION_OFICINA_REPORTES_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY,
+            key: GESTION_OFICINA_REPORTES_ROUTER_PATH,
+            label: capitalizeFirstLetter(REPORTES_PATH),
+            url: GESTION_OFICINA_REPORTES_ROUTER_PATH,
+            parentKey: GESTION_OFICINA_ROUTER_PATH,
             permisoId: PERMISOS_MAP_IDS.accesoReportes
           }
-          /* {
-            key: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
-            label: 'Solicitudes',
-            url: GESTION_OFICINA_SOLICITUDES_MENU_KEY,
-            parentKey: GESTION_OFICINA_MENU_KEY,
-            permisoId: PERMISOS_MAP_IDS.accesoSolicitudes
-          } */
         ]
       }
     ]

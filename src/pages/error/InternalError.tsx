@@ -2,7 +2,7 @@ import {Row, Col, Card, Container, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import Logo from '@/assets/images/logo.png';
 import {BGCircles} from '@/components';
-import {DEFAULT_ROUTER_PATH, year} from '@/constants';
+import {LOGIN_ROUTER_PATH, year} from '@/constants';
 import config from '@/config';
 
 const InternalError = () => {
@@ -15,8 +15,8 @@ const InternalError = () => {
             <Col md={8} lg={6} xl={5} xxl={4}>
               <Card>
                 <Card.Header className="py-3 text-center bg-primary">
-                  <Link to={DEFAULT_ROUTER_PATH}>
-                    <Image className="w-50" fluid src={Logo} alt="weikstudio" loading="lazy" />
+                  <Link to={LOGIN_ROUTER_PATH}>
+                    <Image className="w-50" fluid src={Logo} alt="devikgo" loading="lazy" />
                   </Link>
                 </Card.Header>
                 <Card.Body>
@@ -24,7 +24,7 @@ const InternalError = () => {
                     <h1 className="text-uppercase text-danger mt-1 h3">Error interno</h1>
                     <p className="text-dark text-opacity-75">¿Por qué no intentas actualizar tu página?</p>
                     <Link className="btn btn-info mt-1" to="/" replace>
-                      <i className="mdi mdi-reply"></i> Regresar a weik services
+                      <i className="mdi mdi-reply"></i> Regresar a Devik Go
                     </Link>
                   </div>
                 </Card.Body>
@@ -34,7 +34,7 @@ const InternalError = () => {
         </Container>
       </div>
       <footer className="footer footer-alt">
-        {year} © DevikGo - devikgo.com - {config.APP_VERSION}
+        {year} © DevikGo - {config.APP_VERSION}
       </footer>
     </>
   );

@@ -13,7 +13,7 @@ import {selectisLoadingEmployees} from '@/store/selectores/users';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {selectUser} from '@/store/selectores';
 import {hasPermission} from '@/utils';
-import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
+import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TOAST_DURATION} from '@/constants';
 
 const tabContents: TabContentItem[] = [
   {id: 'Roles', title: 'Roles'},
@@ -38,7 +38,7 @@ const RolesYPermisos = memo(function RolesYPermisos() {
   }, [getEmployeesListener, getPermisosListener, getRolesListener]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoRoles, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
-    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
+    return <Navigate to={HOME_ROUTER_PATH} replace />;
   }
 
   return (

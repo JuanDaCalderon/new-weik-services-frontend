@@ -1,7 +1,7 @@
 import {db} from '@/firebase';
 import {deleteDoc, doc, getDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {CLIENTES_PATH} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH} from '@/constants';
 import {Cliente} from '@/types';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
@@ -14,7 +14,7 @@ export default function useDeleteClient() {
   const deleteCliente = useCallback(
     async (clienteId: string): Promise<void> => {
       setIsLoadingDeleteCliente(true);
-      const clienteRef = doc(db, CLIENTES_PATH, clienteId);
+      const clienteRef = doc(db, FIRESTORE_CLIENTES_PATH, clienteId);
       try {
         const clienteDoc = await getDoc(clienteRef);
         const clienteData = clienteDoc.data() as Cliente;

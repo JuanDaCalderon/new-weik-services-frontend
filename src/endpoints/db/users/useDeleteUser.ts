@@ -1,7 +1,7 @@
 import {db} from '@/firebase';
 import {deleteDoc, doc, getDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {Employee} from '@/types';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
@@ -15,7 +15,7 @@ export default function useDeleteUser() {
     async (userId: string): Promise<void> => {
       setIsLoadingDeleteUser(true);
       try {
-        const userRef = doc(db, USUARIOS_PATH, userId);
+        const userRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
         const usuarioDoc = await getDoc(userRef);
         const userData = usuarioDoc.data() as Employee;
         await deleteDoc(userRef);

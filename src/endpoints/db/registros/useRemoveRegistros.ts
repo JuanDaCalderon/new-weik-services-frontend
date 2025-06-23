@@ -3,7 +3,7 @@ import {deleteDoc, doc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {CLIENTES_PATH} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH} from '@/constants';
 
 export default function useRemoveRegistros() {
   const [isDeletingRegistro, setIsDeletingRegistro] = useState<boolean>(false);
@@ -12,7 +12,7 @@ export default function useRemoveRegistros() {
     setIsDeletingRegistro(true);
     try {
       for (const registroId of registroIds) {
-        const registroRef = doc(db, `${CLIENTES_PATH}/${cliente}/${tipo}`, registroId);
+        const registroRef = doc(db, `${FIRESTORE_CLIENTES_PATH}/${cliente}/${tipo}`, registroId);
         await deleteDoc(registroRef);
       }
       toast.success(`Has eliminado los registros de ${cliente} - ${tipo} correctamente.`);

@@ -3,7 +3,7 @@ import {Col, Row} from 'react-bootstrap';
 import {Link, Navigate} from 'react-router-dom';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import useLogin, {LoginFormFields, loginFormSchema} from './useLogin';
-import {DEFAULT_HOME_ROUTER_PATH, PAGE_RECOVERY_PASSWORD, TOAST_DURATION} from '@/constants';
+import {HOME_ROUTER_PATH, RECOVERY_ROUTER_PATH, TOAST_DURATION} from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 import {useEffect} from 'react';
 import {useAppSelector} from '@/store';
@@ -17,7 +17,7 @@ export default function Login() {
   useEffect(() => {
     toast.remove();
   }, []);
-  if (isLoggedIn) return <Navigate to={DEFAULT_HOME_ROUTER_PATH} />;
+  if (isLoggedIn) return <Navigate to={HOME_ROUTER_PATH} />;
   return (
     <AccountWrapper>
       <div className="text-center w-75 m-auto">
@@ -41,7 +41,7 @@ export default function Login() {
           </Col>
         </Row>
         <PasswordInput label={'Contraseña'} name="password" placeholder={'Ingresa tu contraseña'} containerClass="mb-2">
-          <Link to={PAGE_RECOVERY_PASSWORD} className="text-dark text-opacity-75 float-end">
+          <Link to={RECOVERY_ROUTER_PATH} className="text-dark text-opacity-75 float-end">
             <small>Olvidaste tu contraseña?</small>
           </Link>
         </PasswordInput>

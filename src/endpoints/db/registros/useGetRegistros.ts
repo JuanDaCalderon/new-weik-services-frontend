@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingRegistrosPerCliente, setRegistrosPerCliente} from '@/store/slices/registros';
 import {collection, getDocs, onSnapshot, orderBy, query, QueryDocumentSnapshot, Unsubscribe} from 'firebase/firestore';
-import {CLIENTES_PATH, REGISTRO_STATUS, REGISTRO_PRIORIDAD} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH, REGISTRO_STATUS, REGISTRO_PRIORIDAD} from '@/constants';
 import {Registros, RegistrosToDb} from '@/types';
 
 const useGetRegistros = () => {
@@ -45,7 +45,7 @@ const useGetRegistros = () => {
     async (cliente: string, tipo: string, shouldFilterEntregados = false): Promise<void> => {
       dispatch(isLoadingRegistrosPerCliente({cliente, tipo, isLoading: true}));
       try {
-        const registrosRef = collection(db, `${CLIENTES_PATH}/${cliente}/${tipo}`);
+        const registrosRef = collection(db, `${FIRESTORE_CLIENTES_PATH}/${cliente}/${tipo}`);
         const q = query(registrosRef, orderBy('deliverAt', 'asc'));
         const querySnapshotDocs = await getDocs(q);
         const allRegistros: Registros[] = querySnapshotDocs.docs.map(getMapRegistros);
@@ -70,7 +70,7 @@ const useGetRegistros = () => {
         unsubRefs.current[key]();
       }
       dispatch(isLoadingRegistrosPerCliente({cliente, tipo, isLoading: true}));
-      const registrosRef = collection(db, `${CLIENTES_PATH}/${cliente}/${tipo}`);
+      const registrosRef = collection(db, `${FIRESTORE_CLIENTES_PATH}/${cliente}/${tipo}`);
       const q = query(registrosRef, orderBy('deliverAt', 'asc'));
       const unsubscribe = onSnapshot(
         q,

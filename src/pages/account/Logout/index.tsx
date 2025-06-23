@@ -2,7 +2,7 @@ import {useEffect, useMemo, JSX} from 'react';
 import AccountWrapper from '@/pages/account/AccountWrapper';
 import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {DEFAULT_ROUTER_PATH, TOAST_DURATION} from '@/constants';
+import {LOGIN_ROUTER_PATH, TOAST_DURATION} from '@/constants';
 import {useAuth} from '@/endpoints';
 import toast, {Toaster} from 'react-hot-toast';
 
@@ -24,7 +24,7 @@ const Logout = () => {
           <p className="text-dark text-opacity-75 text-opacity-75">
             Volver al
             {!isLoadingLogOut ? (
-              <Link to={DEFAULT_ROUTER_PATH} className="text-dark text-opacity-75 ms-1">
+              <Link to={LOGIN_ROUTER_PATH} className="text-dark text-opacity-75 ms-1">
                 <b>acceso</b>
               </Link>
             ) : (

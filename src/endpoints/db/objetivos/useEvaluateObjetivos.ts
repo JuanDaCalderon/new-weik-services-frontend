@@ -3,7 +3,7 @@ import {doc, Timestamp, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {OBJETIVOS_PATH} from '@/constants';
+import {FIRESTORE_OBJETIVOS_PATH} from '@/constants';
 import {Evaluation, ObjetivosToDb} from '@/types';
 
 export default function useEvaluateObjetivos() {
@@ -20,7 +20,7 @@ export default function useEvaluateObjetivos() {
           evaluatedAt: Timestamp.fromDate(new Date())
         }
       };
-      const objetivoRef = doc(db, OBJETIVOS_PATH, objetivoId);
+      const objetivoRef = doc(db, FIRESTORE_OBJETIVOS_PATH, objetivoId);
       await updateDoc(objetivoRef, objetivoToBd);
       toast.success(`Se ha evaluado el objetivo correctamente`);
     } catch (error: any) {

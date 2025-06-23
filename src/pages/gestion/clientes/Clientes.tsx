@@ -6,7 +6,7 @@ import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {CrearCliente} from '@/pages/gestion/clientes/CrearCliente';
 import {hasPermission} from '@/utils';
-import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_CLIENTES_CREAR, TABS_CLIENTES_LISTA} from '@/constants';
+import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_CLIENTES_CREAR, TABS_CLIENTES_LISTA} from '@/constants';
 import {Link, Navigate} from 'react-router-dom';
 import {ListaClientes} from './ListaClientes';
 import {ToastWrapper} from '@/components/Toast';
@@ -33,7 +33,7 @@ const Clientes = memo(function Clientes() {
   }, [canCrearClientes]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoClientes, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
-    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
+    return <Navigate to={HOME_ROUTER_PATH} replace />;
   }
 
   return (

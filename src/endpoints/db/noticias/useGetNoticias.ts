@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useCallback} from 'react';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingNoticias, clearNoticias, setNoticias} from '@/store/slices/noticias';
-import {NOTICIAS_PATH} from '@/constants';
+import {FIRESTORE_NOTICIAS_PATH} from '@/constants';
 import {Noticia, NoticiaToDb} from '@/types';
 
 export default function useGetNoticias() {
@@ -13,7 +13,7 @@ export default function useGetNoticias() {
   const getNoticiasSync = useCallback(async (): Promise<void> => {
     dispatch(isLoadingNoticias(true));
     try {
-      const querySnapshotDocs = await getDocs(collection(db, NOTICIAS_PATH));
+      const querySnapshotDocs = await getDocs(collection(db, FIRESTORE_NOTICIAS_PATH));
       const noticias: Noticia[] = querySnapshotDocs.docs.map((doc) => ({
         ...(doc.data() as Noticia),
         id: doc.id,
@@ -36,7 +36,7 @@ export default function useGetNoticias() {
     dispatch(isLoadingNoticias(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
-      unsubscribe = onSnapshot(collection(db, NOTICIAS_PATH), async (querySnapshotDocs) => {
+      unsubscribe = onSnapshot(collection(db, FIRESTORE_NOTICIAS_PATH), async (querySnapshotDocs) => {
         const noticias: Noticia[] = [];
         querySnapshotDocs.forEach((doc) => {
           noticias.push({

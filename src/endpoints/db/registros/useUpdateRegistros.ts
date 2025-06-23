@@ -2,7 +2,7 @@ import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {DebugUtil} from '@/utils';
 import {doc, Timestamp, updateDoc} from 'firebase/firestore';
-import {CLIENTES_PATH} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH} from '@/constants';
 import toast from 'react-hot-toast';
 import {RegistrosToDb} from '@/types';
 import {useAppSelector} from '@/store';
@@ -21,7 +21,7 @@ const useUpdateRegistros = () => {
     ): Promise<void> => {
       setIsUpdatingRegistro(true);
       try {
-        const registroRef = doc(db, `${CLIENTES_PATH}/${cliente}/${tipo}`, registroId);
+        const registroRef = doc(db, `${FIRESTORE_CLIENTES_PATH}/${cliente}/${tipo}`, registroId);
         await updateDoc(registroRef, {
           ...newRegistroValue,
           updatedBy: id,

@@ -8,7 +8,7 @@ import {usuariosColumns} from './columnas';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {hasPermission} from '@/utils';
-import {PAGE_GESTION_USUARIOS, PERMISOS_MAP_IDS} from '@/constants';
+import {GESTION_USUARIOS_ROUTER_PATH, PERMISOS_MAP_IDS} from '@/constants';
 import {useNavigate} from 'react-router-dom';
 
 const Usuarios = memo(function Usuarios() {
@@ -22,7 +22,7 @@ const Usuarios = memo(function Usuarios() {
     return hasPermission(PERMISOS_MAP_IDS.editarUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
   const onNavigateToCrearUsuario = useCallback(() => {
-    navigate(PAGE_GESTION_USUARIOS);
+    navigate(GESTION_USUARIOS_ROUTER_PATH);
   }, [navigate]);
 
   return (

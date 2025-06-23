@@ -2,7 +2,7 @@ import {arrayRemove, doc, getDoc, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {db} from '@/firebase';
 import {HorarioTypeToFirestore} from '@/types';
 
@@ -12,7 +12,7 @@ export default function useDeleteHorario() {
   const deleteHorario = useCallback(async (userId: string, uuidAEliminar: string): Promise<void> => {
     setIsLoadingDeleteHorario(true);
     try {
-      const userDocRef = doc(db, USUARIOS_PATH, userId);
+      const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
       const userSnapshot = await getDoc(userDocRef);
       if (!userSnapshot.exists()) {
         toast.error('Usuario no encontrado.');

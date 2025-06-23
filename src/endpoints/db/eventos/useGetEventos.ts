@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useCallback} from 'react';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingEventos, clearEventos, setEventos} from '@/store/slices/eventos';
-import {EVENTOS_PATH} from '@/constants';
+import {FIRESTORE_EVENTOS_PATH} from '@/constants';
 import {Eventos, EventosToDb} from '@/types';
 
 export default function useGetEventos() {
@@ -13,7 +13,7 @@ export default function useGetEventos() {
   const getEventosSync = useCallback(async (): Promise<void> => {
     dispatch(isLoadingEventos(true));
     try {
-      const querySnapshotDocs = await getDocs(collection(db, EVENTOS_PATH));
+      const querySnapshotDocs = await getDocs(collection(db, FIRESTORE_EVENTOS_PATH));
       const eventos: Eventos[] = querySnapshotDocs.docs.map((doc) => ({
         ...(doc.data() as Eventos),
         id: doc.id,
@@ -36,7 +36,7 @@ export default function useGetEventos() {
     dispatch(isLoadingEventos(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
-      unsubscribe = onSnapshot(collection(db, EVENTOS_PATH), async (querySnapshotDocs) => {
+      unsubscribe = onSnapshot(collection(db, FIRESTORE_EVENTOS_PATH), async (querySnapshotDocs) => {
         const eventos: Eventos[] = [];
         querySnapshotDocs.forEach((doc) => {
           eventos.push({

@@ -8,7 +8,7 @@ import config from '@/config';
 import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores';
 import {LocalStorageUtil} from '@/utils';
-import {ALERT_TIMEOUT_MS, LOCALSTORAGE_LOG_OUT_ALERT, PAGE_LOG_OUT} from '@/constants';
+import {ALERT_TIMEOUT_MS, LOCALSTORAGE_LOG_OUT_ALERT, LOGOUT_ROUTER_PATH} from '@/constants';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 
 const Topbar = React.lazy(() => import('@/layouts/Topbar'));
@@ -113,7 +113,7 @@ const HorizontalLayout = () => {
     (e: MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      navigate(PAGE_LOG_OUT);
+      navigate(LOGOUT_ROUTER_PATH);
     },
     [navigate]
   );

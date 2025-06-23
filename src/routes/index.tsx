@@ -4,7 +4,13 @@ import Account from '@/pages/account';
 import ErrorPages from '@/pages/error';
 import ProtectedRoutes from '@/routes/ProtectedRoutes';
 import ProtectedHomeRoutes from '@/routes/ProtectedHomeRoutes';
-import {PAGE_NOT_FOUND_PATH} from '@/constants';
+import {
+  ACCOUNT_ROUTER_PATH,
+  ERROR_ROUTER_PATH,
+  HOME_ROUTER_PATH,
+  NOTFOUND_ROUTER_PATH,
+  SERVICES_ROUTER_PATH
+} from '@/constants';
 import {useEffect} from 'react';
 import {changeHTMLAttribute} from '@/utils';
 import {useThemeContext} from '@/common/context';
@@ -16,11 +22,11 @@ export default function AppRoutes() {
   return (
     <ReactRoutes>
       <Route index element={<Root />}></Route>
-      <Route path="/account/*" element={<Account />} />
-      <Route path="/error/*" element={<ErrorPages />} />
-      <Route path="/services/*" element={<ProtectedRoutes />} />
-      <Route path="/home/*" element={<ProtectedHomeRoutes />} />
-      <Route path="*" element={<Navigate to={PAGE_NOT_FOUND_PATH} />} />
+      <Route path={`${ACCOUNT_ROUTER_PATH}/*`} element={<Account />} />
+      <Route path={`${ERROR_ROUTER_PATH}/*`} element={<ErrorPages />} />
+      <Route path={`${SERVICES_ROUTER_PATH}/*`} element={<ProtectedRoutes />} />
+      <Route path={`${HOME_ROUTER_PATH}/*`} element={<ProtectedHomeRoutes />} />
+      <Route path="*" element={<Navigate to={NOTFOUND_ROUTER_PATH} />} />
     </ReactRoutes>
   );
 }

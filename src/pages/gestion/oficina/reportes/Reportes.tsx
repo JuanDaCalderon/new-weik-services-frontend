@@ -3,7 +3,7 @@ import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {PageBreadcrumb} from '@/components';
 import {ToastWrapper} from '@/components/Toast';
 import {TabContentItem} from '@/types';
-import {TABS_REPORTES_ASISTENCIA, TABS_REPORTES_DESEMPEÑO, TABS_REPORTES_OBJETIVOS} from '@/constants';
+import {TABS_REPORTES_ASISTENCIA, TABS_REPORTES_OBJETIVOS} from '@/constants';
 import {Link} from 'react-router-dom';
 import Balance from './balance';
 import Objetivos from './objetivos';
@@ -13,8 +13,7 @@ import {useGetEmployees} from '@/endpoints';
 
 const tabContents: TabContentItem[] = [
   {id: TABS_REPORTES_ASISTENCIA, title: TABS_REPORTES_ASISTENCIA},
-  {id: TABS_REPORTES_OBJETIVOS, title: TABS_REPORTES_OBJETIVOS},
-  {id: TABS_REPORTES_DESEMPEÑO, title: TABS_REPORTES_DESEMPEÑO}
+  {id: TABS_REPORTES_OBJETIVOS, title: TABS_REPORTES_OBJETIVOS}
 ];
 
 const Reportes = memo(function Reportes() {
@@ -50,7 +49,6 @@ const Reportes = memo(function Reportes() {
                         <Col sm={12}>
                           {tab.id === TABS_REPORTES_ASISTENCIA && <Balance users={users} />}
                           {tab.id === TABS_REPORTES_OBJETIVOS && <Objetivos users={users} />}
-                          {tab.id === TABS_REPORTES_DESEMPEÑO && <></>}
                         </Col>
                       </Row>
                     </Tab.Pane>

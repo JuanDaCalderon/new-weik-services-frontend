@@ -3,7 +3,7 @@ import {doc, setDoc, Timestamp} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {NOTICIAS_PATH} from '@/constants';
+import {FIRESTORE_NOTICIAS_PATH} from '@/constants';
 import {Noticia, NoticiaToDb} from '@/types';
 
 export default function useUpdateNoticia() {
@@ -19,7 +19,7 @@ export default function useUpdateNoticia() {
             ? {rangoFechas: noticia.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))}
             : {})
         } as Partial<NoticiaToDb>;
-        await setDoc(doc(db, NOTICIAS_PATH, noticiaId), noticiaToBd, {merge: true});
+        await setDoc(doc(db, FIRESTORE_NOTICIAS_PATH, noticiaId), noticiaToBd, {merge: true});
         toast.success(`Se ha actualizado la noticia correctamente`);
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

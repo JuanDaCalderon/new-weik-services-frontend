@@ -3,7 +3,7 @@ import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import {useAuth} from '@/endpoints';
 import {useNavigate} from 'react-router-dom';
-import {PAGE_CONFIRM_EMAIL} from '@/constants';
+import {CONFIRM_ROUTER_PATH} from '@/constants';
 
 export const recoverPasswordFormSchema = object({
   email: string()
@@ -25,7 +25,7 @@ export default function useRecoverPassword() {
         const emailSent = await authRecoverPassword({email});
         if (emailSent) {
           DebugUtil.logSuccess('Correo de recuperación de contraseña enviado', email);
-          navigate(`${PAGE_CONFIRM_EMAIL}/${emailSent}`);
+          navigate(`${CONFIRM_ROUTER_PATH}/${emailSent}`);
         }
       } catch (error: any) {
         DebugUtil.logError(error.toString(), error);

@@ -262,8 +262,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
           <Form.Text className="text-danger">
             Solo ingresa la parte antes del @ para crear el email, ya que al seleccionar el cliente, este se
             autocompletará automáticamente. Todos los usuarios deben estar asociados a el dominio de un cliente, ya sea
-            un cliente externo o el cliente raíz (Weikstudio), donde pueden tener roles como diseñador, administrador u
-            otros.
+            un cliente externo o el cliente raíz, donde pueden tener roles como diseñador, administrador u otros.
           </Form.Text>
         </Col>
         <Col xs={12} md={6}>

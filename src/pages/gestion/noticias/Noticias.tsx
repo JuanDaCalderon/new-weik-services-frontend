@@ -5,7 +5,7 @@ import {useAppSelector} from '@/store';
 import {useAddNoticia, useGetNoticias, useUploadFiles} from '@/endpoints';
 import {selectIsLoadingNoticias, selectNoticias, selectUser} from '@/store/selectores';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, STORAGE_NOTICIAS_PATH, TOAST_DURATION} from '@/constants';
+import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, STORAGE_NOTICIAS_PATH, TOAST_DURATION} from '@/constants';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Grid, Mousewheel, Pagination} from 'swiper/modules';
 import {NoticiaCard} from '@/components/Noticias';
@@ -125,7 +125,7 @@ const Noticias = memo(function Noticias() {
   const canCrearNoticia = useMemo(() => getPermission(PERMISOS_MAP_IDS.crearNoticias), [getPermission]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoNoticias, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
-    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
+    return <Navigate to={HOME_ROUTER_PATH} replace />;
   }
 
   return (

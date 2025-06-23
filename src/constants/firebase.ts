@@ -1,14 +1,15 @@
-export const USUARIOS_PATH: string = 'usuarios';
-export const CLIENTES_PATH: string = 'clientes';
-export const STORAGE_LOGOS_CLIENTES_PATH: string = 'clientes';
-export const STORAGE_DOCS_CLIENTES_PATH: string = 'clientesDocs';
-export const STORAGE_NOTICIAS_PATH: string = 'noticias';
-export const STORAGE_APPS_PATH: string = 'apps';
-export const ROLES_PATH: string = 'roles';
-export const PERMISOS_PATH: string = 'permisos';
-export const NOTICIAS_PATH: string = 'noticias';
-export const APPS_PATH: string = 'apps';
-export const EVENTOS_PATH: string = 'eventos';
-export const OBJETIVOS_PATH: string = 'objetivos';
+export const STORAGE_LOGOS_CLIENTES_PATH = 'clientes';
+export const STORAGE_DOCS_CLIENTES_PATH = 'clientesDocs';
+export const STORAGE_NOTICIAS_PATH = 'noticias';
+export const STORAGE_APPS_PATH = 'apps';
 
-export const MAIN_DOMAIN: string = 'weikstudio';
+export const FIRESTORE_USUARIOS_PATH = 'usuarios';
+export const FIRESTORE_CLIENTES_PATH = 'clientes';
+export const FIRESTORE_ROLES_PATH = 'roles';
+export const FIRESTORE_PERMISOS_PATH = 'permisos';
+export const FIRESTORE_NOTICIAS_PATH = 'noticias';
+export const FIRESTORE_APPS_PATH = 'apps';
+export const FIRESTORE_EVENTOS_PATH = 'eventos';
+export const FIRESTORE_OBJETIVOS_PATH = 'objetivos';
+
+export const MAIN_DOMAIN = 'weikstudio';

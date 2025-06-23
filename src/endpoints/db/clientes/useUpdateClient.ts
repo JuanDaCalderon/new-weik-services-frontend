@@ -4,7 +4,7 @@ import {useCallback, useState} from 'react';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
 import {Cliente} from '@/types';
-import {CLIENTES_PATH} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH} from '@/constants';
 
 export default function useUpdateClient() {
   const [isUpdateClient, setIsUpdateClient] = useState<boolean>(false);
@@ -16,7 +16,7 @@ export default function useUpdateClient() {
     }
     setIsUpdateClient(true);
     try {
-      await setDoc(doc(db, CLIENTES_PATH, id), {...newClienteData}, {merge: true});
+      await setDoc(doc(db, FIRESTORE_CLIENTES_PATH, id), {...newClienteData}, {merge: true});
       toast.success(`¡Se ha actualizado el cliente ${id} correctamente!`);
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

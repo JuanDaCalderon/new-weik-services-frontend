@@ -7,7 +7,7 @@ import {useAuth} from '@/endpoints';
 import {DebugUtil} from '@/utils';
 import {useNavigate} from 'react-router-dom';
 import toast from 'react-hot-toast';
-import {DEFAULT_HOME_ROUTER_PATH} from '@/constants';
+import {HOME_ROUTER_PATH} from '@/constants';
 
 export const loginFormSchema = object({
   email: string()
@@ -40,7 +40,7 @@ export default function useLogin() {
             })
           );
           DebugUtil.logSuccess('Sesión iniciada en el store', user);
-          navigate(DEFAULT_HOME_ROUTER_PATH);
+          navigate(HOME_ROUTER_PATH);
           setTimeout(() => {
             toast.success(`Has iniciado sesión correctamente como ${user?.email}`);
           }, 1000);

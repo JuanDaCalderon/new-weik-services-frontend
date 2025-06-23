@@ -3,7 +3,7 @@ import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {useAppSelector} from '@/store';
 import {HorasTrabajoToFirestore} from '@/types';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import toast from 'react-hot-toast';
 import {selectUser} from '@/store/selectores';
 import {DateUtils, DebugUtil, calcularHorasTrabajo} from '@/utils';
@@ -43,7 +43,7 @@ export default function useCheckOut() {
           checkOut: h.checkOut ? Timestamp.fromDate(new Date(h.checkOut)) : null
         };
       });
-      const userRef = doc(db, USUARIOS_PATH, user.id);
+      const userRef = doc(db, FIRESTORE_USUARIOS_PATH, user.id);
       await updateDoc(userRef, {horasTrabajo: updatedHorasTrabajo});
       dispatch(
         updateWorkingHoursUser(

@@ -1,4 +1,4 @@
-import {PERMISOS_PATH, ROLES_PATH, USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_PERMISOS_PATH, FIRESTORE_ROLES_PATH, FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {db} from '@/firebase';
 import {updateDataUser} from '@/store/slices/user';
 import {PartialEmployee, PermisoByRoles, UsuarioCargoEdit} from '@/types';
@@ -33,7 +33,7 @@ const useUpdateUser = () => {
         })
       };
       try {
-        await setDoc(doc(db, USUARIOS_PATH, id), dataToUpdate, {merge: true});
+        await setDoc(doc(db, FIRESTORE_USUARIOS_PATH, id), dataToUpdate, {merge: true});
         dispatch(
           updateDataUser({
             ...updatedData,
@@ -60,7 +60,7 @@ const useUpdateUser = () => {
   const updateUserCargo = useCallback(async (userId: string, userCargoUpdated: UsuarioCargoEdit) => {
     setIsLoadingUpdateCargo(true);
     try {
-      await setDoc(doc(db, USUARIOS_PATH, userId), userCargoUpdated, {merge: true});
+      await setDoc(doc(db, FIRESTORE_USUARIOS_PATH, userId), userCargoUpdated, {merge: true});
       DebugUtil.logSuccess('El cargo del usuario se actualizó correctamente.');
       toast.success('El cargo del usuario se actualizó correctamente.');
     } catch (error: any) {
@@ -74,11 +74,11 @@ const useUpdateUser = () => {
   const updatedRolesOfUser = useCallback(async (userId: string, newRoles: string[] = []) => {
     setIsLoadingUsersToRol(true);
     try {
-      const userDocRef = doc(db, USUARIOS_PATH, userId);
+      const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
       let rolDocRef: DocumentReference;
       const newRolDocsRefs: DocumentReference[] = [];
       for (const roleId of newRoles) {
-        rolDocRef = doc(db, ROLES_PATH, roleId);
+        rolDocRef = doc(db, FIRESTORE_ROLES_PATH, roleId);
         newRolDocsRefs.push(rolDocRef);
       }
       await updateDoc(userDocRef, {
@@ -96,7 +96,7 @@ const useUpdateUser = () => {
 
   const agregarPermisoOtorgadoToUser = useCallback(async (userId: string, permisoRef: DocumentReference) => {
     try {
-      const userDocRef = doc(db, USUARIOS_PATH, userId);
+      const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
       await updateDoc(userDocRef, {
         permisosOtorgados: arrayUnion(permisoRef)
       });
@@ -108,7 +108,7 @@ const useUpdateUser = () => {
 
   const quitarPermisoOtorgadoToUser = useCallback(async (userId: string, permisoRef: DocumentReference) => {
     try {
-      const userDocRef = doc(db, USUARIOS_PATH, userId);
+      const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
       await updateDoc(userDocRef, {
         permisosOtorgados: arrayRemove(permisoRef)
       });
@@ -123,7 +123,7 @@ const useUpdateUser = () => {
       setIsLoadingUpdatePermisosOtorgados(true);
       try {
         for (const permiso of permisosOtorgados) {
-          const permisoRef = doc(db, PERMISOS_PATH, permiso.id);
+          const permisoRef = doc(db, FIRESTORE_PERMISOS_PATH, permiso.id);
           if (permiso.activo) await agregarPermisoOtorgadoToUser(userId, permisoRef);
           else await quitarPermisoOtorgadoToUser(userId, permisoRef);
         }
@@ -140,7 +140,7 @@ const useUpdateUser = () => {
 
   const agregarPermisoDenegadoToUser = useCallback(async (userId: string, permisoRef: DocumentReference) => {
     try {
-      const userDocRef = doc(db, USUARIOS_PATH, userId);
+      const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
       await updateDoc(userDocRef, {
         permisosDenegados: arrayUnion(permisoRef)
       });
@@ -152,7 +152,7 @@ const useUpdateUser = () => {
 
   const quitarPermisoDenegadoToUser = useCallback(async (userId: string, permisoRef: DocumentReference) => {
     try {
-      const userDocRef = doc(db, USUARIOS_PATH, userId);
+      const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
       await updateDoc(userDocRef, {
         permisosDenegados: arrayRemove(permisoRef)
       });
@@ -167,7 +167,7 @@ const useUpdateUser = () => {
       setIsLoadingUpdatePermisosDenegados(true);
       try {
         for (const permiso of permisosDenegados) {
-          const permisoRef = doc(db, PERMISOS_PATH, permiso.id);
+          const permisoRef = doc(db, FIRESTORE_PERMISOS_PATH, permiso.id);
           if (permiso.activo) await agregarPermisoDenegadoToUser(userId, permisoRef);
           else await quitarPermisoDenegadoToUser(userId, permisoRef);
         }

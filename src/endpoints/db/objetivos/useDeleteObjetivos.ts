@@ -3,7 +3,7 @@ import {deleteDoc, doc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {OBJETIVOS_PATH} from '@/constants';
+import {FIRESTORE_OBJETIVOS_PATH} from '@/constants';
 
 export default function useDeleteObjetivos() {
   const [isDeletingObjetivo, setIsDeletingObjetivo] = useState<boolean>(false);
@@ -11,7 +11,7 @@ export default function useDeleteObjetivos() {
   const deleteObjetivo = useCallback(async (objetivoId: string): Promise<void> => {
     setIsDeletingObjetivo(true);
     try {
-      const objetivoRef = doc(db, OBJETIVOS_PATH, objetivoId);
+      const objetivoRef = doc(db, FIRESTORE_OBJETIVOS_PATH, objetivoId);
       await deleteDoc(objetivoRef);
       toast.success(`Se ha eliminado el objetivo con éxito`);
     } catch (error: any) {

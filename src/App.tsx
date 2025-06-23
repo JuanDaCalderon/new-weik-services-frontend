@@ -1,7 +1,7 @@
 import AppRoutes from '@/routes';
 import {ThemeProvider} from '@/common/context';
-import './assets/scss/Saas.scss';
 import {useAppVersionChecker} from '@/hooks';
+import './assets/scss/Saas.scss';
 
 const App = () => {
   useAppVersionChecker();

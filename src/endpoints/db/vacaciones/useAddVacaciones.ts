@@ -1,6 +1,6 @@
 import {doc, Timestamp, arrayUnion, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {VacacionesType, VacacionesTypeToFirestore} from '@/types';
 import {DebugUtil, generateUuid} from '@/utils';
 import {db} from '@/firebase';
@@ -21,7 +21,7 @@ export default function useAddVacaciones() {
           uuid: generateUuid(),
           rangoFechas: newVacaciones.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))
         };
-        await updateDoc(doc(db, USUARIOS_PATH, id), {
+        await updateDoc(doc(db, FIRESTORE_USUARIOS_PATH, id), {
           vacaciones: arrayUnion(newItem)
         });
         toast.success('Solicitud de vacaciones creada con éxito!');

@@ -4,7 +4,7 @@ import {useCallback, useState} from 'react';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
 import {Employee} from '@/types';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 
 export default function useAddUser() {
   const [isLoadingAddUser, setIsLoadingAddUser] = useState<boolean>(false);
@@ -12,7 +12,7 @@ export default function useAddUser() {
   const addUser = useCallback(async (user: Employee): Promise<string | undefined> => {
     setIsLoadingAddUser(true);
     try {
-      const newUserDocRef = await addDoc(collection(db, USUARIOS_PATH), {
+      const newUserDocRef = await addDoc(collection(db, FIRESTORE_USUARIOS_PATH), {
         ...user,
         fechaNacimiento: Timestamp.now(),
         fechaCreacion: Timestamp.now()

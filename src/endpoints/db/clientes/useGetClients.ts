@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {collection, getDocs, onSnapshot, query, Timestamp, Unsubscribe, where} from 'firebase/firestore';
 import {db} from '@/firebase';
-import {CLIENTES_PATH, MAIN_DOMAIN} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH, MAIN_DOMAIN} from '@/constants';
 import {DateUtils, DebugUtil} from '@/utils';
 import {useDispatch} from 'react-redux';
 import {clearClientes, isLoadingClientes, setClientes} from '@/store/slices/clientes';
@@ -15,7 +15,7 @@ const useGetClients = () => {
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
       unsubscribe = onSnapshot(
-        query(collection(db, CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN)),
+        query(collection(db, FIRESTORE_CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN)),
         async (querySnapshotDocs) => {
           const clientes: Cliente[] = [];
           for (const doc of querySnapshotDocs.docs) {
@@ -69,7 +69,9 @@ const useGetClients = () => {
     dispatch(isLoadingClientes(true));
     try {
       const clientes: Cliente[] = [];
-      const queryDocs = await getDocs(query(collection(db, CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN)));
+      const queryDocs = await getDocs(
+        query(collection(db, FIRESTORE_CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN))
+      );
       for (const doc of queryDocs.docs) {
         const {
           branding,

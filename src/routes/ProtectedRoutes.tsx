@@ -4,7 +4,14 @@ import HorizontalLayout from '@/layouts/Horizontal';
 import Root from '@/routes/Root';
 import {useAppSelector} from '@/store';
 import {isUserLoggedInSelector} from '@/store/selectores/user';
-import {DEFAULT_ROUTER_PATH} from '@/constants';
+import {
+  CLIENTE_QUERY_PARAM,
+  CLIENTES_PATH,
+  GESTION_PATH,
+  LOGIN_ROUTER_PATH,
+  PERFIL_PATH,
+  ROLES_PATH
+} from '@/constants';
 /* NEW PAGES */
 const Profile = lazy(() => import('@/pages/perfil'));
 const RolesYPermisos = lazy(() => import('@/pages/rolesypermisos'));
@@ -26,10 +33,10 @@ export default function ProtectedRoutes() {
         <Route path="/*" element={<HorizontalLayout />}>
           <Route index element={<Root />} />
           {/* NEW PAGES */}
-          <Route path="perfil" element={<Profile />} />
-          <Route path="rolesypermisos" element={<RolesYPermisos />} />
-          <Route path="gestion/*" element={<Gestion />} />
-          <Route path="clientes/:cliente" element={<Clientes />} />
+          <Route path={PERFIL_PATH} element={<Profile />} />
+          <Route path={ROLES_PATH} element={<RolesYPermisos />} />
+          <Route path={`${GESTION_PATH}/*`} element={<Gestion />} />
+          <Route path={`${CLIENTES_PATH}/:${CLIENTE_QUERY_PARAM}`} element={<Clientes />} />
           {/* NEW PAGES */}
           <Route path="dashboard/*" element={<Dashboard />} />
           <Route path="apps/*" element={<Apps />} />
@@ -39,5 +46,5 @@ export default function ProtectedRoutes() {
         </Route>
       </ReactRoutes>
     );
-  } else return <Navigate to={DEFAULT_ROUTER_PATH} />;
+  } else return <Navigate to={LOGIN_ROUTER_PATH} />;
 }

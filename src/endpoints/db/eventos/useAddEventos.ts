@@ -3,7 +3,7 @@ import {addDoc, collection, Timestamp} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {EVENTOS_PATH} from '@/constants';
+import {FIRESTORE_EVENTOS_PATH} from '@/constants';
 import {Eventos, EventosToDb} from '@/types';
 
 export default function useAddEventos() {
@@ -16,7 +16,7 @@ export default function useAddEventos() {
         ...evento,
         rangoFechas: evento.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))
       };
-      await addDoc(collection(db, EVENTOS_PATH), eventoToBd);
+      await addDoc(collection(db, FIRESTORE_EVENTOS_PATH), eventoToBd);
       toast.success(`Has agregado un evento correctamente`);
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

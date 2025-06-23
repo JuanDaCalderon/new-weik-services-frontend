@@ -19,9 +19,9 @@ export default defineConfig({
         enabled: true
       },
       manifest: {
-        name: 'Weik Services',
-        short_name: 'Weik',
-        description: 'Weik Crafting Your Vision',
+        name: 'Devik Go',
+        short_name: 'Devik Go',
+        description: 'Devik Go va contigo',
         start_url: '/',
         display: 'standalone',
         background_color: '#313a46',

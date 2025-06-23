@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {collection, getDocs, query, where, Timestamp, DocumentReference, getDoc} from 'firebase/firestore';
 import {db} from '@/firebase';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {DebugUtil, DateUtils} from '@/utils';
 import {
   Employee,
@@ -44,7 +44,9 @@ const useGetUsers = () => {
     async (userEmail: string): Promise<Employee | null> => {
       let usuario: Employee | null = null;
       try {
-        const queryDocs = await getDocs(query(collection(db, USUARIOS_PATH), where('email', '==', userEmail)));
+        const queryDocs = await getDocs(
+          query(collection(db, FIRESTORE_USUARIOS_PATH), where('email', '==', userEmail))
+        );
         const firstDoc = queryDocs.docs[0];
         if (!firstDoc) throw new Error('El usuario no persiste en la base de datos.');
         const {

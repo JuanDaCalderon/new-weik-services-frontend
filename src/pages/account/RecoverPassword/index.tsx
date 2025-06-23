@@ -4,7 +4,7 @@ import AccountWrapper from '@/pages/account/AccountWrapper';
 import {Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import useRecoverPassword, {recoverPasswordFormFields, recoverPasswordFormSchema} from './useRecoverPassword';
-import {DEFAULT_ROUTER_PATH, TOAST_DURATION} from '@/constants';
+import {LOGIN_ROUTER_PATH, TOAST_DURATION} from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 
 const RecoverPassword = () => {
@@ -20,7 +20,7 @@ const RecoverPassword = () => {
         <Col className="text-center">
           <p className="text-dark text-opacity-75">
             Olvidalo, ya la recordé
-            <Link to={DEFAULT_ROUTER_PATH} className="text-dark text-opacity-75 ms-1">
+            <Link to={LOGIN_ROUTER_PATH} className="text-dark text-opacity-75 ms-1">
               <b>Ingresar</b>
             </Link>
           </p>

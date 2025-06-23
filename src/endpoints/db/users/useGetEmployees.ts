@@ -10,7 +10,7 @@ import {
   onSnapshot
 } from 'firebase/firestore';
 import {db} from '@/firebase';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {DebugUtil, DateUtils} from '@/utils';
 import {
   Employee,
@@ -56,7 +56,7 @@ const useGetEmployees = () => {
     dispatch(setIsloadingUsers(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
-      unsubscribe = onSnapshot(query(collection(db, USUARIOS_PATH)), async (querySnapshotDocs) => {
+      unsubscribe = onSnapshot(query(collection(db, FIRESTORE_USUARIOS_PATH)), async (querySnapshotDocs) => {
         const employees: Employee[] = [];
         for (const doc of querySnapshotDocs.docs) {
           const {
@@ -141,7 +141,7 @@ const useGetEmployees = () => {
     dispatch(setIsloadingUsers(true));
     try {
       const employees: Employee[] = [];
-      const queryDocs = await getDocs(query(collection(db, USUARIOS_PATH)));
+      const queryDocs = await getDocs(query(collection(db, FIRESTORE_USUARIOS_PATH)));
       for (const doc of queryDocs.docs) {
         const {
           email,

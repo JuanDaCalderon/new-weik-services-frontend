@@ -1,3 +1,4 @@
+import {CLIENTES_PATH, NOTICIAS_PATH, OFICINA_PATH, USUARIOS_PATH} from '@/constants';
 import Root from '@/routes/Root';
 import {lazy} from 'react';
 import {Outlet, Route, Routes} from 'react-router-dom';
@@ -13,10 +14,10 @@ export default function Gestion() {
     <Routes>
       <Route path="/*" element={<Outlet />}>
         <Route index element={<Root />} />
-        <Route path="clientes" element={<Clientes />} />
-        <Route path="usuarios" element={<Usuarios />} />
-        <Route path="noticias" element={<Noticias />} />
-        <Route path="oficina/*" element={<Oficina />} />
+        <Route path={CLIENTES_PATH} element={<Clientes />} />
+        <Route path={USUARIOS_PATH} element={<Usuarios />} />
+        <Route path={NOTICIAS_PATH} element={<Noticias />} />
+        <Route path={`${OFICINA_PATH}/*`} element={<Oficina />} />
         <Route path="*" element={<Error404Alt />} />
       </Route>
     </Routes>

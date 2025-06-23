@@ -3,7 +3,7 @@ import {Card, Col, Container, Row, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {BGCircles, LanguageDropdown} from '@/components';
 import Logo from '@/assets/images/logo.png';
-import {DEFAULT_ROUTER_PATH, year} from '@/constants';
+import {LOGIN_ROUTER_PATH, year} from '@/constants';
 import config from '@/config';
 
 type AccountWrapperProps = {
@@ -21,8 +21,8 @@ function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
             <Col md={8} lg={6} xl={5} xxl={4}>
               <Card>
                 <Card.Header className="pt-3 pb-3 text-center bg-primary">
-                  <Link to={DEFAULT_ROUTER_PATH}>
-                    <Image className="w-50" fluid src={Logo} alt="weikstudio" loading="lazy" />
+                  <Link to={LOGIN_ROUTER_PATH}>
+                    <Image className="w-50" fluid src={Logo} alt="devikgo" loading="lazy" />
                   </Link>
                 </Card.Header>
                 <Card.Body>{children}</Card.Body>
@@ -36,7 +36,7 @@ function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
         </div>
       </div>
       <footer className="footer footer-alt">
-        {year} © DevikGo - devikgo.com - {config.APP_VERSION}
+        {year} © DevikGo - {config.APP_VERSION}
       </footer>
     </>
   );

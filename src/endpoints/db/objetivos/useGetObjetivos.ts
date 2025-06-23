@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useCallback} from 'react';
 import {DateUtils, DebugUtil} from '@/utils';
 import {clearObjetivos, isLoadingObjetivos, setObjetivos} from '@/store/slices/objetivos';
-import {OBJETIVOS_PATH} from '@/constants';
+import {FIRESTORE_OBJETIVOS_PATH} from '@/constants';
 import {Objetivos, ObjetivosToDb} from '@/types';
 
 export default function useGetObjetivos() {
@@ -37,7 +37,7 @@ export default function useGetObjetivos() {
   const getObjetivosSync = useCallback(async (): Promise<void> => {
     dispatch(isLoadingObjetivos(true));
     try {
-      const querySnapshotDocs = await getDocs(collection(db, OBJETIVOS_PATH));
+      const querySnapshotDocs = await getDocs(collection(db, FIRESTORE_OBJETIVOS_PATH));
       const objetivos: Objetivos[] = getObjetivos(querySnapshotDocs);
       dispatch(clearObjetivos());
       dispatch(setObjetivos(objetivos));
@@ -53,7 +53,7 @@ export default function useGetObjetivos() {
     dispatch(isLoadingObjetivos(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
-      unsubscribe = onSnapshot(collection(db, OBJETIVOS_PATH), async (querySnapshotDocs) => {
+      unsubscribe = onSnapshot(collection(db, FIRESTORE_OBJETIVOS_PATH), async (querySnapshotDocs) => {
         const objetivos: Objetivos[] = getObjetivos(querySnapshotDocs);
         dispatch(clearObjetivos());
         dispatch(setObjetivos(objetivos));

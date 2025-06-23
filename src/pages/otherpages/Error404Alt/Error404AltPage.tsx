@@ -20,7 +20,7 @@ const Error404AltPage = () => {
                   pequeño consejo que puede ayudarte a retomar el rumbo.
                 </p>
                 <Link className="btn btn-info mt-3" to="/" replace>
-                  <i className="mdi mdi-reply"></i> Regresar a weik services
+                  <i className="mdi mdi-reply"></i> Regresar a Devik Go
                 </Link>
               </div>
             </Col>

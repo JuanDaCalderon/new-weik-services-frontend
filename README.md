@@ -1,1 +1,1 @@
-# Weik Services Web App - React + TypeScript + Vite
+# Devik Go Web App - React + TypeScript + Vite

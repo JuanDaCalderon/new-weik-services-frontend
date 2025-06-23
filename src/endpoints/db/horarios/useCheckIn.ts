@@ -3,7 +3,7 @@ import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {useAppSelector} from '@/store';
 import {HorasTrabajoToFirestore} from '@/types';
-import {USUARIOS_PATH} from '@/constants';
+import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import toast from 'react-hot-toast';
 import {selectUser} from '@/store/selectores';
 import {DateUtils, DebugUtil} from '@/utils';
@@ -40,7 +40,7 @@ export default function useCheckIn() {
       const {horasTrabajo = []} = user;
       let updatedHorasTrabajo: HorasTrabajoToFirestore[];
       const dayExists = horasTrabajo.some((h) => h.dia === todayDate);
-      const userRef = doc(db, USUARIOS_PATH, user.id);
+      const userRef = doc(db, FIRESTORE_USUARIOS_PATH, user.id);
       if (dayExists) {
         updatedHorasTrabajo = horasTrabajo.map((h) =>
           h.dia === todayDate

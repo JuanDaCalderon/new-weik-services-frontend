@@ -3,15 +3,39 @@ import {Dropdown} from 'react-bootstrap';
 import classNames from 'classnames';
 import {useToggle} from '@/hooks';
 import {memo, useMemo} from 'react';
-import {profileMenus} from '@/constants';
+import {LOGOUT_ROUTER_PATH, PERFIL_ROUTER_PATH, PERMISOS_MAP_IDS, ROLES_ROUTER_PATH} from '@/constants';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {filterByPermissions, getNombreCompletoUser} from '@/utils';
+import {ProfileOption} from '@/types';
+import {useTranslation} from 'react-i18next';
 
 const ProfileDropdown = () => {
   const [isOpen, toggleDropdown] = useToggle();
   const user = useAppSelector(selectUser);
+  const {t} = useTranslation();
+
+  const profileMenus: ProfileOption[] = useMemo(() => {
+    return [
+      {
+        label: t('myAccount'),
+        icon: 'mdi mdi-account-circle',
+        redirectTo: PERFIL_ROUTER_PATH
+      },
+      {
+        label: t('RolesAndPermissions'),
+        icon: 'mdi mdi-account-edit',
+        redirectTo: ROLES_ROUTER_PATH,
+        permisoId: PERMISOS_MAP_IDS.accesoRoles
+      },
+      {
+        label: t('LogOut'),
+        icon: 'mdi mdi-logout',
+        redirectTo: LOGOUT_ROUTER_PATH
+      }
+    ];
+  }, [t]);
 
   const title: string = useMemo(() => {
     return getNombreCompletoUser(user);
@@ -24,7 +48,7 @@ const ProfileDropdown = () => {
 
   const profileMenuOptions = useMemo(() => {
     return filterByPermissions(profileMenus, user.roles, user.permisosOtorgados, user.permisosDenegados);
-  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+  }, [profileMenus, user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (
     <Dropdown show={isOpen} onToggle={toggleDropdown}>

@@ -3,7 +3,7 @@ import {addDoc, collection, Timestamp} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {OBJETIVOS_PATH} from '@/constants';
+import {FIRESTORE_OBJETIVOS_PATH} from '@/constants';
 import {OBJETIVO_STATUS, Objetivos, ObjetivosToDb} from '@/types';
 
 export default function useAddObjetivos() {
@@ -19,7 +19,7 @@ export default function useAddObjetivos() {
         status: OBJETIVO_STATUS.PENDIENTE,
         requiredSelfAssessment: objetivo.requiredSelfAssessment || false
       } as ObjetivosToDb;
-      await addDoc(collection(db, OBJETIVOS_PATH), objetivoToBd);
+      await addDoc(collection(db, FIRESTORE_OBJETIVOS_PATH), objetivoToBd);
       toast.success(`Has agregado un objetivo correctamente`);
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

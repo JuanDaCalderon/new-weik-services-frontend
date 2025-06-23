@@ -3,7 +3,7 @@ import {deleteDoc, doc, getDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {APPS_PATH} from '@/constants';
+import {FIRESTORE_APPS_PATH} from '@/constants';
 import useDeleteFile from '@/endpoints/db/utils/useDeleteFile';
 import {Apps} from '@/types';
 
@@ -14,7 +14,7 @@ export default function useDeleteApp() {
   const deleteApp = useCallback(
     async (appId: string): Promise<void> => {
       setIsDeletingApp(true);
-      const appRef = doc(db, APPS_PATH, appId);
+      const appRef = doc(db, FIRESTORE_APPS_PATH, appId);
       try {
         const appDoc = await getDoc(appRef);
         const appData = appDoc.data() as Apps;

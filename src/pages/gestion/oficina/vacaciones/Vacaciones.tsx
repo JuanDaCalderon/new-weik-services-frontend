@@ -13,7 +13,7 @@ import {useAddVacaciones, useApproveVacaciones, useUpdateVacaciones} from '@/end
 import {FormWrapper, OnlyLabel, SelectField} from '@/components/Form2';
 import {VacacionesType, Option, Employee} from '@/types';
 import {VACACIONESCREATEDVALUES, VACACIONESEDITVALUES} from './initialValues';
-import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS} from '@/constants';
+import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS} from '@/constants';
 import {Navigate} from 'react-router-dom';
 import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
@@ -274,7 +274,7 @@ const Vacaciones = memo(function Vacaciones() {
   }, [approveVacaciones, getEmployeesSync, hideApprover, vacacionesEdited, whoIsThisVacactions]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoVacaciones, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
-    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
+    return <Navigate to={HOME_ROUTER_PATH} replace />;
   }
 
   return (

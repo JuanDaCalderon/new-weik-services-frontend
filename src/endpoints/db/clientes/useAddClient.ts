@@ -4,7 +4,7 @@ import {useCallback, useState} from 'react';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
 import {Cliente} from '@/types';
-import {CLIENTES_PATH} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH} from '@/constants';
 
 export default function useAddClient() {
   const [isLoadingAddClient, setIsLoadingAddClient] = useState<boolean>(false);
@@ -12,7 +12,7 @@ export default function useAddClient() {
   const addClient = useCallback(async (cliente: Cliente): Promise<void> => {
     setIsLoadingAddClient(true);
     try {
-      await setDoc(doc(db, CLIENTES_PATH, cliente.domain), {
+      await setDoc(doc(db, FIRESTORE_CLIENTES_PATH, cliente.domain), {
         ...cliente,
         fechaCreacion: Timestamp.now()
       });

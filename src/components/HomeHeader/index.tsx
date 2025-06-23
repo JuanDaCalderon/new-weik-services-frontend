@@ -5,7 +5,7 @@ import {useAppSelector} from '@/store';
 import {getNombreCompletoUser} from '@/utils';
 import {SkeletonLoader} from '../SkeletonLoader';
 import {Link} from 'react-router-dom';
-import {PERFIL_MENU_KEY} from '@/constants';
+import {PERFIL_ROUTER_PATH} from '@/constants';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 
 const HomeHeader = () => {
@@ -26,11 +26,11 @@ const HomeHeader = () => {
         />
       </div>
       <h4 className="text-uppercase my-1">{userDomain}</h4>
-      <Link to={PERFIL_MENU_KEY} className="text-uppercase mb-1">
+      <Link to={PERFIL_ROUTER_PATH} className="text-uppercase mb-1">
         <i className="mdi mdi-email-outline me-1"></i>
         {user.email}
       </Link>
-      <Link to={PERFIL_MENU_KEY} className="text-uppercase mb-1">
+      <Link to={PERFIL_ROUTER_PATH} className="text-uppercase mb-1">
         <i className="mdi mdi-card-account-details-outline me-1"></i>
         {getNombreCompletoUser(user)}
       </Link>

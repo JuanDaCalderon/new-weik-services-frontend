@@ -13,7 +13,7 @@ const PageBreadcrumb = ({title, children}: PageTitleProps) => {
   return (
     <>
       <Helmet>
-        <title>{title} | Weik - Crafting your vision</title>
+        <title>{title} | Devik go - Va contigo</title>
       </Helmet>
       <Row>
         <Col>

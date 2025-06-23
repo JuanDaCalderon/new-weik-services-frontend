@@ -3,7 +3,7 @@ import {doc, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {OBJETIVOS_PATH} from '@/constants';
+import {FIRESTORE_OBJETIVOS_PATH} from '@/constants';
 import {ObjetivosToDb, SelfAssessment} from '@/types';
 
 export default function useSelfEvaluate() {
@@ -20,7 +20,7 @@ export default function useSelfEvaluate() {
             wasReviewed: selfAssessment.wasReviewed || false
           }
         };
-        const objetivoRef = doc(db, OBJETIVOS_PATH, objetivoId);
+        const objetivoRef = doc(db, FIRESTORE_OBJETIVOS_PATH, objetivoId);
         await updateDoc(objetivoRef, objetivoToBd);
         toast.success(`Se ha enviado la autoevaluación correctamente`);
       } catch (error: any) {

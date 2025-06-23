@@ -3,16 +3,16 @@ import HomeHeader from '@/components/HomeHeader';
 import {TableroNoticias} from '@/components/Noticias';
 import {ToastWrapper} from '@/components/Toast';
 import {
-  CLIENTES_MENU_KEY,
-  GESTION_CLIENTES_MENU_KEY,
-  GESTION_NOTICIAS_MENU_KEY,
-  GESTION_OFICINA_CALENDARIO_MENU_KEY,
-  GESTION_OFICINA_REPORTES_MENU_KEY,
-  GESTION_OFICINA_SOLICITUDES_MENU_KEY,
-  GESTION_OFICINA_VACACIONES_MENU_KEY,
-  GESTION_USUARIOS_MENU_KEY,
+  CLIENTES_ROUTER_PATH,
+  GESTION_CLIENTES_ROUTER_PATH,
+  GESTION_NOTICIAS_ROUTER_PATH,
+  GESTION_OFICINA_EVENTOS_ROUTER_PATH,
+  GESTION_OFICINA_HORARIOS_ROUTER_PATH,
+  GESTION_OFICINA_REPORTES_ROUTER_PATH,
+  GESTION_OFICINA_VACACIONES_ROUTER_PATH,
+  GESTION_USUARIOS_ROUTER_PATH,
   PERMISOS_MAP_IDS,
-  ROLESYPERMISOS_MENU_KEY,
+  ROLES_ROUTER_PATH,
   TABS_CLIENTES_CREAR,
   TABS_USUARIOS_CREAR
 } from '@/constants';
@@ -62,8 +62,12 @@ const Home = memo(function Home() {
     return hasPermission(PERMISOS_MAP_IDS.accesoNoticias, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
-  const canAccesoCalendario = useMemo(() => {
-    return hasPermission(PERMISOS_MAP_IDS.accesoCalendario, user.roles, user.permisosOtorgados, user.permisosDenegados);
+  const canAccesoHorarios = useMemo(() => {
+    return hasPermission(PERMISOS_MAP_IDS.accesoHorarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
+  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
+  const canAccesoEventos = useMemo(() => {
+    return hasPermission(PERMISOS_MAP_IDS.accesoEventos, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const canAccesoVacaciones = useMemo(() => {
@@ -72,15 +76,6 @@ const Home = memo(function Home() {
 
   const canAccesoReportes = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.accesoReportes, user.roles, user.permisosOtorgados, user.permisosDenegados);
-  }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
-
-  const canAccesoSolicitudes = useMemo(() => {
-    return hasPermission(
-      PERMISOS_MAP_IDS.accesoSolicitudes,
-      user.roles,
-      user.permisosOtorgados,
-      user.permisosDenegados
-    );
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   return (
@@ -107,7 +102,7 @@ const Home = memo(function Home() {
                     <Dropdown.Menu>
                       {clientes.map((cliente, index) => {
                         return (
-                          <Dropdown.Item as={Link} to={`${CLIENTES_MENU_KEY}/${cliente.domain}`} key={index}>
+                          <Dropdown.Item as={Link} to={`${CLIENTES_ROUTER_PATH}/${cliente.domain}`} key={index}>
                             {cliente.nombre}
                           </Dropdown.Item>
                         );
@@ -116,7 +111,7 @@ const Home = memo(function Home() {
                   </Dropdown>
                   {canCrearClientes && (
                     <Link
-                      to={`${GESTION_CLIENTES_MENU_KEY}?option=${TABS_CLIENTES_CREAR}`}
+                      to={`${GESTION_CLIENTES_ROUTER_PATH}?option=${TABS_CLIENTES_CREAR}`}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-account-multiple-plus" /> {t('home.crear_clients')}
@@ -124,7 +119,7 @@ const Home = memo(function Home() {
                   )}
                   {canCrearUsuarios && (
                     <Link
-                      to={`${GESTION_USUARIOS_MENU_KEY}?option=${TABS_USUARIOS_CREAR}`}
+                      to={`${GESTION_USUARIOS_ROUTER_PATH}?option=${TABS_USUARIOS_CREAR}`}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-account-box-multiple-outline" /> {t('home.crear_user')}
@@ -132,7 +127,7 @@ const Home = memo(function Home() {
                   )}
                   {canAccesoRoles && (
                     <Link
-                      to={ROLESYPERMISOS_MENU_KEY}
+                      to={ROLES_ROUTER_PATH}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-cog" /> {t('home.crear_roles_permisos')}
@@ -140,23 +135,31 @@ const Home = memo(function Home() {
                   )}
                   {canAccesoNoticias && (
                     <Link
-                      to={GESTION_NOTICIAS_MENU_KEY}
+                      to={GESTION_NOTICIAS_ROUTER_PATH}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-newspaper" /> {t('home.news')}
                     </Link>
                   )}
-                  {canAccesoCalendario && (
+                  {canAccesoHorarios && (
                     <Link
-                      to={GESTION_OFICINA_CALENDARIO_MENU_KEY}
+                      to={GESTION_OFICINA_HORARIOS_ROUTER_PATH}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-hours-24" /> {t('home.calendar')}
+                      <i className="mdi mdi-hours-24" /> {t('home.schedule')}
+                    </Link>
+                  )}
+                  {canAccesoEventos && (
+                    <Link
+                      to={GESTION_OFICINA_EVENTOS_ROUTER_PATH}
+                      type="button"
+                      className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
+                      <i className="mdi mdi-calendar-multiselect" /> {t('home.events')}
                     </Link>
                   )}
                   {canAccesoVacaciones && (
                     <Link
-                      to={GESTION_OFICINA_VACACIONES_MENU_KEY}
+                      to={GESTION_OFICINA_VACACIONES_ROUTER_PATH}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-beach" /> {t('home.vacations')}
@@ -164,18 +167,10 @@ const Home = memo(function Home() {
                   )}
                   {canAccesoReportes && (
                     <Link
-                      to={GESTION_OFICINA_REPORTES_MENU_KEY}
+                      to={GESTION_OFICINA_REPORTES_ROUTER_PATH}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-chart-bar-stacked" /> {t('home.reports')}
-                    </Link>
-                  )}
-                  {canAccesoSolicitudes && (
-                    <Link
-                      to={GESTION_OFICINA_SOLICITUDES_MENU_KEY}
-                      type="button"
-                      className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
-                      <i className="mdi mdi-file-document-edit-outline" /> {t('home.requests')}
                     </Link>
                   )}
                 </Col>

@@ -2,7 +2,7 @@ import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {DebugUtil} from '@/utils';
 import {addDoc, collection, Timestamp} from 'firebase/firestore';
-import {CLIENTES_PATH} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH} from '@/constants';
 import toast from 'react-hot-toast';
 import {RegistrosToDb, RegistrosToBecreated} from '@/types';
 import {useAppSelector} from '@/store';
@@ -30,7 +30,7 @@ const useAddRegistros = () => {
             createdBy: comment.createdBy || id
           }))
         };
-        await addDoc(collection(db, `${CLIENTES_PATH}/${cliente}/${tipo}`), registroToAdd);
+        await addDoc(collection(db, `${FIRESTORE_CLIENTES_PATH}/${cliente}/${tipo}`), registroToAdd);
         toast.success(`Has agregado un registro correctamente`);
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

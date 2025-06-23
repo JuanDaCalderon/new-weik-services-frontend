@@ -6,7 +6,7 @@ import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
 import {hasPermission} from '@/utils';
-import {DEFAULT_HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_USUARIOS_CREAR, TABS_USUARIOS_LISTA} from '@/constants';
+import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_USUARIOS_CREAR, TABS_USUARIOS_LISTA} from '@/constants';
 import {Link, Navigate, useLocation} from 'react-router-dom';
 import {ListaUsuarios} from './ListaUsuarios';
 import {ToastWrapper} from '@/components/Toast';
@@ -32,7 +32,7 @@ const Usuarios = memo(function Usuarios() {
   }, [canCrearUsuarios]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
-    return <Navigate to={DEFAULT_HOME_ROUTER_PATH} replace />;
+    return <Navigate to={HOME_ROUTER_PATH} replace />;
   }
 
   return (

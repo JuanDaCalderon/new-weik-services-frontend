@@ -3,7 +3,7 @@ import {addDoc, collection} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {APPS_PATH} from '@/constants';
+import {FIRESTORE_APPS_PATH} from '@/constants';
 import {Apps, AppsToDb} from '@/types';
 
 export default function useAddApp() {
@@ -13,7 +13,7 @@ export default function useAddApp() {
     setIsSavingApp(true);
     try {
       const appToBd: AppsToDb = {...app};
-      await addDoc(collection(db, APPS_PATH), appToBd);
+      await addDoc(collection(db, FIRESTORE_APPS_PATH), appToBd);
       toast.success(`Has agregado un acceso directo`);
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
