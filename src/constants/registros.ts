@@ -1,5 +1,12 @@
 import {RegistrosFilterMode} from '@/types';
 
+export enum CUSTOM_FIELD_TYPE {
+  STRING = 'string',
+  NUMBER = 'number',
+  BOOLEAN = 'boolean',
+  SELECT = 'select'
+}
+
 export enum REGISTRO_ASSIGNMENT {
   SINASIGNAR = 'SINASIGNAR',
   ASIGNADO = 'ASIGNADO'

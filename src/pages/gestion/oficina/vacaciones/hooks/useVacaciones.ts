@@ -5,7 +5,7 @@ import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/sel
 import {useGetEmployees} from '@/endpoints';
 import {VacacionesType} from '@/types';
 import {DateUtils, getStatus, hasPermission} from '@/utils';
-import {EVENTTYPES, PERMISOS_MAP_IDS} from '@/constants';
+import {PERMISOS_MAP_IDS} from '@/constants';
 
 export default function useVacaciones() {
   const user = useAppSelector(selectUser);
@@ -52,7 +52,7 @@ export default function useVacaciones() {
       const canIApproveIt = approver === user.id && aprobadas === null;
       const approvalIndicator = getApprovalIndicator(canIApproveIt, aprobadas, isMyVacations);
       return {
-        id: `${EVENTTYPES.vacaciones}-${id}-${index}`,
+        id: `vacaciones-${id}-${index}`,
         title: `${isMyVacations ? 'Mis vacaciones' : 'Vacaciones de'} ${email} - ${statusCopy} ${approvalIndicator}`,
         className: status,
         start: DateUtils.parseStringToDate(rangoFechas[0]),

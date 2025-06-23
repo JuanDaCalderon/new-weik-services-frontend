@@ -1,11 +1,11 @@
 import {
-  SESSION_APPS_KEY,
-  SESSION_CLIENTES_KEY,
-  SESSION_EVENTOS_KEY,
-  SESSION_NOTICIAS_KEY,
-  SESSION_OBJETIVOS_KEY,
-  SESSION_PERMISOS_KEY,
-  SESSION_ROLES_KEY,
+  APPS_NAME,
+  CLIENTES_NAME,
+  EVENTOS_NAME,
+  NOTICIAS_NAME,
+  OBJETIVOS_NAME,
+  PERMISOS_NAME,
+  ROLES_NAME,
   USER_DOMAIN,
   USER_NAME
 } from '@/constants';
@@ -72,13 +72,13 @@ export const userSlice = createSlice({
     logOutUser: (state: PayLoadUserType) => {
       LocalStorageUtil.removeItem(USER_NAME);
       LocalStorageUtil.removeItem(USER_DOMAIN);
-      SessionStorageUtil.removeItem(SESSION_APPS_KEY);
-      SessionStorageUtil.removeItem(SESSION_CLIENTES_KEY);
-      SessionStorageUtil.removeItem(SESSION_EVENTOS_KEY);
-      SessionStorageUtil.removeItem(SESSION_NOTICIAS_KEY);
-      SessionStorageUtil.removeItem(SESSION_OBJETIVOS_KEY);
-      SessionStorageUtil.removeItem(SESSION_PERMISOS_KEY);
-      SessionStorageUtil.removeItem(SESSION_ROLES_KEY);
+      SessionStorageUtil.removeItem(APPS_NAME);
+      SessionStorageUtil.removeItem(CLIENTES_NAME);
+      SessionStorageUtil.removeItem(EVENTOS_NAME);
+      SessionStorageUtil.removeItem(NOTICIAS_NAME);
+      SessionStorageUtil.removeItem(OBJETIVOS_NAME);
+      SessionStorageUtil.removeItem(PERMISOS_NAME);
+      SessionStorageUtil.removeItem(ROLES_NAME);
       SessionStorageUtil.removeItem(USER_NAME);
       SessionStorageUtil.removeItem(USER_DOMAIN);
       state.user = {} as User;

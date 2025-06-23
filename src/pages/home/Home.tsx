@@ -13,8 +13,8 @@ import {
   GESTION_USUARIOS_ROUTER_PATH,
   PERMISOS_MAP_IDS,
   ROLES_ROUTER_PATH,
-  TABS_CLIENTES_CREAR,
-  TABS_USUARIOS_CREAR
+  TABS_CLIENTES_ID_CREAR,
+  TABS_USUARIOS_ID_CREAR
 } from '@/constants';
 import {useGetClients, useRolesYPermisos} from '@/endpoints';
 import {useAppSelector} from '@/store';
@@ -111,7 +111,7 @@ const Home = memo(function Home() {
                   </Dropdown>
                   {canCrearClientes && (
                     <Link
-                      to={`${GESTION_CLIENTES_ROUTER_PATH}?option=${TABS_CLIENTES_CREAR}`}
+                      to={`${GESTION_CLIENTES_ROUTER_PATH}?option=${TABS_CLIENTES_ID_CREAR}`}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-account-multiple-plus" /> {t('home.crear_clients')}
@@ -119,7 +119,7 @@ const Home = memo(function Home() {
                   )}
                   {canCrearUsuarios && (
                     <Link
-                      to={`${GESTION_USUARIOS_ROUTER_PATH}?option=${TABS_USUARIOS_CREAR}`}
+                      to={`${GESTION_USUARIOS_ROUTER_PATH}?option=${TABS_USUARIOS_ID_CREAR}`}
                       type="button"
                       className="btn btn-sm btn-dark d-flex align-items-center justify-content-center">
                       <i className="mdi mdi-account-box-multiple-outline" /> {t('home.crear_user')}

@@ -1,10 +1,10 @@
-import {NOTICIAS_NAME, SESSION_NOTICIAS_KEY} from '@/constants';
+import {NOTICIAS_NAME} from '@/constants';
 import {Noticia, PayLoadNoticiasType} from '@/types';
 import {SessionStorageUtil} from '@/utils';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: PayLoadNoticiasType = {
-  noticias: SessionStorageUtil.getItem<Noticia[]>(SESSION_NOTICIAS_KEY) ?? ([] as Noticia[]),
+  noticias: SessionStorageUtil.getItem<Noticia[]>(NOTICIAS_NAME) ?? ([] as Noticia[]),
   isLoading: false
 };
 
@@ -13,11 +13,11 @@ export const noticiasSlice = createSlice({
   initialState,
   reducers: {
     setNoticias: (state: PayLoadNoticiasType, action: PayloadAction<Noticia[]>) => {
-      if (action.payload.length > 0) SessionStorageUtil.setItem<Noticia[]>(SESSION_NOTICIAS_KEY, action.payload);
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Noticia[]>(NOTICIAS_NAME, action.payload);
       state.noticias = action.payload;
     },
     clearNoticias: (state: PayLoadNoticiasType) => {
-      SessionStorageUtil.removeItem(SESSION_NOTICIAS_KEY);
+      SessionStorageUtil.removeItem(NOTICIAS_NAME);
       state.noticias = [];
     },
     isLoadingNoticias: (state: PayLoadNoticiasType, action: PayloadAction<boolean>) => {

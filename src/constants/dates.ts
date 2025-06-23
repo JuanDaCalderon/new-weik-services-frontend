@@ -1,5 +1,5 @@
 /** Months of the year with Index started in 0 and the name in spanish */
-const months: {index: number; name: string}[] = [
+export const months: {index: number; name: string}[] = [
   {index: 0, name: 'Enero'},
   {index: 1, name: 'Febrero'},
   {index: 2, name: 'Marzo'},
@@ -13,6 +13,6 @@ const months: {index: number; name: string}[] = [
   {index: 10, name: 'Noviembre'},
   {index: 11, name: 'Diciembre'}
 ];
+
 /** Current year in number */
-const year: number = new Date().getFullYear();
-export {months, year};
+export const year: number = new Date().getFullYear();

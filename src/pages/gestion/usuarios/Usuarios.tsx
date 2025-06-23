@@ -6,30 +6,34 @@ import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {CrearUsuarios} from '@/pages/gestion/usuarios/CrearUsuarios';
 import {hasPermission} from '@/utils';
-import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_USUARIOS_CREAR, TABS_USUARIOS_LISTA} from '@/constants';
+import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_USUARIOS_ID_CREAR, TABS_USUARIOS_ID_LISTA} from '@/constants';
 import {Link, Navigate, useLocation} from 'react-router-dom';
 import {ListaUsuarios} from './ListaUsuarios';
 import {ToastWrapper} from '@/components/Toast';
-
-const tabContents: TabContentItem[] = [
-  {id: TABS_USUARIOS_CREAR, title: TABS_USUARIOS_CREAR},
-  {id: TABS_USUARIOS_LISTA, title: TABS_USUARIOS_LISTA}
-];
+import {useTranslation} from 'react-i18next';
 
 const Usuarios = memo(function Usuarios() {
   const {search} = useLocation();
+  const {t} = useTranslation();
   const queryParams = new URLSearchParams(search);
-  const tabOption = queryParams.get('option') || TABS_USUARIOS_LISTA;
+  const tabOption = queryParams.get('option') || TABS_USUARIOS_ID_LISTA;
   const user = useAppSelector(selectUser);
+
+  const tabContents: TabContentItem[] = useMemo(() => {
+    return [
+      {id: TABS_USUARIOS_ID_CREAR, title: t('gestion.usuarios.crear')},
+      {id: TABS_USUARIOS_ID_LISTA, title: t('gestion.usuarios.lista')}
+    ];
+  }, [t]);
 
   const canCrearUsuarios = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.crearUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const listContentOptions: TabContentItem[] = useMemo(() => {
-    if (!canCrearUsuarios) return tabContents.filter((tab) => tab.id !== TABS_USUARIOS_CREAR);
+    if (!canCrearUsuarios) return tabContents.filter((tab) => tab.id !== TABS_USUARIOS_ID_CREAR);
     else return tabContents;
-  }, [canCrearUsuarios]);
+  }, [canCrearUsuarios, tabContents]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={HOME_ROUTER_PATH} replace />;
@@ -59,8 +63,8 @@ const Usuarios = memo(function Usuarios() {
                     <Tab.Pane eventKey={tab.id} key={index}>
                       <Row>
                         <Col sm={12}>
-                          {tab.id === TABS_USUARIOS_CREAR && <CrearUsuarios />}
-                          {tab.id === TABS_USUARIOS_LISTA && <ListaUsuarios />}
+                          {tab.id === TABS_USUARIOS_ID_CREAR && <CrearUsuarios />}
+                          {tab.id === TABS_USUARIOS_ID_LISTA && <ListaUsuarios />}
                         </Col>
                       </Row>
                     </Tab.Pane>

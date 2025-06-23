@@ -1,11 +1,11 @@
-import {APPS_NAME, SESSION_APPS_KEY} from '@/constants';
+import {APPS_NAME} from '@/constants';
 import {Apps, PayLoadAppsType} from '@/types';
 import {SessionStorageUtil} from '@/utils';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: PayLoadAppsType = {
-  apps: SessionStorageUtil.getItem<Apps[]>(SESSION_APPS_KEY) ?? ([] as Apps[]),
+  apps: SessionStorageUtil.getItem<Apps[]>(APPS_NAME) ?? ([] as Apps[]),
   isLoading: false
 };
 
@@ -14,11 +14,11 @@ export const appsSlice = createSlice({
   initialState,
   reducers: {
     setApps: (state: PayLoadAppsType, action: PayloadAction<Apps[]>) => {
-      if (action.payload.length > 0) SessionStorageUtil.setItem<Apps[]>(SESSION_APPS_KEY, action.payload);
+      if (action.payload.length > 0) SessionStorageUtil.setItem<Apps[]>(APPS_NAME, action.payload);
       state.apps = action.payload;
     },
     clearApps: (state: PayLoadAppsType) => {
-      SessionStorageUtil.removeItem(SESSION_APPS_KEY);
+      SessionStorageUtil.removeItem(APPS_NAME);
       state.apps = [];
     },
     isLoadingApps: (state: PayLoadAppsType, action: PayloadAction<boolean>) => {

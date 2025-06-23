@@ -1,24 +1,38 @@
+import {
+  APPS_KEY,
+  CLIENTES_KEY,
+  EVENTOS_KEY,
+  HORARIOS_KEY,
+  NOTICIAS_KEY,
+  OBJETIVOS_KEY,
+  REGISTROS_KEY,
+  REPORTES_KEY,
+  ROLES_KEY,
+  USUARIOS_KEY,
+  VACACIONES_KEY
+} from './keys';
+
 /* CRUD CATEGORIES */
-export const ACCESO_CATEGORY_KEY = 'acceso';
-export const CREAR_CATEGORY_KEY = 'crear';
-export const EDITAR_CATEGORY_KEY = 'editar';
-export const ELIMINAR_CATEGORY_KEY = 'eliminar';
-export const INACTIVAR_CATEGORY_KEY = 'inactivar';
-export const APROBAR_CATEGORY_KEY = 'aprobar';
-export const ASIGNAR_CATEGORY_KEY = 'asignar';
-export const EVALUAR_CATEGORY_KEY = 'evaluar';
+const ACCESO_CATEGORY_KEY = 'acceso';
+const CREAR_CATEGORY_KEY = 'crear';
+const EDITAR_CATEGORY_KEY = 'editar';
+const ELIMINAR_CATEGORY_KEY = 'eliminar';
+const INACTIVAR_CATEGORY_KEY = 'inactivar';
+const APROBAR_CATEGORY_KEY = 'aprobar';
+const ASIGNAR_CATEGORY_KEY = 'asignar';
+const EVALUAR_CATEGORY_KEY = 'evaluar';
 /* FUNCTIONS SUBCATEGORIES */
-export const USUARIOS_SUBCATEGORY_KEY = 'usuarios';
-export const CLIENTES_SUBCATEGORY_KEY = 'clientes';
-export const NOTICIAS_SUBCATEGORY_KEY = 'noticias';
-export const APPS_SUBCATEGORY_KEY = 'apps';
-export const ROLES_SUBCATEGORY_KEY = 'roles';
-export const EVENTOS_SUBCATEGORY_KEY = 'eventos';
-export const HORARIOS_SUBCATEGORY_KEY = 'horarios';
-export const VACACIONES_SUBCATEGORY_KEY = 'vacaciones';
-export const REPORTES_SUBCATEGORY_KEY = 'reportes';
-export const OBJETIVOS_SUBCATEGORY_KEY = 'objetivos';
-export const REGISTROS_SUBCATEGORY_KEY = 'registros';
+const USUARIOS_SUBCATEGORY_KEY = USUARIOS_KEY;
+const CLIENTES_SUBCATEGORY_KEY = CLIENTES_KEY;
+const NOTICIAS_SUBCATEGORY_KEY = NOTICIAS_KEY;
+const APPS_SUBCATEGORY_KEY = APPS_KEY;
+const ROLES_SUBCATEGORY_KEY = ROLES_KEY;
+const EVENTOS_SUBCATEGORY_KEY = EVENTOS_KEY;
+const REPORTES_SUBCATEGORY_KEY = REPORTES_KEY;
+const OBJETIVOS_SUBCATEGORY_KEY = OBJETIVOS_KEY;
+const REGISTROS_SUBCATEGORY_KEY = REGISTROS_KEY;
+const HORARIOS_SUBCATEGORY_KEY = HORARIOS_KEY;
+const VACACIONES_SUBCATEGORY_KEY = VACACIONES_KEY;
 
 export const PERMISOS_MAP_IDS = {
   /* DE ACCESO */

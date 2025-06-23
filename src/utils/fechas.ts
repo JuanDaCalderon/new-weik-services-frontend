@@ -1,18 +1,6 @@
+import {months} from '@/constants';
 const START_HOUR = 6;
-const monthNames = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Mayo',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Noviembre',
-  'Diciembre'
-];
+const monthNames = months.map((m) => m.name);
 class DateUtils {
   /**
    * Convierte un Date a formato 'YYYY/MM/DD, HH:MM:SS GMT-Z'
@@ -327,5 +315,4 @@ class DateUtils {
     );
   }
 }
-
 export {DateUtils};

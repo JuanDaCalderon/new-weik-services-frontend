@@ -8,7 +8,7 @@ import {
   ROLES_PERMISOS_NAME,
   SELECTED_ROW_NAME,
   USER_NAME,
-  USERS_NAME,
+  USUARIOS_NAME,
   UTILITIES_NAME
 } from '@/constants';
 import {dedupeUsersMiddleware} from '@/store/middlewares/dedupeUsersMiddleware';
@@ -29,7 +29,7 @@ import {dedupeRegistrosMiddleware} from './middlewares';
 
 const rootReducer = combineReducers({
   [USER_NAME]: userReducer,
-  [USERS_NAME]: usersSlice,
+  [USUARIOS_NAME]: usersSlice,
   [ROLES_PERMISOS_NAME]: rolesPermisosSlice,
   [CLIENTES_NAME]: clientesSlice,
   [NOTICIAS_NAME]: noticiasSlice,

@@ -6,31 +6,35 @@ import {useAppSelector} from '@/store';
 import {selectUser} from '@/store/selectores';
 import {CrearCliente} from '@/pages/gestion/clientes/CrearCliente';
 import {hasPermission} from '@/utils';
-import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_CLIENTES_CREAR, TABS_CLIENTES_LISTA} from '@/constants';
+import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS, TABS_CLIENTES_ID_CREAR, TABS_CLIENTES_ID_LISTA} from '@/constants';
 import {Link, Navigate} from 'react-router-dom';
 import {ListaClientes} from './ListaClientes';
 import {ToastWrapper} from '@/components/Toast';
 import {useLocation} from 'react-router-dom';
-
-const tabContents: TabContentItem[] = [
-  {id: TABS_CLIENTES_CREAR, title: TABS_CLIENTES_CREAR},
-  {id: TABS_CLIENTES_LISTA, title: TABS_CLIENTES_LISTA}
-];
+import {useTranslation} from 'react-i18next';
 
 const Clientes = memo(function Clientes() {
   const {search} = useLocation();
   const queryParams = new URLSearchParams(search);
-  const tabOption = queryParams.get('option') || TABS_CLIENTES_LISTA;
+  const tabOption = queryParams.get('option') || TABS_CLIENTES_ID_LISTA;
   const user = useAppSelector(selectUser);
+  const {t} = useTranslation();
+
+  const tabContents: TabContentItem[] = useMemo(() => {
+    return [
+      {id: TABS_CLIENTES_ID_CREAR, title: t('gestion.clientes.crear')},
+      {id: TABS_CLIENTES_ID_LISTA, title: t('gestion.clientes.lista')}
+    ];
+  }, [t]);
 
   const canCrearClientes = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.crearClientes, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
   const listContentOptions: TabContentItem[] = useMemo(() => {
-    if (!canCrearClientes) return tabContents.filter((tab) => tab.id !== TABS_CLIENTES_CREAR);
+    if (!canCrearClientes) return tabContents.filter((tab) => tab.id !== TABS_CLIENTES_ID_CREAR);
     else return tabContents;
-  }, [canCrearClientes]);
+  }, [canCrearClientes, tabContents]);
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoClientes, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={HOME_ROUTER_PATH} replace />;
@@ -60,8 +64,8 @@ const Clientes = memo(function Clientes() {
                     <Tab.Pane eventKey={tab.id} key={index}>
                       <Row>
                         <Col sm={12}>
-                          {tab.id === TABS_CLIENTES_CREAR && <CrearCliente />}
-                          {tab.id === TABS_CLIENTES_LISTA && <ListaClientes />}
+                          {tab.id === TABS_CLIENTES_ID_CREAR && <CrearCliente />}
+                          {tab.id === TABS_CLIENTES_ID_LISTA && <ListaClientes />}
                         </Col>
                       </Row>
                     </Tab.Pane>

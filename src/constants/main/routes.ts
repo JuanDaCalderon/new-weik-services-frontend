@@ -1,3 +1,18 @@
+import {
+  CLIENTE_QUERY_PARAM_KEY,
+  CLIENTES_KEY,
+  EMAIL_QUERY_PARAM_KEY,
+  EVENTOS_KEY,
+  GESTION_KEY,
+  HORARIOS_KEY,
+  NOTICIAS_KEY,
+  OFICINA_KEY,
+  REPORTES_KEY,
+  ROLES_KEY,
+  USUARIOS_KEY,
+  VACACIONES_KEY
+} from './keys';
+
 /* ROOT PATHS */
 export const ROOT = '/';
 export const HOME_PATH = 'home';
@@ -11,18 +26,18 @@ export const CONFIRM_PATH = 'confirm';
 export const NOTFOUND_PATH = 'notFound';
 export const INTERNAL_PATH = 'internal';
 export const PERFIL_PATH = 'perfil';
-export const ROLES_PATH = 'roles';
-export const GESTION_PATH = 'gestion';
-export const USUARIOS_PATH = 'usuarios';
-export const CLIENTES_PATH = 'clientes';
-export const NOTICIAS_PATH = 'noticias';
-export const OFICINA_PATH = 'oficina';
-export const EVENTOS_PATH = 'eventos';
-export const HORARIOS_PATH = 'horarios';
-export const VACACIONES_PATH = 'vacaciones';
-export const REPORTES_PATH = 'reportes';
-export const EMAIL_RECOVERY_QUERY_PARAM = 'email';
-export const CLIENTE_QUERY_PARAM = 'cliente';
+export const ROLES_PATH = ROLES_KEY;
+export const USUARIOS_PATH = USUARIOS_KEY;
+export const CLIENTES_PATH = CLIENTES_KEY;
+export const NOTICIAS_PATH = NOTICIAS_KEY;
+export const EVENTOS_PATH = EVENTOS_KEY;
+export const REPORTES_PATH = REPORTES_KEY;
+export const GESTION_PATH = GESTION_KEY;
+export const OFICINA_PATH = OFICINA_KEY;
+export const HORARIOS_PATH = HORARIOS_KEY;
+export const VACACIONES_PATH = VACACIONES_KEY;
+export const EMAIL_RECOVERY_QUERY_PARAM = EMAIL_QUERY_PARAM_KEY;
+export const CLIENTE_QUERY_PARAM = CLIENTE_QUERY_PARAM_KEY;
 
 /* MAIN ROUTER PATHS */
 export const HOME_ROUTER_PATH = `${ROOT}${HOME_PATH}`;
