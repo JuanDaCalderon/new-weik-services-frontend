@@ -26,9 +26,7 @@ const Objetivos = memo(function Objetivos({users = []}: {users: Employee[]}) {
   const {getObjetivosSync} = useGetObjetivos();
   const {show, isOpen, toggle} = useTogglev2();
   const {addObjetivo, isSavingObjetivo} = useAddObjetivos();
-  useEffect(() => {
-    if (objetivos.length <= 0) getObjetivosSync();
-  }, [getObjetivosSync, objetivos.length]);
+
   useEffect(() => {
     if (users.length > 0) {
       setusersFiltered(users);
@@ -37,11 +35,14 @@ const Objetivos = memo(function Objetivos({users = []}: {users: Employee[]}) {
       setSelectedUser(userFound ?? users[0]);
     }
   }, [users]);
+
   const search = useCallback((text: string) => setusersFiltered(filterUsers(users, text)), [users]);
+
   const handleUserSelection = (u: Employee) => {
     setSelectedUser(u);
     SessionStorageUtil.setItem(SESSIONSTORAGE_OBJETIVOS_USER_SELECTED_KEY, u.id);
   };
+
   const onSendObjetivo = useCallback(async () => {
     if (dateRange[0] === null || dateRange[1] === null) {
       toast.error('Por favor selecciona un rango de fechas');
@@ -68,6 +69,7 @@ const Objetivos = memo(function Objetivos({users = []}: {users: Employee[]}) {
     toggle();
     await getObjetivosSync();
   }, [addObjetivo, dateRange, getObjetivosSync, nuevoObjetivo, objetivos, selectedUser, toggle]);
+
   const objetivosPerUser = useMemo(() => {
     if (selectedUser) return objetivos.filter((o) => o.userId === selectedUser.id);
     return [];

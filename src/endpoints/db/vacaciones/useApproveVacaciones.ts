@@ -1,7 +1,6 @@
-import {doc, getDoc, updateDoc} from 'firebase/firestore';
+import {doc, updateDoc} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {FIRESTORE_USUARIOS_PATH} from '@/constants';
-import {VacacionesTypeToFirestore} from '@/types';
+import {FIRESTORE_VACACIONES_PATH} from '@/constants';
 import {DebugUtil} from '@/utils';
 import {db} from '@/firebase';
 import toast from 'react-hot-toast';
@@ -9,38 +8,19 @@ import toast from 'react-hot-toast';
 export default function useApproveVacaciones() {
   const [isLoadingApproveVacaciones, setIsLoadingApproveVacaciones] = useState<boolean>(false);
 
-  const approveVacaciones = useCallback(
-    async (userId: string, vacacionesUuid: string, aprobadas: boolean): Promise<void> => {
-      setIsLoadingApproveVacaciones(true);
-      try {
-        const userRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
-        const snapshot = await getDoc(userRef);
-        if (!snapshot.exists()) {
-          toast.error('Usuario no encontrado');
-          return;
-        }
-        const data = snapshot.data();
-        const vacaciones: VacacionesTypeToFirestore[] = data.vacaciones ?? [];
-        const newVacaciones = vacaciones.map((v) => {
-          if (v.uuid === vacacionesUuid) {
-            return {
-              ...v,
-              aprobadas: aprobadas
-            };
-          }
-          return v;
-        });
-        await updateDoc(userRef, {vacaciones: newVacaciones});
-        toast.success(`Vacaciones ${aprobadas ? 'aprobadas' : 'denegadas'} correctamente`);
-      } catch (error: any) {
-        toast.error('Error al aprobar o denegar las vacaciones, intenta de nuevo más tarde.');
-        DebugUtil.logError(error.message, error);
-      } finally {
-        setIsLoadingApproveVacaciones(false);
-      }
-    },
-    []
-  );
+  const approveVacaciones = useCallback(async (vacacionesId: string, aprobadas: boolean): Promise<void> => {
+    setIsLoadingApproveVacaciones(true);
+    try {
+      const vacationRef = doc(db, FIRESTORE_VACACIONES_PATH, vacacionesId);
+      await updateDoc(vacationRef, {aprobadas});
+      toast.success(`Vacaciones ${aprobadas ? 'aprobadas' : 'denegadas'} correctamente`);
+    } catch (error: any) {
+      toast.error('Error al aprobar o denegar las vacaciones, intenta de nuevo más tarde.');
+      DebugUtil.logError(error.message, error);
+    } finally {
+      setIsLoadingApproveVacaciones(false);
+    }
+  }, []);
 
   return {
     isLoadingApproveVacaciones,

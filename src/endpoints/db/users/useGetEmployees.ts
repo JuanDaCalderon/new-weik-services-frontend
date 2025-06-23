@@ -12,14 +12,7 @@ import {
 import {db} from '@/firebase';
 import {FIRESTORE_USUARIOS_PATH} from '@/constants';
 import {DebugUtil, DateUtils} from '@/utils';
-import {
-  Employee,
-  HorarioTypeToFirestore,
-  HorasTrabajoToFirestore,
-  Permiso,
-  Rol,
-  VacacionesTypeToFirestore
-} from '@/types';
+import {Employee, HorasTrabajoToFirestore, Permiso, Rol} from '@/types';
 import {useDispatch} from 'react-redux';
 import {setUsers, clearUsers, setIsloadingUsers} from '@/store/slices/users';
 
@@ -74,9 +67,7 @@ const useGetEmployees = () => {
             roles,
             permisosOtorgados,
             permisosDenegados,
-            horario,
             horasTrabajo,
-            vacaciones,
             informacionLaboral
           } = doc.data();
           const thisRoles = getRoles(roles);
@@ -102,23 +93,13 @@ const useGetEmployees = () => {
             roles: thisRoles ? await Promise.all(thisRoles) : [],
             permisosOtorgados: thisPermisosOtorgados ? await Promise.all(thisPermisosOtorgados) : [],
             permisosDenegados: thisPermisosDenegados ? await Promise.all(thisPermisosDenegados) : [],
-            horario:
-              ((horario as HorarioTypeToFirestore[]) || []).map((h) => ({
-                ...h,
-                rangoFechas: h.rangoFechas.map((rango) => DateUtils.formatDateToString(rango.toDate()))
-              })) ?? [],
             horasTrabajo:
               ((horasTrabajo as HorasTrabajoToFirestore[]) || []).map((h) => ({
                 ...h,
                 checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
                 checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
               })) ?? [],
-            informacionLaboral: informacionLaboral ?? [],
-            vacaciones:
-              ((vacaciones as VacacionesTypeToFirestore[]) || []).map((v) => ({
-                ...v,
-                rangoFechas: v.rangoFechas.map((rango) => DateUtils.formatDateToString(rango.toDate()))
-              })) ?? []
+            informacionLaboral: informacionLaboral ?? []
           };
           employees.push(employee);
         }
@@ -158,9 +139,7 @@ const useGetEmployees = () => {
           roles,
           permisosOtorgados,
           permisosDenegados,
-          horario,
           horasTrabajo,
-          vacaciones,
           informacionLaboral
         } = doc.data();
         const thisRoles = getRoles(roles);
@@ -186,23 +165,13 @@ const useGetEmployees = () => {
           roles: thisRoles ? await Promise.all(thisRoles) : [],
           permisosOtorgados: thisPermisosOtorgados ? await Promise.all(thisPermisosOtorgados) : [],
           permisosDenegados: thisPermisosDenegados ? await Promise.all(thisPermisosDenegados) : [],
-          horario:
-            ((horario as HorarioTypeToFirestore[]) || []).map((h) => ({
-              ...h,
-              rangoFechas: h.rangoFechas.map((rango) => DateUtils.formatDateToString(rango.toDate()))
-            })) ?? [],
           horasTrabajo:
             ((horasTrabajo as HorasTrabajoToFirestore[]) || []).map((h) => ({
               ...h,
               checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
               checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
             })) ?? [],
-          informacionLaboral: informacionLaboral ?? [],
-          vacaciones:
-            ((vacaciones as VacacionesTypeToFirestore[]) || []).map((v) => ({
-              ...v,
-              rangoFechas: v.rangoFechas.map((rango) => DateUtils.formatDateToString(rango.toDate()))
-            })) ?? []
+          informacionLaboral: informacionLaboral ?? []
         };
         employees.push(employee);
       }

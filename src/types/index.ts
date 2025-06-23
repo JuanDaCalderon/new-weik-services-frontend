@@ -16,3 +16,5 @@ export * from './objetivos';
 export * from './registros';
 export * from './registrosProps';
 export * from './rows';
+export * from './horarios';
+export * from './vacaciones';

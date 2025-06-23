@@ -2,6 +2,7 @@ import {
   APPS_NAME,
   CLIENTES_NAME,
   EVENTOS_NAME,
+  HORARIOS_NAME,
   NOTICIAS_NAME,
   OBJETIVOS_NAME,
   REGISTROS_NAME,
@@ -9,7 +10,8 @@ import {
   SELECTED_ROW_NAME,
   USER_NAME,
   USUARIOS_NAME,
-  UTILITIES_NAME
+  UTILITIES_NAME,
+  VACACIONES_NAME
 } from '@/constants';
 import {dedupeUsersMiddleware} from '@/store/middlewares/dedupeUsersMiddleware';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
@@ -21,6 +23,8 @@ import usersSlice from '@/store/slices/users';
 import noticiasSlice from '@/store/slices/noticias';
 import appsSlice from '@/store/slices/apps';
 import eventosSlice from '@/store/slices/eventos';
+import horariosSlice from '@/store/slices/horarios';
+import vacacionesSlice from '@/store/slices/vacaciones';
 import objetivosSlice from '@/store/slices/objetivos';
 import registrosSlice from '@/store/slices/registros';
 import utilitiesSlice from '@/store/slices/utilities';
@@ -35,6 +39,8 @@ const rootReducer = combineReducers({
   [NOTICIAS_NAME]: noticiasSlice,
   [APPS_NAME]: appsSlice,
   [EVENTOS_NAME]: eventosSlice,
+  [HORARIOS_NAME]: horariosSlice,
+  [VACACIONES_NAME]: vacacionesSlice,
   [OBJETIVOS_NAME]: objetivosSlice,
   [REGISTROS_NAME]: registrosSlice,
   [SELECTED_ROW_NAME]: SelectedRowType,

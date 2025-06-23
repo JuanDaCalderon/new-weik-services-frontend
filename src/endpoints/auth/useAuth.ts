@@ -16,6 +16,9 @@ import {clearApps} from '@/store/slices/apps';
 import {clearEventos} from '@/store/slices/eventos';
 import {clearObjetivos} from '@/store/slices/objetivos';
 import {clearRegistros} from '@/store/slices/registros';
+import {clearHorarios} from '@/store/slices/horarios';
+import {clearVacaciones} from '@/store/slices/vacaciones';
+import {clearUsers} from '@/store/slices/users';
 
 const useAuth = () => {
   const [isLoadingLogOut, setIsLoadingLogOut] = useState<boolean>(true);
@@ -71,9 +74,12 @@ const useAuth = () => {
       if (id) await setOfflineUser(id);
       if (isLoggedIn) {
         dispatch(logOutUser());
+        dispatch(clearUsers());
         dispatch(clearApps());
         dispatch(clearClientes());
         dispatch(clearEventos());
+        dispatch(clearHorarios());
+        dispatch(clearVacaciones());
         dispatch(clearNoticias());
         dispatch(clearObjetivos());
         dispatch(clearRegistros());

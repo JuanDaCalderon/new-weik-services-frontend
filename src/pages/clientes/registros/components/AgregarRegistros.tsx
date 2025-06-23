@@ -1,4 +1,4 @@
-import {Fragment, memo, useEffect, useMemo} from 'react';
+import {Fragment, memo, useMemo} from 'react';
 import {Button, Col} from 'react-bootstrap';
 import {GenericModal} from '@/components';
 import SimpleBar from 'simplebar-react';
@@ -18,7 +18,6 @@ import {CustomFieldDefinition, Employee, Option} from '@/types';
 import {capitalizeFirstLetter, getCustomDefaults, getNombreCompletoUser, hasPermission} from '@/utils';
 import {useAppSelector} from '@/store';
 import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
-import {useGetEmployees} from '@/endpoints';
 
 type Props = {cliente: string | undefined; registerType: string; customFields: CustomFieldDefinition[]};
 const AgregarRegistros = memo(function AgregarRegistros({cliente, registerType, customFields = []}: Props) {
@@ -26,7 +25,6 @@ const AgregarRegistros = memo(function AgregarRegistros({cliente, registerType, 
   const {id} = useAppSelector(selectUser);
   const users = useAppSelector(selectEmployees);
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
-  const {getEmployeesSync} = useGetEmployees();
   const {isOpen, toggle} = useTogglev2();
   const {addRegistro, isSavingRegistro} = useAgregarRegistros(cliente, registerType);
   const customDefaults = useMemo(() => getCustomDefaults(customFields), [customFields]);
@@ -42,9 +40,6 @@ const AgregarRegistros = memo(function AgregarRegistros({cliente, registerType, 
     [REGISTRO_STATUS.ENTREGADO]: t('clientes.registros.filter.status.delivered'),
     [REGISTRO_STATUS.COMPLETADO]: t('clientes.registros.filter.status.completed')
   };
-  useEffect(() => {
-    if (users.length <= 0) getEmployeesSync();
-  }, [getEmployeesSync, users.length]);
 
   const usersToAssignRegister: Option[] = useMemo(() => {
     const defaultSinAsignar = [{value: REGISTRO_ASSIGNMENT.SINASIGNAR, label: 'Sin Asignar'}];

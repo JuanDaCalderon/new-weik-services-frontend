@@ -2,12 +2,14 @@ import {
   APPS_NAME,
   CLIENTES_NAME,
   EVENTOS_NAME,
+  HORARIOS_NAME,
   NOTICIAS_NAME,
   OBJETIVOS_NAME,
   PERMISOS_NAME,
   ROLES_NAME,
   USER_DOMAIN,
-  USER_NAME
+  USER_NAME,
+  VACACIONES_NAME
 } from '@/constants';
 import {HorasTrabajoType, PartialEmployee, PayLoadUserType, User} from '@/types';
 import {createSlice} from '@reduxjs/toolkit';
@@ -72,6 +74,8 @@ export const userSlice = createSlice({
     logOutUser: (state: PayLoadUserType) => {
       LocalStorageUtil.removeItem(USER_NAME);
       LocalStorageUtil.removeItem(USER_DOMAIN);
+      LocalStorageUtil.removeItem(HORARIOS_NAME);
+      LocalStorageUtil.removeItem(VACACIONES_NAME);
       SessionStorageUtil.removeItem(APPS_NAME);
       SessionStorageUtil.removeItem(CLIENTES_NAME);
       SessionStorageUtil.removeItem(EVENTOS_NAME);
@@ -81,6 +85,7 @@ export const userSlice = createSlice({
       SessionStorageUtil.removeItem(ROLES_NAME);
       SessionStorageUtil.removeItem(USER_NAME);
       SessionStorageUtil.removeItem(USER_DOMAIN);
+      SessionStorageUtil.clear();
       state.user = {} as User;
       state.domain = '';
       state.isLoggedIn = false;

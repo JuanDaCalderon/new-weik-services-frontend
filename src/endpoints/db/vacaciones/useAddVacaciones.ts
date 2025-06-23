@@ -1,8 +1,8 @@
-import {doc, Timestamp, arrayUnion, updateDoc} from 'firebase/firestore';
+import {Timestamp, addDoc, collection} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {FIRESTORE_USUARIOS_PATH} from '@/constants';
-import {VacacionesType, VacacionesTypeToFirestore} from '@/types';
-import {DebugUtil, generateUuid} from '@/utils';
+import {FIRESTORE_VACACIONES_PATH} from '@/constants';
+import {Vacaciones, VacacionesToFirestore} from '@/types';
+import {DebugUtil} from '@/utils';
 import {db} from '@/firebase';
 import toast from 'react-hot-toast';
 import {useAppSelector} from '@/store';
@@ -13,17 +13,15 @@ export default function useAddVacaciones() {
   const {id} = useAppSelector(selectUser);
 
   const addVacaciones = useCallback(
-    async (newVacaciones: VacacionesType): Promise<void> => {
+    async (newVacaciones: Vacaciones): Promise<void> => {
       setIsLoadingAddVacaciones(true);
       try {
-        const newItem: VacacionesTypeToFirestore = {
+        const vacacionesToDb: VacacionesToFirestore = {
           ...newVacaciones,
-          uuid: generateUuid(),
+          userId: id,
           rangoFechas: newVacaciones.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))
         };
-        await updateDoc(doc(db, FIRESTORE_USUARIOS_PATH, id), {
-          vacaciones: arrayUnion(newItem)
-        });
+        await addDoc(collection(db, FIRESTORE_VACACIONES_PATH), vacacionesToDb);
         toast.success('Solicitud de vacaciones creada con éxito!');
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

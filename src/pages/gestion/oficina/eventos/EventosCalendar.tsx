@@ -23,15 +23,8 @@ const EventosCalendar = memo(function EventosCalendar() {
   const {addEvento, isSavingEvento} = useAddEventos();
   const {deleteEvento, isDeletingEvento} = useDeleteEventos();
   const {updateEvento, isUpdatingTheEvento} = useUpdateEventos();
-  const {
-    thisUserActive,
-    eventos,
-    isLoadingEventos,
-    getEventosSync,
-    canCrearEventos,
-    canEditarEventos,
-    canEliminarEventos
-  } = useEventos();
+  const {thisUserActive, eventos, isLoadingEventos, canCrearEventos, canEditarEventos, canEliminarEventos} =
+    useEventos();
   const {isOpen: isOpenAdd, toggle: toggleAdd, hide: hideAdd} = useTogglev2(false);
   const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
 
@@ -196,8 +189,7 @@ const EventosCalendar = memo(function EventosCalendar() {
     };
     await addEvento(evento as Eventos);
     hideAdd();
-    await getEventosSync();
-  }, [addEvento, dateRange, eventoCreated.descripcion, eventoCreated.titulo, getEventosSync, hideAdd]);
+  }, [addEvento, dateRange, eventoCreated.descripcion, eventoCreated.titulo, hideAdd]);
 
   const onEditEvent = useCallback(async () => {
     if (dateRange[0] === null || dateRange[1] === null) {
@@ -218,17 +210,15 @@ const EventosCalendar = memo(function EventosCalendar() {
       } else delete newEventUpdated.rangoFechas;
       await updateEvento(thisEventoEvent.id, newEventUpdated);
       hideEdit();
-      await getEventosSync();
     }
-  }, [dateRange, getEventosSync, hideEdit, thisEventoEvent, updateEvento]);
+  }, [dateRange, hideEdit, thisEventoEvent, updateEvento]);
 
   const onDeleteEvent = useCallback(async () => {
     if (thisEventoEvent) {
       await deleteEvento(thisEventoEvent.id);
       hideEdit();
-      await getEventosSync();
     }
-  }, [deleteEvento, getEventosSync, hideEdit, thisEventoEvent]);
+  }, [deleteEvento, hideEdit, thisEventoEvent]);
 
   if (
     !hasPermission(

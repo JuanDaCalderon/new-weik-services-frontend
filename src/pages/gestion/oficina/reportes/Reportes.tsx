@@ -8,17 +8,40 @@ import {Link} from 'react-router-dom';
 import Balance from './balance';
 import Objetivos from './objetivos';
 import {useAppSelector} from '@/store';
-import {selectEmployees} from '@/store/selectores';
-import {useGetEmployees} from '@/endpoints';
+import {selectEmployees, selectObjetivos} from '@/store/selectores';
+import {useGetEmployees, useGetObjetivos} from '@/endpoints';
 import {useTranslation} from 'react-i18next';
+import useGetVacaciones from '@/endpoints/db/vacaciones/useGetVacaciones';
+import {selectVacaciones} from '@/store/selectores/vacaciones';
+import useGetHorarios from '@/endpoints/db/horarios/useGetHorarios';
+import {selectHorarios} from '@/store/selectores/horarios';
 
 const Reportes = memo(function Reportes() {
   const {t} = useTranslation();
   const users = useAppSelector(selectEmployees);
+  const vacaciones = useAppSelector(selectVacaciones);
+  const horarios = useAppSelector(selectHorarios);
+  const objetivos = useAppSelector(selectObjetivos);
   const {getEmployeesSync} = useGetEmployees();
+  const {getVacacionesSync} = useGetVacaciones();
+  const {getHorariosSync} = useGetHorarios();
+  const {getObjetivosSync} = useGetObjetivos();
+
   useEffect(() => {
     if (users.length <= 0) getEmployeesSync();
   }, [getEmployeesSync, users.length]);
+
+  useEffect(() => {
+    if (horarios.length <= 0) getHorariosSync();
+  }, [getHorariosSync, horarios.length]);
+
+  useEffect(() => {
+    if (vacaciones.length <= 0) getVacacionesSync();
+  }, [getVacacionesSync, vacaciones.length]);
+
+  useEffect(() => {
+    if (objetivos.length <= 0) getObjetivosSync();
+  }, [getObjetivosSync, objetivos.length]);
 
   const tabContents: TabContentItem[] = useMemo(() => {
     return [

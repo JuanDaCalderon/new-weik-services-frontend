@@ -1,10 +1,10 @@
 import {memo, useState, useEffect, useCallback, useMemo, JSX, ChangeEvent} from 'react';
 import {Card, Col, Row} from 'react-bootstrap';
 import {CustomDatePicker, DatepickerRange, GenericModal, PageBreadcrumb} from '@/components';
-import {DateSelectArg, EventClickArg, EventInput} from '@fullcalendar/core';
+import {DateSelectArg, EventClickArg} from '@fullcalendar/core';
 import {ToastWrapper} from '@/components/Toast';
 import {useAddHorario, useDeleteHorario, useUpdateHorario} from '@/endpoints';
-import {calendarHorarioEventType, Employee, HorarioType} from '@/types';
+import {calendarHorarioEventType, Employee, Horario} from '@/types';
 import {UsersColumnList} from '@/components';
 import {
   areStringArraysEqual,
@@ -37,69 +37,39 @@ const HorarioCalendario = memo(function HorarioCalendario() {
   const {dateRange, onDateChangeRange} = useDatePicker();
   const [startTime, setStartTime] = useState<Date>(DateUtils.getFormattedTime() as Date);
   const [startTimeEdit, setStartTimeEdit] = useState<Date>(DateUtils.getFormattedTime() as Date);
-  const [horarioCreated, setHorarioCreated] = useState<HorarioType>(HORARIOCREATEDVALUES);
+  const [horarioCreated, setHorarioCreated] = useState<Horario>(HORARIOCREATEDVALUES);
   const {addHorario, isLoadingAddHorario} = useAddHorario();
   const {deleteHorario, isLoadingDeleteHorario} = useDeleteHorario();
   const {updateHorario, isLoadingUpdateHorario} = useUpdateHorario();
+  const {isOpen: isOpenAdd, toggle: toggleAdd, hide: hideAdd} = useTogglev2(false);
+  const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
   const {
     thisUserActive,
     users,
+    events,
+    isLoadingHorarios,
     isLoadingUsers,
-    getEmployeesSync,
     canAccesoHorarios,
     canCrearHorarios,
     canEditarHorarios,
     canEliminarHorarios
-  } = useHorarios();
-  const {isOpen: isOpenAdd, toggle: toggleAdd, hide: hideAdd} = useTogglev2(false);
-  const {isOpen: isOpenEdit, toggle: toggleEdit, hide: hideEdit} = useTogglev2(false);
+  } = useHorarios(selectedUser);
 
   useEffect(() => {
     if (users.length > 0) {
       setusersFiltered(users);
       const selectedUserId = SessionStorageUtil.getItem<string>(SESSIONSTORAGE_CALENDAR_USER_SELECTED_KEY);
       const userFound = users.find((u) => u.id === selectedUserId);
-      setSelectedUser(userFound ? userFound : users[0]);
+      setSelectedUser(userFound ?? users[0]);
     }
   }, [users]);
 
-  const search = useCallback((text: string) => setusersFiltered(filterUsers(users, text)), [users]);
+  const search = useCallback((t: string) => setusersFiltered(filterUsers(users, t)), [users]);
 
   const handleUserSelection = (u: Employee) => {
     setSelectedUser(u);
     SessionStorageUtil.setItem(SESSIONSTORAGE_CALENDAR_USER_SELECTED_KEY, u.id);
   };
-
-  const horarios: EventInput[] = useMemo(() => {
-    const createEventInput = (
-      id: string,
-      title: string,
-      start: Date,
-      end: Date,
-      className: string,
-      extendedProps: any
-    ): EventInput => ({
-      id,
-      title,
-      className,
-      start,
-      end,
-      allDay: true,
-      durationEditable: false,
-      editable: false,
-      interactive: false,
-      startEditable: false,
-      extendedProps
-    });
-    return selectedUser && selectedUser.horario.length > 0
-      ? selectedUser.horario.map((h, index) => {
-          const start = DateUtils.parseStringToDate(h.rangoFechas[0]);
-          const end = DateUtils.addDays(DateUtils.parseStringToDate(h.rangoFechas[1]), 1);
-          const title = `Hora entrada ${DateUtils.convertTo12HourFormat(h.horaInicio)} - ${h.horasDeTrabajo} Horas - ${h.break} Minutos de break`;
-          return createEventInput(`horario-${selectedUser.id}-${index}`, title, start, end, 'bg-primary', h);
-        })
-      : [];
-  }, [selectedUser]);
 
   const onSelectSet = useCallback(
     (arg: DateSelectArg) => {
@@ -113,17 +83,13 @@ const HorarioCalendario = memo(function HorarioCalendario() {
   const onHorarioClickSet = useCallback(
     (arg: EventClickArg) => {
       const {event} = arg;
-      const {id, extendedProps, start, end} = event;
-      const thisId = id.split('-')[1];
-      setThisHorario({id: thisId, horario: extendedProps as HorarioType});
+      const {extendedProps, start, end} = event;
+      const eventId = (extendedProps as Horario).id;
+      const horaInicio = (extendedProps as Horario).horaInicio;
+      setThisHorario({id: eventId, horario: extendedProps as Horario});
       onDateChangeRange([start ?? new Date(), DateUtils.addDays(end ?? new Date(), -1)]);
       setStartTimeEdit(
-        DateUtils.getFormattedTime(
-          true,
-          new Date(),
-          +(extendedProps as HorarioType).horaInicio.split(':')[0]!,
-          +(extendedProps as HorarioType).horaInicio.split(':')[1]!
-        ) as Date
+        DateUtils.getFormattedTime(true, new Date(), +horaInicio.split(':')[0]!, +horaInicio.split(':')[1]!) as Date
       );
       if (canEditarHorarios || canEliminarHorarios) toggleEdit();
     },
@@ -134,10 +100,7 @@ const HorarioCalendario = memo(function HorarioCalendario() {
 
   const handleInputChangeHorario = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
-    setHorarioCreated((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    setHorarioCreated((prev) => ({...prev, [name]: value}));
   }, []);
 
   const handleInputChangeHorarioEdit = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -317,23 +280,21 @@ const HorarioCalendario = memo(function HorarioCalendario() {
       DateUtils.formatDateToString(dateRange[0]!),
       DateUtils.formatDateToString(dateRange[1]!)
     ];
-    const horario: HorarioType = {
-      uuid: '',
-      horasDeTrabajo: +horarioCreated.horasDeTrabajo,
-      horaInicio: horarioCreated.horaInicio,
-      break: horarioCreated.break,
-      rangoFechas: dateRangeFormatted
-    };
     if (selectedUser) {
       const {id} = selectedUser;
-      await addHorario(id, horario);
+      const horario: Horario = {
+        userId: id,
+        horasDeTrabajo: +horarioCreated.horasDeTrabajo,
+        horaInicio: horarioCreated.horaInicio,
+        break: horarioCreated.break,
+        rangoFechas: dateRangeFormatted
+      } as unknown as Horario;
+      await addHorario(horario);
       hideAdd();
-      await getEmployeesSync();
     }
   }, [
     addHorario,
     dateRange,
-    getEmployeesSync,
     hideAdd,
     horarioCreated.break,
     horarioCreated.horaInicio,
@@ -351,29 +312,22 @@ const HorarioCalendario = memo(function HorarioCalendario() {
       DateUtils.formatDateToString(dateRange[1]!)
     ];
     if (thisHorario) {
-      let newHorarioUpdated: Partial<HorarioType> = {
+      let newHorarioUpdated: Partial<Horario> = {
         ...thisHorario.horario
       };
       if (!areStringArraysEqual(thisHorario.horario.rangoFechas, dateRangeFormatted)) {
         newHorarioUpdated.rangoFechas = dateRangeFormatted;
       } else delete newHorarioUpdated.rangoFechas;
-      delete newHorarioUpdated.uuid;
-      if (selectedUser) {
-        const {id} = selectedUser;
-        await updateHorario(id, thisHorario.horario.uuid, newHorarioUpdated);
-      }
+      delete newHorarioUpdated.id;
+      await updateHorario(thisHorario.horario.id, newHorarioUpdated);
       hideEdit();
-      await getEmployeesSync();
     }
-  }, [dateRange, getEmployeesSync, hideEdit, selectedUser, thisHorario, updateHorario]);
+  }, [dateRange, hideEdit, thisHorario, updateHorario]);
 
   const onDeleteHorario = useCallback(async () => {
-    if (thisHorario && selectedUser) {
-      await deleteHorario(selectedUser.id, thisHorario.horario.uuid);
-      hideEdit();
-      await getEmployeesSync();
-    }
-  }, [deleteHorario, getEmployeesSync, hideEdit, selectedUser, thisHorario]);
+    if (thisHorario) await deleteHorario(thisHorario.horario.id);
+    hideEdit();
+  }, [deleteHorario, hideEdit, thisHorario]);
 
   useEffect(() => {
     if (!canAccesoHorarios) setSelectedUser(users.find((u) => u.id === thisUserActive.id) ?? null);
@@ -397,18 +351,16 @@ const HorarioCalendario = memo(function HorarioCalendario() {
         <Card.Body>
           <Row>
             <Col xl={2}>
-              <div>
-                <h5 className="text-center">¿Cómo funciona?</h5>
-                <ul className="ps-3">
-                  <li className="text-muted mb-1 font-14">
-                    Selecciona las fechas en el calendario y ajusta el rango arrastrando y soltando según sea necesario.
-                  </li>
-                  <li className="text-muted mb-1 font-14">
-                    Podrás crear horarios específicos a los usuarios, recuerda que debes tener un usuario seleccionado
-                    en la lista de abajo para asignar horarios.
-                  </li>
-                </ul>
-              </div>
+              <h5 className="text-center">¿Cómo funciona?</h5>
+              <ul className="ps-3">
+                <li className="text-muted mb-1 font-14">
+                  Selecciona las fechas en el calendario y ajusta el rango arrastrando y soltando según sea necesario.
+                </li>
+                <li className="text-muted mb-1 font-14">
+                  Podrás crear horarios específicos a los usuarios, recuerda que debes tener un usuario seleccionado en
+                  la lista de abajo para asignar horarios.
+                </li>
+              </ul>
               {canAccesoHorarios && (
                 <UsersColumnList
                   users={usersFiltered}
@@ -420,10 +372,10 @@ const HorarioCalendario = memo(function HorarioCalendario() {
               )}
             </Col>
             <Col xl={10}>
-              {isLoadingUsers ? (
+              {isLoadingUsers || isLoadingHorarios ? (
                 <SkeletonLoader customClass="p-0" height="66vh" />
               ) : (
-                <CalendarWidget events={horarios} onSelect={onSelectSet} onEventClick={onHorarioClickSet} />
+                <CalendarWidget events={events} onSelect={onSelectSet} onEventClick={onHorarioClickSet} />
               )}
             </Col>
           </Row>

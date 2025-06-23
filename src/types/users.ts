@@ -14,27 +14,9 @@ export type UserWorkData = {
   salarioExtraTexto: string;
 };
 
-export type HorarioType = {
-  uuid: string;
-  rangoFechas: string[];
-  horaInicio: string;
-  horasDeTrabajo: number;
-  break: number;
-};
-
-export type HorarioTypeToFirestore = {
-  uuid: string;
-  rangoFechas: Timestamp[];
-  horaInicio: string;
-  horasDeTrabajo: number;
-  break: number;
-};
-
-export type HorasTrabajoType = {
+interface HorasTrabajoBase {
   isInWorkingTime: boolean; // BOOLEAN
-  checkIn: string; // TIMESTAMP
   hasCheckIn: boolean; // BOOLEAN
-  checkOut: string | null; // TIMESTAMP
   hasCheckOut: boolean; // BOOLEAN
   dia: string; // STRING
   tiempoDeTrabajoEnSegundos: number; //El total de horas en segundos // NUMBER
@@ -43,36 +25,17 @@ export type HorasTrabajoType = {
   tiempoDeTrabajoExtraEnSegundos: number; //El total de horas en segundos pero de las horas extra // NUMBER
   horasDeTrabajoExtra: number; // 1-24 de horas extra // NUMBER
   minutosDeTrabajoExtra: number; // 1-60 de horas extra // NUMBER
-};
+}
 
-export type HorasTrabajoToFirestore = {
-  isInWorkingTime: boolean;
+export interface HorasTrabajoType extends HorasTrabajoBase {
+  checkIn: string; // TIMESTAMP
+  checkOut: string | null; // TIMESTAMP
+}
+
+export interface HorasTrabajoToFirestore extends HorasTrabajoBase {
   checkIn: Timestamp;
-  hasCheckIn: boolean;
   checkOut: Timestamp | null;
-  hasCheckOut: boolean;
-  dia: string;
-  tiempoDeTrabajoEnSegundos: number;
-  horasDeTrabajo: number; // 1-24
-  minutosDeTrabajo: number; // 1-60
-  tiempoDeTrabajoExtraEnSegundos: number;
-  horasDeTrabajoExtra: number; // 1-24
-  minutosDeTrabajoExtra: number; // 1-60
-};
-
-export type VacacionesType = {
-  uuid: string;
-  approver: string; // id del usuario que aprueba la solicitud de vacaciones
-  rangoFechas: string[];
-  aprobadas: boolean | null;
-};
-
-export type VacacionesTypeToFirestore = {
-  uuid: string;
-  approver: string; // id del usuario que aprueba la solicitud de vacaciones
-  rangoFechas: Timestamp[];
-  aprobadas: boolean | null;
-};
+}
 
 export type RolesForUser = Omit<
   Rol,
@@ -95,9 +58,7 @@ export type Employee = {
   roles: RolesForUser[];
   permisosOtorgados: Permiso[];
   permisosDenegados: Permiso[];
-  horario: HorarioType[];
   horasTrabajo: HorasTrabajoType[];
-  vacaciones: VacacionesType[];
   informacionLaboral: UserWorkData;
 };
 

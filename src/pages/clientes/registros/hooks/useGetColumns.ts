@@ -16,12 +16,13 @@ import DateTimeInputColumn from '@/pages/clientes/registros/components/columns/D
 import SwitchInputColumn from '@/pages/clientes/registros/components/columns/SwitchInputColumn';
 import NumberInputColumn from '@/pages/clientes/registros/components/columns/NumberInputColumn';
 import {useAppSelector} from '@/store';
-import {selectEmployees, selectUser} from '@/store/selectores';
+import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
 import {getNombreCompletoUser, hasPermission} from '@/utils';
 
 export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType: string) => {
   const {id} = useAppSelector(selectUser);
   const users = useAppSelector(selectEmployees);
+  const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
   const {t} = useTranslation();
   const customFields: CustomFieldDefinition[] = useMemo(() => {
     return (
@@ -190,7 +191,8 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
             row: cellContext.row,
             registerType,
             field: 'encargado',
-            options: usersToAssignRegister
+            options: usersToAssignRegister,
+            isLoadingOptions: isLoadingUsers
           })
       },
       ...customFields.map((field) => ({
@@ -254,7 +256,7 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
           })
       }
     ];
-  }, [customFields, estadoLabels, prioridadLabels, registerType, usersToAssignRegister]);
+  }, [customFields, estadoLabels, isLoadingUsers, prioridadLabels, registerType, usersToAssignRegister]);
 
   return {
     registrosColumnsPdf,

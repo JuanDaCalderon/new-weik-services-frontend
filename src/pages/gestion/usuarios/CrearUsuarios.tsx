@@ -112,12 +112,10 @@ const CrearUsuarios = memo(function CrearUsuarios() {
         ? newUser.email.toLowerCase()
         : `${newUser.email}@${clienteSelected}.com`.toLowerCase(),
       estado: ESTADOS.offline,
-      horario: [],
       horasTrabajo: [],
       permisosDenegados: [],
       permisosOtorgados: [],
       roles: [],
-      vacaciones: [],
       numeroDocumento: '',
       ciudadExpedicionDocumento: '',
       userImage: ''

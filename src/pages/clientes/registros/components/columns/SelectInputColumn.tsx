@@ -13,8 +13,15 @@ type Props = {
   registerType: string;
   field: keyof Registros;
   options: Option[];
+  isLoadingOptions?: boolean;
 };
-const SelectInputColumn = memo(function SelectInputColumn({row, registerType, field, options}: Props) {
+const SelectInputColumn = memo(function SelectInputColumn({
+  row,
+  registerType,
+  field,
+  options,
+  isLoadingOptions
+}: Props) {
   const originalValue = row.original[field] as string;
   const id = row.original.id;
   const [selectValue, setSelectValue] = useState<string>(originalValue);
@@ -58,7 +65,7 @@ const SelectInputColumn = memo(function SelectInputColumn({row, registerType, fi
 
   return (
     <div className="w-100 h-100" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      {isUpdatingRegistro ? (
+      {isUpdatingRegistro || isLoadingOptions ? (
         <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
       ) : (
         <Form.Select

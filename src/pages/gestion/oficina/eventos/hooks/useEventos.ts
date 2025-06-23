@@ -9,11 +9,16 @@ export default function useEventos() {
   const user = useAppSelector(selectUser);
   const eventos = useAppSelector(selectEventos);
   const isLoadingEventos = useAppSelector(selectIsLoadingEventos);
-  const {getEventosSync} = useGetEventos();
+  const {getEventosListener} = useGetEventos();
 
   useEffect(() => {
-    if (eventos.length <= 0) getEventosSync();
-  }, [eventos.length, getEventosSync]);
+    const unsubscribe = getEventosListener();
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [getEventosListener]);
 
   const canCrearEventos = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.crearEventos, user.roles, user.permisosOtorgados, user.permisosDenegados);
@@ -31,7 +36,6 @@ export default function useEventos() {
     thisUserActive: user,
     eventos,
     isLoadingEventos,
-    getEventosSync,
     canCrearEventos,
     canEditarEventos,
     canEliminarEventos

@@ -1,4 +1,4 @@
-import {HorasTrabajoType, VacacionesType} from '@/types';
+import {HorasTrabajoType, Vacaciones} from '@/types';
 import {DateUtils} from './fechas';
 
 /**
@@ -91,11 +91,11 @@ export function calcularHorasExtras(
 /**
  * Obtiene los días de vacaciones aprobadas que caen dentro de un mes o rango específico.
  *
- * @param {VacacionesType[]} vacaciones - Arreglo de vacaciones, cada una con un rango de fechas y estado.
+ * @param {Vacaciones[]} vacaciones - Arreglo de vacaciones, cada una con un rango de fechas y estado.
  * @param {Date | [Date, Date]} filtro - Fecha del mes objetivo o un rango de fechas [desde, hasta].
  * @returns {string[]} - Arreglo de días en formato "d/m/yyyy" que son vacaciones aprobadas y están dentro del filtro.
  */
-export function obtenerDiasVacaciones(vacaciones: VacacionesType[], filtro: Date | [Date, Date]): string[] {
+export function obtenerDiasVacaciones(vacaciones: Vacaciones[], filtro: Date | [Date, Date]): string[] {
   const [desde, hasta] = obtenerRangoDesdeFiltro(filtro);
   const diasDeVacaciones: string[] = [];
   vacaciones

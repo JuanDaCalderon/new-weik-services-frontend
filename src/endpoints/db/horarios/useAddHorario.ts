@@ -1,24 +1,23 @@
-import {doc, Timestamp, arrayUnion, updateDoc} from 'firebase/firestore';
+import {Timestamp, addDoc, collection} from 'firebase/firestore';
 import {useCallback, useState} from 'react';
-import {FIRESTORE_USUARIOS_PATH} from '@/constants';
-import {HorarioType, HorarioTypeToFirestore} from '@/types';
-import {DebugUtil, generateUuid} from '@/utils';
+import {FIRESTORE_HORARIOS_PATH} from '@/constants';
+import {Horario, HorarioToFirestore} from '@/types';
+import {DebugUtil} from '@/utils';
 import {db} from '@/firebase';
 import toast from 'react-hot-toast';
 
 export default function useAddHorario() {
   const [isLoadingAddHorario, setIsLoadingAddHorario] = useState<boolean>(false);
-  const addHorario = useCallback(async (userId: string, newHorario: HorarioType): Promise<void> => {
+
+  const addHorario = useCallback(async (newHorario: Horario, userId?: string): Promise<void> => {
     setIsLoadingAddHorario(true);
     try {
-      const newItem: HorarioTypeToFirestore = {
+      const newH: HorarioToFirestore = {
         ...newHorario,
-        uuid: generateUuid(),
+        ...(userId ? {userId} : {}),
         rangoFechas: newHorario.rangoFechas.map((date) => Timestamp.fromDate(new Date(date)))
       };
-      await updateDoc(doc(db, FIRESTORE_USUARIOS_PATH, userId), {
-        horario: arrayUnion(newItem)
-      });
+      await addDoc(collection(db, FIRESTORE_HORARIOS_PATH), newH);
       toast.success('¡Horario agregado correctamente!');
     } catch (error: any) {
       toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');

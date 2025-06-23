@@ -1,5 +1,8 @@
 import {Timestamp} from 'firebase/firestore';
-import {HorarioType} from './users';
+
+export interface calendarEventTypeBase {
+  id: string;
+}
 
 interface BaseEventos {
   titulo: string;
@@ -13,14 +16,6 @@ export interface Eventos extends BaseEventos {
 
 export interface EventosToDb extends BaseEventos {
   rangoFechas: Timestamp[];
-}
-
-interface calendarEventTypeBase {
-  id: string;
-}
-
-export interface calendarHorarioEventType extends calendarEventTypeBase {
-  horario: HorarioType;
 }
 
 export interface calendarEventoEventType extends calendarEventTypeBase {

@@ -11,7 +11,7 @@ import {useDatePicker, useTogglev2} from '@/hooks';
 import toast from 'react-hot-toast';
 import {useAddVacaciones, useApproveVacaciones, useUpdateVacaciones} from '@/endpoints';
 import {FormWrapper, OnlyLabel, SelectField} from '@/components/Form2';
-import {VacacionesType, Option, Employee} from '@/types';
+import {Vacaciones as VacacionesType, Option, Employee} from '@/types';
 import {VACACIONESCREATEDVALUES, VACACIONESEDITVALUES} from './initialValues';
 import {HOME_ROUTER_PATH, PERMISOS_MAP_IDS} from '@/constants';
 import {Navigate} from 'react-router-dom';
@@ -32,14 +32,14 @@ const Vacaciones = memo(function Vacaciones() {
   const {
     events,
     isLoadingUsers,
+    isLoadingVacations,
     users,
     user,
     canAprobarVacaciones,
     handleSwitchChange,
     isCheckedOnlyMyVacations,
     handleSwitchChangePendingVacations,
-    isCheckedPendingVacations,
-    getEmployeesSync
+    isCheckedPendingVacations
   } = useVacaciones();
   const {addVacaciones, isLoadingAddVacaciones} = useAddVacaciones();
   const {updateVacaciones, isLoadingUpdateVacaciones} = useUpdateVacaciones();
@@ -47,7 +47,6 @@ const Vacaciones = memo(function Vacaciones() {
   const {id} = useAppSelector(selectUser);
 
   const approversOptions: Option[] = useMemo(() => {
-    if (users.length === 0) return [];
     return users
       .filter((u: Employee) => {
         const canApprove = hasPermission(
@@ -60,6 +59,13 @@ const Vacaciones = memo(function Vacaciones() {
       })
       .map((u: Employee) => ({value: u.id, label: getNombreCompletoUser(u)}));
   }, [id, users]);
+
+  const defaultApproverSelected = useMemo(() => {
+    if (vacacionesEdited.approver) {
+      const approver = users.find((u) => u.id === vacacionesEdited.approver);
+      if (approver) return approver;
+    }
+  }, [users, vacacionesEdited]);
 
   useEffect(() => {
     if (approversOptions.length > 0) setVacacionesCreated((prev) => ({...prev, approver: approversOptions[0].value}));
@@ -76,23 +82,26 @@ const Vacaciones = memo(function Vacaciones() {
   const onEventClickSet = useCallback(
     (arg: EventClickArg) => {
       const {event} = arg;
-      const {id, extendedProps, start, end} = event;
-      const userId = id.split('-')[1];
-      const isMyVacation = userId === user.id;
+      const {extendedProps, start, end} = event;
+      const userId = (extendedProps as VacacionesType).userId;
+      const eventId = (extendedProps as VacacionesType).id;
+      const approver = (extendedProps as VacacionesType).approver;
+      const aprobadas = (extendedProps as VacacionesType).aprobadas;
+      const isMyVacation = userId === id;
       setWhoIsThisVacactions(users.find((u) => u.id === userId));
-      setIsStillPending((extendedProps as VacacionesType).aprobadas === null);
+      setIsStillPending(aprobadas === null);
       onDateChangeRange([start ?? new Date(), DateUtils.addDays(end ?? new Date(), -1)]);
       setVacacionesEdited((prev) => ({
         ...prev,
-        uuid: (extendedProps as VacacionesType).uuid,
-        approver: (extendedProps as VacacionesType).approver,
+        id: eventId,
+        approver,
         rangoFechas: (extendedProps as VacacionesType).rangoFechas
       }));
-      setAmAbleToApproveThisVacation((extendedProps as VacacionesType).approver === user.id);
+      setAmAbleToApproveThisVacation(approver === id);
       if (isMyVacation) toggleEdit();
       else if (canAprobarVacaciones) toggleApprover();
     },
-    [canAprobarVacaciones, onDateChangeRange, toggleApprover, toggleEdit, user.id, users]
+    [canAprobarVacaciones, id, onDateChangeRange, toggleApprover, toggleEdit, users]
   );
 
   const addModalBody: JSX.Element = useMemo(
@@ -147,27 +156,14 @@ const Vacaciones = memo(function Vacaciones() {
           />
         </OnlyLabel>
         {isStillPending ? (
-          <p className="font-14 text-muted m-0">
-            <span className="fw-bold text-uppercase">Nota:</span> Puedes editar tus vacaciones hasta que sean aprobadas
-            o denegadas.
-          </p>
+          <p className="font-14 text-muted m-0">Puedes editar tus vacaciones hasta que se aprueben o rechacen.</p>
         ) : (
-          <p className="font-14 text-muted m-0">
-            <span className="fw-bold text-uppercase">Nota:</span> No puedes editar tus vacaciones, ya han sido
-            procesadas.
-          </p>
+          <p className="font-14 text-muted m-0">No puedes editar tus vacaciones, ya han sido procesadas.</p>
         )}
       </FormWrapper>
     ),
     [approversOptions, dateRange, isStillPending, onDateChangeRange, vacacionesEdited.approver]
   );
-
-  const defaultApproverSelected = useMemo(() => {
-    if (vacacionesEdited && vacacionesEdited.approver) {
-      const approver = users.find((u) => u.id === vacacionesEdited.approver);
-      if (approver) return approver;
-    }
-  }, [users, vacacionesEdited]);
 
   const approveModalBody: JSX.Element = useMemo(
     () => (
@@ -231,8 +227,7 @@ const Vacaciones = memo(function Vacaciones() {
     };
     await addVacaciones(newVacaciones);
     hideAdd();
-    await getEmployeesSync();
-  }, [addVacaciones, dateRange, getEmployeesSync, hideAdd, vacacionesCreated]);
+  }, [addVacaciones, dateRange, hideAdd, vacacionesCreated]);
 
   const onEditVacations = useCallback(async () => {
     if (dateRange[0] === null || dateRange[1] === null) {
@@ -249,29 +244,20 @@ const Vacaciones = memo(function Vacaciones() {
     if (vacacionesEdited.rangoFechas && !areStringArraysEqual(vacacionesEdited.rangoFechas, dateRangeFormatted)) {
       newVacacionesUpdated.rangoFechas = dateRangeFormatted;
     } else delete newVacacionesUpdated.rangoFechas;
-    delete newVacacionesUpdated.uuid;
     delete newVacacionesUpdated.aprobadas;
-    await updateVacaciones(user.id, vacacionesEdited.uuid!, newVacacionesUpdated);
+    delete newVacacionesUpdated.id;
+    await updateVacaciones(vacacionesEdited.id!, newVacacionesUpdated);
     hideEdit();
-    await getEmployeesSync();
     setEditHasChanged(false);
-  }, [dateRange, getEmployeesSync, hideEdit, updateVacaciones, user.id, vacacionesEdited]);
+  }, [dateRange, hideEdit, updateVacaciones, vacacionesEdited]);
 
-  const onApproveVacations = useCallback(async () => {
-    if (whoIsThisVacactions && whoIsThisVacactions.id && vacacionesEdited && vacacionesEdited.uuid) {
-      await approveVacaciones(whoIsThisVacactions.id, vacacionesEdited.uuid, true);
+  const onValidateVacations = useCallback(
+    async (value: boolean) => {
+      if (vacacionesEdited.id) await approveVacaciones(vacacionesEdited.id, value);
       hideApprover();
-      await getEmployeesSync();
-    }
-  }, [approveVacaciones, getEmployeesSync, hideApprover, vacacionesEdited, whoIsThisVacactions]);
-
-  const onDenegarVacations = useCallback(async () => {
-    if (whoIsThisVacactions && whoIsThisVacactions.id && vacacionesEdited && vacacionesEdited.uuid) {
-      await approveVacaciones(whoIsThisVacactions.id, vacacionesEdited.uuid, false);
-      hideApprover();
-      await getEmployeesSync();
-    }
-  }, [approveVacaciones, getEmployeesSync, hideApprover, vacacionesEdited, whoIsThisVacactions]);
+    },
+    [approveVacaciones, hideApprover, vacacionesEdited]
+  );
 
   if (!hasPermission(PERMISOS_MAP_IDS.accesoVacaciones, user.roles, user.permisosOtorgados, user.permisosDenegados)) {
     return <Navigate to={HOME_ROUTER_PATH} replace />;
@@ -339,7 +325,7 @@ const Vacaciones = memo(function Vacaciones() {
               )}
             </Col>
             <Col xl={10}>
-              {isLoadingUsers ? (
+              {isLoadingUsers || isLoadingVacations ? (
                 <SkeletonLoader customClass="p-0" height="66vh" />
               ) : (
                 <CalendarWidget events={events} onSelect={onSelectSet} onEventClick={onEventClickSet} />
@@ -353,7 +339,6 @@ const Vacaciones = memo(function Vacaciones() {
         onToggle={toggleAdd}
         headerText="Solicitud de vacaciones"
         submitText="Crear"
-        secondaryText="Cancelar"
         body={addModalBody}
         isDisabled={isLoadingAddVacaciones}
         isLoading={isLoadingAddVacaciones}
@@ -384,8 +369,8 @@ const Vacaciones = memo(function Vacaciones() {
         body={approveModalBody}
         isDisabled={!amAbleToApproveThisVacation || !isStillPending || isLoadingApproveVacaciones}
         isLoading={isLoadingApproveVacaciones}
-        onSend={onApproveVacations}
-        onDelete={onDenegarVacations}
+        onSend={() => onValidateVacations(true)}
+        onDelete={() => onValidateVacations(false)}
       />
     </ToastWrapper>
   );

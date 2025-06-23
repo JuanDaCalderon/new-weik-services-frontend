@@ -1,33 +1,18 @@
-import {arrayRemove, doc, getDoc, updateDoc} from 'firebase/firestore';
+import {deleteDoc, doc} from 'firebase/firestore';
+import {db} from '@/firebase';
 import {useCallback, useState} from 'react';
 import {DebugUtil} from '@/utils';
 import toast from 'react-hot-toast';
-import {FIRESTORE_USUARIOS_PATH} from '@/constants';
-import {db} from '@/firebase';
-import {HorarioTypeToFirestore} from '@/types';
+import {FIRESTORE_HORARIOS_PATH} from '@/constants';
 
 export default function useDeleteHorario() {
   const [isLoadingDeleteHorario, setIsLoadingDeleteHorario] = useState<boolean>(false);
 
-  const deleteHorario = useCallback(async (userId: string, uuidAEliminar: string): Promise<void> => {
+  const deleteHorario = useCallback(async (horarioId: string): Promise<void> => {
     setIsLoadingDeleteHorario(true);
     try {
-      const userDocRef = doc(db, FIRESTORE_USUARIOS_PATH, userId);
-      const userSnapshot = await getDoc(userDocRef);
-      if (!userSnapshot.exists()) {
-        toast.error('Usuario no encontrado.');
-        return;
-      }
-      const userData = userSnapshot.data();
-      const horarios: HorarioTypeToFirestore[] = userData.horario ?? [];
-      const horarioAEliminar = horarios.find((h) => h.uuid === uuidAEliminar);
-      if (!horarioAEliminar) {
-        toast.error('Horario no encontrado');
-        return;
-      }
-      await updateDoc(userDocRef, {
-        horario: arrayRemove(horarioAEliminar)
-      });
+      const horarioRef = doc(db, FIRESTORE_HORARIOS_PATH, horarioId);
+      await deleteDoc(horarioRef);
       toast.success('Horario eliminado correctamente');
     } catch (error: any) {
       toast.error('Error al eliminar el horario, intenta de nuevo más tarde!');

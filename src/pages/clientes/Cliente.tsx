@@ -6,14 +6,16 @@ import {Cliente as ClienteType, TabContentItem} from '@/types';
 import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
 import {useAppSelector} from '@/store';
-import {selectActiveNoticias, selectClientes, selectNoticiasIsExpanded} from '@/store/selectores';
+import {selectActiveNoticias, selectClientes, selectEmployees, selectNoticiasIsExpanded} from '@/store/selectores';
 import {useTranslation} from 'react-i18next';
+import {useGetEmployees} from '@/endpoints';
 const TabRegisters = lazy(() => import('@/pages/clientes/registros/TabRegisters'));
 
 const Cliente = memo(function Cliente() {
   const tableroNoticiasIsExpanded = useAppSelector(selectNoticiasIsExpanded);
   const {cliente} = useParams<{cliente: string}>();
   const clientes = useAppSelector(selectClientes);
+  const users = useAppSelector(selectEmployees);
   const hasNoticias = useAppSelector(selectActiveNoticias);
   const {tiposRegistros} = useMemo(() => {
     return clientes.find((c) => c.domain === cliente) || ({tiposRegistros: []} as unknown as ClienteType);
@@ -25,7 +27,13 @@ const Cliente = memo(function Cliente() {
     }))
   );
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
+  const {getEmployeesSync} = useGetEmployees();
   const {t} = useTranslation();
+
+  useEffect(() => {
+    if (users.length <= 0) getEmployeesSync();
+  }, [getEmployeesSync, users.length]);
+
   useEffect(() => {
     const newTabs = tiposRegistros.map((tipoRegistro) => ({
       id: tipoRegistro.tipo.toUpperCase(),
@@ -34,6 +42,7 @@ const Cliente = memo(function Cliente() {
     setTabContents(newTabs);
     setActiveTab(newTabs[0]?.id);
   }, [tiposRegistros]);
+
   const tabComponentsMap: Record<string, JSX.Element> = useMemo(() => {
     return tabContents.reduce(
       (acc, tab) => {

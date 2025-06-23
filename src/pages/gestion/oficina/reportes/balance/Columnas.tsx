@@ -1,4 +1,4 @@
-import {EmployeeWithFilterDate, HorarioType, HorasTrabajoType} from '@/types';
+import {EmployeeWithFilterDate, Horario, HorasTrabajoType} from '@/types';
 import type {ColumnDef} from '@tanstack/react-table';
 import type {Row} from '@tanstack/react-table';
 import {GenericModal} from '@/components/Modals/GenericModal';
@@ -10,6 +10,8 @@ import {ESTADOS, RIBBONTYPES} from '@/constants';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {Asistencia} from './Asistencia';
+import {useAppSelector} from '@/store';
+import {selectHorarios} from '@/store/selectores/horarios';
 
 function getHorasTrabajoDelDia(filterDate?: string, horasTrabajo: HorasTrabajoType[] = []): HorasTrabajoType | null {
   const thisFilterDate = filterDate || new Date().toLocaleDateString('es-ES');
@@ -54,16 +56,23 @@ const UsuarioColumn = memo(function UsuarioColumn({row}: {row: Row<EmployeeWithF
 });
 
 const BreakColumn = memo(function BreakColumn({row}: {row: Row<EmployeeWithFilterDate>}) {
-  const todayUserHorario: HorarioType | null = useMemo(() => {
+  const horarios = useAppSelector(selectHorarios);
+
+  const userHorarios = useMemo(() => {
+    return horarios.length > 0 ? horarios.filter((h) => h.userId === row.original.id) : [];
+  }, [horarios, row.original.id]);
+
+  const todayUserHorario: Horario | null = useMemo(() => {
     const thisFilterDate = DateUtils.parseLocaleDateString(row.original.filterDate) || new Date();
     return (
-      row.original.horario.find((horario) =>
-        Array.isArray(horario.rangoFechas) && horario.rangoFechas.length === 2
-          ? DateUtils.isDateInRange(horario.rangoFechas as [string, string], thisFilterDate)
+      userHorarios.find((h) =>
+        Array.isArray(h.rangoFechas) && h.rangoFechas.length === 2
+          ? DateUtils.isDateInRange(h.rangoFechas as [string, string], thisFilterDate)
           : false
       ) || null
     );
-  }, [row.original.filterDate, row.original.horario]);
+  }, [row.original.filterDate, userHorarios]);
+
   return todayUserHorario ? <span>{todayUserHorario.break} Min</span> : <span>-</span>;
 });
 

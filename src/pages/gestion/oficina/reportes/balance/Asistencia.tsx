@@ -17,6 +17,8 @@ import {useDatePicker, useExportToExcel} from '@/hooks';
 import {useTranslation} from 'react-i18next';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
 import {PDFViewer} from '@react-pdf/renderer';
+import {selectVacacionesPerUserId} from '@/store/selectores/vacaciones';
+import {useSelector} from 'react-redux';
 
 type AsistenciaDataType = {
   fecha: string;
@@ -98,6 +100,7 @@ const Asistencia = memo(function Asistencia({employee}: {employee: EmployeeWithF
   const [filterMonth, setFilterMonth] = useState<Date>(new Date());
   const {dateRange, onDateChangeRange} = useDatePicker();
   const {exportToExcel} = useExportToExcel<AsistenciaDataType>();
+  const misVacaciones = useSelector(selectVacacionesPerUserId(employee.id));
 
   const horasTrabajo = useMemo(() => {
     switch (filtroActivo) {
@@ -126,15 +129,14 @@ const Asistencia = memo(function Asistencia({employee}: {employee: EmployeeWithF
   const diasOff = useMemo(() => {
     switch (filtroActivo) {
       case 'mes':
-        return obtenerDiasVacaciones(employee.vacaciones, filterMonth).length;
+        return obtenerDiasVacaciones(misVacaciones, filterMonth).length;
       case 'rango':
-        return obtenerDiasVacaciones(employee.vacaciones, [dateRange[0] || new Date(), dateRange[1] || new Date()])
-          .length;
+        return obtenerDiasVacaciones(misVacaciones, [dateRange[0] || new Date(), dateRange[1] || new Date()]).length;
       case 'ninguno':
       default:
-        return obtenerDiasVacaciones(employee.vacaciones, filterMonth).length;
+        return obtenerDiasVacaciones(misVacaciones, filterMonth).length;
     }
-  }, [dateRange, employee.vacaciones, filterMonth, filtroActivo]);
+  }, [dateRange, filterMonth, filtroActivo, misVacaciones]);
 
   const horariosFiltered = useMemo(() => {
     switch (filtroActivo) {

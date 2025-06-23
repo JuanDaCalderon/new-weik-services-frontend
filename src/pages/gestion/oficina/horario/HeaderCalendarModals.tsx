@@ -1,6 +1,6 @@
 import {memo, useState} from 'react';
 import {Col, Image} from 'react-bootstrap';
-import {Employee, HorarioType} from '@/types';
+import {Employee, Horario} from '@/types';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 import {DateUtils, getNombreCompletoUser} from '@/utils';
 import fallBackLogo from '@/assets/images/logo-fallback.png';
@@ -8,7 +8,7 @@ import fallBackLogo from '@/assets/images/logo-fallback.png';
 interface HeaderCalendarModalsProps {
   selectedUser: Employee | null;
   dateRange: [Date | null, Date | null];
-  horario?: HorarioType;
+  horario?: Horario;
 }
 
 export const HeaderCalendarModals = memo(function HeaderCalendarModals({
