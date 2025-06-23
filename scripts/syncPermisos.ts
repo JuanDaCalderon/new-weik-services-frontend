@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import {cert, initializeApp} from 'firebase-admin/app';
 import {getFirestore} from 'firebase-admin/firestore';
-import {PERMISOS_MAP_IDS, PERMISOS_PATH} from '../src/constants';
+import {PERMISOS_MAP_IDS, FIRESTORE_PERMISOS_PATH} from '../src/constants';
 import {getApps} from 'firebase-admin/app';
 import {readFileSync} from 'fs';
 const CREDENTIALSPATH = process.env.VITE_FIREBASE_CREDENTIALS_PATH || '';
@@ -20,7 +20,7 @@ const app = !getApps().length
 const db = getFirestore(app, process.env.VITE_FIREBASE_DATABASE || '');
 
 const run = async () => {
-  const permisosCollection = db.collection(PERMISOS_PATH);
+  const permisosCollection = db.collection(FIRESTORE_PERMISOS_PATH);
   const permisos = Object.values(PERMISOS_MAP_IDS);
 
   for (let i = 0; i < permisos.length; i++) {

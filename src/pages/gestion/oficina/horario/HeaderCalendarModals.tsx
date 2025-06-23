@@ -8,13 +8,13 @@ import fallBackLogo from '@/assets/images/logo-fallback.png';
 interface HeaderCalendarModalsProps {
   selectedUser: Employee | null;
   dateRange: [Date | null, Date | null];
-  horarioEvent?: HorarioType;
+  horario?: HorarioType;
 }
 
 export const HeaderCalendarModals = memo(function HeaderCalendarModals({
   selectedUser,
   dateRange,
-  horarioEvent
+  horario
 }: HeaderCalendarModalsProps) {
   const [iconHasLoad, setIconHasLoad] = useState<boolean>(false);
   return (
@@ -37,9 +37,9 @@ export const HeaderCalendarModals = memo(function HeaderCalendarModals({
           <p>
             Horario del usuario{' '}
             <span className="fw-bold">{getNombreCompletoUser(selectedUser ? selectedUser : ({} as Employee))}</span>,
-            con un turno de entrada a las <span className="fw-bold">{horarioEvent?.horaInicio}</span>, con una jornada
-            laboral de <span className="fw-bold">{horarioEvent?.horasDeTrabajo}</span> horas, un descanso de{' '}
-            <span className="fw-bold">{horarioEvent?.break}</span> minutos y un rango de fechas del{' '}
+            con un turno de entrada a las <span className="fw-bold">{horario?.horaInicio}</span>, con una jornada
+            laboral de <span className="fw-bold">{horario?.horasDeTrabajo}</span> horas, un descanso de{' '}
+            <span className="fw-bold">{horario?.break}</span> minutos y un rango de fechas del{' '}
             <span className="fw-bold">{`${DateUtils.formatShortDate(dateRange[0] ? dateRange[0] : new Date())} - ${DateUtils.formatShortDate(
               dateRange[1] ? dateRange[1] : new Date()
             )}`}</span>

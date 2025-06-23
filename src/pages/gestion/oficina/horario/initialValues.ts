@@ -1,5 +1,5 @@
 import {BREAKMINUTES} from '@/constants';
-import {Eventos, HorarioType} from '@/types';
+import {HorarioType} from '@/types';
 import {DateUtils} from '@/utils';
 
 export const HORARIOCREATEDVALUES: HorarioType = {
@@ -9,9 +9,3 @@ export const HORARIOCREATEDVALUES: HorarioType = {
   break: +BREAKMINUTES.MIN_30,
   rangoFechas: []
 };
-
-export const EVENTOSINITIALVALUES: Eventos = {
-  titulo: '',
-  descripcion: '',
-  rangoFechas: []
-} as unknown as Eventos;
