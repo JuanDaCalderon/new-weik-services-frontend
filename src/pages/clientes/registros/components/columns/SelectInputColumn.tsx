@@ -69,7 +69,7 @@ const SelectInputColumn = memo(function SelectInputColumn({
         <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
       ) : (
         <Form.Select
-          className={selectClassName}
+          className={`${selectClassName} cursor-pointer`}
           value={selectValue}
           name={field}
           disabled={disabledHover}

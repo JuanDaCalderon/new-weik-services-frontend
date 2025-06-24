@@ -43,6 +43,7 @@ const DateInputColumn = memo(function DateInputColumn({row, registerType, field}
         <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
       ) : (
         <Form.Control
+          className="cursor-pointer"
           type="date"
           value={inputValue}
           name={field}

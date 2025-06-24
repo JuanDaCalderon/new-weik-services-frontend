@@ -37,6 +37,8 @@ interface BaseRegistros {
   numeroOrden: string;
   createdBy: string;
   updatedBy: string;
+  isSubRegistro: boolean;
+  parentRegistroId?: string;
   customFields?: {
     [key: string]: {
       value: string | number | boolean;
@@ -63,7 +65,16 @@ export interface RegistrosToDb extends BaseRegistros {
 
 export type RegistrosToBecreated = Pick<
   Registros,
-  'nombre' | 'link' | 'cliente' | 'solicitante' | 'encargado' | 'estado' | 'prioridad' | 'numeroOrden'
+  | 'nombre'
+  | 'link'
+  | 'cliente'
+  | 'solicitante'
+  | 'encargado'
+  | 'estado'
+  | 'prioridad'
+  | 'numeroOrden'
+  | 'isSubRegistro'
+  | 'parentRegistroId'
 > & {
   requestAt: Date;
   deliverAt: Date;

@@ -25,6 +25,7 @@ export const useAgregarRegistros = (cliente: string | undefined, registerType: s
         prioridad: registro.prioridad || REGISTRO_PRIORIDAD.SINPRIORIDAD,
         requestAt: DateUtils.parseDate(registro.requestAt),
         deliverAt: DateUtils.parseDatetimeLocal(registro.deliverAt),
+        isSubRegistro: registro.isSubRegistro || false,
         comentarios: registro.comentarios
           ? [
               {

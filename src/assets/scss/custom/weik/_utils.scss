@@ -72,7 +72,7 @@ img.loading {
   background: linear-gradient(
     to bottom,
     rgba(var(--#{$prefix}emphasis-color-rgb), 1) 0%,
-    rgba(var(--#{$prefix}emphasis-color-rgb), 1) 60%,
-    rgba(var(--#{$prefix}emphasis-color-rgb), 0.2) 100%
+    rgba(var(--#{$prefix}emphasis-color-rgb), 1) 66%,
+    rgba(var(--#{$prefix}emphasis-color-rgb), 0.3) 100%
   );
 }

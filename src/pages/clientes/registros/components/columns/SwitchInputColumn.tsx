@@ -35,6 +35,7 @@ const SwitchInputColumn = memo(function SwitchInputColumn({row, registerType, fi
       ) : (
         <>
           <Form.Check
+            className="cursor-pointer"
             type="switch"
             name={field}
             disabled={disabledHover}

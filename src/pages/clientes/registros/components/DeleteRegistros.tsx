@@ -9,10 +9,7 @@ import ReactTable from '@/components/tablev02/ReactTable';
 import {SelectedRowType} from '@/types';
 import {useTranslation} from 'react-i18next';
 
-type Props = {
-  cliente: string | undefined;
-  registerType: string;
-};
+type Props = {cliente: string | undefined; registerType: string};
 const DeleteRegistros = memo(function DeleteRegistros({cliente, registerType}: Props) {
   const {t} = useTranslation();
   const selectedRegistros = useAppSelector(selectSelectedRows);

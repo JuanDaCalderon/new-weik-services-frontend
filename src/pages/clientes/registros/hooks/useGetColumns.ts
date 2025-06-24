@@ -15,6 +15,9 @@ import DateInputColumn from '@/pages/clientes/registros/components/columns/DateI
 import DateTimeInputColumn from '@/pages/clientes/registros/components/columns/DateTimeInputColumn';
 import SwitchInputColumn from '@/pages/clientes/registros/components/columns/SwitchInputColumn';
 import NumberInputColumn from '@/pages/clientes/registros/components/columns/NumberInputColumn';
+import DetalleColumn from '@/pages/clientes/registros/components/columns/DetalleColumn';
+import LinkColumn from '@/pages/clientes/registros/components/columns/LinkColumn';
+
 import {useAppSelector} from '@/store';
 import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
 import {getNombreCompletoUser, hasPermission} from '@/utils';
@@ -41,6 +44,7 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {field: 'numeroOrden' as keyof Registros, header: 'Número de orden'},
       {field: 'prioridad' as keyof Registros, header: 'Prioridad'},
       {field: 'encargado' as keyof Registros, header: 'Encargado'},
+      {field: 'isSubRegistro' as keyof Registros, header: 'Es un subregistro o Ajuste'},
       ...customFields.map((field) => ({
         field: field.key as keyof Registros,
         header: field.key.charAt(0).toUpperCase() + field.key.slice(1)
@@ -89,10 +93,18 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
   const registrosColumns: ColumnDef<Registros>[] = useMemo(() => {
     return [
       {
+        header: 'Ver',
+        accessorKey: 'isSubRegistro',
+        size: 40,
+        enableResizing: false,
+        cell: DetalleColumn
+      },
+      {
         header: 'Fecha de solicitud',
         accessorKey: 'requestAt',
+        minSize: 100,
         size: 160,
-        enableResizing: false,
+        enableResizing: true,
         cell: (cellContext) =>
           createElement(DateInputColumn, {
             row: cellContext.row,
@@ -103,8 +115,9 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Fecha de entrega',
         accessorKey: 'deliverAt',
+        minSize: 160,
         size: 240,
-        enableResizing: false,
+        enableResizing: true,
         cell: (cellContext) =>
           createElement(DateTimeInputColumn, {
             row: cellContext.row,
@@ -113,7 +126,7 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
           })
       },
       {
-        header: 'Nombre del proyecto',
+        header: 'Proyecto',
         accessorKey: 'nombre',
         minSize: 90,
         size: 220,
@@ -124,6 +137,13 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
             registerType,
             field: 'nombre'
           })
+      },
+      {
+        header: 'Link',
+        accessorKey: 'link',
+        size: 50,
+        enableResizing: false,
+        cell: LinkColumn
       },
       {
         header: 'Cliente',
@@ -167,8 +187,9 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Prioridad',
         accessorKey: 'prioridad',
+        minSize: 80,
         size: 140,
-        enableResizing: false,
+        enableResizing: true,
         cell: (cellContext) =>
           createElement(SelectInputColumn, {
             row: cellContext.row,

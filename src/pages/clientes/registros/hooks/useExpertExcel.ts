@@ -16,6 +16,7 @@ export const useExpertExcel = (registros: Registros[], tiposRegistros: TipoRegis
       solicitante: registro.solicitante,
       numeroOrden: registro.numeroOrden,
       prioridad: registro.prioridad,
+      isSubRegistro: registro.isSubRegistro,
       encargado: registro.encargado,
       estado: registro.estado
     }));

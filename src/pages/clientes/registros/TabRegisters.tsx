@@ -7,7 +7,7 @@ const TabRegisters = memo(function TabRegisters({registerType, customFields = []
   return (
     <TabRegisterContainer
       registerComponent={<Registros registerType={registerType} customFields={customFields} />}
-      reportComponent={<p>{registerType}</p>}
+      reportComponent={<></>}
     />
   );
 });

@@ -26,6 +26,8 @@ const useGetRegistros = () => {
       numeroOrden: data.numeroOrden || '',
       createdBy: data.createdBy || '',
       updatedBy: data.updatedBy || '',
+      isSubRegistro: data.isSubRegistro || false,
+      ...(data.parentRegistroId ? {parentRegistroId: data.parentRegistroId} : {}),
       ...(data.customFields ? data.customFields : {}),
       createdAt: DateUtils.formatDateToString(data.createdAt ? data.createdAt.toDate() : new Date()),
       deliverAt: DateUtils.formatDateToString(data.deliverAt ? data.deliverAt.toDate() : new Date()),

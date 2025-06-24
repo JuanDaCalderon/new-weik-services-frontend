@@ -1,6 +1,6 @@
 import {REGISTRO_ASSIGNMENT, REGISTRO_PRIORIDAD, REGISTRO_STATUS} from '@/constants';
 import {DateUtils} from '@/utils';
-import {object, string, InferType} from 'yup';
+import {object, string, InferType, boolean} from 'yup';
 
 export const registrosCrearSchema = object({
   nombre: string().required('El nombre es requerido'),
@@ -17,6 +17,7 @@ export const registrosCrearSchema = object({
     .required('La prioridad es requerida')
     .default(REGISTRO_PRIORIDAD.SINPRIORIDAD),
   numeroOrden: string().required('El número de orden es requerido'),
+  isSubRegistro: boolean().optional().default(false),
   requestAt: string().required('La fecha de solicitud es requerida').default(DateUtils.formatDateToInput(new Date())),
   deliverAt: string()
     .required('La fecha de entrega es requerida')
@@ -32,6 +33,7 @@ export const staticDefaultValues = {
   encargado: REGISTRO_ASSIGNMENT.SINASIGNAR,
   estado: REGISTRO_STATUS.PAUSA,
   prioridad: REGISTRO_PRIORIDAD.SINPRIORIDAD,
+  isSubRegistro: false,
   numeroOrden: '',
   requestAt: DateUtils.formatDateToInput(new Date()),
   deliverAt: DateUtils.formatDateToDatetimeLocal(new Date()),

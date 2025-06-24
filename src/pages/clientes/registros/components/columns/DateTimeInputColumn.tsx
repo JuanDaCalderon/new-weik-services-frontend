@@ -45,6 +45,7 @@ const DateTimeInputColumn = memo(function DateTimeInputColumn({row, registerType
         <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
       ) : (
         <Form.Control
+          className="cursor-pointer"
           type="datetime-local"
           value={inputValue}
           name={field}
