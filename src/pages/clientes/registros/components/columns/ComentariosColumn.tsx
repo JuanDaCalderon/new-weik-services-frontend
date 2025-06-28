@@ -6,12 +6,19 @@ import {useToggle} from '@/hooks';
 import {GenericModal} from '@/components';
 import DetalleModalBody from '@/pages/clientes/registros/components/modal/DetalleModalBody';
 
-const DetalleColumn = memo(function DetalleColumn({row}: {row: TableRow<Registros>}) {
+const ComentariosColumn = memo(function ComentariosColumn({
+  row,
+  registerType
+}: {
+  row: TableRow<Registros>;
+  registerType: string;
+}) {
   const thisRegister = row.original;
   const [isOpen, toggle, show] = useToggle();
   return (
     <>
-      <OverlayTrigger overlay={<Tooltip id="verRegistro">Ver registro {thisRegister.nombre}</Tooltip>}>
+      <OverlayTrigger
+        overlay={<Tooltip id="verRegistro">Comentarios y anotaciones registro {thisRegister.nombre}</Tooltip>}>
         <Button id="verRegistro" variant="outline-info py-0 px-1" onClick={show}>
           <i className="uil-eye" />
         </Button>
@@ -20,11 +27,11 @@ const DetalleColumn = memo(function DetalleColumn({row}: {row: TableRow<Registro
         size="lg"
         show={isOpen}
         onToggle={toggle}
-        headerText={`Registro ${thisRegister.nombre}`}
+        headerText={`Comentarios para el registro ${thisRegister.nombre}`}
         showFooter={false}
-        body={<DetalleModalBody registro={thisRegister} />}
+        body={<DetalleModalBody registro={thisRegister} registerType={registerType} />}
       />
     </>
   );
 });
-export default DetalleColumn;
+export default ComentariosColumn;

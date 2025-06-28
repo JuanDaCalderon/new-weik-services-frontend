@@ -82,10 +82,10 @@ const Cliente = memo(function Cliente() {
           <Card>
             <Card.Body>
               <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k ?? undefined)}>
-                <Nav variant="pills" justify className="bg-nav-pills">
+                <Nav variant="tabs" className="nav-bordered" as="ul">
                   {tabContents.map((tab, index) => (
-                    <Nav.Item key={index.toString()}>
-                      <Nav.Link className="d-flex justify-content-center gap-1" as={Link} to="" eventKey={tab.id}>
+                    <Nav.Item as="li" key={index.toString()}>
+                      <Nav.Link className="px-2 pb-1 pt-0" as={Link} to="" eventKey={tab.id}>
                         <span className="d-block">{tab.title}</span>
                       </Nav.Link>
                     </Nav.Item>

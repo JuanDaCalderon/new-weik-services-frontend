@@ -5,7 +5,7 @@ import useGetRegistros from '@/endpoints/db/registros/useGetRegistros';
 import useClearRegistros from '@/endpoints/db/registros/useClearRegistros';
 import {CheckRecordsState} from '@/pages/clientes/registros/types/registros';
 
-export const useLoadRegistros = (cliente: string | undefined, registerType: string, registrosLength: number) => {
+export const useLoadRegistros = (cliente: string | undefined, registerType: string, registrosLength: number = 0) => {
   const [checkRecords, setCheckRecords] = useState<CheckRecordsState>({
     checkPendingRecords: SessionStorageUtil.getItem<boolean>(SESSIONSTORAGE_LOAD_PENDING_RECORDS) ?? true,
     checkDeliveredRecords: SessionStorageUtil.getItem<boolean>(SESSIONSTORAGE_LOAD_DELIVERED_RECORDS) ?? false

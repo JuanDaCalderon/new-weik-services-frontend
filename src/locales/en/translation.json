@@ -24,6 +24,7 @@
     "clientes.registros.load.delivered": "Load delivered records",
     "clientes.cliente.default": "Client",
     "clientes.registros.add": "Add",
+    "clientes.subregistro.add": "Add sub-record",
     "clientes.registros.delete": "Delete",
     "clientes.registros.filter.status.all": "All",
     "clientes.registros.filter.status.in_progress": "In Progress",

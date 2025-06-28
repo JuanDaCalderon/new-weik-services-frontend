@@ -15,7 +15,7 @@ import DateInputColumn from '@/pages/clientes/registros/components/columns/DateI
 import DateTimeInputColumn from '@/pages/clientes/registros/components/columns/DateTimeInputColumn';
 import SwitchInputColumn from '@/pages/clientes/registros/components/columns/SwitchInputColumn';
 import NumberInputColumn from '@/pages/clientes/registros/components/columns/NumberInputColumn';
-import DetalleColumn from '@/pages/clientes/registros/components/columns/DetalleColumn';
+import ComentariosColumn from '@/pages/clientes/registros/components/columns/ComentariosColumn';
 import LinkColumn from '@/pages/clientes/registros/components/columns/LinkColumn';
 
 import {useAppSelector} from '@/store';
@@ -94,10 +94,14 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
     return [
       {
         header: 'Ver',
-        accessorKey: 'isSubRegistro',
+        accessorKey: 'comentarios',
         size: 40,
         enableResizing: false,
-        cell: DetalleColumn
+        cell: (cellContext) =>
+          createElement(ComentariosColumn, {
+            row: cellContext.row,
+            registerType
+          })
       },
       {
         header: 'Fecha de solicitud',
@@ -141,9 +145,15 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Link',
         accessorKey: 'link',
-        size: 50,
-        enableResizing: false,
-        cell: LinkColumn
+        minSize: 70,
+        size: 180,
+        enableResizing: true,
+        cell: (cellContext) =>
+          createElement(LinkColumn, {
+            row: cellContext.row,
+            registerType,
+            field: 'link'
+          })
       },
       {
         header: 'Cliente',

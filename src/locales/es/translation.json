@@ -24,6 +24,7 @@
     "clientes.registros.load.delivered": "Cargar registros entregados",
     "clientes.cliente.default": "Cliente",
     "clientes.registros.add": "Agregar",
+    "clientes.subregistro.add": "Agregar subregistro",
     "clientes.registros.delete": "Eliminar",
     "clientes.registros.filter.status.all": "Todos",
     "clientes.registros.filter.status.in_progress": "En Progreso",

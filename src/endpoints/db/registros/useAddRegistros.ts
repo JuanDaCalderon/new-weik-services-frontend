@@ -31,7 +31,7 @@ const useAddRegistros = () => {
           }))
         };
         await addDoc(collection(db, `${FIRESTORE_CLIENTES_PATH}/${cliente}/${tipo}`), registroToAdd);
-        toast.success(`Has agregado un registro correctamente`);
+        toast.success(`Has agregado un ${registroToAdd.isSubRegistro ? 'subregistro' : 'registro'} correctamente`);
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
         DebugUtil.logError(error.message, error);

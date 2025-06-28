@@ -26,6 +26,7 @@ export const useAgregarRegistros = (cliente: string | undefined, registerType: s
         requestAt: DateUtils.parseDate(registro.requestAt),
         deliverAt: DateUtils.parseDatetimeLocal(registro.deliverAt),
         isSubRegistro: registro.isSubRegistro || false,
+        ...(registro.isSubRegistro && registro.parentRegistroId ? {parentRegistroId: registro.parentRegistroId} : {}),
         comentarios: registro.comentarios
           ? [
               {

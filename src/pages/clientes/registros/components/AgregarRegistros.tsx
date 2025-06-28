@@ -18,22 +18,39 @@ import {CustomFieldDefinition, Employee, Option} from '@/types';
 import {capitalizeFirstLetter, getCustomDefaults, getNombreCompletoUser, hasPermission} from '@/utils';
 import {useAppSelector} from '@/store';
 import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
+import {selectSelectedRows} from '@/store/selectores/selected-row';
 
-type Props = {cliente: string | undefined; registerType: string; customFields: CustomFieldDefinition[]};
-const AgregarRegistros = memo(function AgregarRegistros({cliente, registerType, customFields = []}: Props) {
+type Props = {
+  cliente: string | undefined;
+  registerType: string;
+  customFields: CustomFieldDefinition[];
+  isSubRegistro?: boolean;
+};
+const AgregarRegistros = memo(function AgregarRegistros({
+  cliente,
+  registerType,
+  customFields = [],
+  isSubRegistro = false
+}: Props) {
   const {t} = useTranslation();
   const {id} = useAppSelector(selectUser);
+  const selectedRegistros = useAppSelector(selectSelectedRows);
   const users = useAppSelector(selectEmployees);
   const isLoadingUsers = useAppSelector(selectisLoadingEmployees);
   const {isOpen, toggle} = useTogglev2();
   const {addRegistro, isSavingRegistro} = useAgregarRegistros(cliente, registerType);
-  const customDefaults = useMemo(() => getCustomDefaults(customFields), [customFields]);
+
+  const customDefaults = useMemo(() => {
+    return getCustomDefaults(customFields);
+  }, [customFields]);
+
   const prioridadLabels = {
     [REGISTRO_PRIORIDAD.BAJA]: t('clientes.registros.filter.priority.low'),
     [REGISTRO_PRIORIDAD.MEDIA]: t('clientes.registros.filter.priority.medium'),
     [REGISTRO_PRIORIDAD.ALTA]: t('clientes.registros.filter.priority.high'),
     [REGISTRO_PRIORIDAD.SINPRIORIDAD]: t('clientes.registros.filter.priority.no_priority')
   };
+
   const estadoLabels = {
     [REGISTRO_STATUS.ENPROGRESO]: t('clientes.registros.filter.status.in_progress'),
     [REGISTRO_STATUS.PAUSA]: t('clientes.registros.filter.status.on_hold'),
@@ -58,25 +75,41 @@ const AgregarRegistros = memo(function AgregarRegistros({cliente, registerType, 
     return [...defaultSinAsignar, ...employeesOptions];
   }, [users, id]);
 
+  const parentRegistro = useMemo(() => selectedRegistros[0], [selectedRegistros]);
+
+  const modalHeaderCopy = useMemo(() => {
+    if (isSubRegistro) return `Agregar subregistro a ${cliente} - ${registerType} - ${parentRegistro?.nombre}`;
+    return `Agregar registro a ${cliente} - ${registerType}`;
+  }, [cliente, isSubRegistro, parentRegistro?.nombre, registerType]);
+
   return (
     <>
-      <Button className="font-14 px-2" variant="outline-success" onClick={toggle}>
-        <span className="d-none d-md-inline">{t('clientes.registros.add')}</span>
+      <Button
+        className="font-14 px-2"
+        variant={isSubRegistro ? 'outline-warning' : 'outline-success'}
+        onClick={toggle}
+        disabled={isSubRegistro && !(selectedRegistros.length === 1)}>
+        <span className="d-none d-md-inline">
+          {t(isSubRegistro ? 'clientes.subregistro.add' : 'clientes.registros.add')}
+        </span>
         <i className="d-inline d-md-none mdi mdi-plus-circle-outline" />
       </Button>
       <GenericModal
         show={isOpen}
         onToggle={toggle}
+        size="lg"
         showFooter={false}
-        variant="success"
-        headerText={`Agregar registro a ${cliente} - ${registerType}`}
+        variant={isSubRegistro ? 'warning' : 'success'}
+        headerText={modalHeaderCopy}
         body={
           <SimpleBar style={{maxHeight: '700px', width: '100%', overflowX: 'hidden'}}>
             <HookForm<RegistrosCrearFormFields & Record<string, any>>
               schema={registrosCrearSchema}
               defaultValues={customDefaults}
               onSubmit={async (values) => {
-                await addRegistro(values);
+                if (isSubRegistro)
+                  await addRegistro({...values, isSubRegistro: true, parentRegistroId: parentRegistro?.id});
+                else await addRegistro(values);
                 toggle();
               }}
               isDisabled={isSavingRegistro}

@@ -77,6 +77,7 @@ const Registros = memo(function Registros({registerType, customFields}: Registro
         <LoadRegistros checkRecords={checkRecords} onToggleCheck={toggleCheck} isLoading={isLoading} />
         <div className="d-flex align-items-center flex-wrap justify-content-end gap-1">
           <AgregarRegistros cliente={cliente} registerType={registerType} customFields={customFields} />
+          <AgregarRegistros isSubRegistro cliente={cliente} registerType={registerType} customFields={customFields} />
           <DeleteRegistros cliente={cliente} registerType={registerType} />
           <Button className="font-14 px-2" variant="outline-dark" onClick={pdfToggle}>
             <span className="d-none d-md-inline">PDF</span>
