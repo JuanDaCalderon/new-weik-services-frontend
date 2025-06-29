@@ -15,7 +15,7 @@ import {registrosCrearSchema, RegistrosCrearFormFields} from '@/pages/clientes/r
 import {useAgregarRegistros} from '../hooks/useAgregarRegistros';
 import {useTranslation} from 'react-i18next';
 import {CustomFieldDefinition, Employee, Option} from '@/types';
-import {capitalizeFirstLetter, getCustomDefaults, getNombreCompletoUser, hasPermission} from '@/utils';
+import {capitalizeFirstLetter, getCustomDefaults, getNombreCompletoUser, hasPermission, removeUndefined} from '@/utils';
 import {useAppSelector} from '@/store';
 import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
 import {selectSelectedRows} from '@/store/selectores/selected-row';
@@ -40,9 +40,28 @@ const AgregarRegistros = memo(function AgregarRegistros({
   const {isOpen, toggle} = useTogglev2();
   const {addRegistro, isSavingRegistro} = useAgregarRegistros(cliente, registerType);
 
+  const parentRegistro = useMemo(() => selectedRegistros[0], [selectedRegistros]);
+
   const customDefaults = useMemo(() => {
-    return getCustomDefaults(customFields);
-  }, [customFields]);
+    const baseDefaults = getCustomDefaults(customFields);
+    if (!isSubRegistro) return baseDefaults;
+    const parentDefaults = {
+      nombre: parentRegistro?.nombre || '',
+      cliente: parentRegistro?.cliente || '',
+      solicitante: parentRegistro?.solicitante || '',
+      numeroOrden: parentRegistro?.numeroOrden || '',
+      link: parentRegistro?.link || '',
+      prioridad: parentRegistro?.prioridad || REGISTRO_PRIORIDAD.SINPRIORIDAD,
+      estado: parentRegistro?.estado || REGISTRO_STATUS.PAUSA,
+      encargado: parentRegistro?.encargado || REGISTRO_ASSIGNMENT.SINASIGNAR,
+      comentarios: parentRegistro?.comentarios?.at(-1)?.comentario || '',
+      ...removeUndefined(Object.fromEntries(customFields.map((f) => [f.key, parentRegistro?.[f.key]])))
+    };
+    return {
+      ...baseDefaults,
+      ...parentDefaults
+    };
+  }, [customFields, isSubRegistro, parentRegistro]);
 
   const prioridadLabels = {
     [REGISTRO_PRIORIDAD.BAJA]: t('clientes.registros.filter.priority.low'),
@@ -74,8 +93,6 @@ const AgregarRegistros = memo(function AgregarRegistros({
       .map((u: Employee) => ({value: u.id, label: getNombreCompletoUser(u)}));
     return [...defaultSinAsignar, ...employeesOptions];
   }, [users, id]);
-
-  const parentRegistro = useMemo(() => selectedRegistros[0], [selectedRegistros]);
 
   const modalHeaderCopy = useMemo(() => {
     if (isSubRegistro) return `Agregar subregistro a ${cliente} - ${registerType} - ${parentRegistro?.nombre}`;

@@ -38,7 +38,10 @@ const DateInputColumn = memo(function DateInputColumn({row, registerType, field}
     [cliente, id, originalValue, registerType, updateRegistroPerClienteType]
   );
   return (
-    <div className="w-100 h-100" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div
+      className="w-100 h-100 d-flex align-content-center align-items-center"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
       {isUpdatingRegistro ? (
         <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
       ) : (

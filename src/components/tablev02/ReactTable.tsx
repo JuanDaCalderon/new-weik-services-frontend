@@ -69,6 +69,7 @@ const ReactTable = <RowType,>({
       maxSize: 600
     },
     getRowId: (row, i) => (row as any)?.id ?? i,
+    getSubRows: (row) => (row as any)?.subRows || [],
     columnResizeMode: 'onChange',
     onPaginationChange: setPagination,
     state: {pagination, globalFilter, rowSelection, expanded},
@@ -199,7 +200,7 @@ function TableBody<T>({
     <tbody>
       {table.getRowModel().rows.map((row) => (
         <Fragment key={row.id}>
-          <tr style={{width: 'fit-content'}}>
+          <tr className={row.depth > 0 ? 'isSubRegister' : ''} style={{width: 'fit-content'}}>
             {isSelectable && (
               <td className="p-0 m-0" style={{width: '34px', minWidth: '34px', maxWidth: '34px'}}>
                 <IndeterminateCheckbox

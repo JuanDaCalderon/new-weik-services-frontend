@@ -1,91 +1,59 @@
-import {memo, ReactNode, useMemo} from 'react';
-import {Card, Col, Row} from 'react-bootstrap';
-import {Cliente, Registros} from '@/types';
+import {memo, ReactNode, useMemo, useState} from 'react';
+import {Card, Image} from 'react-bootstrap';
+import {Registros} from '@/types';
 import SimpleBar from 'simplebar-react';
 import ComentarioForm from './ComentarioForm';
 import logoTemp from '@/assets/images/logo.png';
-import {useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {Comentario} from '@/types';
 import {useAppSelector} from '@/store';
-import {selectClientes, selectRegistrosByClienteYTipo} from '@/store/selectores';
-import {AgregarRegistros} from '@/pages/clientes/registros/components/AgregarRegistros';
+import {selectEmployees} from '@/store/selectores';
+import {DateUtils, getNombreCompletoUser} from '@/utils';
+import {SkeletonLoader} from '@/components/SkeletonLoader';
 
-type Message = {
-  id: number;
-  userPic?: string;
-  userName: string;
-  text: string;
-  postedOn: string;
-};
-
-const messages: Message[] = [
-  {
-    id: 1,
-    userPic: logoTemp,
-    userName: 'Geneva',
-    text: 'Hello!',
-    postedOn: '10:00'
-  },
-  {
-    id: 2,
-    userPic: logoTemp,
-    userName: 'Dominic',
-    text: 'Hi, How are you? What about our next meeting?',
-    postedOn: '10:01'
-  },
-  {
-    id: 3,
-    userPic: logoTemp,
-    userName: 'Geneva',
-    text: 'Yeah everything is fine',
-    postedOn: '10:02'
-  },
-  {
-    id: 4,
-    userPic: logoTemp,
-    userName: 'Dominic',
-    text: "Wow that's great!",
-    postedOn: '10:03'
-  },
-  {
-    id: 5,
-    userPic: logoTemp,
-    userName: 'Dominic',
-    text: 'Cool!',
-    postedOn: '10:03'
-  },
-  {
-    id: 6,
-    userPic: logoTemp,
-    userName: 'Juan',
-    text: 'un super comentario',
-    postedOn: '10:09'
-  }
-];
-
-const ChatItemAvatar = ({userAvatar, postedOn}: {userAvatar: string; postedOn: string}) => {
+const ChatItemAvatar = memo(function ChatItemAvatar({userAvatar, postedOn}: {userAvatar: string; postedOn: string}) {
+  const [hasLoad, setHasLoad] = useState<boolean>(false);
   return (
-    <div className="chat-avatar">
-      <img src={userAvatar} alt={userAvatar} />
-      <i>{postedOn}</i>
+    <div className="chat-avatar d-flex flex-column align-items-center justify-content-center gap-1">
+      {!hasLoad && <SkeletonLoader width="100%" height="45px" customClass="p-0" />}
+      <Image
+        fluid
+        loading="lazy"
+        src={userAvatar}
+        alt={userAvatar}
+        className="w-50 object-fit-cover ratio-1x1"
+        onLoad={() => setHasLoad(true)}
+      />
+      <span className="text-muted font-10 lh-sm">{postedOn}</span>
     </div>
   );
-};
+});
 
-const ChatItemText = ({userName, text}: {userName: string; text: string}) => {
+const ChatItemText = memo(function ChatItemText({userName, text}: {userName: string; text: string}) {
   return (
     <div className="conversation-text">
       <div className="ctext-wrap">
-        <i>{userName}</i>
+        <h6 className="p-0 m-0 font-12 text-uppercase fw-bold text-muted">{userName}</h6>
         <p>{text}</p>
       </div>
     </div>
   );
-};
+});
 
-const ChatItem = ({children, placement, className}: {children: ReactNode; placement: string; className?: string}) => {
-  return <li className={`clearfix ${placement === 'left' ? 'odd' : ''} ${className ? className : ''}`}>{children}</li>;
-};
+const ChatItem = memo(function ChatItem({
+  children,
+  placement,
+  className
+}: {
+  children: ReactNode;
+  placement: string;
+  className?: string;
+}) {
+  return (
+    <li className={`clearfix mb-2 w-100 h-100 ${placement === 'left' ? 'odd' : ''} ${className ? className : ''}`}>
+      {children}
+    </li>
+  );
+});
 
 const DetalleModalBody = memo(function DetalleModalBody({
   registro,
@@ -94,62 +62,46 @@ const DetalleModalBody = memo(function DetalleModalBody({
   registro: Registros;
   registerType: string;
 }) {
-  const {cliente} = useParams<{cliente: string}>();
-  const clientes = useAppSelector(selectClientes);
-  const {tiposRegistros} = useMemo(() => {
-    return clientes.find((c) => c.domain === cliente) || ({tiposRegistros: []} as unknown as Cliente);
-  }, [cliente, clientes]);
-  const selectRegistros = useMemo(() => {
-    if (!cliente) return null;
-    return selectRegistrosByClienteYTipo(cliente, registerType);
-  }, [cliente, registerType]);
-  const {registros, isLoading} = useSelector(selectRegistros || (() => ({registros: [], isLoading: false})));
-  console.log('🚀 ~ registros, isLoading:', registros, isLoading);
-
-  const customFields = useMemo(() => {
+  const users = useAppSelector(selectEmployees);
+  const comments: Comentario[] = useMemo(() => {
     return (
-      tiposRegistros.find((tr) => tr.tipo.toLowerCase().trim() === registerType.toLowerCase().trim())?.customFields ||
-      []
+      registro.comentarios.reduce((acc, comment) => {
+        const user = users.find((u) => u.id === comment.createdBy);
+        if (user) {
+          acc.push({
+            userPic: user.userImage || logoTemp,
+            userName: getNombreCompletoUser(user),
+            text: comment.comentario,
+            postedOn: DateUtils.formatShortDate(DateUtils.parseStringToDate(comment.createdAt) || new Date(), true)
+          });
+          return acc;
+        } else return acc;
+      }, [] as Comentario[]) || []
     );
-  }, [registerType, tiposRegistros]);
+  }, [registro.comentarios, users]);
 
   return (
-    <>
-      <Row>
-        <Col className="d-flex align-content-center align-items-center justify-content-between pt-0 pb-1" xs={12}>
-          <h5 className="fw-bold font-14 lh-1 p-0 m-0">Subregistro o ajustes de {registro.nombre}</h5>
-          <div className="d-flex align-items-center flex-wrap justify-content-end gap-1">
-            <AgregarRegistros cliente={cliente} registerType={registerType} customFields={customFields} isSubRegistro />
+    <Card className="m-0 p-0 shadow">
+      <Card.Body className="p-1">
+        <div className="d-flex flex-column gap-2">
+          <div className="d-flex">
+            <SimpleBar style={{maxHeight: '40vh', width: '100%'}}>
+              <ul className="conversation-list m-0 p-0">
+                {comments.map((comment, i) => {
+                  return (
+                    <ChatItem key={i.toString()} placement={i > 0 ? (i % 2 === 0 ? '' : 'left') : 'right'}>
+                      {comment.userPic && <ChatItemAvatar userAvatar={comment.userPic} postedOn={comment.postedOn} />}
+                      <ChatItemText userName={comment.userName} text={comment.text} />
+                    </ChatItem>
+                  );
+                })}
+              </ul>
+            </SimpleBar>
           </div>
-        </Col>
-        <Col xs={12}>
-          <hr className="m-0 p-0" />
-        </Col>
-      </Row>
-      <Card className="m-0 p-0 shadow">
-        <Card.Body className="p-1">
-          <div className="d-flex flex-column gap-2 w-100 h-100">
-            <div className="d-flex">
-              <SimpleBar style={{maxHeight: '40vh', width: '100%'}}>
-                <ul className="conversation-list m-0 p-0">
-                  {(messages || []).map((message, index) => {
-                    return (
-                      <ChatItem
-                        key={index.toString()}
-                        placement={index > 0 ? (index % 2 === 0 ? '' : 'left') : 'right'}>
-                        {message.userPic && <ChatItemAvatar userAvatar={message.userPic} postedOn={message.postedOn} />}
-                        <ChatItemText userName={message.userName} text={message.text} />
-                      </ChatItem>
-                    );
-                  })}
-                </ul>
-              </SimpleBar>
-            </div>
-            <ComentarioForm />
-          </div>
-        </Card.Body>
-      </Card>
-    </>
+          <ComentarioForm registro={registro} registerType={registerType} />
+        </div>
+      </Card.Body>
+    </Card>
   );
 });
 

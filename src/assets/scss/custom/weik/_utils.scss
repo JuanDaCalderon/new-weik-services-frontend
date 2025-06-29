@@ -76,3 +76,7 @@ img.loading {
     rgba(var(--#{$prefix}emphasis-color-rgb), 0.3) 100%
   );
 }
+tr.isSubRegister > * {
+  --ct-table-color-type: var(--ct-table-striped-color);
+  --ct-table-bg-type: var(--ct-table-striped-bg);
+}

@@ -7,8 +7,8 @@ import {useParams} from 'react-router-dom';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 
 type FormControlElement = HTMLInputElement | HTMLTextAreaElement;
-type Props = {row: TableRow<Registros>; registerType: string; field: keyof Registros};
-const TextInputColumn = memo(function TextInputColumn({row, registerType, field}: Props) {
+type Props = {row: TableRow<Registros>; registerType: string; field: keyof Registros; showSubRowIcon?: boolean};
+const TextInputColumn = memo(function TextInputColumn({row, registerType, field, showSubRowIcon = false}: Props) {
   const originalValue = row.original[field as keyof Registros] as string;
   const id = row.original.id;
   const [inputValue, setInputValue] = useState<string>(originalValue);
@@ -37,7 +37,17 @@ const TextInputColumn = memo(function TextInputColumn({row, registerType, field}
     [handleUpdate, hasClicked, originalValue]
   );
   return (
-    <div className="w-100 h-100" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div
+      className="w-100 h-100 d-flex align-content-center align-items-center"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
+      {showSubRowIcon && row.original.isSubRegistro && (
+        <>
+          {Array.from({length: row.depth}, (_, i) => (
+            <i key={i} className="mdi mdi-file-tree me-1 font-10" />
+          ))}
+        </>
+      )}
       {isUpdatingRegistro ? (
         <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
       ) : (

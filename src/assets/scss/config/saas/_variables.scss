@@ -751,7 +751,7 @@ $table-accent-bg: transparent;
 $table-th-font-weight: null;
 
 $table-striped-color: $table-color;
-$table-striped-bg-factor: 1;
+$table-striped-bg-factor: 0.7;
 $table-striped-bg: rgba(var(--#{$prefix}tertiary-bg-rgb), $table-striped-bg-factor);
 
 $table-active-color: $table-color;

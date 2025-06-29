@@ -11,7 +11,7 @@ export interface RegistrosFilterMode {
 
 interface BaseComentarios {
   comentario: string;
-  createdBy?: string;
+  createdBy: string;
 }
 
 export interface Comentarios extends BaseComentarios {
@@ -53,6 +53,7 @@ export interface Registros extends BaseRegistros {
   createdAt: string;
   updatedAt: string;
   comentarios: Comentarios[];
+  subRows?: Registros[];
 }
 
 export interface RegistrosToDb extends BaseRegistros {

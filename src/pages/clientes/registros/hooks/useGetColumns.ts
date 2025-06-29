@@ -17,6 +17,8 @@ import SwitchInputColumn from '@/pages/clientes/registros/components/columns/Swi
 import NumberInputColumn from '@/pages/clientes/registros/components/columns/NumberInputColumn';
 import ComentariosColumn from '@/pages/clientes/registros/components/columns/ComentariosColumn';
 import LinkColumn from '@/pages/clientes/registros/components/columns/LinkColumn';
+import SubrowColumn from '@/pages/clientes/registros/components/columns/SubrowColumn';
+import ExpandHeader from '@/pages/clientes/registros/components/columns/ExpandHeader';
 
 import {useAppSelector} from '@/store';
 import {selectEmployees, selectisLoadingEmployees, selectUser} from '@/store/selectores';
@@ -95,13 +97,24 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Ver',
         accessorKey: 'comentarios',
-        size: 40,
+        size: 58,
         enableResizing: false,
         cell: (cellContext) =>
           createElement(ComentariosColumn, {
             row: cellContext.row,
-            registerType
+            registerType,
+            showSubRegisterIcon: true
           })
+      },
+      {
+        header: (cellContext) =>
+          createElement(ExpandHeader, {
+            table: cellContext.table
+          }),
+        accessorKey: 'isSubRegistro',
+        size: 28,
+        enableResizing: false,
+        cell: SubrowColumn
       },
       {
         header: 'Fecha de solicitud',
@@ -139,7 +152,8 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
           createElement(TextInputColumn, {
             row: cellContext.row,
             registerType,
-            field: 'nombre'
+            field: 'nombre',
+            showSubRowIcon: true
           })
       },
       {
