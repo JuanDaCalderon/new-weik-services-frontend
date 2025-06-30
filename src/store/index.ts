@@ -13,7 +13,6 @@ import {
   UTILITIES_NAME,
   VACACIONES_NAME
 } from '@/constants';
-import {dedupeUsersMiddleware} from '@/store/middlewares/dedupeUsersMiddleware';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import userReducer from '@/store/slices/user';
@@ -29,7 +28,7 @@ import objetivosSlice from '@/store/slices/objetivos';
 import registrosSlice from '@/store/slices/registros';
 import utilitiesSlice from '@/store/slices/utilities';
 import SelectedRowType from '@/store/slices/selected-row';
-import {dedupeRegistrosMiddleware} from './middlewares';
+import {dedupeRegistrosMiddleware, dedupeUsersMiddleware, dedupeSelectedRowMiddleware} from './middlewares';
 
 const rootReducer = combineReducers({
   [USER_NAME]: userReducer,
@@ -50,7 +49,10 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(dedupeUsersMiddleware).concat(dedupeRegistrosMiddleware)
+    getDefaultMiddleware()
+      .concat(dedupeUsersMiddleware)
+      .concat(dedupeRegistrosMiddleware)
+      .concat(dedupeSelectedRowMiddleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

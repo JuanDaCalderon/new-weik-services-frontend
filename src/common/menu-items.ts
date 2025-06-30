@@ -24,7 +24,7 @@ import {MenuItemType} from '@/types';
 import {capitalizeFirstLetter} from '@/utils';
 
 const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
-  {
+  /* {
     key: 'dashboards',
     icon: 'uil-dashboard',
     label: 'Dashboards',
@@ -639,7 +639,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ]
       }
     ]
-  },
+  }, */
   {
     key: CLIENTES_ROUTER_PATH,
     icon: 'uil-user-square',

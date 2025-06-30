@@ -3,8 +3,17 @@ import {db} from '@/firebase';
 import {useDispatch} from 'react-redux';
 import {DateUtils, DebugUtil} from '@/utils';
 import {isLoadingRegistrosPerCliente, setRegistrosPerCliente} from '@/store/slices/registros';
-import {collection, getDocs, onSnapshot, orderBy, query, QueryDocumentSnapshot, Unsubscribe} from 'firebase/firestore';
-import {FIRESTORE_CLIENTES_PATH, REGISTRO_STATUS, REGISTRO_PRIORIDAD} from '@/constants';
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+  Unsubscribe,
+  where
+} from 'firebase/firestore';
+import {FIRESTORE_CLIENTES_PATH, REGISTRO_STATUS, REGISTRO_PRIORIDAD, MAIN_DOMAIN} from '@/constants';
 import {Registros, RegistrosToDb} from '@/types';
 
 const useGetRegistros = () => {
@@ -41,6 +50,19 @@ const useGetRegistros = () => {
           }))
         : []
     };
+  }, []);
+
+  const getSyncRegistros = useCallback(async () => {
+    try {
+      const querySnapshot = await getDocs(
+        query(collection(db, FIRESTORE_CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN))
+      );
+      for (const doc of querySnapshot.docs) {
+        console.log('🚀 ~ for...of ~ doc:', doc.data()?.domain, doc.data()?.tiposRegistros);
+      }
+    } catch (error: any) {
+      DebugUtil.logError('Error al sincronizar registros: ' + error.message, error);
+    }
   }, []);
 
   const getRegistroPerClienteType = useCallback(
@@ -113,6 +135,7 @@ const useGetRegistros = () => {
   }, [unsubRefs]);
 
   return {
+    getSyncRegistros,
     getRegistroPerClienteType,
     getRegistroPerClienteTypeListener,
     unsubscribeClienteTipo
