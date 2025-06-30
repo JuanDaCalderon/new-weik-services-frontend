@@ -91,7 +91,7 @@ const TableroNoticias = memo(function TableroNoticias() {
   return (
     noticiasData.length > 0 && (
       <Col className="p-0 m-0" xs={12} xl={isExpanded ? 3 : 2} xxl={isExpanded ? 2 : 1}>
-        <Card>
+        <Card className="mb-2">
           <Card.Body className="position-relative">
             <Card.Header className="p-0 pb-1 d-flex align-items-center gap-2">
               <h4 className="header-title text-dark text-opacity-75 d-flex align-items-center w-auto m-0 pb-0 pt-1">

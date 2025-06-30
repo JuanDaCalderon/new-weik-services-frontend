@@ -9,6 +9,7 @@ import {useAppSelector} from '@/store';
 import {selectActiveNoticias, selectClientes, selectEmployees, selectNoticiasIsExpanded} from '@/store/selectores';
 import {useTranslation} from 'react-i18next';
 import {useGetEmployees} from '@/endpoints';
+import {Dashboard} from '@/components/Dashboard';
 const TabRegisters = lazy(() => import('@/pages/clientes/registros/TabRegisters'));
 
 const Cliente = memo(function Cliente() {
@@ -79,30 +80,35 @@ const Cliente = memo(function Cliente() {
       <Row>
         <TableroNoticias />
         <Col xs={12} xl={xl} xxl={xxl} className="px-0 px-xl-2">
-          <Card>
-            <Card.Body>
-              <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k ?? undefined)}>
-                <Nav variant="tabs" className="nav-bordered" as="ul">
-                  {tabContents.map((tab, index) => (
-                    <Nav.Item as="li" key={index.toString()}>
-                      <Nav.Link className="px-2 pb-1 pt-0" as={Link} to="" eventKey={tab.id}>
-                        <span className="d-block">{tab.title}</span>
-                      </Nav.Link>
-                    </Nav.Item>
-                  ))}
-                </Nav>
-                <Tab.Content>
-                  {tabContents.map((tab, index) => (
-                    <Tab.Pane eventKey={tab.id} id={tab.id} key={index.toString()}>
-                      <Row>
-                        <Col xs={12}>{tabComponentsMap[tab.id]}</Col>
-                      </Row>
-                    </Tab.Pane>
-                  ))}
-                </Tab.Content>
-              </Tab.Container>
-            </Card.Body>
-          </Card>
+          <Dashboard></Dashboard>
+          <Row>
+            <Col>
+              <Card>
+                <Card.Body>
+                  <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k ?? undefined)}>
+                    <Nav variant="tabs" className="nav-bordered" as="ul">
+                      {tabContents.map((tab, index) => (
+                        <Nav.Item as="li" key={index.toString()}>
+                          <Nav.Link className="px-2 pb-1 pt-0" as={Link} to="" eventKey={tab.id}>
+                            <span className="d-block">{tab.title}</span>
+                          </Nav.Link>
+                        </Nav.Item>
+                      ))}
+                    </Nav>
+                    <Tab.Content>
+                      {tabContents.map((tab, index) => (
+                        <Tab.Pane eventKey={tab.id} id={tab.id} key={index.toString()}>
+                          <Row>
+                            <Col xs={12}>{tabComponentsMap[tab.id]}</Col>
+                          </Row>
+                        </Tab.Pane>
+                      ))}
+                    </Tab.Content>
+                  </Tab.Container>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </ToastWrapper>

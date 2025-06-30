@@ -80,3 +80,8 @@ tr.isSubRegister > * {
   --ct-table-color-type: var(--ct-table-striped-color);
   --ct-table-bg-type: var(--ct-table-striped-bg);
 }
+
+.table.dashboard-table > :not(caption) > * > * {
+  padding-top: 0.2rem !important;
+  padding-bottom: 0.2rem !important;
+}
