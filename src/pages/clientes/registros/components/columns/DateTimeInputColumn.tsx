@@ -1,22 +1,31 @@
-import {memo, useCallback, useState, MouseEvent, FocusEvent} from 'react';
+import {memo, useCallback, useState, MouseEvent, FocusEvent, useMemo, JSX} from 'react';
 import type {Row as TableRow} from '@tanstack/react-table';
 import {Registros} from '@/types';
 import {Form} from 'react-bootstrap';
 import useUpdateRegistros from '@/endpoints/db/registros/useUpdateRegistros';
 import {useParams} from 'react-router-dom';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
-import {DateUtils as du} from '@/utils';
+import {DateUtils, DateUtils as du} from '@/utils';
 import {Timestamp} from 'firebase/firestore';
+import {REGISTRO_STATUS} from '@/constants';
 
 type FormControlElement = HTMLInputElement | HTMLTextAreaElement;
 type Props = {
   row: TableRow<Registros>;
   registerType: string;
   field: keyof Registros;
+  showStatusIcons?: boolean;
 };
-const DateTimeInputColumn = memo(function DateTimeInputColumn({row, registerType, field}: Props) {
+const DateTimeInputColumn = memo(function DateTimeInputColumn({
+  row,
+  registerType,
+  field,
+  showStatusIcons = false
+}: Props) {
   const originalValue = row.original[field] as string;
   const id = row.original.id;
+  const deliveryDate = DateUtils.parseStringToDate(row.original.deliverAt);
+  const status = row.original.estado as REGISTRO_STATUS;
   const [inputValue, setInputValue] = useState<string>(
     du.formatDateToDatetimeLocal(du.parseStringToDate(originalValue))
   );
@@ -39,8 +48,35 @@ const DateTimeInputColumn = memo(function DateTimeInputColumn({row, registerType
     },
     [cliente, id, originalValue, registerType, updateRegistroPerClienteType]
   );
+
+  const statusIcon: JSX.Element = useMemo(() => {
+    const now = new Date();
+    const startOfToday = new Date(now);
+    startOfToday.setHours(0, 0, 0, 0);
+    const endOfToday = new Date(now);
+    endOfToday.setHours(23, 59, 59, 999);
+    if (status === REGISTRO_STATUS.COMPLETADO) return <i className="mdi mdi-check-decagram text-primary mx-1" />;
+    if (status === REGISTRO_STATUS.ENTREGADO) return <i className="mdi mdi-check-decagram text-success mx-1" />;
+
+    const inputTime = deliveryDate.getTime();
+
+    const icon =
+      inputTime < startOfToday.getTime() ? (
+        <i className="mdi mdi-skull text-dark mx-1" />
+      ) : inputTime > endOfToday.getTime() ? (
+        <></>
+      ) : (
+        <i className="mdi mdi-alert text-danger mx-1" />
+      );
+
+    return icon;
+  }, [deliveryDate, status]);
+
   return (
-    <div className="w-100 h-100" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div
+      className="w-100 h-100 d-flex justify-content-between align-content-center align-items-center"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
       {isUpdatingRegistro ? (
         <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
       ) : (
@@ -55,6 +91,7 @@ const DateTimeInputColumn = memo(function DateTimeInputColumn({row, registerType
           onBlurCapture={onDispatchAction}
         />
       )}
+      {showStatusIcons && statusIcon}
     </div>
   );
 });

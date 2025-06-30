@@ -133,20 +133,21 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
         header: 'Fecha de entrega',
         accessorKey: 'deliverAt',
         minSize: 160,
-        size: 240,
+        size: 260,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(DateTimeInputColumn, {
             row: cellContext.row,
             registerType,
-            field: 'deliverAt'
+            field: 'deliverAt',
+            showStatusIcons: true
           })
       },
       {
         header: 'Proyecto',
         accessorKey: 'nombre',
-        minSize: 90,
-        size: 220,
+        minSize: 80,
+        size: 200,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(TextInputColumn, {
@@ -159,8 +160,8 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Link',
         accessorKey: 'link',
-        minSize: 70,
-        size: 180,
+        minSize: 60,
+        size: 160,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(LinkColumn, {
@@ -172,8 +173,8 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Cliente',
         accessorKey: 'cliente',
-        minSize: 90,
-        size: 220,
+        minSize: 80,
+        size: 200,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(TextInputColumn, {
@@ -185,8 +186,8 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Solicitante',
         accessorKey: 'solicitante',
-        minSize: 80,
-        size: 200,
+        minSize: 60,
+        size: 180,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(TextInputColumn, {
@@ -196,10 +197,10 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
           })
       },
       {
-        header: 'Número de orden',
+        header: 'Núm de orden',
         accessorKey: 'numeroOrden',
         minSize: 80,
-        size: 140,
+        size: 120,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(TextInputColumn, {
@@ -212,7 +213,7 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
         header: 'Prioridad',
         accessorKey: 'prioridad',
         minSize: 80,
-        size: 140,
+        size: 130,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(SelectInputColumn, {
@@ -229,7 +230,7 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
         header: 'Encargado',
         accessorKey: 'encargado',
         minSize: 80,
-        size: 150,
+        size: 140,
         enableResizing: true,
         cell: (cellContext) =>
           createElement(SelectInputColumn, {
@@ -243,7 +244,7 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       ...customFields.map((field) => ({
         header: field.key.charAt(0).toUpperCase() + field.key.slice(1),
         accessorKey: field.key,
-        size: field.type === CUSTOM_FIELD_TYPE.BOOLEAN || field.type === CUSTOM_FIELD_TYPE.NUMBER ? 90 : 140,
+        size: field.type === CUSTOM_FIELD_TYPE.BOOLEAN || field.type === CUSTOM_FIELD_TYPE.NUMBER ? 80 : 120,
         minSize: 40,
         enableResizing: true,
         ...(field.type === CUSTOM_FIELD_TYPE.BOOLEAN && {
@@ -287,7 +288,7 @@ export const useGetColumns = (tiposRegistros: TipoRegistro[] = [], registerType:
       {
         header: 'Estado',
         accessorKey: 'estado',
-        size: 150,
+        size: 140,
         enableResizing: false,
         cell: (cellContext) =>
           createElement(SelectInputColumn, {
