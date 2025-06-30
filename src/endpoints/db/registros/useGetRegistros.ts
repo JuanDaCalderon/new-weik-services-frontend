@@ -14,7 +14,7 @@ import {
   where
 } from 'firebase/firestore';
 import {FIRESTORE_CLIENTES_PATH, REGISTRO_STATUS, REGISTRO_PRIORIDAD, MAIN_DOMAIN} from '@/constants';
-import {Registros, RegistrosToDb} from '@/types';
+import {Registros, RegistrosToDb, TipoRegistro as TR} from '@/types';
 
 const useGetRegistros = () => {
   const dispatch = useDispatch();
@@ -52,19 +52,6 @@ const useGetRegistros = () => {
     };
   }, []);
 
-  const getSyncRegistros = useCallback(async () => {
-    try {
-      const querySnapshot = await getDocs(
-        query(collection(db, FIRESTORE_CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN))
-      );
-      for (const doc of querySnapshot.docs) {
-        console.log('🚀 ~ for...of ~ doc:', doc.data()?.domain, doc.data()?.tiposRegistros);
-      }
-    } catch (error: any) {
-      DebugUtil.logError('Error al sincronizar registros: ' + error.message, error);
-    }
-  }, []);
-
   const getRegistroPerClienteType = useCallback(
     async (cliente: string, tipo: string, shouldFilterEntregados = false): Promise<void> => {
       dispatch(isLoadingRegistrosPerCliente({cliente, tipo, isLoading: true}));
@@ -86,6 +73,26 @@ const useGetRegistros = () => {
     },
     [dispatch, getMapRegistros]
   );
+
+  const getSyncRegistros = useCallback(async () => {
+    try {
+      const querySnapshot = await getDocs(
+        query(collection(db, FIRESTORE_CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN))
+      );
+      for (const doc of querySnapshot.docs) {
+        const cliente = doc.data()?.domain as string;
+        const tiposRegistros = ((doc.data()?.tiposRegistros || []) as TR[]).map(({tipo}) => tipo.toUpperCase());
+        if (cliente) {
+          for (const tipo of tiposRegistros) {
+            await getRegistroPerClienteType(cliente, tipo);
+          }
+          DebugUtil.logSuccess(`Registros sincronizados para el cliente: ${cliente}`);
+        }
+      }
+    } catch (error: any) {
+      DebugUtil.logError('Error al sincronizar registros: ' + error.message, error);
+    }
+  }, [getRegistroPerClienteType]);
 
   const getRegistroPerClienteTypeListener = useCallback(
     (cliente: string, tipo: string, shouldFilterEntregados = false) => {

@@ -1,5 +1,5 @@
 import {RootState} from '@/store';
-import {TypeRegister} from '@/types';
+import {ClienteRegistros, TypeRegister} from '@/types';
 import {organizeRegistrosConJerarquia} from '@/utils';
 import {createSelector} from '@reduxjs/toolkit';
 
@@ -19,3 +19,5 @@ export const selectRegistrosByClienteYTipo = (cliente: string, tipo: string) =>
       } as TypeRegister;
     }
   );
+
+export const selectRegistros = (state: RootState): Record<string, ClienteRegistros> => state.registros.registros;

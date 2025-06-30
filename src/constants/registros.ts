@@ -40,6 +40,3 @@ export const REGISTRO_FILTER_MODE_DEFAULT: RegistrosFilterMode = {
   isInRangeDates: false,
   isInPrioridad: false
 };
-
-export const SESSIONSTORAGE_LOAD_DELIVERED_RECORDS = 'shouldLoadDeliveredRecords';
-export const SESSIONSTORAGE_LOAD_PENDING_RECORDS = 'shouldLoadPendingRecords';

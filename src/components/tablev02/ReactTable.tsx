@@ -59,7 +59,7 @@ const ReactTable = <RowType,>({
 
   const [rowSelection, setRowSelection] = useState({});
 
-  const [expanded, setExpanded] = useState<ExpandedState>({});
+  const [expanded, setExpanded] = useState<ExpandedState>(true);
 
   const table = useReactTable({
     data,

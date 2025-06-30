@@ -1,16 +1,22 @@
 import {MenuItemType, NavbarProps} from '@/types';
 import AppMenu from '@/layouts/Horizontal/Menu';
 import {Collapse, Container} from 'react-bootstrap';
-import {memo, useMemo} from 'react';
+import {memo, useEffect, useMemo} from 'react';
 import {useAppSelector} from '@/store';
 import {selectClientes, selectUser} from '@/store/selectores';
 import {navBarFilterByPermissions} from '@/utils';
 import {HORIZONTAL_MENU_ITEMS} from '@/common';
 import {CLIENTES_ROUTER_PATH} from '@/constants';
+import useGetRegistros from '@/endpoints/db/registros/useGetRegistros';
 
 const Navbar = ({isMenuOpened}: NavbarProps) => {
   const user = useAppSelector(selectUser);
   const clientes = useAppSelector(selectClientes);
+  const {getSyncRegistros} = useGetRegistros();
+
+  useEffect(() => {
+    getSyncRegistros();
+  }, [getSyncRegistros]);
 
   const menuItems: MenuItemType[] = useMemo(() => {
     return HORIZONTAL_MENU_ITEMS.map((menuItem) => {

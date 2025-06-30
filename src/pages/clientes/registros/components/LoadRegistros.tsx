@@ -12,6 +12,12 @@ type Props = {
 const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, isLoading}: Props) {
   const {t} = useTranslation();
 
+  const boolValidation = useMemo(() => {
+    if (!isLoading && checkRecords.checkPendingRecords) return true;
+    if (!isLoading && checkRecords.checkDeliveredRecords) return false;
+    return true;
+  }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading]);
+
   const titleCopy: string = useMemo(() => {
     let copy = t('clientes.registros.loading');
     if (!isLoading && checkRecords.checkPendingRecords) copy = t('clientes.registros.pending');
@@ -25,6 +31,7 @@ const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, 
     if (!isLoading && checkRecords.checkDeliveredRecords) copy = t('clientes.registros.mobile.delivered');
     return copy;
   }, [checkRecords.checkDeliveredRecords, checkRecords.checkPendingRecords, isLoading, t]);
+
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -34,6 +41,11 @@ const LoadRegistros = memo(function LoadRegistros({checkRecords, onToggleCheck, 
         <i className="mdi mdi-dots-vertical m-0 p-0" />
         <span className="d-none d-md-inline fw-bold font-14 lh-1 m-0 p-0">{titleCopy}</span>
         <span className="d-none d-sm-inline d-md-none fw-bold font-14 lh-1 m-0 p-0">{titleCopyMobile}</span>
+        {boolValidation ? (
+          <i className="mdi mdi-alert-circle font-16 ms-1 text-danger" />
+        ) : (
+          <i className="mdi mdi-check-circle font-16 ms-1 text-success" />
+        )}
       </Dropdown.Toggle>
       <Dropdown.Menu style={{minWidth: 'max-content', width: 'max-content'}}>
         <Row className="mx-0 my-1 p-0">

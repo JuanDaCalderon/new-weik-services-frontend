@@ -1,14 +1,12 @@
 import {useCallback, useEffect, useState} from 'react';
-import {SessionStorageUtil} from '@/utils';
-import {SESSIONSTORAGE_LOAD_PENDING_RECORDS, SESSIONSTORAGE_LOAD_DELIVERED_RECORDS} from '@/constants';
 import useGetRegistros from '@/endpoints/db/registros/useGetRegistros';
 import useClearRegistros from '@/endpoints/db/registros/useClearRegistros';
 import {CheckRecordsState} from '@/pages/clientes/registros/types/registros';
 
 export const useLoadRegistros = (cliente: string | undefined, registerType: string, registrosLength: number = 0) => {
   const [checkRecords, setCheckRecords] = useState<CheckRecordsState>({
-    checkPendingRecords: SessionStorageUtil.getItem<boolean>(SESSIONSTORAGE_LOAD_PENDING_RECORDS) ?? true,
-    checkDeliveredRecords: SessionStorageUtil.getItem<boolean>(SESSIONSTORAGE_LOAD_DELIVERED_RECORDS) ?? false
+    checkPendingRecords: true,
+    checkDeliveredRecords: false
   });
   const {getRegistroPerClienteTypeListener, unsubscribeClienteTipo} = useGetRegistros();
   const {clearRegistros} = useClearRegistros();
@@ -69,8 +67,6 @@ export const useLoadRegistros = (cliente: string | undefined, registerType: stri
         : {checkPendingRecords: false, checkDeliveredRecords: checked};
 
     setCheckRecords(newState);
-    SessionStorageUtil.setItem(SESSIONSTORAGE_LOAD_PENDING_RECORDS, newState.checkPendingRecords);
-    SessionStorageUtil.setItem(SESSIONSTORAGE_LOAD_DELIVERED_RECORDS, newState.checkDeliveredRecords);
   };
 
   return {

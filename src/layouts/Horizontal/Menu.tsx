@@ -1,8 +1,11 @@
-import React, {useEffect, useState, useCallback, memo} from 'react';
+import React, {useEffect, useState, useCallback, memo, useMemo, JSX} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {AppMenuProps, MenuItems, MenuItemType} from '@/types';
 import classNames from 'classnames';
 import {findAllParent, findMenuItem} from '@/layouts/utils/menu';
+import {CLIENTES_ROUTER_PATH, REGISTRO_STATUS} from '@/constants';
+import {useAppSelector} from '@/store';
+import {selectRegistros} from '@/store/selectores';
 
 const MenuItemWithChildren = memo(function MenuItemWithChildren({
   item,
@@ -99,10 +102,27 @@ const MenuItem = memo(function MenuItem({item, className, linkClassName}: MenuIt
 });
 
 const MenuItemLink = memo(function MenuItemLink({item, className}: MenuItems) {
+  const registros = useAppSelector(selectRegistros);
+
+  const pendingRegisters: JSX.Element = useMemo(() => {
+    if (item.parentKey === CLIENTES_ROUTER_PATH) {
+      const data = registros?.[item.key.split('/').at(-1) || ''] || {};
+      let totalRegistros = 0;
+      for (const tipo in data) {
+        const registros = data[tipo]?.registros ?? [];
+        const registrosValidos = registros.filter((registro) => registro.estado !== REGISTRO_STATUS.ENTREGADO);
+        totalRegistros += registrosValidos.length;
+      }
+      if (totalRegistros === 0) return <i className="mdi mdi-check-circle text-success" />;
+      else return <span className="mb-1 badge rounded-pill bg-danger text-center">{totalRegistros}</span>;
+    } else return <></>;
+  }, [item.key, item.parentKey, registros]);
+
   return (
     <Link to={item.url!} target={item.target} className={className} data-menu-key={item.key} data-url-match={item.url}>
       {item.icon && <i className={item.icon}></i>}
       <span> {item.label} </span>
+      {pendingRegisters}
     </Link>
   );
 });
