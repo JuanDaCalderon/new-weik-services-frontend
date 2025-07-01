@@ -42,7 +42,8 @@ export default function useRoles() {
         updatedDate: DateUtils.formatShortDate(DateUtils.parseStringToDate(rol.fechaActualizacion), true),
         RolePermisos: `${numeroRoles} ${numeroRoles === 1 ? 'permiso' : 'permisos'}`,
         RoleUsuarios: !isLoadingEmployees ? `${numeroUsuarios} ${numeroUsuarios === 1 ? 'usuario' : 'usuarios'}` : null,
-        usuarios: employeesFromStore.filter((employee) => employee.roles.some((thisRol) => thisRol.id === String(id)))
+        usuarios: employeesFromStore.filter((employee) => employee.roles.some((thisRol) => thisRol.id === String(id))),
+        isMainRol: rol.isMainRol || false // Aseguramos que el campo isMainRol exista
       };
     });
   }, [employeesFromStore, isLoadingEmployees, rolesFromStore]);

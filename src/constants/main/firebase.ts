@@ -11,10 +11,15 @@ import {
   VACACIONES_KEY
 } from './keys';
 
+export const MAIN_ROL_ID = '1';
+export const MAIN_ROL_NAME = 'superadministrador';
+export const MAIN_DEFAULT_PASSWORD = '000000';
+
 export const STORAGE_LOGOS_CLIENTES_PATH = CLIENTES_KEY;
 export const STORAGE_DOCS_CLIENTES_PATH = `${CLIENTES_KEY}Docs`;
 export const STORAGE_NOTICIAS_PATH = NOTICIAS_KEY;
 export const STORAGE_APPS_PATH = APPS_KEY;
+export const STORAGE_USUARIOS_PATH = USUARIOS_KEY;
 
 export const FIRESTORE_USUARIOS_PATH = USUARIOS_KEY;
 export const FIRESTORE_CLIENTES_PATH = CLIENTES_KEY;

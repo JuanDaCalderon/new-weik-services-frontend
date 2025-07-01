@@ -128,6 +128,7 @@ const RoleUsuariosColumn = memo(function RoleUsuariosColumn({row}: {row: Row<thi
 });
 
 const EliminarRol = memo(function EliminarRol({row}: {row: Row<thisRol>}) {
+  const isMainRol = row.original.isMainRol || false;
   const user = useAppSelector(selectUser);
   const employees = useAppSelector(selectEmployees);
   const [rolName, setRolName] = useState<string>('');
@@ -192,6 +193,8 @@ const EliminarRol = memo(function EliminarRol({row}: {row: Row<thisRol>}) {
   const canDeleteRoles = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.eliminarRoles, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
+  if (isMainRol) return <span className="text-danger">Rol principal</span>;
 
   return (
     <>

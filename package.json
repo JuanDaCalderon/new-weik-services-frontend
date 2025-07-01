@@ -11,6 +11,8 @@
     "lint": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "sync-permisos": "tsx scripts/syncPermisos.ts",
+    "create-main-rol": "tsx scripts/createMainRole.ts",
+    "create-main-user": "tsx scripts/createMainUser.ts",
     "users-offline": "tsx scripts/offlineUsuarios.ts"
   },
   "dependencies": {

@@ -2,7 +2,6 @@ export * from './main/routes';
 export * from './main/permisos';
 export * from './main/store';
 export * from './main/firebase';
-export * from './temp';
 export * from './dates';
 export * from './users';
 export * from './themeContext';

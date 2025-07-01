@@ -60,6 +60,7 @@ export type Employee = {
   permisosDenegados: Permiso[];
   horasTrabajo: HorasTrabajoType[];
   informacionLaboral: UserWorkData;
+  isMainUser?: boolean;
 };
 
 export type PartialEmployee = Partial<Employee>;

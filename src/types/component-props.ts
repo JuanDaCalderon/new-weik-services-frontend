@@ -15,6 +15,7 @@ export type ReactTableProps<RowType> = {
   tableClass?: string;
   theadClass?: string;
   searchBoxClass?: string;
+  shouldStartExpanded?: boolean;
   renderSubComponent?: (props: {row: Row<RowType>}) => ReactElement;
   getRowCanExpand?: (row: Row<RowType>) => boolean;
 };

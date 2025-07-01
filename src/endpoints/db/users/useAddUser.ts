@@ -15,7 +15,8 @@ export default function useAddUser() {
       const newUserDocRef = await addDoc(collection(db, FIRESTORE_USUARIOS_PATH), {
         ...user,
         fechaNacimiento: Timestamp.now(),
-        fechaCreacion: Timestamp.now()
+        fechaCreacion: Timestamp.now(),
+        isMainUser: false // Ningun usuario creado desde la aplicacion puede ser el usuario principal
       });
       toast.success(`Has agregado ${user.email.toLowerCase()} como usuario correctamente`);
       return newUserDocRef.id;

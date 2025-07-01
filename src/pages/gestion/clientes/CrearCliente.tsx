@@ -132,12 +132,12 @@ const CrearCliente = memo(function CrearCliente() {
         </Col>
         <Col xs={12} className="d-flex gap-3">
           <div>
-            <h5 className="d-inline-block weik-text-grey-300 my-0 me-1">Nombre del cliente:</h5>
-            <p className="d-inline-block weik-text-grey-200 my-0">Nombre completo del cliente</p>
+            <h5 className="d-inline-block my-0 me-1">Nombre del cliente:</h5>
+            <p className="d-inline-block my-0">Nombre completo del cliente</p>
           </div>
           <div>
-            <h5 className="d-inline-block weik-text-grey-300 my-0 me-1">Dominio del cliente:</h5>
-            <p className="d-inline-block weik-text-grey-200 my-0">
+            <h5 className="d-inline-block my-0 me-1">Dominio del cliente:</h5>
+            <p className="d-inline-block my-0">
               @<b>dominio</b>.com, donde se asociarán los correos de los usuarios al cliente. No debe contener espacios.
             </p>
           </div>

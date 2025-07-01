@@ -49,8 +49,16 @@ const useRolesYPermisos = () => {
       unsubscribe = onSnapshot(query(collection(db, FIRESTORE_ROLES_PATH)), async (querySnapshotDocs) => {
         const roles: Rol[] = [];
         for (const doc of querySnapshotDocs.docs) {
-          const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion, usuarioUpdated} =
-            doc.data();
+          const {
+            rol,
+            descripcion,
+            permisos,
+            fechaCreacion,
+            fechaActualizacion,
+            usuarioCreacion,
+            usuarioUpdated,
+            isMainRol
+          } = doc.data();
           const thisPermisos: Promise<Permiso>[] = getPermisos(permisos);
           const docSnap = await getDoc(usuarioCreacion as DocumentReference);
           const thisUsuarioCreacion: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'> = {
@@ -80,7 +88,8 @@ const useRolesYPermisos = () => {
               ? DateUtils.formatDateToString((fechaActualizacion as Timestamp).toDate())
               : DateUtils.formatDateToString(new Date()),
             usuarioCreacion: thisUsuarioCreacion,
-            usuarioUpdated: thisUsuarioUpdated
+            usuarioUpdated: thisUsuarioUpdated,
+            isMainRol: isMainRol ?? false // Aseguramos que el campo isMainRol exista
           });
         }
         dispatch(clearRoles());
@@ -98,8 +107,16 @@ const useRolesYPermisos = () => {
       const roles: Rol[] = [];
       const queryDocs = await getDocs(query(collection(db, FIRESTORE_ROLES_PATH)));
       for (const doc of queryDocs.docs) {
-        const {rol, descripcion, permisos, fechaCreacion, fechaActualizacion, usuarioCreacion, usuarioUpdated} =
-          doc.data();
+        const {
+          rol,
+          descripcion,
+          permisos,
+          fechaCreacion,
+          fechaActualizacion,
+          usuarioCreacion,
+          usuarioUpdated,
+          isMainRol
+        } = doc.data();
         const thisPermisos: Promise<Permiso>[] = getPermisos(permisos);
         const docSnap = await getDoc(usuarioCreacion as DocumentReference);
         const thisUsuarioCreacion: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'> = {
@@ -129,7 +146,8 @@ const useRolesYPermisos = () => {
             ? DateUtils.formatDateToString((fechaActualizacion as Timestamp).toDate())
             : DateUtils.formatDateToString(new Date()),
           usuarioCreacion: thisUsuarioCreacion,
-          usuarioUpdated: thisUsuarioUpdated
+          usuarioUpdated: thisUsuarioUpdated,
+          isMainRol: isMainRol ?? false // Aseguramos que el campo isMainRol exista
         });
       }
       dispatch(setRoles(roles));
@@ -256,7 +274,8 @@ const useRolesYPermisos = () => {
           usuarioCreacion: userDocRef,
           usuarioUpdated: userDocRef,
           fechaActualizacion: Timestamp.now(),
-          fechaCreacion: Timestamp.now()
+          fechaCreacion: Timestamp.now(),
+          isMainRol: false
         });
         DebugUtil.logSuccess(`Rol ${rolCreationBasics.rol} creado correctamente`);
         toast.success(`Rol ${rolCreationBasics.rol} creado correctamente`);

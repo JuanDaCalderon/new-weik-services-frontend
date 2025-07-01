@@ -203,6 +203,7 @@ const Registros = memo(function Registros({registerType, customFields}: Registro
             showPagination
             isSearchable
             isSelectable
+            shouldStartExpanded
           />
         )}
         {registros.length > 0 && exportData.length > 0 && pdf && (

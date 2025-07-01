@@ -36,20 +36,20 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-$weikblue: #10abcd;
-$weikorange: #dd9933;
-$weikpurple: #993399;
+$devikgoblue: #10abcd;
+$devikgoorange: #dd9933;
+$devikgopurple: #993399;
 
 $blue: #2c8ef8;
 $indigo: #727cf5;
-$purple: $weikpurple;
+$purple: $devikgopurple;
 $pink: #ff679b;
 $red: #fa5c7c;
-$orange: $weikorange;
+$orange: $devikgoorange;
 $yellow: #eeaa36;
 $green: #0acf97;
 $teal: #02a8b5;
-$cyan: $weikblue;
+$cyan: $devikgoblue;
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -68,9 +68,9 @@ $colors: (
   'white': $white,
   'gray': $gray-600,
   'gray-dark': $gray-800,
-  'weikblue': $weikblue,
-  'weikorange': $weikorange,
-  'weikpurple': $weikpurple
+  'devikgoblue': $devikgoblue,
+  'devikgoorange': $devikgoorange,
+  'devikgopurple': $devikgopurple
 );
 // scss-docs-end colors-map
 
@@ -305,7 +305,7 @@ $cyans: (
 // fusv-enable
 
 // scss-docs-start theme-color-variables
-$primary: $weikblue;
+$primary: $devikgoblue;
 $secondary: $gray-700;
 $success: $green;
 $info: $cyan;

@@ -50,6 +50,7 @@ const UsuarioColumn = memo(function UsuarioColumn({row}: {row: Row<Employee>}) {
 });
 
 const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employee>}) {
+  const isMainUser = row.original.isMainUser || false;
   const user = useAppSelector(selectUser);
   const [userEmail, setUserEmail] = useState<string>('');
   const [isReadyToBeDeleted, setIsReadyToBeDeleted] = useState<boolean>(true);
@@ -166,6 +167,8 @@ const UsuariosAcciones = memo(function UsuariosAcciones({row}: {row: Row<Employe
   const canDeleteUsuarios = useMemo(() => {
     return hasPermission(PERMISOS_MAP_IDS.eliminarUsuarios, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
+
+  if (isMainUser) return <span className="text-danger">Usuario principal</span>;
 
   return (
     <>

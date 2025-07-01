@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
-import {collection, getDocs, onSnapshot, query, Timestamp, Unsubscribe, where} from 'firebase/firestore';
+import {collection, getDocs, onSnapshot, query, Timestamp, Unsubscribe} from 'firebase/firestore';
 import {db} from '@/firebase';
-import {FIRESTORE_CLIENTES_PATH, MAIN_DOMAIN} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH} from '@/constants';
 import {DateUtils, DebugUtil} from '@/utils';
 import {useDispatch} from 'react-redux';
 import {clearClientes, isLoadingClientes, setClientes} from '@/store/slices/clientes';
@@ -14,51 +14,48 @@ const useGetClients = () => {
     dispatch(isLoadingClientes(true));
     let unsubscribe: Unsubscribe = {} as Unsubscribe;
     try {
-      unsubscribe = onSnapshot(
-        query(collection(db, FIRESTORE_CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN)),
-        async (querySnapshotDocs) => {
-          const clientes: Cliente[] = [];
-          for (const doc of querySnapshotDocs.docs) {
-            const {
-              branding,
-              logo,
-              nombre,
-              domain,
-              fechaCreacion,
-              documento,
-              direccionFisicaCliente,
-              emailPersonaContacto,
-              idNitCliente,
-              nombrePersonaContacto,
-              telefonoCliente,
-              telefonoPersonaContacto,
-              tiposRegistros
-            } = doc.data() as Cliente;
-            clientes.push({
-              id: doc.id,
-              branding: branding || '',
-              logo: logo || '',
-              documento: documento || '',
-              nombre: nombre || '',
-              domain: domain || '',
-              direccionFisicaCliente: direccionFisicaCliente || '',
-              emailPersonaContacto: emailPersonaContacto || '',
-              idNitCliente: idNitCliente || '',
-              nombrePersonaContacto: nombrePersonaContacto || '',
-              telefonoCliente: telefonoCliente || '',
-              telefonoPersonaContacto: telefonoPersonaContacto || '',
-              fechaCreacion: fechaCreacion
-                ? DateUtils.formatDateToString((fechaCreacion as unknown as Timestamp).toDate())
-                : DateUtils.formatDateToString(new Date()),
-              tiposRegistros: tiposRegistros ?? []
-            });
-          }
-          dispatch(clearClientes());
-          dispatch(setClientes(clientes));
-          dispatch(isLoadingClientes(false));
-          DebugUtil.logSuccess('Se han consultado los clientes correctamente y ya deben estar en el store', clientes);
+      unsubscribe = onSnapshot(query(collection(db, FIRESTORE_CLIENTES_PATH)), async (querySnapshotDocs) => {
+        const clientes: Cliente[] = [];
+        for (const doc of querySnapshotDocs.docs) {
+          const {
+            branding,
+            logo,
+            nombre,
+            domain,
+            fechaCreacion,
+            documento,
+            direccionFisicaCliente,
+            emailPersonaContacto,
+            idNitCliente,
+            nombrePersonaContacto,
+            telefonoCliente,
+            telefonoPersonaContacto,
+            tiposRegistros
+          } = doc.data() as Cliente;
+          clientes.push({
+            id: doc.id,
+            branding: branding || '',
+            logo: logo || '',
+            documento: documento || '',
+            nombre: nombre || '',
+            domain: domain || '',
+            direccionFisicaCliente: direccionFisicaCliente || '',
+            emailPersonaContacto: emailPersonaContacto || '',
+            idNitCliente: idNitCliente || '',
+            nombrePersonaContacto: nombrePersonaContacto || '',
+            telefonoCliente: telefonoCliente || '',
+            telefonoPersonaContacto: telefonoPersonaContacto || '',
+            fechaCreacion: fechaCreacion
+              ? DateUtils.formatDateToString((fechaCreacion as unknown as Timestamp).toDate())
+              : DateUtils.formatDateToString(new Date()),
+            tiposRegistros: tiposRegistros ?? []
+          });
         }
-      );
+        dispatch(clearClientes());
+        dispatch(setClientes(clientes));
+        dispatch(isLoadingClientes(false));
+        DebugUtil.logSuccess('Se han consultado los clientes correctamente y ya deben estar en el store', clientes);
+      });
     } catch (error: any) {
       DebugUtil.logError(error.message, error);
     }
@@ -69,9 +66,7 @@ const useGetClients = () => {
     dispatch(isLoadingClientes(true));
     try {
       const clientes: Cliente[] = [];
-      const queryDocs = await getDocs(
-        query(collection(db, FIRESTORE_CLIENTES_PATH), where('domain', '!=', MAIN_DOMAIN))
-      );
+      const queryDocs = await getDocs(query(collection(db, FIRESTORE_CLIENTES_PATH)));
       for (const doc of queryDocs.docs) {
         const {
           branding,

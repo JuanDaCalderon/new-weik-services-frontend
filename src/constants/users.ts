@@ -1,6 +1,7 @@
 import {Option} from '@/types';
+import {MAIN_DEFAULT_PASSWORD} from './main/firebase';
 
-export const DEFAULT_PASSWORD = '000000';
+export const DEFAULT_PASSWORD = MAIN_DEFAULT_PASSWORD;
 
 export enum ESTADOS {
   online = 'online',

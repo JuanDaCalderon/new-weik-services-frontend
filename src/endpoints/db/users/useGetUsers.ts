@@ -58,7 +58,8 @@ const useGetUsers = () => {
           permisosOtorgados,
           permisosDenegados,
           horasTrabajo,
-          informacionLaboral
+          informacionLaboral,
+          isMainUser
         } = firstDoc.data();
         const thisRoles = getRoles(roles);
         const thisPermisosOtorgados = getPermisos(permisosOtorgados);
@@ -89,7 +90,8 @@ const useGetUsers = () => {
               checkIn: DateUtils.formatDateToString(h.checkIn.toDate()),
               checkOut: h.checkOut === null ? null : DateUtils.formatDateToString(h.checkOut.toDate())
             })) ?? [],
-          informacionLaboral: informacionLaboral ?? []
+          informacionLaboral: informacionLaboral ?? [],
+          isMainUser: isMainUser ?? false // Aseguramos que el campo isMainUser exista
         };
         DebugUtil.logSuccess('El usuario se ha consultado correctamente desde la base de datos', usuario);
       } catch (error: any) {

@@ -3,7 +3,7 @@ import {db, storage} from '@/firebase';
 import {useDispatch} from 'react-redux';
 import {FileType} from '@/components';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
-import {USUARIOS_PATH} from '@/constants';
+import {STORAGE_USUARIOS_PATH, USUARIOS_PATH} from '@/constants';
 import {doc, setDoc} from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import {DebugUtil} from '@/utils';
@@ -18,7 +18,7 @@ const useUserProfileImage = () => {
   const updateProfileImage = useCallback(
     async (image: FileType): Promise<void> => {
       const newImage = image;
-      const storageRef = ref(storage, `weik/users/${id}_${userName}`);
+      const storageRef = ref(storage, `${STORAGE_USUARIOS_PATH}/${id}_${userName}`);
       try {
         await uploadBytes(storageRef, newImage);
         const userImage = await getDownloadURL(storageRef);

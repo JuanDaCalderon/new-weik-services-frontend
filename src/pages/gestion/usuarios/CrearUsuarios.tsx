@@ -4,7 +4,7 @@ import {Employee, Option} from '@/types';
 import {useAppSelector} from '@/store';
 import Select, {MultiValue} from 'react-select';
 import {clientesOptionsSelector, rolesSelector, selectEmployees} from '@/store/selectores';
-import {ESTADOS, THIS_CLIENT_INFO} from '@/constants';
+import {DEFAULT_PASSWORD, ESTADOS} from '@/constants';
 import {checkIfUserExists, DebugUtil, generateUsername, isValidEmail} from '@/utils';
 import {useAddUser, useCreateUserAuth, useGetEmployees, useUpdateUser} from '@/endpoints';
 import toast from 'react-hot-toast';
@@ -19,16 +19,12 @@ const userDatosIniciales: Employee = {
 const CrearUsuarios = memo(function CrearUsuarios() {
   const users = useAppSelector(selectEmployees);
   const clientes = useAppSelector(clientesOptionsSelector);
-  const clientesOptions: Option[] = useMemo(() => {
-    const optionsClients: Option[] = [];
-    optionsClients.push({value: THIS_CLIENT_INFO.DOMAIN, label: THIS_CLIENT_INFO.LABEL}, ...clientes);
-    return optionsClients;
-  }, [clientes]);
+  const clientesOptions: Option[] = useMemo(() => [...clientes], [clientes]);
   const roles = useAppSelector(rolesSelector);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [deactivateAutoEmail, setDeactivateAutoEmail] = useState<boolean>(false);
-  const [clienteSelected, setClienteSelected] = useState<string>(clientesOptions[0].value);
-  const [password, setpassword] = useState<string>('000000');
+  const [clienteSelected, setClienteSelected] = useState<string>(clientesOptions?.[0]?.value || '');
+  const [password, setpassword] = useState<string>(DEFAULT_PASSWORD);
   const [selectedOptionsRoles, setSelectedOptionsRoles] = useState<{value: string; label: string}[]>([]);
   const [newUser, setNewUser] = useState<Employee>(userDatosIniciales);
   const [hasTouched, setHasTouched] = useState<boolean>(false);
@@ -95,7 +91,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
   const resetForm = useCallback(() => {
     setNewUser(userDatosIniciales);
     setSelectedOptionsRoles([]);
-    setClienteSelected(clientesOptions[0].value);
+    setClienteSelected(clientesOptions?.[0]?.value || '');
     setHasTouched(false);
   }, [clientesOptions]);
 
@@ -288,7 +284,7 @@ const CrearUsuarios = memo(function CrearUsuarios() {
                 }}></span>
             </div>
           </InputGroup>
-          <Form.Text className="text-muted">La contraseña por defecto sera 000000</Form.Text>
+          <Form.Text className="text-muted">La contraseña por defecto sera {DEFAULT_PASSWORD}</Form.Text>
         </Col>
         <Col xs={12} md={6}>
           <Form.Label className="mb-1" htmlFor="roles">

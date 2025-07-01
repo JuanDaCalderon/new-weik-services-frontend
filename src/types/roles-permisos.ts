@@ -15,6 +15,7 @@ export type Rol = {
   usuarioUpdated: Pick<Employee, 'email' | 'nombres' | 'apellidos' | 'userName' | 'userImage'>;
   fechaCreacion: string;
   fechaActualizacion: string;
+  isMainRol?: boolean;
 };
 
 export type PayLoadRolesPermisosType = {
@@ -48,6 +49,7 @@ export type thisRol = {
   RoleUsuarios: string | null;
   usuarios: Employee[];
   descripcion: string;
+  isMainRol?: boolean;
 };
 
 export interface PermisoByRoles extends Permiso {

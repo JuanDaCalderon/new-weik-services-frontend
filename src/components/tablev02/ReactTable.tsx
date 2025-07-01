@@ -46,6 +46,7 @@ const ReactTable = <RowType,>({
   searchBoxClass,
   theadClass,
   isSelectable,
+  shouldStartExpanded = false,
   renderSubComponent,
   getRowCanExpand
 }: ReactTableProps<RowType>) => {
@@ -59,7 +60,7 @@ const ReactTable = <RowType,>({
 
   const [rowSelection, setRowSelection] = useState({});
 
-  const [expanded, setExpanded] = useState<ExpandedState>(true);
+  const [expanded, setExpanded] = useState<ExpandedState>(shouldStartExpanded ? true : {});
 
   const table = useReactTable({
     data,
