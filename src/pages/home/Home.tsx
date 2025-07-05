@@ -19,7 +19,14 @@ import {
 } from '@/constants';
 import {useGetClients, useRolesYPermisos} from '@/endpoints';
 import {useAppSelector} from '@/store';
-import {permisosSelector, rolesSelector, selectClientes, selectUser} from '@/store/selectores';
+import {
+  permisosSelector,
+  rolesSelector,
+  selectActiveNoticias,
+  selectClientes,
+  selectNoticiasIsExpanded,
+  selectUser
+} from '@/store/selectores';
 import {hasPermission} from '@/utils';
 import {memo, useEffect, useMemo} from 'react';
 import {Card, Col, Dropdown, Row} from 'react-bootstrap';
@@ -29,6 +36,8 @@ import {Link} from 'react-router-dom';
 const Home = memo(function Home() {
   const {getRolesSync, getPermisosSync} = useRolesYPermisos();
   const {getClientesSync} = useGetClients();
+  const tableroNoticiasIsExpanded = useAppSelector(selectNoticiasIsExpanded);
+  const hasNoticias = useAppSelector(selectActiveNoticias);
   const clientes = useAppSelector(selectClientes);
   const roles = useAppSelector(rolesSelector);
   const permisos = useAppSelector(permisosSelector);
@@ -79,6 +88,16 @@ const Home = memo(function Home() {
     return hasPermission(PERMISOS_MAP_IDS.accesoReportes, user.roles, user.permisosOtorgados, user.permisosDenegados);
   }, [user.permisosDenegados, user.permisosOtorgados, user.roles]);
 
+  const xl = useMemo(() => {
+    if (hasNoticias) return tableroNoticiasIsExpanded ? 9 : 10;
+    else return 12;
+  }, [hasNoticias, tableroNoticiasIsExpanded]);
+
+  const xxl = useMemo(() => {
+    if (hasNoticias) return tableroNoticiasIsExpanded ? 10 : 11;
+    else return 12;
+  }, [hasNoticias, tableroNoticiasIsExpanded]);
+
   return (
     <ToastWrapper>
       <PageBreadcrumb title={t('home.title')} />
@@ -86,7 +105,7 @@ const Home = memo(function Home() {
       <Row>
         <TableroNoticias />
 
-        <Col>
+        <Col xs={12} xl={xl} xxl={xxl} className="px-0 px-xl-2">
           <Dashboard applyMobilePadding></Dashboard>
           <Row>
             <Col className="px-0 px-xl-2">
