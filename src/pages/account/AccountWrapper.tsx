@@ -22,7 +22,7 @@ function AccountWrapper({bottomLinks, children}: AccountWrapperProps) {
               <Card>
                 <Card.Header className="pt-3 pb-3 text-center bg-primary">
                   <Link to={LOGIN_ROUTER_PATH}>
-                    <Image className="w-50" fluid src={Logo} alt="devikgo" loading="lazy" />
+                    <Image className="w-75" fluid src={Logo} alt="devikgo" loading="lazy" />
                   </Link>
                 </Card.Header>
                 <Card.Body>{children}</Card.Body>

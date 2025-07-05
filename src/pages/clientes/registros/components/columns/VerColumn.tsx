@@ -8,7 +8,7 @@ import DetalleModalBody from '@/pages/clientes/registros/components/modal/Detall
 import {useAppSelector} from '@/store';
 import {selectisLoadingEmployees} from '@/store/selectores';
 
-const ComentariosColumn = memo(function ComentariosColumn({
+const VerColumn = memo(function VerColumn({
   row,
   registerType,
   showSubRegisterIcon = false
@@ -30,7 +30,7 @@ const ComentariosColumn = memo(function ComentariosColumn({
       <OverlayTrigger
         overlay={
           <Tooltip id="verRegistro">
-            Comentarios y anotaciones {isSubregister ? 'subregistro' : 'registro'} {thisRegister.nombre}
+            Ver {isSubregister ? 'subregistro' : 'registro'} {thisRegister.nombre}
           </Tooltip>
         }>
         <Button
@@ -53,4 +53,4 @@ const ComentariosColumn = memo(function ComentariosColumn({
   );
 });
 
-export default ComentariosColumn;
+export default VerColumn;

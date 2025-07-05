@@ -1,14 +1,26 @@
 import {memo, useCallback, useState, ChangeEvent, KeyboardEvent, MouseEvent} from 'react';
 import type {Row as TableRow} from '@tanstack/react-table';
 import {Registros} from '@/types';
-import {Form} from 'react-bootstrap';
+import {Button, Form, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import useUpdateRegistros from '@/endpoints/db/registros/useUpdateRegistros';
 import {useParams} from 'react-router-dom';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
 
 type FormControlElement = HTMLInputElement | HTMLTextAreaElement;
-type Props = {row: TableRow<Registros>; registerType: string; field: keyof Registros; showSubRowIcon?: boolean};
-const TextInputColumn = memo(function TextInputColumn({row, registerType, field, showSubRowIcon = false}: Props) {
+type Props = {
+  row: TableRow<Registros>;
+  registerType: string;
+  field: keyof Registros;
+  showSubRowIcon?: boolean;
+  showLinkIcon?: boolean;
+};
+const TextInputColumn = memo(function TextInputColumn({
+  row,
+  registerType,
+  field,
+  showSubRowIcon = false,
+  showLinkIcon = false
+}: Props) {
   const originalValue = row.original[field as keyof Registros] as string;
   const id = row.original.id;
   const [inputValue, setInputValue] = useState<string>(originalValue);
@@ -70,6 +82,19 @@ const TextInputColumn = memo(function TextInputColumn({row, registerType, field,
           onMouseLeave={onDispatchAction}
           onBlurCapture={onDispatchAction}
         />
+      )}
+      {showLinkIcon && row.original.link?.trim() !== '' && (
+        <OverlayTrigger overlay={<Tooltip id="link">{row.original.link}</Tooltip>}>
+          <Button
+            id="link"
+            as="a"
+            href={row.original.link}
+            target="_blank"
+            variant="outline-light py-0 px-1 d-flex align-items-center justify-content-center"
+            className=" border-0 ms-1">
+            <i className="uil-external-link-alt" />
+          </Button>
+        </OverlayTrigger>
       )}
     </div>
   );

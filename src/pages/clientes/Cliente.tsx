@@ -3,7 +3,7 @@ import {PageBreadcrumb} from '@/components';
 import {TableroNoticias} from '@/components/Noticias';
 import {ToastWrapper} from '@/components/Toast';
 import {Cliente as ClienteType, TabContentItem} from '@/types';
-import {Card, Col, Nav, Row, Tab} from 'react-bootstrap';
+import {Card, Col, Image, Nav, Row, Tab} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
 import {useAppSelector} from '@/store';
 import {selectActiveNoticias, selectClientes, selectEmployees, selectNoticiasIsExpanded} from '@/store/selectores';
@@ -20,6 +20,9 @@ const Cliente = memo(function Cliente() {
   const hasNoticias = useAppSelector(selectActiveNoticias);
   const {tiposRegistros} = useMemo(() => {
     return clientes.find((c) => c.domain === cliente) || ({tiposRegistros: []} as unknown as ClienteType);
+  }, [cliente, clientes]);
+  const {logo}: ClienteType = useMemo(() => {
+    return clientes.find((c) => c.domain === cliente) || ({} as ClienteType);
   }, [cliente, clientes]);
   const [tabContents, setTabContents] = useState<TabContentItem[]>(
     tiposRegistros.map((tipoRegistro) => ({
@@ -76,11 +79,23 @@ const Cliente = memo(function Cliente() {
 
   return (
     <ToastWrapper>
-      <PageBreadcrumb title={cliente ?? t('clientes.cliente.default')} />
+      <PageBreadcrumb title={t('clientes.cliente.default')} />
       <Row>
         <TableroNoticias />
         <Col xs={12} xl={xl} xxl={xxl} className="px-0 px-xl-2">
           <Dashboard></Dashboard>
+          <Row>
+            <Col xs={12} className="d-flex gap-1 align-items-center">
+              {logo && (
+                <Image
+                  src={logo}
+                  alt={cliente}
+                  className="img-fluid rounded-circle object-fit-cover ratio-1x1 avatar-xs"
+                />
+              )}
+              <h4 className="page-title text-dark text-opacity-75">{cliente || t('clientes.cliente.default')}</h4>
+            </Col>
+          </Row>
           <Row>
             <Col>
               <Card>

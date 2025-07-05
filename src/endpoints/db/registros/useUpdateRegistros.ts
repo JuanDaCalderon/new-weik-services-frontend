@@ -2,7 +2,7 @@ import {useCallback, useState} from 'react';
 import {db} from '@/firebase';
 import {DebugUtil} from '@/utils';
 import {doc, Timestamp, updateDoc} from 'firebase/firestore';
-import {FIRESTORE_CLIENTES_PATH} from '@/constants';
+import {FIRESTORE_CLIENTES_PATH, TOAST_DURATION_2X} from '@/constants';
 import toast from 'react-hot-toast';
 import {RegistrosToDb} from '@/types';
 import {useAppSelector} from '@/store';
@@ -27,7 +27,11 @@ const useUpdateRegistros = () => {
           updatedBy: id,
           updatedAt: Timestamp.now()
         });
-        toast.success(`Se ha actualizado el registro correctamente`);
+        const updatedFields = Object.keys(newRegistroValue);
+        const fieldUpdated: string = updatedFields.length > 0 ? updatedFields[0] : 'registro';
+        toast.success(`Se ha actualizado el ${fieldUpdated} correctamente`, {
+          duration: TOAST_DURATION_2X
+        });
       } catch (error: any) {
         toast.error('¡Ups ha ocurrido un error, intenta de nuevo más tarde!');
         DebugUtil.logError(error.message, error);

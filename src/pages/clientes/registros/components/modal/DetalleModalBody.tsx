@@ -1,14 +1,16 @@
-import {memo, ReactNode, useMemo, useState} from 'react';
-import {Card, Image} from 'react-bootstrap';
+import {memo, ReactNode, useCallback, useMemo, useState, ChangeEvent, KeyboardEvent, MouseEvent} from 'react';
+import {Button, Card, Form, Image} from 'react-bootstrap';
 import {Registros} from '@/types';
 import SimpleBar from 'simplebar-react';
 import ComentarioForm from './ComentarioForm';
-import logoTemp from '@/assets/images/logo.png';
+import logoTemp from '@/assets/images/logo-sm.png';
 import {Comentario} from '@/types';
 import {useAppSelector} from '@/store';
 import {selectEmployees} from '@/store/selectores';
 import {DateUtils, getNombreCompletoUser} from '@/utils';
 import {SkeletonLoader} from '@/components/SkeletonLoader';
+import useUpdateRegistros from '@/endpoints/db/registros/useUpdateRegistros';
+import {useParams} from 'react-router-dom';
 
 const ChatItemAvatar = memo(function ChatItemAvatar({userAvatar, postedOn}: {userAvatar: string; postedOn: string}) {
   const [hasLoad, setHasLoad] = useState<boolean>(false);
@@ -55,6 +57,7 @@ const ChatItem = memo(function ChatItem({
   );
 });
 
+type FormControlElement = HTMLInputElement | HTMLTextAreaElement;
 const DetalleModalBody = memo(function DetalleModalBody({
   registro,
   registerType
@@ -62,7 +65,34 @@ const DetalleModalBody = memo(function DetalleModalBody({
   registro: Registros;
   registerType: string;
 }) {
+  const originalValue = registro.link || '';
+  const id = registro.id;
+  const [inputValue, setInputValue] = useState<string>(originalValue);
+  const [hasClicked, setHasClicked] = useState<boolean>(false);
+  const [disabledHover, setDisabledHover] = useState<boolean>(true);
+  const {cliente} = useParams<{cliente: string}>();
   const users = useAppSelector(selectEmployees);
+  const {isUpdatingRegistro, updateRegistroPerClienteType} = useUpdateRegistros();
+  const handleUpdate = useCallback(
+    async (e: ChangeEvent<FormControlElement> | KeyboardEvent<FormControlElement> | MouseEvent<FormControlElement>) => {
+      setHasClicked(false);
+      const target = e.target as FormControlElement;
+      if (target.value === originalValue) return;
+      if (!cliente) return;
+      await updateRegistroPerClienteType(cliente, registerType, id, {[target.name]: target.value});
+    },
+    [cliente, id, originalValue, registerType, updateRegistroPerClienteType]
+  );
+  const onMouseEnter = useCallback(() => setDisabledHover(false), []);
+  const onMouseLeave = useCallback(() => setDisabledHover(true), []);
+  const onClick = useCallback(() => setHasClicked(true), []);
+  const onDispatchAction = useCallback(
+    (e: ChangeEvent<FormControlElement> | KeyboardEvent<FormControlElement> | MouseEvent<FormControlElement>) => {
+      const target = e.target as FormControlElement;
+      if (hasClicked && target.value !== originalValue) handleUpdate(e);
+    },
+    [handleUpdate, hasClicked, originalValue]
+  );
   const comments: Comentario[] = useMemo(() => {
     return (
       registro.comentarios.reduce((acc, comment) => {
@@ -83,7 +113,52 @@ const DetalleModalBody = memo(function DetalleModalBody({
   return (
     <Card className="m-0 p-0 shadow">
       <Card.Body className="p-1">
-        <div className="d-flex flex-column gap-2">
+        <div
+          className="w-100 h-100 d-flex align-items-center mb-1"
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}>
+          {isUpdatingRegistro ? (
+            <SkeletonLoader customClass="p-0 top-0 w-100" height="29px" />
+          ) : (
+            <div className="w-100 h-100 d-flex flex-column">
+              <Form.Label className="mb-1 text-muted lh-1">Link</Form.Label>
+              <div className="h-100 w-100 d-flex align-items-center">
+                <Form.Control
+                  type="url"
+                  pattern="https://.*"
+                  value={inputValue}
+                  name="link"
+                  disabled={disabledHover}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onClick={onClick}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      onDispatchAction(e);
+                    } else if (e.key === 'Escape') {
+                      setInputValue(originalValue);
+                      setHasClicked(false);
+                    }
+                  }}
+                  onMouseLeave={onDispatchAction}
+                  onBlurCapture={onDispatchAction}
+                />
+                <Button
+                  id="link"
+                  as="a"
+                  href={registro.link || ''}
+                  target="_blank"
+                  variant="outline-light py-0 px-1 d-flex align-items-center justify-content-center"
+                  className=" border-0 ms-1">
+                  <i className="uil-external-link-alt" />
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+        <hr className="mt-1 mb-2" />
+        <div className="d-flex flex-column gap-1">
+          <Form.Label className="mb-1 text-muted lh-1">Comentarios</Form.Label>
           <div className="d-flex">
             <SimpleBar style={{maxHeight: '40vh', width: '100%'}}>
               <ul className="conversation-list m-0 p-0">
