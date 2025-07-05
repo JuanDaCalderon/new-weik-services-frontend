@@ -1,4 +1,4 @@
-import {memo, useCallback, useMemo, useState} from 'react';
+import {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {Button, Col, Form, Row} from 'react-bootstrap';
 import ReactTable from '@/components/tablev02/ReactTable';
 import {useParams} from 'react-router-dom';
@@ -67,6 +67,16 @@ const Registros = memo(function Registros({registerType, customFields}: Registro
     [REGISTRO_PRIORIDAD.MEDIA]: t('clientes.registros.filter.priority.medium'),
     [REGISTRO_PRIORIDAD.BAJA]: t('clientes.registros.filter.priority.low')
   };
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    interval = setInterval(() => {
+      refreashRegistros();
+    }, 1800000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [refreashRegistros]);
 
   /* Callbacks */
   const pdfToggle = useCallback(() => setPdf((prev) => !prev), []);
